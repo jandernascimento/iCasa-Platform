@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2010-2011 Université Joseph Fourier Licensed under the Apache 
+	License, Version 2.0 (the "License"); you may not use this file except in 
+	compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
+	Unless required by applicable law or agreed to in writing, software distributed 
+	under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
+	OR CONDITIONS OF ANY KIND, either express or implied. See the License for 
+	the specific language governing permissions and limitations under the License. -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>fr.liglab.adele.icasa</groupId>
+		<artifactId>parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath></relativePath>
+	</parent>
+
+	<!-- Project coordinates -->
+	<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+	<artifactId>parent</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<!-- Project description -->
+	<name>${productName} :: ${projectName}</name>
+	<description>${project.name}</description>
+	<inceptionYear>2012</inceptionYear>
+
+	<!-- Project common properties -->
+	<properties>
+		<productName>M2MAppBuilder</productName>
+		<productVersion>0.0.1-SNAPSHOT</productVersion>
+		<iCasaVersion>0.0.1-SNAPSHOT</iCasaVersion>
+	</properties>
+
+	<!-- Project repositories -->
+	<repositories>
+	<!-- iCASA repositories -->
+		<repository>
+			<id>icasa-snapshot-repository</id>
+			<name>iCASA Snapshot repository</name>
+			<url>https://repository-icasa.forge.cloudbees.com/snapshot/</url>
+		</repository>
+		<repository>
+			<id>icasa-release-repository</id>
+			<name>iCASA Release repository</name>
+			<url>https://repository-icasa.forge.cloudbees.com/release/</url>
+		</repository>
+		
+		<!-- OW2 projects repositories (mainly Chameleon) -->
+		<repository>
+			<id>ow2-release-repository</id>
+			<name>OW2 release repository</name>
+			<url>http://maven.ow2.org/maven2</url>
+		</repository>
+		<repository>
+			<id>ow2-snapshot-repository</id>
+			<name>OW2 Snapshot repository</name>
+			<url>http://maven.ow2.org/maven2-snapshot</url>
+		</repository>
+
+		<!-- Cilia mediation framework repository -->
+		<repository>
+			<id>cilia-repository</id>
+			<name>Cilia repository</name>
+			<url>http://cilia.ligforge.imag.fr/repo</url>
+		</repository>
+		
+		<!-- ROSE repository -->
+		<repository>
+			<id>maven-barjo-repository-release</id>
+			<name>RoSe - Release</name>
+			<url>https://repository-barjo.forge.cloudbees.com/release/</url>
+			<layout>default</layout>
+		</repository>
+		<repository>
+			<id>maven-barjo-repository-snapshot</id>
+			<name>RoSe - Snapshot</name>
+			<url>https://repository-barjo.forge.cloudbees.com/snapshot/</url>
+			<layout>default</layout>
+		</repository>
+
+	</repositories>
+	
+	 <pluginRepositories>
+		<pluginRepository>
+			<id>elca-services</id>
+			<url>http://el4.elca-services.ch/el4j/maven2repository</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<!-- Dependencies version management -->
+	<dependencyManagement>
+		<dependencies>
+
+			<!-- Loggers -->
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>1.2.16</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-simple</artifactId>
+				<version>1.6.1</version>
+			</dependency>
+		
+			<!-- OW2 CILIA -->
+			<dependency>
+				<groupId>fr.liglab.adele.cilia</groupId>
+				<artifactId>cilia-core</artifactId>
+				<version>1.2.1</version>
+			</dependency>
+			<dependency>
+				<groupId>fr.liglab.adele.cilia</groupId>
+				<artifactId>cilia-ipojo-compendium</artifactId>
+				<version>1.2.1</version>
+			</dependency>
+			<dependency>
+				<groupId>fr.liglab.adele.cilia</groupId>
+				<artifactId>cilia-ipojo-runtime</artifactId>
+				<version>1.2.1</version>
+			</dependency>
+			<dependency>
+				<groupId>fr.liglab.adele.cilia</groupId>
+				<artifactId>cilia-deployer</artifactId>
+				<version>2.2.1</version>
+			</dependency>
+			<dependency>
+				<groupId>fr.liglab.adele.cilia</groupId>
+				<artifactId>cilia-chain-parser</artifactId>
+				<version>1.2.3</version>
+			</dependency>
+			<dependency>
+				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+				<artifactId>cilia.dp</artifactId>
+				<version>1.2.1</version>
+				<type>deployment-package</type>
+			</dependency>
+
+			<!-- ROSE -->
+			<dependency>
+				<groupId>org.ow2.chameleon.rose</groupId>
+				<artifactId>rose-core</artifactId>
+				<version>0.3.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.ow2.chameleon.rose</groupId>
+				<artifactId>json-configurator</artifactId>
+				<version>0.1.3-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+				<artifactId>rose.dp</artifactId>
+				<version>0.3.1</version>
+				<type>deployment-package</type>
+			</dependency>
+
+			<!-- OW2 JSON service -->
+			<dependency>
+				<groupId>org.ow2.chameleon.json</groupId>
+				<artifactId>json-service-json.org</artifactId>
+				<version>0.4.0</version>
+			</dependency>
+
+			<!-- Jersey -->
+			<dependency>
+				<groupId>com.sun.jersey</groupId>
+				<artifactId>jersey-client</artifactId>
+				<version>1.8</version>
+			</dependency>
+			<dependency>
+				<groupId>com.sun.jersey</groupId>
+				<artifactId>jersey-core</artifactId>
+				<version>1.8</version>
+			</dependency>
+			<dependency>
+				<groupId>com.sun.jersey</groupId>
+				<artifactId>jersey-server</artifactId>
+				<version>1.8</version>
+			</dependency>
+
+			<!-- OW2 Chameleon handies & annotations -->
+			<dependency>
+				<groupId>org.ow2.chameleon.handies</groupId>
+				<artifactId>annotations</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.ow2.chameleon.handies</groupId>
+				<artifactId>ipojo-log-handler</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+
+			<!-- UPNP -->
+			<dependency>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>org.apache.felix.upnp.basedriver</artifactId>
+				<version>0.8.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>org.apache.felix.upnp.extra</artifactId>
+				<version>0.4.0</version>
+			</dependency>
+
+			<!-- JUnit 4 and Mockito for tests -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.8.2</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-all</artifactId>
+				<version>1.7</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>org.apache.felix.http.jetty</artifactId>
+				<version>2.2.0</version>
+			</dependency>
+			
+			<!-- M2MAppBuilder -->
+			<dependency>
+				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+				<artifactId>common</artifactId>
+				<version>${productVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+				<artifactId>application.api</artifactId>
+				<version>${productVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+				<artifactId>application.impl</artifactId>
+				<version>${productVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+				<artifactId>device.manager.api</artifactId>
+				<version>${productVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+				<artifactId>device.manager.impl</artifactId>
+				<version>${productVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+				<artifactId>platform.core.dp</artifactId>
+				<version>${productVersion}</version>
+				<type>deployment-package</type>
+			</dependency>
+			
+			<!-- M2MAppBuilder tests -->
+			<dependency>
+				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+				<artifactId>test.common</artifactId>
+				<version>${productVersion}</version>
+			</dependency>
+			
+			<!-- Settopbox -->
+			<dependency>
+				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+				<artifactId>upnp.settopbox.importer</artifactId>
+				<version>${productVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+				<artifactId>upnp.presence.detector</artifactId>
+				<version>${productVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+				<artifactId>upnp.widget</artifactId>
+				<version>${productVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+				<artifactId>upnp.settopbox.core.dp</artifactId>
+				<version>${productVersion}</version>
+				<type>deployment-package</type>
+			</dependency>
+			
+			<!-- Tikitag -->
+			<dependency>
+				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+				<artifactId>usb.discovery.rose</artifactId>
+				<version>${productVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>org.apache.felix.usb.basedriver</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+				<artifactId>rfid.reader</artifactId>
+				<version>${productVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+				<artifactId>usb.rfid.reader.importer</artifactId>
+				<version>${productVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+				<artifactId>tikitag.widget</artifactId>
+				<version>${productVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+				<artifactId>tikitag.core.dp</artifactId>
+				<version>${productVersion}</version>
+				<type>deployment-package</type>
+			</dependency>
+			
+			<!-- X10 -->
+			<dependency>
+				<groupId>org.rxtx</groupId>
+				<artifactId>org.rxtx</artifactId>
+				<version>2.2.7</version>
+			</dependency>
+			<dependency>
+				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+				<artifactId>x10.base.driver</artifactId>
+				<version>${productVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+				<artifactId>x10.widget</artifactId>
+				<version>${productVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+				<artifactId>x10.presence.sensor.core.dp</artifactId>
+				<version>${productVersion}</version>
+				<type>deployment-package</type>
+			</dependency>
+			
+			<!-- dashboard application -->
+			<dependency>
+				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+				<artifactId>icasa.device.model.bridge</artifactId>
+				<version>${productVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+				<artifactId>dashboard</artifactId>
+				<version>${productVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+				<artifactId>dashboard.dp</artifactId>
+				<version>${productVersion}</version>
+				<type>deployment-package</type>
+			</dependency>
+			
+			<!-- iCasa Simulator -->
+			<dependency>
+				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+				<artifactId>simulator.core.dp</artifactId>
+				<version>${productVersion}</version>
+				<type>deployment-package</type>
+			</dependency>
+			<dependency>
+				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+				<artifactId>simulator.ihm.dp</artifactId>
+				<version>${productVersion}</version>
+				<type>deployment-package</type>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+
+		<!-- Plugins version management -->
+		<pluginManagement>
+			<plugins>
+
+				<!-- Bundle plugin -->
+				<plugin>
+					<groupId>org.apache.felix</groupId>
+					<artifactId>maven-bundle-plugin</artifactId>
+					<version>2.3.4</version>
+					<extensions>true</extensions>
+					<configuration>
+						<instructions>
+							<!-- Default bundle headers -->
+							<Bundle-Name>${project.name}</Bundle-Name>
+							<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+							<Bundle-Version>${project.version}</Bundle-Version>
+							<Bundle-Vendor>${project.organization.name}</Bundle-Vendor>
+							<Bundle-DocURL>https://github.com/AdeleResearchGroup/M2MAppBuilder</Bundle-DocURL>
+							<Bundle-RequiredExecutionEnvironment>J2SE-1.5</Bundle-RequiredExecutionEnvironment>
+							<Bundle-ContactAddress>leveque.thomas@gmail.com</Bundle-ContactAddress>
+							<Bundle-Copyright>Copyright 2011-2012 Joseph Fourier University</Bundle-Copyright>
+							<Bundle-License>Apache License - Version 2.0;
+								link=http://www.apache.org/licenses/LICENSE-2.0.txt</Bundle-License>
+						</instructions>
+					</configuration>
+				</plugin>
+				
+				<!-- License plugin -->
+				<plugin>
+					<groupId>com.google.code.maven-license-plugin</groupId>
+					<artifactId>maven-license-plugin</artifactId>
+					<version>1.4.0</version>
+					<configuration>
+						<header>${basedir}/../parent/license.txt</header>
+						<aggregate>true</aggregate>
+						<excludes>
+							<exclude>.gitignore</exclude>
+							<exclude>license.txt</exclude>
+							<exclude>**/src/test/resources/**</exclude>
+							<exclude>**/src/test/data/**</exclude>
+							<exclude>**/*.so</exclude>
+							<exclude>**/*.dll</exclude>
+							<exclude>**/*.bhv</exclude>
+							<exclude>**/*.cfg</exclude>
+							<exclude>**/*.dp</exclude>
+							<exclude>**/*.xcf</exclude>
+							<exclude>**/*.md</exclude>
+							<exclude>**/*.jj</exclude>
+							<exclude>.git/**/*</exclude>
+						</excludes>
+					</configuration>
+					<executions>
+						<execution>
+							<phase>verify</phase>
+							<goals>
+								<goal>format</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				
+			</plugins>
+		</pluginManagement>
+
+		<!-- Build extensions -->
+		<extensions>
+			<extension> 
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>2.3.4</version>
+			</extension>
+			<extension> 
+				<groupId>de.akquinet.gomobile</groupId>
+				<artifactId>maven-dp-plugin</artifactId>
+				<version>1.0.1-SNAPSHOT</version>
+			</extension>
+		</extensions>
+		
+		<plugins>
+		  
+		</plugins>
+	</build>
+</project>

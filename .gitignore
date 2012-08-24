@@ -1,0 +1,35 @@
+# Eclipse files
+
+.project
+.settings
+.classpath
+
+# maven folders
+
+target
+load
+felix-cache
+
+# other folders and files
+bin
+Zone.sav
+
+/distribution/base/bundle
+/distribution/dev/PRODUCTDebug
+/distribution/dev/PRODUCTDebug.bat
+/distribution/dev/bundle
+/distribution/dev/PRODUCT
+/distribution/dev/PRODUCT.bat
+/distribution/dev/PRODUCT.bat
+/distribution/base/README.txt
+/distribution/base/conf/config.properties
+/distribution/base/PRODUCT
+/distribution/base/PRODUCT.bat
+/distribution/base/PRODUCTDebug
+/distribution/base/PRODUCTDebug.bat
+/distribution/asus-box/PRODUCTDebug.bat
+/distribution/asus-box/bundle
+/distribution/asus-box/conf
+/distribution/asus-box/PRODUCT
+/distribution/asus-box/PRODUCT.bat
+/distribution/asus-box/PRODUCTDebug
