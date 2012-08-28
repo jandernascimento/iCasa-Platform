@@ -33,7 +33,8 @@
 	<!-- Project common properties -->
 	<properties>
 		<productName>M2MAppBuilder</productName>
-		<productVersion>0.0.1-SNAPSHOT</productVersion>
+		<productVersion>${m2mAppBuilderVersion}</productVersion>
+		<m2mAppBuilderVersion>0.0.1-SNAPSHOT</m2mAppBuilderVersion>
 		<iCasaVersion>0.0.1-SNAPSHOT</iCasaVersion>
 	</properties>
 
@@ -233,32 +234,32 @@
 			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 				<artifactId>common</artifactId>
-				<version>${productVersion}</version>
+				<version>${m2mAppBuilderVersion}</version>
 			</dependency>
 			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 				<artifactId>application.api</artifactId>
-				<version>${productVersion}</version>
+				<version>${m2mAppBuilderVersion}</version>
 			</dependency>
 			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 				<artifactId>application.impl</artifactId>
-				<version>${productVersion}</version>
+				<version>${m2mAppBuilderVersion}</version>
 			</dependency>
 			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 				<artifactId>device.manager.api</artifactId>
-				<version>${productVersion}</version>
+				<version>${m2mAppBuilderVersion}</version>
 			</dependency>
 			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 				<artifactId>device.manager.impl</artifactId>
-				<version>${productVersion}</version>
+				<version>${m2mAppBuilderVersion}</version>
 			</dependency>
 			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 				<artifactId>platform.core.dp</artifactId>
-				<version>${productVersion}</version>
+				<version>${m2mAppBuilderVersion}</version>
 				<type>deployment-package</type>
 			</dependency>
 			
@@ -266,29 +267,29 @@
 			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 				<artifactId>test.common</artifactId>
-				<version>${productVersion}</version>
+				<version>${m2mAppBuilderVersion}</version>
 			</dependency>
 			
 			<!-- Settopbox -->
 			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 				<artifactId>upnp.settopbox.importer</artifactId>
-				<version>${productVersion}</version>
+				<version>${m2mAppBuilderVersion}</version>
 			</dependency>
 			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 				<artifactId>upnp.presence.detector</artifactId>
-				<version>${productVersion}</version>
+				<version>${m2mAppBuilderVersion}</version>
 			</dependency>
 			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 				<artifactId>upnp.widget</artifactId>
-				<version>${productVersion}</version>
+				<version>${m2mAppBuilderVersion}</version>
 			</dependency>
 			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 				<artifactId>upnp.settopbox.core.dp</artifactId>
-				<version>${productVersion}</version>
+				<version>${m2mAppBuilderVersion}</version>
 				<type>deployment-package</type>
 			</dependency>
 			
@@ -296,7 +297,7 @@
 			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 				<artifactId>usb.discovery.rose</artifactId>
-				<version>${productVersion}</version>
+				<version>${m2mAppBuilderVersion}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.felix</groupId>
@@ -306,22 +307,22 @@
 			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 				<artifactId>rfid.reader</artifactId>
-				<version>${productVersion}</version>
+				<version>${m2mAppBuilderVersion}</version>
 			</dependency>
 			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 				<artifactId>usb.rfid.reader.importer</artifactId>
-				<version>${productVersion}</version>
+				<version>${m2mAppBuilderVersion}</version>
 			</dependency>
 			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 				<artifactId>tikitag.widget</artifactId>
-				<version>${productVersion}</version>
+				<version>${m2mAppBuilderVersion}</version>
 			</dependency>
 			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 				<artifactId>tikitag.core.dp</artifactId>
-				<version>${productVersion}</version>
+				<version>${m2mAppBuilderVersion}</version>
 				<type>deployment-package</type>
 			</dependency>
 			
@@ -334,17 +335,17 @@
 			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 				<artifactId>x10.base.driver</artifactId>
-				<version>${productVersion}</version>
+				<version>${m2mAppBuilderVersion}</version>
 			</dependency>
 			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 				<artifactId>x10.widget</artifactId>
-				<version>${productVersion}</version>
+				<version>${m2mAppBuilderVersion}</version>
 			</dependency>
 			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 				<artifactId>x10.presence.sensor.core.dp</artifactId>
-				<version>${productVersion}</version>
+				<version>${m2mAppBuilderVersion}</version>
 				<type>deployment-package</type>
 			</dependency>
 			
@@ -352,17 +353,17 @@
 			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 				<artifactId>icasa.device.model.bridge</artifactId>
-				<version>${productVersion}</version>
+				<version>${m2mAppBuilderVersion}</version>
 			</dependency>
 			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 				<artifactId>dashboard</artifactId>
-				<version>${productVersion}</version>
+				<version>${m2mAppBuilderVersion}</version>
 			</dependency>
 			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 				<artifactId>dashboard.dp</artifactId>
-				<version>${productVersion}</version>
+				<version>${m2mAppBuilderVersion}</version>
 				<type>deployment-package</type>
 			</dependency>
 			
@@ -370,13 +371,13 @@
 			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 				<artifactId>simulator.core.dp</artifactId>
-				<version>${productVersion}</version>
+				<version>${m2mAppBuilderVersion}</version>
 				<type>deployment-package</type>
 			</dependency>
 			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 				<artifactId>simulator.ihm.dp</artifactId>
-				<version>${productVersion}</version>
+				<version>${m2mAppBuilderVersion}</version>
 				<type>deployment-package</type>
 			</dependency>
 
