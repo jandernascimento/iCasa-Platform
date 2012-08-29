@@ -13,8 +13,18 @@ Contributors
 =====
 
 The main contributors are 
-- Adele team
-- Orange Labs
+- _Adele team_
+- _Orange Labs_
+
+Source Organization
+====
+
+- _applications_: Contains M2M applications such as the iCasa simulator.  
+- _dependencies_: Contains packages of used dependencies such as ROSE and Cilia.
+- _distribution_: Contains distributions.
+- _parent_: Contain the global build configuration including licensing information.
+- _platform_: Contains technical services and device drivers used by the applications and distributions. 
+- _tests_: Contains integration tests.
 
 How to use it
 =====
