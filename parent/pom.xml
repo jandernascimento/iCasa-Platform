@@ -349,24 +349,6 @@
 				<type>deployment-package</type>
 			</dependency>
 			
-			<!-- dashboard application -->
-			<dependency>
-				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-				<artifactId>icasa.device.model.bridge</artifactId>
-				<version>${m2mAppBuilderVersion}</version>
-			</dependency>
-			<dependency>
-				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-				<artifactId>dashboard</artifactId>
-				<version>${m2mAppBuilderVersion}</version>
-			</dependency>
-			<dependency>
-				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-				<artifactId>dashboard.dp</artifactId>
-				<version>${m2mAppBuilderVersion}</version>
-				<type>deployment-package</type>
-			</dependency>
-			
 			<!-- iCasa Simulator -->
 			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
@@ -380,7 +362,12 @@
 				<version>${m2mAppBuilderVersion}</version>
 				<type>deployment-package</type>
 			</dependency>
-
+			<dependency>
+				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+				<artifactId>icasa.device.model.bridge</artifactId>
+				<version>${m2mAppBuilderVersion}</version>
+			</dependency>
+			
 		</dependencies>
 	</dependencyManagement>
 

@@ -29,6 +29,10 @@
 	<name>${productName} :: ${projectName}</name>
 
 	<modules>
+		<module>icasa-device-model-bridge</module>
+		<module>tikitag-widget</module>
+		<module>upnp-widget</module>
+		<module>x10-widget</module>
 		<module>packages</module>
 	</modules>
 </project>

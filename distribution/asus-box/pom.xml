@@ -28,7 +28,7 @@
   </parent>
 
   <!-- Project coordinates -->
-  <artifactId>asus.box.dashboard</artifactId>
+  <artifactId>asus.box.simulator</artifactId>
   <packaging>pom</packaging>
   <name>${productName} :: ${projectName}</name>
   
@@ -73,11 +73,6 @@
 	<dependency>
 		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 		<artifactId>simulator.ihm.dp</artifactId>
-		<type>deployment-package</type>
-	</dependency>
-	<dependency>
-		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-		<artifactId>dashboard.dp</artifactId>
 		<type>deployment-package</type>
 	</dependency>
 	<dependency>

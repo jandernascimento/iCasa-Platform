@@ -56,11 +56,6 @@
 		<artifactId>simulator.ihm.dp</artifactId>
 		<type>deployment-package</type>
 	</dependency>
-	<dependency>
-		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-		<artifactId>dashboard.dp</artifactId>
-		<type>deployment-package</type>
-	</dependency>
 	
   </dependencies>
   
