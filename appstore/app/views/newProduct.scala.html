@@ -1,0 +1,17 @@
+@(productForm: Form[models.values.Product])
+@import helper._ 
+
+@main("Add product") {
+   @form(routes.ProductController.addProduct()) { 
+	
+		@inputText(productForm("id"))
+		
+		@inputText(productForm("name"))
+		
+		@inputText(productForm("description"))
+		
+		<input type="submit" value="Create">
+	
+	} 
+    
+}
