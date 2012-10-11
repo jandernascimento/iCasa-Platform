@@ -30,13 +30,6 @@ import play.mvc.Result;
 public class ApplicationController extends Controller {
 	static Form<Application> applicationForm = form(Application.class);
 
-
-	public static Result index() {
-
-		return applications();
-
-	}
-
 	public static Result applications(){
 		return ok(views.html.applications.render(Application.all()));
 	}

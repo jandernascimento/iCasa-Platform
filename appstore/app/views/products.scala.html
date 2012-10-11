@@ -1,0 +1,15 @@
+@(products: List[models.values.Product])
+@import helper._ 
+
+@main("Appstore") {
+    <h1>@products.size() products(s)</h1>
+	<ul>
+		@for(product <- products) {
+		<li>
+			@product.name 
+			@product.description 
+		</li>
+		}
+	</ul>
+    
+}

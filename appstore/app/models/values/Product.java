@@ -35,6 +35,12 @@ import play.db.ebean.Model;
 @Entity
 @Table(name="products")
 public class Product extends Model {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6533282470018272197L;
+
 	@Id
 	@Required
 	@Column(name="id", length=25)

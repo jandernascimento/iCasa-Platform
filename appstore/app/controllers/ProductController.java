@@ -10,14 +10,8 @@ public class ProductController extends Controller {
 	static Form<Product> productForm = form(Product.class);
 
 
-	public static Result index() {
-
-		return products();
-
-	}
-
 	public static Result products(){
-		return ok(views.html.index.render(Product.all()));
+		return ok(views.html.products.render(Product.all()));
 	}
 
 	public static Result addProductForm(){
@@ -34,7 +28,7 @@ public class ProductController extends Controller {
 			}catch (Exception ex){
 				return badRequest(views.html.newProduct.render(filledForm));
 			}
-			return redirect(routes.ProductController.index());
+			return redirect(routes.ProductController.products());
 		}
 	}
 
