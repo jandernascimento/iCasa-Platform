@@ -1,8 +1,8 @@
-@(products: List[models.values.Product])
+@(title: String, products: List[models.values.Value])
 @import helper._ 
 
 @main("Appstore"){@adminMenu.render} {
-    <h1>@products.size() products(s)</h1>
+    <h1>@products.size()  @title (s)</h1>
 	<ul>
 		@for(product <- products) {
 		<li>

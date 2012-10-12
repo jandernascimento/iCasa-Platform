@@ -20,5 +20,13 @@ GET      /application                          controllers.ApplicationController
 
 GET      /applications                          controllers.ApplicationController.applications()
 
+#Servuce Controllers
+POST     /service                          controllers.ServiceController.addService()
+
+GET      /service                          controllers.ServiceController.addServiceForm()
+
+GET      /services                          controllers.ServiceController.services()
+
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

@@ -1,4 +1,4 @@
-@(applications: List[models.values.Application])
+@(applications: List[models.values.Value])
 @import helper._ 
 
 @main("Appstore"){@adminMenu.render} {
@@ -6,8 +6,8 @@
 	<ul>
 		@for(application <- applications) {
 		<li>
-			@application.name 
-			@application.description 
+			@application.getName()
+			@application.getDescription() 
 		</li>
 		}
 	</ul>

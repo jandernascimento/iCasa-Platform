@@ -31,7 +31,7 @@ public class ApplicationController extends Controller {
 	static Form<Application> applicationForm = form(Application.class);
 
 	public static Result applications(){
-		return ok(views.html.applications.render(Application.all()));
+		return ok(views.html.applications.render(Application.getValues()));
 	}
 
 	public static Result addApplicationForm(){

@@ -34,37 +34,66 @@ import play.db.ebean.Model;
  */
 @Entity
 @Table(name="services")
-public class Service extends Model {
+public class Service extends Model implements Value {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 498903206959165812L;
-	
+
 	@Id
 	@Column(name="id", length=25)
 	public String id;
-	
+
 	@Column(name="name", length=50)
 	public String name;
-	
+
 	@Column(name="description", columnDefinition="TEXT")
 	public String description;
-	
+
 	public static Finder<String,Service> find = new Finder<String, Service>(
-		    String.class, Service.class
-		  );
-	
+			String.class, Service.class
+			);
+
 	public static List<Service> all() {
 		return find.all();
-		
+
 	}
-	
+
+	public static List<Value> getValues(){
+		List<? extends Value> all = all();
+		return (List<Value>) all;
+	}
+
 	public static void create(Service service) {
 		service.save();
 	}
-	
+
 	public static void remove(String identifier){
 		find.byId(identifier).delete();
 	}
-	
+
+	/* (non-Javadoc)
+	 * @see models.values.Value#getId()
+	 */
+	@Override
+	public String getId() {
+		return id;
+	}
+
+	/* (non-Javadoc)
+	 * @see models.values.Value#getName()
+	 */
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	/* (non-Javadoc)
+	 * @see models.values.Value#getDescription()
+	 */
+	@Override
+	public String getDescription() {
+		return description;
+	}
+
 }

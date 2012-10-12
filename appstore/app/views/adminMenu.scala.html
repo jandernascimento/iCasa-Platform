@@ -1,7 +1,45 @@
 <div class="well sidebar-nav">
-	<ul class="dropdown-menu">
-		<li class="nav-header">Sidebar</li>
-		<li><a href="applications">Applications</a></li>
-		<li><a href="products">Products</a></li>
-	</ul>
+	<!-- <ul class="nav navbar-inner">
+ -->
+	<div id="accordion">
+		<h4>
+			<a href="#">Applications</a>
+		</h4>
+		<div>
+			<ul>
+				<li><a tabindex="-1" href="applications">See available
+						applications</a></li>
+				<li><a tabindex="-1" href="application">Add applications</a></li>
+			</ul>
+		</div>
+		<h4>
+			<a href="#">Products</a>
+		</h4>
+		<div>
+			<ul>
+				<li><a tabindex="-1" href="products">See available
+						products</a></li>
+				<li><a tabindex="-1" href="product">Add product</a></li>
+			</ul>
+		</div>
+		<h4>
+			<a href="#">Services</a>
+		</h4>
+		<div>
+			<ul>
+				<li><a tabindex="-1" href="services">See available
+						services</a></li>
+				<li><a tabindex="-1" href="service">Add service</a></li>
+			</ul>
+		</div>
+	</div>
 </div>
+<!-- 
+</ul>
+ -->
+
+<script>
+	$(document).ready(function() {
+		$("#accordion").accordion();
+	});
+</script>

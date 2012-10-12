@@ -11,7 +11,7 @@ public class ProductController extends Controller {
 
 
 	public static Result products(){
-		return ok(views.html.products.render(Product.all()));
+		return ok(views.html.products.render("Product", Product.all()));
 	}
 
 	public static Result addProductForm(){
