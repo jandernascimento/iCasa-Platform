@@ -39,13 +39,17 @@ public class Service extends Model {
 	 * 
 	 */
 	private static final long serialVersionUID = 498903206959165812L;
+	
 	@Id
 	@Column(name="id", length=25)
 	public String id;
+	
 	@Column(name="name", length=50)
 	public String name;
+	
 	@Column(name="description", columnDefinition="TEXT")
 	public String description;
+	
 	public static Finder<String,Service> find = new Finder<String, Service>(
 		    String.class, Service.class
 		  );

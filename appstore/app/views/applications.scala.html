@@ -1,7 +1,7 @@
 @(applications: List[models.values.Application])
 @import helper._ 
 
-@main("Appstore") {
+@main("Appstore"){@adminMenu.render} {
     <h1>@applications.size() applications(s)</h1>
 	<ul>
 		@for(application <- applications) {

@@ -1,7 +1,7 @@
 @(applicationForm: Form[models.values.Application])
 @import helper._ 
 
-@main("Add Application") {
+@main("Add Application"){@adminMenu.render} {
    @form(routes.ApplicationController.addApplication()) { 
 	
 		@inputText(applicationForm("id"))

@@ -1,7 +1,7 @@
 @(products: List[models.values.Product])
 @import helper._ 
 
-@main("Appstore") {
+@main("Appstore"){@adminMenu.render} {
     <h1>@products.size() products(s)</h1>
 	<ul>
 		@for(product <- products) {

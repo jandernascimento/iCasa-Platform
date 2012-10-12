@@ -1,7 +1,7 @@
 @(productForm: Form[models.values.Product])
 @import helper._ 
 
-@main("Add product") {
+@main("Add product"){@adminMenu.render} {
    @form(routes.ProductController.addProduct()) { 
 	
 		@inputText(productForm("id"))
