@@ -17,7 +17,6 @@
  */
 package controllers;
 
-import models.values.Product;
 import models.values.Service;
 import play.data.Form;
 import play.mvc.Controller;
@@ -33,22 +32,22 @@ public class ServiceController extends Controller {
 
 
 	public static Result services(){
-		return ok(views.html.services.render(Service.all()));
+		return ok(views.html.products.services.services.render(Service.all()));
 	}
 
 	public static Result addServiceForm(){
-		return ok(views.html.newService.render(form(Service.class)));
+		return ok(views.html.products.services.newService.render(form(Service.class)));
 	}
 
 	public static Result addService(){
 		Form<Service> filledForm = serviceForm.bindFromRequest();
 		if (filledForm.hasErrors()){
-			return badRequest(views.html.newService.render(filledForm));
+			return badRequest(views.html.products.services.newService.render(filledForm));
 		} else {
 			try{
 				Service.create(filledForm.get());
 			}catch (Exception ex){
-				return badRequest(views.html.newService.render(filledForm));
+				return badRequest(views.html.products.services.newService.render(filledForm));
 			}
 			return redirect(routes.ServiceController.services());
 		}

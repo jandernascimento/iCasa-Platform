@@ -31,22 +31,22 @@ public class ApplicationController extends Controller {
 	static Form<Application> applicationForm = form(Application.class);
 
 	public static Result applications(){
-		return ok(views.html.applications.render(Application.getValues()));
+		return ok(views.html.products.applications.applications.render(Application.all()));
 	}
 
 	public static Result addApplicationForm(){
-		return ok(views.html.newApplication.render(form(Application.class)));
+		return ok(views.html.products.applications.newApplication.render(form(Application.class)));
 	}
 
 	public static Result addApplication(){
 		Form<Application> filledForm = applicationForm.bindFromRequest();
 		if (filledForm.hasErrors()){
-			return badRequest(views.html.newApplication.render(filledForm));
+			return badRequest(views.html.products.applications.newApplication.render(filledForm));
 		} else {
 			try{
 				Application.create(filledForm.get());
 			}catch (Exception ex){
-				return badRequest(views.html.newApplication.render(filledForm));
+				return badRequest(views.html.products.applications.newApplication.render(filledForm));
 			}
 			return redirect(routes.ApplicationController.applications());
 		}

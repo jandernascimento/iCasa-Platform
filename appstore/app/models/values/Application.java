@@ -35,7 +35,7 @@ import play.db.ebean.Model;
  */
 @Entity
 @Table(name="applications")
-public class Application extends Model implements Value {
+public class Application extends Model  {
 
 	private static final long serialVersionUID = 7658036868515739627L;
 	@Id
@@ -54,11 +54,6 @@ public class Application extends Model implements Value {
 		return find.all();
 	}
 	
-	public static List<Value> getValues(){
-		List<? extends Value> all = all();
-		return (List<Value>) all;
-	}
-	
 	public static void create(Application application) {
 		application.save();
 	}
@@ -66,30 +61,5 @@ public class Application extends Model implements Value {
 	public static void remove(String identifier){
 		find.byId(identifier).delete();
 	}
-
-	/* (non-Javadoc)
-	 * @see models.values.Value#getId()
-	 */
-	@Override
-	public String getId() {
-		return id;
-	}
-
-	/* (non-Javadoc)
-	 * @see models.values.Value#getName()
-	 */
-	@Override
-	public String getName() {
-		return name;
-	}
-
-	/* (non-Javadoc)
-	 * @see models.values.Value#getDescription()
-	 */
-	@Override
-	public String getDescription() {
-		return description;
-	}
-
 	
 }

@@ -11,26 +11,24 @@ public class ProductController extends Controller {
 
 
 	public static Result products(){
-		return ok(views.html.products.render("Product", Product.all()));
+		return ok(views.html.products.products.render(Product.all()));
 	}
 
 	public static Result addProductForm(){
-		return ok(views.html.newProduct.render(form(Product.class)));
+		return ok(views.html.products.newProduct.render(form(Product.class)));
 	}
 
 	public static Result addProduct(){
 		Form<Product> filledForm = productForm.bindFromRequest();
 		if (filledForm.hasErrors()){
-			return badRequest(views.html.newProduct.render(filledForm));
+			return badRequest(views.html.products.newProduct.render(filledForm));
 		} else {
 			try{
 				Product.create(filledForm.get());
 			}catch (Exception ex){
-				return badRequest(views.html.newProduct.render(filledForm));
+				return badRequest(views.html.products.newProduct.render(filledForm));
 			}
 			return redirect(routes.ProductController.products());
 		}
 	}
-
-
 }
