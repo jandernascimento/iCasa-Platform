@@ -90,30 +90,9 @@ require([
     'components/model/productModel',
     'components/modelView/productView',
     'components/AppstoreViewUtil'
-    ], function($, ui,bs,kb, bb,ko, model, ProductView,AppstoreViewUtil) {
-	
-	$( "#accordion" ).show();
-    $( "#accordion" ).accordion({
-    	heightStyle: "fill"
-    });
-    util = new AppstoreViewUtil();
-    util.initialize();
-//        ko.bindingHandlers.bsPopover = {
-//            init: function (element, valueAccessor) {
-//                var val = ko.utils.unwrapObservable(valueAccessor());
-//                var options = { title: val.title,
-//                    animation: val.animation,
-//                    placement: val.placement,
-//                    trigger: val.trigger,
-//                    delay: val.delay,
-//                    //can grab html content from a target option
-//                    content: ($(val.target).html() != null) ? $(val.target).html() : val.content
-//                };
-//                $(element).popover(options);
-//            }
-//        };
+    ], function($, ui,bs,kb, bb,ko, model, ProductView) {
 
-    
+   
     pmodel = new model.ProductModel({id: 'product id', name: 'this is my product name', version: '1.0', description: 'my description'});
     pmodel2 = new model.ProductModel({id: 'product id 2', name: 'this is my product name 2', version: '1.0', description: 'This is my description'});
 
