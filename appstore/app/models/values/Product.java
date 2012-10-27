@@ -24,8 +24,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.node.ObjectNode;
+
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
+import play.libs.Json;
 
 /**
  * @author <a href="mailto:cilia-devel@lists.ligforge.imag.fr">Cilia Project
@@ -66,7 +69,6 @@ public class Product extends Model  {
 	 */
 	public static List<Product> all() {
 		return find.all();
-		
 	}
 
 	/**
@@ -85,6 +87,13 @@ public class Product extends Model  {
 		find.byId(identifier).delete();
 	}
 
+	public static ObjectNode toJson(Product product){
+		ObjectNode result = Json.newObject();
+		result.put("id", product.id);
+		result.put("name", product.name);
+		result.put("description", product.description);
+		return result;
+	}
 
 	
 }

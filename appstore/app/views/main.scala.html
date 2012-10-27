@@ -9,9 +9,10 @@
       document.documentElement.className = 'tohide';
 </script>
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("javascripts/frameworks/bootstrap/css/bootstrap.css")" >
-<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">   
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
 <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-<script src="@routes.Assets.at("javascripts/frameworks/require/require.js")" data-main="@routes.Assets.at("javascripts/main")"></script>
+
+
 
 
 </head>
@@ -19,21 +20,19 @@
 	<div class="navbar navbar-inverse navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container-fluid">
-				 <a class="brand" href="/">Just A Simple AppStore</a>
+				<a class="brand" href="/">Just A Simple AppStore</a>
 			</div>
 		</div>
 	</div>
 	<div class="container-fluid">
 		<div class="row-fluid">
-			<div class="span3">
-				@sidebar
+			<div class="span3"><div class="well">@sidebar</div>
 			</div>
 			<div class="span9">
-				<div class="hero-unit">@content</div>
+				<div class="well">@content</div>
 			</div>
 		</div>
-		<!--/row-->
+
 	</div>
-	<!--/.fluid-container-->
 </body>
 </html>

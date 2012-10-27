@@ -2,16 +2,12 @@
 @import helper._ 
 
 @main("Add product"){@adminMenu.render} {
-   @form(routes.ProductController.addProduct()) { 
-	
-		@inputText(productForm("id"))
-		
-		@inputText(productForm("name"))
-		
-		@inputText(productForm("description"))
-		
-		<input type="submit" value="Create">
-	
-	} 
-    
+		<form class="input" data-bind="submit: saveModel">
+			<p>Id<input type="text" data-bind="value: id"></p>
+			<p>Name<input type="text" data-bind="value: name"></p>
+			<p>Description<input type="text" data-bind="value: description"></p>
+			<button type="Submit">Create</button>
+		</form>
 }
+<script src="@routes.Assets.at("javascripts/frameworks/require/require.js")" data-main="@routes.Assets.at("javascripts/addProduct")" > </script>
+

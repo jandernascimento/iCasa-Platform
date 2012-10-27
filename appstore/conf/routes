@@ -6,12 +6,19 @@
 GET     /                           controllers.MainController.index()
 
 
-#Product Controllers
-POST     /product                          controllers.ProductController.addProduct()
+#Product Controllers PAGE
 
 GET      /product                          controllers.ProductController.addProductForm()
 
 GET      /products                          controllers.ProductController.products()
+
+#Product Controllers REST
+
+GET      /api/products                          controllers.api.ProductREST.products()
+
+POST      /api/product                          controllers.api.ProductREST.addProduct()
+
+
 
 #Application Controllers
 POST     /application                          controllers.ApplicationController.addApplication()
