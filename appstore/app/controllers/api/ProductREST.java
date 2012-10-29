@@ -28,6 +28,12 @@ public class ProductREST extends Controller {
 		}
 		return ok(products);
 	}
+	
+	public static Result getTopProducts(){
+		
+		return ok();
+	}
+	
 	public static Result addProduct(){
 		System.out.println("hello add product  ");
 		System.out.println("aDD PRODUCT " + request().body());

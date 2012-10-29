@@ -9,14 +9,14 @@ define ['underscore','knockback','knockout'], (_,kb,ko) ->
 #	}
 
 	
-	class  ServiceViewModel extends kb.ViewModel
+	class ServiceViewModel extends kb.ViewModel
 		constructor: (model) ->
 			@id = model.id
 			@name = ko.observable(model.name)
 			@description = ko.observable(model.name)
 			@version = ko.observable(model.version)
 			
-	class  ApplicationViewModel extends kb.ViewModel
+	class ApplicationViewModel extends kb.ViewModel
 		constructor: (model) ->
 			@id = model.id
 			@name = ko.observable(model.name)
@@ -27,7 +27,7 @@ define ['underscore','knockback','knockout'], (_,kb,ko) ->
 		constructor: (@model) ->
 			@id = kb.observable(@model,'id')
 			@name = kb.observable(@model,'name')
-			classItem = "item"
+			@classItem = "item"
 			@description = kb.observable(@model,'description')
 #			@applications = ko.observableArray(@model.applications)
 #			@services = ko.observableArray(@model.services)
@@ -36,17 +36,15 @@ define ['underscore','knockback','knockout'], (_,kb,ko) ->
 			console.log(@model.toJSON())
 			@model.save()
 			
-	class ProductViewModelCollection 
-		constructor:(model) ->
+	class ProductViewModelCollection
+		constructor: (model) ->
 			@products = kb.collectionObservable(model)
-			_.each(@products.collection(), (imodel) -> 
-				console.log (imodel)
-				#imodel.classItem = 'item'
-			)
-			console.log ("initializing the collection")
-		setClassItem: (product) ->
-			product.classItem = "item"
-#  			if @products.lenght > 0
-#  				firstModel = @products.at(0)
-#  				firstModel.set(classItem: 'active item')
+			@products.subscribe(@.test)
+		test:(models)->
+			_.each models, (imodel) -> 
+				imodel.classItem= 'item'
+			if models.length > 0
+				firstModel = models[0]
+				firstModel.classItem = 'active item'
+			
 	return {ProductViewModelCollection,ProductViewModel}

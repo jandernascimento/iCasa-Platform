@@ -23,14 +23,26 @@ define ['backbone'], (bb) ->
 			version: '0.0.0'
 	
 	class ProductModel extends bb.Model
+		constructor: ()->
+		 	console.log "initializing Product Model"
+		 	super
  		urlRoot: 'api/product'
 		defaults:
 			name: 'my product name'
 			description: 'my description'
-
+			imageURL: 'assets/images/products/default.jpg'
 	
 	class ProductModelCollection extends bb.Collection
+
 		url: 'api/products'
 		model: ProductModel
+		@topProducts = 10
+		@productsPerPage = 10
+		getTopProducts: () ->
+			@.fetch({ data: $.param({ topNumber: @topProducts})})
+
+		getPage:(page) ->
+			@.fetch({ data: $.param({ page: page, productsPerPage:@productsPerPage})})
+
 
 	return {ProductModelCollection, ProductModel,ApplicationModel,ServiceModel}

@@ -5,10 +5,10 @@
 	<div id="myCarousel" class="carousel slide">
 		<!-- Carousel items -->
 		<div class="carousel-inner" data-bind="foreach: products">
-			<div class = "item" >
+			<div class="item" data-bind="attr: {class: classItem}"> <!--   -->
 				<center>
 				<a href="#" >
-            		<img data-bind="attr: {src: imageURL}"  alt="">
+            		<img src="assets/images/products/default.jpg"  data-bind="attr: {src: imageURL}" alt=""> <!--  -->
                 </a>
                 </center>
                 <div class="carousel-caption">
