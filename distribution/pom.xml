@@ -31,8 +31,6 @@
 	<modules>
 		<module>config-base</module>
 		<module>base</module>
-		<module>dev</module>
-		<module>asus-box</module>
 	</modules>
 
 </project>

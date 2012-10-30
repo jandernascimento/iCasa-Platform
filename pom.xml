@@ -31,9 +31,9 @@
 	<modules>
 		<module>parent</module>
 		<module>dependencies</module>	
-		<module>platform</module>	
-		<module>applications</module>
+		<module>platform</module>
 		<module>distribution</module>
+        <module>applications</module>
 		<module>tests</module>
 	</modules>
 
