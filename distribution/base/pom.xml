@@ -328,6 +328,57 @@
 		  
         </executions>
       </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.groovy.maven</groupId>
+        <artifactId>gmaven-plugin</artifactId>
+        <version>1.0</version>
+        <executions>
+          <execution>
+            <phase>compile</phase>
+            <goals>
+                <goal>execute</goal>
+            </goals>
+            <configuration>
+                <source>
+                    import org.apache.commons.lang.StringUtils
+
+                    def getExtensionFromFilename(filename) {
+                        def returned_value = ""
+                        m = (filename =~ /(\.[^\.]*)$/)
+                        if (m.size() > 0) returned_value = ((m[0][0].size() > 0) ? m[0][0].substring(1).trim().toLowerCase() : "");
+                        return returned_value
+                    }
+
+                    // get the temporary distribution directory
+                    def tempDistribDir = new File(project.properties['tempDistribDirectory'])
+
+                    tempDistribDir.eachFile { file ->
+
+                        def fileName = file.name
+                        def fileExtension = getExtensionFromFilename(fileName)
+
+                        // replace all PRODUCT match items to real product name
+                        if (fileExtension.equalsIgnoreCase("txt") || fileExtension.equalsIgnoreCase("md")
+                                || fileName.endsWith("assembly.xml") ) {
+
+                            String fileContent = file.text
+                            String newFileContent = fileContent.replaceAll("PRODUCT", project.properties['distribProductName'])
+                            file.write(newFileContent)
+                        }
+
+                        // rename it if file name contains PRODUCT
+                        String oldFileName = fileName
+                        String newFileName = oldFileName.replaceAll("PRODUCT", project.properties['distribProductName'])
+                        if (!newFileName.equals(oldFileName))
+                            file.renameTo(new File(file.parentFile, newFileName))
+                    }
+
+                </source>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
 	  
 	  <!-- clean implementation -->
 	  <plugin>
@@ -350,7 +401,6 @@
                         <include>${distribProductName}Debug.bat</include>
 						<include>${distribProductName}</include>
 						<include>${distribProductName}Debug</include>
-                        <include>README.txt</include>
 					</includes>
 					<excludes>
 						<exclude>pom.xml</exclude>
