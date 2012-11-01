@@ -1,16 +1,19 @@
 <assembly>
     <id>distribution</id>
+    <baseDirectory>${distribProductName}</baseDirectory>
     <formats>
         <format>zip</format>
     </formats>
 
     <fileSets>
 		<fileSet>
-			<directory>${basedir}</directory>
+			<directory>${tempDistribDirectory}</directory>
+			<outputDirectory>.</outputDirectory>
 			<includes>
 				<include>bin/*</include>
 				<include>bundle/*</include>
 				<include>conf/*</include>
+				<include>load/</include>
 				<include>load/*</include>
 				<include>WEB-INF/*</include>
 				<include>PRODUCT</include>
