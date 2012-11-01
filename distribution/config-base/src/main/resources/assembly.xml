@@ -13,10 +13,10 @@
 				<include>conf/*</include>
 				<include>load/*</include>
 				<include>WEB-INF/*</include>
-				<include>iCASA</include>
-				<include>iCASA.bat</include>
-				<include>iCASADebug</include>
-				<include>iCASADebug.bat</include>
+				<include>PRODUCT</include>
+				<include>PRODUCT.bat</include>
+				<include>PRODUCTDebug</include>
+				<include>PRODUCTDebug.bat</include>
 				<include>README.txt</include>
 			</includes>
 			<excludes>
