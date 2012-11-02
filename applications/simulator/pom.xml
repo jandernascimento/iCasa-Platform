@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
  Copyright Adele Team LIG
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,5 +34,6 @@
 		<module>upnp-widget</module>
 		<module>x10-widget</module>
 		<module>packages</module>
+        <module>distribution</module>
 	</modules>
 </project>

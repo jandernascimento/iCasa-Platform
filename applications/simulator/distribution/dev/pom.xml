@@ -24,30 +24,16 @@
 	<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 	<artifactId>distribution.base</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<relativePath>../base</relativePath>
+	<relativePath>../../../../distribution/base</relativePath>
   </parent>
 
   <!-- Project coordinates -->
-  <artifactId>asus.box.simulator</artifactId>
+  <artifactId>distribution.dev</artifactId>
   <packaging>pom</packaging>
   <name>${productName} :: ${projectName}</name>
   
   <!-- Project dependencies -->
   <dependencies>
-	
-	<!-- Device widgets -->
-	<dependency>
-  		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-		<artifactId>tikitag.widget</artifactId>
-	</dependency>
-	<dependency>
-  		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-		<artifactId>upnp.widget</artifactId>
-	</dependency>
-	<dependency>
-  		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-		<artifactId>x10.widget</artifactId>
-	</dependency>
 	
 	<!-- deployed packages -->
 	<dependency>
@@ -60,11 +46,6 @@
 		<artifactId>rose.dp</artifactId>
 		<type>deployment-package</type>
 	</dependency>
-	<!--dependency>
-		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-		<artifactId>cilia.dp</artifactId>
-		<type>deployment-package</type>
-	</dependency-->
 	<dependency>
 		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 		<artifactId>simulator.core.dp</artifactId>
@@ -73,21 +54,6 @@
 	<dependency>
 		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 		<artifactId>simulator.ihm.dp</artifactId>
-		<type>deployment-package</type>
-	</dependency>
-	<dependency>
-		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-		<artifactId>x10.presence.sensor.core.dp</artifactId>
-		<type>deployment-package</type>
-	</dependency>
-	<dependency>
-		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-		<artifactId>upnp.settopbox.core.dp</artifactId>
-		<type>deployment-package</type>
-	</dependency>
-	<dependency>
-		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-		<artifactId>tikitag.core.dp</artifactId>
 		<type>deployment-package</type>
 	</dependency>
 	

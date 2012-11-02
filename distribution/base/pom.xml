@@ -31,15 +31,28 @@
   <artifactId>distribution.base</artifactId>
   <packaging>pom</packaging>
   <name>${productName} :: ${projectName}</name>
+
+  <properties>
+      <!-- Name of the distribution product -->
+      <distribProductName>${project.artifactId}</distribProductName>
+
+      <!-- inherited distribution definition -->
+      <inheritedDistribGroupId>fr.liglab.adele.m2mappbuilder</inheritedDistribGroupId>
+      <inheritedDistribArtifactId>distribution.config.base</inheritedDistribArtifactId>
+      <inheritedDistribVersion>${m2mAppBuilderVersion}</inheritedDistribVersion>
+
+      <!-- temporary distribution directory definition (only used during build processing) -->
+      <tempDistribDirectory>${project.build.directory}/distrib-temp/</tempDistribDirectory>
+  </properties>
   
   <!-- Project dependencies -->
   <dependencies>
 	
 	<!-- inherited configuration files -->
 	<dependency>
-		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-		<artifactId>distribution.config.base</artifactId>
-		<version>${project.version}</version>
+		<groupId>${inheritedDistribGroupId}</groupId>
+		<artifactId>${inheritedDistribArtifactId}</artifactId>
+		<version>${inheritedDistribVersion}</version>
 		<type>zip</type>
 	</dependency>
 	
@@ -59,7 +72,7 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
 		<executions>     
-		  <!-- Copy bundles in the 'bundle' directory -->
+		  <!-- Copy felix platform in the 'bin' directory -->
           <execution>
             <id>copy-felix-binaries</id>
             <phase>compile</phase>
@@ -75,7 +88,7 @@
 					<destFileName>felix.jar</destFileName>
 				</artifactItem>
               </artifactItems>
-              <outputDirectory>${basedir}/bin</outputDirectory>
+              <outputDirectory>${tempDistribDirectory}/bin</outputDirectory>
 			  <overWriteSnapshots>true</overWriteSnapshots>
 			  <overWriteIfNewer>true</overWriteIfNewer>
             </configuration>
@@ -226,13 +239,13 @@
 					<version>${productVersion}</version>
 				</artifactItem>
               </artifactItems>
-              <outputDirectory>${basedir}/bundle</outputDirectory>
+              <outputDirectory>${tempDistribDirectory}/bundle</outputDirectory>
 			  <overWriteSnapshots>true</overWriteSnapshots>
 			  <overWriteIfNewer>true</overWriteIfNewer>
             </configuration>
           </execution>
 		
-          <!-- Copy bundles in the 'bundle' directory -->
+          <!-- Copy bundles in the 'load' directory -->
           <execution>
             <id>copy-autoload-bundles</id>
             <phase>compile</phase>
@@ -241,12 +254,12 @@
             </goals>
             <configuration>
 			  <excludeArtifactIds>distribution.config.base</excludeArtifactIds>
-              <outputDirectory>${basedir}/load</outputDirectory>
+              <outputDirectory>${tempDistribDirectory}/load</outputDirectory>
               <overWriteSnapshots>true</overWriteSnapshots>
               <excludeTransitive>true</excludeTransitive>
             </configuration>
           </execution>
-		  
+
 		  <!-- copy inherited config files -->
 		  <execution>
 				<id>unpack-inherited-config</id>
@@ -255,13 +268,14 @@
 					<goal>unpack-dependencies</goal>
 				</goals>
 				<configuration>
-					<includeGroupIds>fr.liglab.adele.m2mappbuilder</includeGroupIds>
-					<includeArtifactIds>distribution.config.base</includeArtifactIds>
-					<outputDirectory>
-						${project.build.directory}/distrib-temp/
-					</outputDirectory>
+					<includeGroupIds>${inheritedDistribGroupId}</includeGroupIds>
+					<includeArtifactIds>${inheritedDistribArtifactId}</includeArtifactIds>
+					<outputDirectory>${tempDistribDirectory}</outputDirectory>
 				</configuration>
-			</execution>
+		    </execution>
+
+            <!-- copy resources into temporary distribution directory -->
+
         </executions>
       </plugin>
 	  
@@ -270,7 +284,7 @@
         <artifactId>maven-antrun-plugin</artifactId>
         <executions>
 		
-		  <!-- copy inherited config files -->
+		  <!-- copy inherited config files into base dir -->
           <execution>
 			<id>copy-inherited-config</id>
             <phase>compile</phase>
@@ -279,22 +293,15 @@
             </goals>
             <configuration>
               <target>
-                <copy failonerror="true"
+                <copy failonerror="false"
 					overwrite="true"
-					todir="${basedir}/">
-					<fileset dir="${project.build.directory}/distrib-temp/">
+					todir="${tempDistribDirectory}/">
+					<fileset dir="${basedir}/src/main/resources/">
 					    <include name="*"/>
-						<exclude name="*.txt"/>
-						<exclude name="conf/*"/>
-						<exclude name="assembly.xml"/>
-					</fileset>
-				</copy>
-				<copy failonerror="true"
-					overwrite="false"
-					todir="${basedir}/">
-					<fileset dir="${project.build.directory}/distrib-temp/">
-					    <include name="*.txt"/>
+						<include name="*.txt"/>
 						<include name="conf/*"/>
+						<include name="assembly.xml"/>
+                        <exclude name="save-conf-files/*"/>
 					</fileset>
 				</copy>
               </target>
@@ -310,15 +317,66 @@
             </goals>
             <configuration>
               <target>
-                <mkdir dir="${basedir}/load/"/>
+                <mkdir dir="${tempDistribDirectory}/load/"/>
 				<copy failonerror="false"
-					todir="${basedir}/load/">
-					<fileset dir="${basedir}/save-conf-files/" />
-					</copy>
+					todir="${tempDistribDirectory}/load/">
+					<fileset dir="${basedir}/src/main/resources/save-conf-files/" />
+				</copy>
               </target>
             </configuration>
           </execution>
 		  
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.groovy.maven</groupId>
+        <artifactId>gmaven-plugin</artifactId>
+        <version>1.0</version>
+        <executions>
+          <execution>
+            <phase>compile</phase>
+            <goals>
+                <goal>execute</goal>
+            </goals>
+            <configuration>
+                <source>
+                    import org.apache.commons.lang.StringUtils
+
+                    def getExtensionFromFilename(filename) {
+                        def returned_value = ""
+                        m = (filename =~ /(\.[^\.]*)$/)
+                        if (m.size() > 0) returned_value = ((m[0][0].size() > 0) ? m[0][0].substring(1).trim().toLowerCase() : "");
+                        return returned_value
+                    }
+
+                    // get the temporary distribution directory
+                    def tempDistribDir = new File(project.properties['tempDistribDirectory'])
+
+                    tempDistribDir.eachFile { file ->
+
+                        def fileName = file.name
+                        def fileExtension = getExtensionFromFilename(fileName)
+
+                        // replace all PRODUCT match items to real product name
+                        if (fileExtension.equalsIgnoreCase("txt") || fileExtension.equalsIgnoreCase("md")
+                                || fileName.endsWith("assembly.xml") ) {
+
+                            String fileContent = file.text
+                            String newFileContent = fileContent.replaceAll("PRODUCT", project.properties['distribProductName'])
+                            file.write(newFileContent)
+                        }
+
+                        // rename it if file name contains PRODUCT
+                        String oldFileName = fileName
+                        String newFileName = oldFileName.replaceAll("PRODUCT", project.properties['distribProductName'])
+                        if (!newFileName.equals(oldFileName))
+                            file.renameTo(new File(file.parentFile, newFileName))
+                    }
+
+                </source>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
 	  
@@ -339,13 +397,12 @@
 						<include>felix-cache</include>
 						<include>load/*</include>
 						<include>load</include>
-						<include>PRODUCT.bat</include>
-						<include>PRODUCTDebug.bat</include>
-						<include>PRODUCT</include>
-						<include>PRODUCTDebug</include>
+						<include>${distribProductName}.bat</include>
+                        <include>${distribProductName}Debug.bat</include>
+						<include>${distribProductName}</include>
+						<include>${distribProductName}Debug</include>
 					</includes>
 					<excludes>
-						<exclude>README.txt</exclude>
 						<exclude>pom.xml</exclude>
 						<exclude>save-conf-files/*</exclude>
 					</excludes>
@@ -368,7 +425,7 @@
               <configuration>
 			    <appendAssemblyId>false</appendAssemblyId>
 				<descriptors>
-					<descriptor>${project.build.directory}/distrib-temp/assembly.xml</descriptor>
+					<descriptor>${tempDistribDirectory}/assembly.xml</descriptor>
 				</descriptors>
               </configuration>
             </execution>

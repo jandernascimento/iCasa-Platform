@@ -51,18 +51,6 @@
 			<name>iCASA Release repository</name>
 			<url>https://repository-icasa.forge.cloudbees.com/release/</url>
 		</repository>
-		
-		<!-- OW2 projects repositories (mainly Chameleon) -->
-		<repository>
-			<id>ow2-release-repository</id>
-			<name>OW2 release repository</name>
-			<url>http://maven.ow2.org/maven2</url>
-		</repository>
-		<repository>
-			<id>ow2-snapshot-repository</id>
-			<name>OW2 Snapshot repository</name>
-			<url>http://maven.ow2.org/maven2-snapshot</url>
-		</repository>
 
 		<!-- Cilia mediation framework repository -->
 		<repository>
@@ -71,20 +59,6 @@
 			<url>http://cilia.ligforge.imag.fr/repo</url>
 		</repository>
 		
-		<!-- ROSE repository -->
-		<repository>
-			<id>maven-barjo-repository-release</id>
-			<name>RoSe - Release</name>
-			<url>https://repository-barjo.forge.cloudbees.com/release/</url>
-			<layout>default</layout>
-		</repository>
-		<repository>
-			<id>maven-barjo-repository-snapshot</id>
-			<name>RoSe - Snapshot</name>
-			<url>https://repository-barjo.forge.cloudbees.com/snapshot/</url>
-			<layout>default</layout>
-		</repository>
-
 	</repositories>
 	
 	 <pluginRepositories>
@@ -162,42 +136,6 @@
 				<artifactId>rose.dp</artifactId>
 				<version>0.3.1</version>
 				<type>deployment-package</type>
-			</dependency>
-
-			<!-- OW2 JSON service -->
-			<dependency>
-				<groupId>org.ow2.chameleon.json</groupId>
-				<artifactId>json-service-json.org</artifactId>
-				<version>0.4.0</version>
-			</dependency>
-
-			<!-- Jersey -->
-			<dependency>
-				<groupId>com.sun.jersey</groupId>
-				<artifactId>jersey-client</artifactId>
-				<version>1.8</version>
-			</dependency>
-			<dependency>
-				<groupId>com.sun.jersey</groupId>
-				<artifactId>jersey-core</artifactId>
-				<version>1.8</version>
-			</dependency>
-			<dependency>
-				<groupId>com.sun.jersey</groupId>
-				<artifactId>jersey-server</artifactId>
-				<version>1.8</version>
-			</dependency>
-
-			<!-- OW2 Chameleon handies & annotations -->
-			<dependency>
-				<groupId>org.ow2.chameleon.handies</groupId>
-				<artifactId>annotations</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
-			</dependency>
-			<dependency>
-				<groupId>org.ow2.chameleon.handies</groupId>
-				<artifactId>ipojo-log-handler</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 
 			<!-- UPNP -->

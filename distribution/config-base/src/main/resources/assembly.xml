@@ -1,22 +1,25 @@
 <assembly>
     <id>distribution</id>
+    <baseDirectory>${distribProductName}</baseDirectory>
     <formats>
         <format>zip</format>
     </formats>
 
     <fileSets>
 		<fileSet>
-			<directory>${basedir}</directory>
+			<directory>${tempDistribDirectory}</directory>
+			<outputDirectory>.</outputDirectory>
 			<includes>
 				<include>bin/*</include>
 				<include>bundle/*</include>
 				<include>conf/*</include>
+				<include>load/</include>
 				<include>load/*</include>
 				<include>WEB-INF/*</include>
-				<include>iCASA</include>
-				<include>iCASA.bat</include>
-				<include>iCASADebug</include>
-				<include>iCASADebug.bat</include>
+				<include>PRODUCT</include>
+				<include>PRODUCT.bat</include>
+				<include>PRODUCTDebug</include>
+				<include>PRODUCTDebug.bat</include>
 				<include>README.txt</include>
 			</includes>
 			<excludes>
