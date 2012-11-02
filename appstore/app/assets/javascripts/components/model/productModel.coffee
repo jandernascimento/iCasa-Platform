@@ -24,25 +24,34 @@ define ['backbone'], (bb) ->
 	
 	class ProductModel extends bb.Model
 		constructor: ()->
-		 	console.log "initializing Product Model"
 		 	super
  		urlRoot: 'api/product'
 		defaults:
 			name: 'my product name'
 			description: 'my description'
 			imageURL: 'assets/images/products/default.jpg'
+
 	
 	class ProductModelCollection extends bb.Collection
 
 		url: 'api/products'
 		model: ProductModel
-		@topProducts = 10
-		@productsPerPage = 10
-		getTopProducts: () ->
-			@.fetch({ data: $.param({ topNumber: @topProducts})})
+		constructor:()->
+			@totalPages = 0
+			super
+		getTopProducts: (topProducts) ->
+			@.fetch({ data: $.param({ topNumber: topProducts})})
 
-		getPage:(page) ->
-			@.fetch({ data: $.param({ page: page, productsPerPage:@productsPerPage})})
-
+		getNextPage:(currentPage, productsPerPage) ->
+			@.fetch({ data: $.param({ page: currentPage, productsPerPage: productsPerPage})})
+			currentPage++
+		parse: (response) ->
+			#test if the list of products is located in an internal list called products
+			if response.totalPages
+				@.totalPages = response.totalPages
+			if response.products
+   		 		return response.products
+   		 	else
+   		 		return response
 
 	return {ProductModelCollection, ProductModel,ApplicationModel,ServiceModel}

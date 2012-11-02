@@ -1,18 +1,19 @@
 # --- !Ups
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+DROP SCHEMA IF EXISTS `appstore` ;
 CREATE SCHEMA IF NOT EXISTS `appstore` DEFAULT CHARACTER SET latin1 ;
-USE `mydb` ;
 USE `appstore` ;
 
 -- -----------------------------------------------------
 -- Table `appstore`.`appstores`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `appstore`.`appstores` ;
+
 CREATE  TABLE IF NOT EXISTS `appstore`.`appstores` (
-  `id` INT(10) UNSIGNED NOT NULL ,
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(50) NOT NULL ,
   `description` TEXT NOT NULL ,
   PRIMARY KEY (`id`) )
@@ -24,8 +25,10 @@ COMMENT = 'maintains the list of available appstores';
 -- -----------------------------------------------------
 -- Table `appstore`.`products`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `appstore`.`products` ;
+
 CREATE  TABLE IF NOT EXISTS `appstore`.`products` (
-  `id` VARCHAR(25) NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NOT NULL ,
   `description` VARCHAR(255) NOT NULL ,
   PRIMARY KEY (`id`) )
@@ -36,8 +39,10 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `appstore`.`users`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `appstore`.`users` ;
+
 CREATE  TABLE IF NOT EXISTS `appstore`.`users` (
-  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `firstname` VARCHAR(50) NOT NULL ,
   `lastname` VARCHAR(50) NOT NULL ,
   `login` VARCHAR(16) NOT NULL ,
@@ -51,9 +56,11 @@ COMMENT = 'Table containing the information of clients';
 -- -----------------------------------------------------
 -- Table `appstore`.`appstore_has_users`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `appstore`.`appstore_has_users` ;
+
 CREATE  TABLE IF NOT EXISTS `appstore`.`appstore_has_users` (
-  `user_id` INT(10) UNSIGNED NOT NULL ,
-  `appstore_id` INT(10) UNSIGNED NOT NULL ,
+  `user_id` INT UNSIGNED NOT NULL ,
+  `appstore_id` INT UNSIGNED NOT NULL ,
   INDEX `user` (`user_id` ASC) ,
   INDEX `appstore` (`appstore_id` ASC) ,
   PRIMARY KEY (`user_id`, `appstore_id`) ,
@@ -74,8 +81,10 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `appstore`.`categories`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `appstore`.`categories` ;
+
 CREATE  TABLE IF NOT EXISTS `appstore`.`categories` (
-  `idCategories` INT NOT NULL ,
+  `idCategories` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NULL ,
   `description` VARCHAR(250) NULL ,
   PRIMARY KEY (`idCategories`) )
@@ -85,8 +94,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `appstore`.`products_has_categories`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `appstore`.`products_has_categories` ;
+
 CREATE  TABLE IF NOT EXISTS `appstore`.`products_has_categories` (
-  `product_id` VARCHAR(25) NOT NULL ,
+  `product_id` INT NOT NULL ,
   `category_id` INT NOT NULL ,
   PRIMARY KEY (`product_id`, `category_id`) ,
   INDEX `fk_products_has_Categories_Categories1_idx` (`category_id` ASC) ,
@@ -108,11 +119,13 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `appstore`.`product_has_price`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `appstore`.`product_has_price` ;
+
 CREATE  TABLE IF NOT EXISTS `appstore`.`product_has_price` (
-  `id` INT NOT NULL ,
-  `appstore_id` INT(10) UNSIGNED NOT NULL ,
-  `product_id` VARCHAR(25) NOT NULL ,
-  `price` VARCHAR(45) NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `appstore_id` INT UNSIGNED NOT NULL ,
+  `product_id` INT NOT NULL ,
+  `price` DECIMAL NULL ,
   `unit` VARCHAR(45) NULL ,
   INDEX `fk_price_appstores1_idx` (`appstore_id` ASC) ,
   INDEX `fk_price_products1_idx` (`product_id` ASC) ,
@@ -133,8 +146,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `appstore`.`services`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `appstore`.`services` ;
+
 CREATE  TABLE IF NOT EXISTS `appstore`.`services` (
-  `id` VARCHAR(25) NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NULL ,
   `description` VARCHAR(45) NULL ,
   PRIMARY KEY (`id`) )
@@ -144,8 +159,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `appstore`.`applications`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `appstore`.`applications` ;
+
 CREATE  TABLE IF NOT EXISTS `appstore`.`applications` (
-  `id` VARCHAR(25) NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NULL ,
   `description` VARCHAR(45) NULL ,
   PRIMARY KEY (`id`) )
@@ -155,9 +172,11 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `appstore`.`ProductVersion`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `appstore`.`ProductVersion` ;
+
 CREATE  TABLE IF NOT EXISTS `appstore`.`ProductVersion` (
-  `id` VARCHAR(25) NOT NULL ,
-  `product_id` VARCHAR(25) NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `product_id` INT NOT NULL ,
   `version` VARCHAR(45) NULL ,
   PRIMARY KEY (`id`, `product_id`) ,
   INDEX `fk_ProductVersion_products1_idx` (`product_id` ASC) ,
@@ -172,10 +191,12 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `appstore`.`ServiceVersion`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `appstore`.`ServiceVersion` ;
+
 CREATE  TABLE IF NOT EXISTS `appstore`.`ServiceVersion` (
-  `version_id` INT NOT NULL ,
+  `version_id` INT NOT NULL AUTO_INCREMENT ,
   `version` VARCHAR(25) NOT NULL ,
-  `services_id` VARCHAR(25) NOT NULL ,
+  `services_id` INT NOT NULL ,
   PRIMARY KEY (`version_id`) ,
   INDEX `fk_ServiceVersion_services1_idx` (`services_id` ASC) ,
   CONSTRAINT `fk_ServiceVersion_services1`
@@ -189,8 +210,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `appstore`.`products_has_services`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `appstore`.`products_has_services` ;
+
 CREATE  TABLE IF NOT EXISTS `appstore`.`products_has_services` (
-  `ProductVersion_id` VARCHAR(25) NOT NULL ,
+  `ProductVersion_id` INT NOT NULL ,
   `serviceVersion_id` INT NOT NULL ,
   PRIMARY KEY (`ProductVersion_id`, `serviceVersion_id`) ,
   INDEX `fk_products_has_services_ProductVersion1_idx` (`ProductVersion_id` ASC) ,
@@ -212,9 +235,11 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `appstore`.`applicationVersion`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `appstore`.`applicationVersion` ;
+
 CREATE  TABLE IF NOT EXISTS `appstore`.`applicationVersion` (
-  `version_id` INT NOT NULL ,
-  `applications_id` VARCHAR(25) NOT NULL ,
+  `version_id` INT NOT NULL AUTO_INCREMENT ,
+  `applications_id` INT NOT NULL ,
   `version` VARCHAR(25) NOT NULL ,
   PRIMARY KEY (`version_id`) ,
   INDEX `fk_applicationVersion_applications1_idx` (`applications_id` ASC) ,
@@ -229,8 +254,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `appstore`.`products_has_applications`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `appstore`.`products_has_applications` ;
+
 CREATE  TABLE IF NOT EXISTS `appstore`.`products_has_applications` (
-  `ProductVersion_id` VARCHAR(25) NOT NULL ,
+  `ProductVersion_id` INT NOT NULL ,
   `applicationVersion_id` INT NOT NULL ,
   PRIMARY KEY (`ProductVersion_id`, `applicationVersion_id`) ,
   INDEX `fk_products_has_applications_ProductVersion1_idx` (`ProductVersion_id` ASC) ,
@@ -252,10 +279,12 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `appstore`.`orders`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `appstore`.`orders` ;
+
 CREATE  TABLE IF NOT EXISTS `appstore`.`orders` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `price_id` INT NOT NULL ,
-  `users_id` INT(10) UNSIGNED NOT NULL ,
+  `users_id` INT UNSIGNED NOT NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_orders_product_has_price1_idx` (`price_id` ASC) ,
   INDEX `fk_orders_users1_idx` (`users_id` ASC) ,

@@ -5,10 +5,10 @@
 	<div id="myCarousel" class="carousel slide">
 		<!-- Carousel items -->
 		<div class="carousel-inner" data-bind="foreach: products">
-			<div class="item" data-bind="attr: {class: classItem}"> <!--   -->
+			<div data-bind="attr: {class: classItem}"> <!--   -->
 				<center>
 				<a href="#" >
-            		<img src="assets/images/products/default.jpg"  data-bind="attr: {src: imageURL}" alt=""> <!--  -->
+            		<img data-bind="attr: {src: imageURL}" alt=""> <!--  -->
                 </a>
                 </center>
                 <div class="carousel-caption">
@@ -21,5 +21,34 @@
 		<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
 		<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
 	</div>
+	<div class ="row offset1">
+		<div   id="product_list" >
+ 			<div   id="product_list" data-bind="foreach: products">
+				<!--   -->
+				<!-- <div > -->
+				<!-- /-->
+				<div >
+					<div style="width:300px;height:230px" class="span3 well" data-bind="bsToggle:{firstElement: firstElement, secondElement: secondElement}">
+						<!-- <div >
+						</div> -->
+						<div style="z-index:0" data-bind="attr:{id: firstElement}">
+							<img  src="assets/images/products/1.jpg"/>
+						</div>
+						<div  style="z-index:0"  data-bind="attr:{id: secondElement}">
+							<img  src="assets/images/products/2.jpg"/>
+						</div>
+					</div>
+						
+						<!-- 
+						<img  data-bind="attr: {src: imageURL}">
+						<a  href="#" rel="popover" onclick="return false"
+							data-bind="bsPopover:{title: name, content: description}, text: name" data-placement="bottom">
+						</a> -->
+				<!--/-->
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<script src="@routes.Assets.at("javascripts/frameworks/require/require.js")" data-main="@routes.Assets.at("javascripts/usersPage")" > </script>
 }

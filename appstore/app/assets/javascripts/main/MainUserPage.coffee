@@ -7,14 +7,16 @@ require([
     'knockout',
     'components/model/productModel',
     'components/modelView/productView',
-    'MainMenu'
+    'knockoutHandlers'
     ], 
 	($, ui,bs,kb, bb,ko, model, view) ->
-		
-	
-		collection = new model.ProductModelCollection()
-		collection.getTopProducts()
-
-		pview = new view.ProductViewModelCollection(collection)
-		ko.applyBindings(pview);
+        carouselCollection = new model.ProductModelCollection()
+        carouselCollection.getTopProducts(10)
+        carouselView = new view.ProductViewModelCollection(carouselCollection)
+        ko.applyBindings(carouselView, document.getElementById("myCarousel"))
+       
+        pageCollection = new model.ProductModelCollection()
+        # pageCollection.getNextPage()
+        pageView = new view.ProductViewModelCollectionGrid(pageCollection)
+        ko.applyBindings(pageView, document.getElementById("product_list"))
 );

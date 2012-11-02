@@ -25,26 +25,35 @@ define ['underscore','knockback','knockout'], (_,kb,ko) ->
 			
 	class ProductViewModel extends kb.ViewModel
 		constructor: (@model) ->
-			@id = kb.observable(@model,'id')
-			@name = kb.observable(@model,'name')
+			@id = @model.get('id')
+			@name = @model.get('name')
 			@classItem = "item"
-			@description = kb.observable(@model,'description')
-#			@applications = ko.observableArray(@model.applications)
-#			@services = ko.observableArray(@model.services)
+			@firstElement = "firstElement"+ @id
+			@secondElement = "secondElement"+ @id
+			@imageURL = @model.get('imageURL')
+			@description = @model.get('description')
+			@isRow = true
 		saveModel: () ->
-# 			alert @model.get('id')
-			console.log(@model.toJSON())
 			@model.save()
 			
 	class ProductViewModelCollection
 		constructor: (model) ->
-			@products = kb.collectionObservable(model)
-			@products.subscribe(@.test)
-		test:(models)->
-			_.each models, (imodel) -> 
-				imodel.classItem= 'item'
+			@products = kb.collectionObservable(model, {view_model: ProductViewModel})
+			@products.subscribe(@.addItemClass)
+		addItemClass:(models)->
 			if models.length > 0
 				firstModel = models[0]
 				firstModel.classItem = 'active item'
-			
-	return {ProductViewModelCollection,ProductViewModel}
+	
+	class ProductViewModelCollectionGrid
+		constructor: (@model) ->
+			@pageSize= ko.observable(12);
+			@pageIndex= ko.observable(0);
+			@products = kb.collectionObservable(model, {view_model: ProductViewModel})
+			ko.computed(()=>
+				model.getNextPage(@.pageIndex, @.pageSize)
+			)
+
+
+
+	return {ProductViewModelCollection,ProductViewModel, ProductViewModelCollectionGrid}
