@@ -45,9 +45,8 @@ public class Product extends Model  {
 	private static final long serialVersionUID = 6533282470018272197L;
 
 	@Id
-	@Required
-	@Column(name="id", length=25)
-	public String id;
+	@Column(name="id")
+	public int id;
 	
 	@Required
 	@Column(name="name", length=50)
@@ -55,6 +54,9 @@ public class Product extends Model  {
 	
 	@Column(name="description", columnDefinition="TEXT")
 	public String description;
+	
+	@Column(name="imageURL")
+	public String imageURL;
 	
 	/**
 	 * To locate Products
@@ -71,6 +73,21 @@ public class Product extends Model  {
 		return find.all();
 	}
 
+	
+	public static List<Product> getTopProducts(int topNumber){
+		//TODO change the search mechanism.
+		return getPageProducts(topNumber, 0);
+	}
+	
+	public static List<Product> getPageProducts(int pageSize, int pageNumber){
+		List<Product> topProducts = find.findPagingList(pageSize).getPage(pageNumber).getList();
+		return topProducts;
+	}
+	
+	public static int getPageCount(int pageSize){
+		return find.findPagingList(pageSize).getTotalPageCount();
+	}
+	
 	/**
 	 * Add a product to the DB
 	 * @param product

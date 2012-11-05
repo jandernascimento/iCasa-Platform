@@ -81,6 +81,10 @@
 			<groupId>fr.liglab.adele.icasa</groupId>
 			<artifactId>simulated.sensor.importer</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>fr.liglab.adele.icasa</groupId>
+			<artifactId>gogo.adapter</artifactId>
+		</dependency>		
 
 		<dependency>
 			<groupId>fr.liglab.adele.icasa</groupId>

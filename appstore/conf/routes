@@ -16,7 +16,7 @@ GET      /products                          controllers.ProductController.produc
 
 GET      /api/products                          controllers.api.ProductREST.products()
 
-POST      /api/product                          controllers.api.ProductREST.addProduct()
+POST     /api/product                          controllers.api.ProductREST.addProduct()
 
 
 
