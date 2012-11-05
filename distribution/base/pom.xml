@@ -43,6 +43,9 @@
 
       <!-- temporary distribution directory definition (only used during build processing) -->
       <tempDistribDirectory>${project.build.directory}/distrib-temp/</tempDistribDirectory>
+
+      <!-- temporary directory used to unzip play2 applications on which we depend on -->
+      <tempPlay2Directory>${project.build.directory}/play2-app-temp/</tempPlay2Directory>
   </properties>
   
   <!-- Project dependencies -->
@@ -253,10 +256,27 @@
               <goal>copy-dependencies</goal>
             </goals>
             <configuration>
+              <excludeTypes>play2,zip</excludeTypes>
 			  <excludeArtifactIds>distribution.config.base</excludeArtifactIds>
               <outputDirectory>${tempDistribDirectory}/load</outputDirectory>
               <overWriteSnapshots>true</overWriteSnapshots>
               <excludeTransitive>true</excludeTransitive>
+            </configuration>
+          </execution>
+
+          <!-- Copy bundles in the 'load' directory -->
+          <execution>
+            <id>unpack-play2-applications</id>
+            <phase>compile</phase>
+            <goals>
+                <goal>unpack-dependencies</goal>
+            </goals>
+            <configuration>
+                <includeTypes>play2,zip</includeTypes>
+                <excludeArtifactIds>distribution.config.base</excludeArtifactIds>
+                <outputDirectory>${tempPlay2Directory}</outputDirectory>
+                <overWriteSnapshots>true</overWriteSnapshots>
+                <excludeTransitive>true</excludeTransitive>
             </configuration>
           </execution>
 
@@ -325,6 +345,30 @@
               </target>
             </configuration>
           </execution>
+
+            <!-- copy inherited config files into base dir -->
+            <execution>
+                <id>copy-play2-application</id>
+                <phase>compile</phase>
+                <goals>
+                    <goal>run</goal>
+                </goals>
+                <configuration>
+                    <target>
+                        <copy failonerror="false"
+                              overwrite="true"
+                              todir="${tempDistribDirectory}/">
+                            <cutdirsmapper dirs="1"/>
+                            <fileset dir="${tempPlay2Directory}/">
+                                <include name="*/start"/>
+                                <include name="*/*.bat"/>
+                                <include name="*/lib/*"/>
+                                <exclude name="*/lib/org.osgi.core*.jar"/>
+                            </fileset>
+                        </copy>
+                    </target>
+                </configuration>
+            </execution>
 		  
         </executions>
       </plugin>

@@ -21,6 +21,7 @@
 				<include>PRODUCTDebug</include>
 				<include>PRODUCTDebug.bat</include>
 				<include>README.txt</include>
+                <include>lib/*</include>
 			</includes>
 			<excludes>
 				<exclude>pom.xml</exclude>

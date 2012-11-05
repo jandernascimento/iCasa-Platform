@@ -56,6 +56,14 @@
 		<artifactId>simulator.ihm.dp</artifactId>
 		<type>deployment-package</type>
 	</dependency>
+
+      <!-- Play 2 applications-->
+      <dependency>
+          <groupId>fr.liglab.adele.icasa</groupId>
+          <artifactId>icasa.web</artifactId>
+          <version>0.0.1-SNAPSHOT</version>
+          <type>zip</type>
+      </dependency>
 	
   </dependencies>
   
