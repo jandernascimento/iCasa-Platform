@@ -389,6 +389,8 @@
                 <source>
                     import org.apache.commons.lang.StringUtils
 
+                    // Replace PRODUCT by specified product name
+
                     def getExtensionFromFilename(filename) {
                         def returned_value = ""
                         m = (filename =~ /(\.[^\.]*)$/)
@@ -396,7 +398,6 @@
                         return returned_value
                     }
 
-                    // get the temporary distribution directory
                     def tempDistribDir = new File(project.properties['tempDistribDirectory'])
 
                     tempDistribDir.eachFile { file ->
@@ -419,6 +420,21 @@
                         if (!newFileName.equals(oldFileName))
                             file.renameTo(new File(file.parentFile, newFileName))
                     }
+
+
+                    // generate a felix distribution start script only used during development
+                    def baseDir = project.basedir
+
+                    def startWinScriptFileName = "start.bat"
+                    File startWinScriptFile = new File("$baseDir/$startWinScriptFileName")
+                    startWinScriptFile.createNewFile()
+                    startWinScriptFile.write("java -jar $tempDistribDir\\bin\\felix.jar\n")
+
+                    def startUnixScriptFileName = "start"
+                    File startUnixScriptFile = new File("$baseDir/$startUnixScriptFileName")
+                    startUnixScriptFile.createNewFile()
+                    startUnixScriptFile.write("#!/usr/bin/env sh\n\nexec java -jar $tempDistribDir/bin/felix.jar\n")
+                    startUnixScriptFile.setExecutable(true,true)
 
                 </source>
             </configuration>
