@@ -428,12 +428,12 @@
                     def startWinScriptFileName = "start.bat"
                     File startWinScriptFile = new File("$baseDir/$startWinScriptFileName")
                     startWinScriptFile.createNewFile()
-                    startWinScriptFile.write("java -jar $tempDistribDir\\bin\\felix.jar\n")
+                    startWinScriptFile.write("cd $tempDistribDir\njava -jar bin\\felix.jar\n")
 
                     def startUnixScriptFileName = "start"
                     File startUnixScriptFile = new File("$baseDir/$startUnixScriptFileName")
                     startUnixScriptFile.createNewFile()
-                    startUnixScriptFile.write("#!/usr/bin/env sh\n\nexec java -jar $tempDistribDir/bin/felix.jar\n")
+                    startUnixScriptFile.write("#!/usr/bin/env sh\ncd $tempDistribDir\nexec java -jar bin/felix.jar\n")
                     startUnixScriptFile.setExecutable(true,true)
 
                 </source>
