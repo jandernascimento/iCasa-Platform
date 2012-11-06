@@ -10,7 +10,7 @@
 			<directory>${tempDistribDirectory}</directory>
 			<outputDirectory>.</outputDirectory>
 			<includes>
-				<include>bin/*</include>
+                <include>bin/*</include>
 				<include>bundle/*</include>
 				<include>conf/*</include>
 				<include>load/</include>
@@ -33,5 +33,14 @@
 				<exclude>target/*</exclude>
 			</excludes>
 		</fileSet>
+        <fileSet>
+            <directory>${tempDistribDirectory}</directory>
+            <outputDirectory>.</outputDirectory>
+            <fileMode>0777</fileMode>
+            <includes>
+                <include>start</include>
+                <include>start.bat</include>
+            </includes>
+        </fileSet>
 	</fileSets>
 </assembly>

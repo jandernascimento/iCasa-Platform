@@ -360,10 +360,12 @@
                               todir="${tempDistribDirectory}/">
                             <cutdirsmapper dirs="1"/>
                             <fileset dir="${tempPlay2Directory}/">
-                                <include name="*/start"/>
-                                <include name="*/*.bat"/>
+                                <exclude name="*/start"/>
+                                <exclude name="*/*.bat"/>
                                 <include name="*/lib/*"/>
                                 <exclude name="*/lib/org.osgi.core*.jar"/>
+                                <exclude name="*/lib/org.apache.felix.main*.jar"/>
+                                <exclude name="*/lib/org.apache.felix.framework*.jar"/>
                             </fileset>
                         </copy>
                     </target>
