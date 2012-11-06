@@ -33,6 +33,9 @@
   <name>${productName} :: ${projectName}</name>
 
   <properties>
+      <!-- flag to flatten deployment packages -->
+      <flattenDP>false</flattenDP>
+
       <!-- Name of the distribution product -->
       <distribProductName>${project.artifactId}</distribProductName>
 
@@ -389,6 +392,8 @@
                 <source>
                     import org.apache.commons.lang.StringUtils
 
+                    import java.util.zip.ZipInputStream
+
                     // Replace PRODUCT by specified product name
 
                     def getExtensionFromFilename(filename) {
@@ -435,6 +440,69 @@
                     startUnixScriptFile.createNewFile()
                     startUnixScriptFile.write("#!/usr/bin/env sh\ncd $tempDistribDir\nexec java -jar bin/felix.jar\n")
                     startUnixScriptFile.setExecutable(true,true)
+
+                    File.metaClass.unzip = { String dest ->
+                        //in metaclass added methods, 'delegate' is the object on which
+                        //the method is called. Here it's the file to unzip
+                        def result = new ZipInputStream(new FileInputStream(delegate))
+                        def destFile = new File(dest)
+                        if(!destFile.exists()){
+                            destFile.mkdir();
+                        }
+                        result.withStream{
+                            def entry
+                            while(entry = result.nextEntry){
+                                if (!entry.isDirectory()){
+                                    new File(dest + File.separator + entry.name).parentFile?.mkdirs()
+                                    def output = new FileOutputStream(dest + File.separator
+                                            + entry.name)
+                                    output.withStream{
+                                        int len = 0;
+                                        byte[] buffer = new byte[4096]
+                                        while ((len = result.read(buffer)) > 0){
+                                            output.write(buffer, 0, len);
+                                        }
+                                    }
+                                }
+                                else {
+                                    new File(dest + File.separator + entry.name).mkdir()
+                                }
+                            }
+                        }
+                    }
+
+                    def flattenDPStr = project.properties['flattenDP']
+                    boolean flattenDP = (flattenDPStr.equals("true"))
+                    if (flattenDP) {
+                        File tempDistribLoadDir = new File("$tempDistribDir/load/")
+                        if (tempDistribLoadDir.exists()) {
+                            tempDistribLoadDir.eachFile { file ->
+
+                                def fileName = file.name
+                                def fileExtension = getExtensionFromFilename(fileName)
+
+                                // replace all PRODUCT match items to real product name
+                                if (fileExtension.equalsIgnoreCase("dp")) {
+
+                                    file.unzip("$tempDistribLoadDir")
+                                    file.delete()
+                                }
+                            }
+                        }
+
+                        File tempDistribLoadBundleDir = new File("$tempDistribLoadDir/bundles/")
+                        if (tempDistribLoadBundleDir.exists()) {
+                            tempDistribLoadBundleDir.eachFile { file ->
+                                file.renameTo(new File(tempDistribLoadDir, file.getName()));
+                            }
+                            tempDistribLoadBundleDir.deleteDir()
+                        }
+
+                        File tempDistribLoadManifestDir = new File("$tempDistribLoadDir/META-INF/")
+                        if (tempDistribLoadManifestDir.exists()) {
+                            tempDistribLoadManifestDir.deleteDir()
+                        }
+                    }
 
                 </source>
             </configuration>
