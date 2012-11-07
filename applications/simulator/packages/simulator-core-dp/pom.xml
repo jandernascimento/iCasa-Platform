@@ -153,7 +153,7 @@
                             
                             <processedResource>
 								<processor>org.osgi.deployment.rp.autoload</processor>
-								<filePath>/src/main/resources/rose-conf-simulator-REST-0.json</filePath>
+								<filePath>/src/main/resources/rose-conf-simulator_REST_0.json</filePath>
 							</processedResource>
 
 						</resources>
