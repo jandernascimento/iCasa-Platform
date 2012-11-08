@@ -167,7 +167,7 @@
 				<artifactItem>
 					<groupId>org.apache.felix</groupId>
 					<artifactId>org.apache.felix.ipojo.composite</artifactId>
-					<version>1.8.0</version>
+					<version>1.8.4</version>
 				</artifactItem>
 				<artifactItem>
 					<groupId>org.apache.felix</groupId>
@@ -177,13 +177,18 @@
 				<artifactItem>
 					<groupId>org.apache.felix</groupId>
 					<artifactId>org.apache.felix.ipojo.webconsole</artifactId>
-					<version>1.4.4</version>
+					<version>1.6.0</version>
 				</artifactItem>
 				<artifactItem>
 					<groupId>org.apache.felix</groupId>
 					<artifactId>org.apache.felix.ipojo</artifactId>
-					<version>1.8.0</version>
+					<version>1.8.4</version>
 				</artifactItem>
+                <artifactItem>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>org.apache.felix.ipojo.annotations</artifactId>
+                    <version>1.8.4</version>
+                </artifactItem>
 				<artifactItem>
 					<groupId>org.apache.felix</groupId>
 					<artifactId>org.apache.felix.log</artifactId>
