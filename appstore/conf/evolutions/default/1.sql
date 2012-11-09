@@ -1,8 +1,6 @@
-# --- !Ups
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
-
 
 CREATE SCHEMA IF NOT EXISTS `appstore` DEFAULT CHARACTER SET latin1 ;
 USE `appstore` ;
@@ -10,8 +8,6 @@ USE `appstore` ;
 -- -----------------------------------------------------
 -- Table `appstore`.`appstores`
 -- -----------------------------------------------------
-
-
 CREATE  TABLE IF NOT EXISTS `appstore`.`appstores` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(50) NOT NULL ,
@@ -23,15 +19,38 @@ COMMENT = 'maintains the list of available appstores';
 
 
 -- -----------------------------------------------------
+-- Table `appstore`.`ProductVersion`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `appstore`.`ProductVersion` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `product_id` INT NOT NULL ,
+  `version` VARCHAR(45) NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_ProductVersion_products1_idx` (`product_id` ASC) ,
+  CONSTRAINT `fk_ProductVersion_products1`
+    FOREIGN KEY (`product_id` )
+    REFERENCES `appstore`.`products` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `appstore`.`products`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `appstore`.`products` ;
-
 CREATE  TABLE IF NOT EXISTS `appstore`.`products` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NOT NULL ,
   `description` VARCHAR(255) NOT NULL ,
-  PRIMARY KEY (`id`) )
+  `imageURL` VARCHAR(45) NULL ,
+  `ProductVersion_id` INT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_products_ProductVersion1` (`ProductVersion_id` ASC) ,
+  CONSTRAINT `fk_products_ProductVersion1`
+    FOREIGN KEY (`ProductVersion_id` )
+    REFERENCES `appstore`.`ProductVersion` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
@@ -39,15 +58,17 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `appstore`.`users`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `appstore`.`users` ;
-
 CREATE  TABLE IF NOT EXISTS `appstore`.`users` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `firstname` VARCHAR(50) NOT NULL ,
-  `lastname` VARCHAR(50) NOT NULL ,
-  `login` VARCHAR(16) NOT NULL ,
+  `userId` VARCHAR(45) NOT NULL ,
+  `username` VARCHAR(80) NOT NULL ,
+  `fullname` VARCHAR(50) NOT NULL ,
   `password` VARCHAR(255) NOT NULL ,
-  PRIMARY KEY (`id`) )
+  `email` VARCHAR(50) NOT NULL ,
+  `provider` VARCHAR(45) NOT NULL ,
+  `authmethod` VARCHAR(45) NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `userId_UNIQUE` (`userId` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1
 COMMENT = 'Table containing the information of clients';
@@ -56,8 +77,6 @@ COMMENT = 'Table containing the information of clients';
 -- -----------------------------------------------------
 -- Table `appstore`.`appstore_has_users`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `appstore`.`appstore_has_users` ;
-
 CREATE  TABLE IF NOT EXISTS `appstore`.`appstore_has_users` (
   `user_id` INT UNSIGNED NOT NULL ,
   `appstore_id` INT UNSIGNED NOT NULL ,
@@ -81,8 +100,6 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `appstore`.`categories`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `appstore`.`categories` ;
-
 CREATE  TABLE IF NOT EXISTS `appstore`.`categories` (
   `idCategories` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NULL ,
@@ -94,8 +111,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `appstore`.`products_has_categories`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `appstore`.`products_has_categories` ;
-
 CREATE  TABLE IF NOT EXISTS `appstore`.`products_has_categories` (
   `product_id` INT NOT NULL ,
   `category_id` INT NOT NULL ,
@@ -119,8 +134,6 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `appstore`.`product_has_price`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `appstore`.`product_has_price` ;
-
 CREATE  TABLE IF NOT EXISTS `appstore`.`product_has_price` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `appstore_id` INT UNSIGNED NOT NULL ,
@@ -146,8 +159,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `appstore`.`services`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `appstore`.`services` ;
-
 CREATE  TABLE IF NOT EXISTS `appstore`.`services` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NULL ,
@@ -159,8 +170,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `appstore`.`applications`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `appstore`.`applications` ;
-
 CREATE  TABLE IF NOT EXISTS `appstore`.`applications` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NULL ,
@@ -170,29 +179,8 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `appstore`.`ProductVersion`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `appstore`.`ProductVersion` ;
-
-CREATE  TABLE IF NOT EXISTS `appstore`.`ProductVersion` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `product_id` INT NOT NULL ,
-  `version` VARCHAR(45) NULL ,
-  PRIMARY KEY (`id`, `product_id`) ,
-  INDEX `fk_ProductVersion_products1_idx` (`product_id` ASC) ,
-  CONSTRAINT `fk_ProductVersion_products1`
-    FOREIGN KEY (`product_id` )
-    REFERENCES `appstore`.`products` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `appstore`.`ServiceVersion`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `appstore`.`ServiceVersion` ;
-
 CREATE  TABLE IF NOT EXISTS `appstore`.`ServiceVersion` (
   `version_id` INT NOT NULL AUTO_INCREMENT ,
   `version` VARCHAR(25) NOT NULL ,
@@ -210,8 +198,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `appstore`.`products_has_services`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `appstore`.`products_has_services` ;
-
 CREATE  TABLE IF NOT EXISTS `appstore`.`products_has_services` (
   `ProductVersion_id` INT NOT NULL ,
   `serviceVersion_id` INT NOT NULL ,
@@ -235,8 +221,6 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `appstore`.`applicationVersion`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `appstore`.`applicationVersion` ;
-
 CREATE  TABLE IF NOT EXISTS `appstore`.`applicationVersion` (
   `version_id` INT NOT NULL AUTO_INCREMENT ,
   `applications_id` INT NOT NULL ,
@@ -254,8 +238,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `appstore`.`products_has_applications`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `appstore`.`products_has_applications` ;
-
 CREATE  TABLE IF NOT EXISTS `appstore`.`products_has_applications` (
   `ProductVersion_id` INT NOT NULL ,
   `applicationVersion_id` INT NOT NULL ,
@@ -279,8 +261,6 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `appstore`.`orders`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `appstore`.`orders` ;
-
 CREATE  TABLE IF NOT EXISTS `appstore`.`orders` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `price_id` INT NOT NULL ,
@@ -305,76 +285,3 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
-# --- !Downs
-DROP SCHEMA IF EXISTS `appstore` ;
-
-DROP TABLE IF EXISTS `appstore`.`appstores` ;
--- -----------------------------------------------------
--- Table `appstore`.`products`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `appstore`.`products` ;
-
-
--- -----------------------------------------------------
--- Table `appstore`.`users`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `appstore`.`users` ;
-
--- -----------------------------------------------------
--- Table `appstore`.`appstore_has_users`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `appstore`.`appstore_has_users` ;
-
--- -----------------------------------------------------
--- Table `appstore`.`categories`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `appstore`.`categories` ;
-
--- -----------------------------------------------------
--- Table `appstore`.`products_has_categories`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `appstore`.`products_has_categories` ;
-
--- -----------------------------------------------------
--- Table `appstore`.`product_has_price`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `appstore`.`product_has_price` ;
-
--- -----------------------------------------------------
--- Table `appstore`.`services`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `appstore`.`services` ;
--- -----------------------------------------------------
--- Table `appstore`.`applications`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `appstore`.`applications` ;
-
--- -----------------------------------------------------
--- Table `appstore`.`ProductVersion`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `appstore`.`ProductVersion` ;
--- -----------------------------------------------------
--- Table `appstore`.`ServiceVersion`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `appstore`.`ServiceVersion` ;
-
--- -----------------------------------------------------
--- Table `appstore`.`products_has_services`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `appstore`.`products_has_services` ;
-
--- -----------------------------------------------------
--- Table `appstore`.`applicationVersion`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `appstore`.`applicationVersion` ;
-
--- -----------------------------------------------------
--- Table `appstore`.`products_has_applications`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `appstore`.`products_has_applications` ;
-
--- -----------------------------------------------------
--- Table `appstore`.`orders`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `appstore`.`orders` ;
