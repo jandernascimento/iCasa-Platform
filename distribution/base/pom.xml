@@ -33,6 +33,9 @@
   <name>${productName} :: ${projectName}</name>
 
   <properties>
+      <!-- flag to flatten deployment packages -->
+      <flattenDP>false</flattenDP>
+
       <!-- Name of the distribution product -->
       <distribProductName>${project.artifactId}</distribProductName>
 
@@ -43,6 +46,9 @@
 
       <!-- temporary distribution directory definition (only used during build processing) -->
       <tempDistribDirectory>${project.build.directory}/distrib-temp/</tempDistribDirectory>
+
+      <!-- temporary directory used to unzip play2 applications on which we depend on -->
+      <tempPlay2Directory>${project.build.directory}/play2-app-temp/</tempPlay2Directory>
   </properties>
   
   <!-- Project dependencies -->
@@ -161,7 +167,7 @@
 				<artifactItem>
 					<groupId>org.apache.felix</groupId>
 					<artifactId>org.apache.felix.ipojo.composite</artifactId>
-					<version>1.8.0</version>
+					<version>1.8.4</version>
 				</artifactItem>
 				<artifactItem>
 					<groupId>org.apache.felix</groupId>
@@ -171,13 +177,18 @@
 				<artifactItem>
 					<groupId>org.apache.felix</groupId>
 					<artifactId>org.apache.felix.ipojo.webconsole</artifactId>
-					<version>1.4.4</version>
+					<version>1.6.0</version>
 				</artifactItem>
 				<artifactItem>
 					<groupId>org.apache.felix</groupId>
 					<artifactId>org.apache.felix.ipojo</artifactId>
-					<version>1.8.0</version>
+					<version>1.8.4</version>
 				</artifactItem>
+                <artifactItem>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>org.apache.felix.ipojo.annotations</artifactId>
+                    <version>1.8.4</version>
+                </artifactItem>
 				<artifactItem>
 					<groupId>org.apache.felix</groupId>
 					<artifactId>org.apache.felix.log</artifactId>
@@ -253,10 +264,27 @@
               <goal>copy-dependencies</goal>
             </goals>
             <configuration>
+              <excludeTypes>play2,zip</excludeTypes>
 			  <excludeArtifactIds>distribution.config.base</excludeArtifactIds>
               <outputDirectory>${tempDistribDirectory}/load</outputDirectory>
               <overWriteSnapshots>true</overWriteSnapshots>
               <excludeTransitive>true</excludeTransitive>
+            </configuration>
+          </execution>
+
+          <!-- Copy bundles in the 'load' directory -->
+          <execution>
+            <id>unpack-play2-applications</id>
+            <phase>compile</phase>
+            <goals>
+                <goal>unpack-dependencies</goal>
+            </goals>
+            <configuration>
+                <includeTypes>play2,zip</includeTypes>
+                <excludeArtifactIds>distribution.config.base</excludeArtifactIds>
+                <outputDirectory>${tempPlay2Directory}</outputDirectory>
+                <overWriteSnapshots>true</overWriteSnapshots>
+                <excludeTransitive>true</excludeTransitive>
             </configuration>
           </execution>
 
@@ -325,6 +353,32 @@
               </target>
             </configuration>
           </execution>
+
+            <!-- copy inherited config files into base dir -->
+            <execution>
+                <id>copy-play2-application</id>
+                <phase>compile</phase>
+                <goals>
+                    <goal>run</goal>
+                </goals>
+                <configuration>
+                    <target>
+                        <copy failonerror="false"
+                              overwrite="true"
+                              todir="${tempDistribDirectory}/">
+                            <cutdirsmapper dirs="1"/>
+                            <fileset dir="${tempPlay2Directory}/">
+                                <exclude name="*/start"/>
+                                <exclude name="*/*.bat"/>
+                                <include name="*/lib/*"/>
+                                <exclude name="*/lib/org.osgi.core*.jar"/>
+                                <exclude name="*/lib/org.apache.felix.main*.jar"/>
+                                <exclude name="*/lib/org.apache.felix.framework*.jar"/>
+                            </fileset>
+                        </copy>
+                    </target>
+                </configuration>
+            </execution>
 		  
         </executions>
       </plugin>
@@ -343,6 +397,10 @@
                 <source>
                     import org.apache.commons.lang.StringUtils
 
+                    import java.util.zip.ZipInputStream
+
+                    // Replace PRODUCT by specified product name
+
                     def getExtensionFromFilename(filename) {
                         def returned_value = ""
                         m = (filename =~ /(\.[^\.]*)$/)
@@ -350,7 +408,6 @@
                         return returned_value
                     }
 
-                    // get the temporary distribution directory
                     def tempDistribDir = new File(project.properties['tempDistribDirectory'])
 
                     tempDistribDir.eachFile { file ->
@@ -372,6 +429,84 @@
                         String newFileName = oldFileName.replaceAll("PRODUCT", project.properties['distribProductName'])
                         if (!newFileName.equals(oldFileName))
                             file.renameTo(new File(file.parentFile, newFileName))
+                    }
+
+
+                    // generate a felix distribution start script only used during development
+                    def baseDir = project.basedir
+
+                    def startWinScriptFileName = "start.bat"
+                    File startWinScriptFile = new File("$baseDir/$startWinScriptFileName")
+                    startWinScriptFile.createNewFile()
+                    startWinScriptFile.write("cd $tempDistribDir\njava -jar bin\\felix.jar\n")
+
+                    def startUnixScriptFileName = "start"
+                    File startUnixScriptFile = new File("$baseDir/$startUnixScriptFileName")
+                    startUnixScriptFile.createNewFile()
+                    startUnixScriptFile.write("#!/usr/bin/env sh\ncd $tempDistribDir\nexec java -jar bin/felix.jar\n")
+                    startUnixScriptFile.setExecutable(true,true)
+
+                    File.metaClass.unzip = { String dest ->
+                        //in metaclass added methods, 'delegate' is the object on which
+                        //the method is called. Here it's the file to unzip
+                        def result = new ZipInputStream(new FileInputStream(delegate))
+                        def destFile = new File(dest)
+                        if(!destFile.exists()){
+                            destFile.mkdir();
+                        }
+                        result.withStream{
+                            def entry
+                            while(entry = result.nextEntry){
+                                if (!entry.isDirectory()){
+                                    new File(dest + File.separator + entry.name).parentFile?.mkdirs()
+                                    def output = new FileOutputStream(dest + File.separator
+                                            + entry.name)
+                                    output.withStream{
+                                        int len = 0;
+                                        byte[] buffer = new byte[4096]
+                                        while ((len = result.read(buffer)) > 0){
+                                            output.write(buffer, 0, len);
+                                        }
+                                    }
+                                }
+                                else {
+                                    new File(dest + File.separator + entry.name).mkdir()
+                                }
+                            }
+                        }
+                    }
+
+                    def flattenDPStr = project.properties['flattenDP']
+                    boolean flattenDP = (flattenDPStr.equals("true"))
+                    if (flattenDP) {
+                        File tempDistribLoadDir = new File("$tempDistribDir/load/")
+                        if (tempDistribLoadDir.exists()) {
+                            tempDistribLoadDir.eachFile { file ->
+
+                                def fileName = file.name
+                                def fileExtension = getExtensionFromFilename(fileName)
+
+                                // replace all PRODUCT match items to real product name
+                                if (fileExtension.equalsIgnoreCase("dp")) {
+
+                                    file.unzip("$tempDistribLoadDir")
+                                    file.delete()
+                                }
+                            }
+                        }
+
+                        File tempDistribLoadBundleDir = new File("$tempDistribLoadDir/bundles/")
+                        if (tempDistribLoadBundleDir.exists()) {
+                            tempDistribLoadBundleDir.eachFile { file ->
+                                file.renameTo(new File(tempDistribLoadDir, file.getName()));
+                            }
+                            tempDistribLoadBundleDir.deleteDir()
+                        }
+
+                        File tempDistribLoadManifestDir = new File("$tempDistribLoadDir/META-INF/")
+                        if (tempDistribLoadManifestDir.exists()) {
+                            tempDistribLoadManifestDir.deleteDir()
+                        }
                     }
 
                 </source>

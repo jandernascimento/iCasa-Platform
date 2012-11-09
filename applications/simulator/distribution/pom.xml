@@ -31,5 +31,6 @@
 	<modules>
 		<module>asus-box</module>
         <module>dev</module>
+        <module>icasa-teaching-distribution</module>
 	</modules>
 </project>

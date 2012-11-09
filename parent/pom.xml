@@ -122,19 +122,9 @@
 
 			<!-- ROSE -->
 			<dependency>
-				<groupId>org.ow2.chameleon.rose</groupId>
-				<artifactId>rose-core</artifactId>
-				<version>0.3.1-SNAPSHOT</version>
-			</dependency>
-			<dependency>
-				<groupId>org.ow2.chameleon.rose</groupId>
-				<artifactId>json-configurator</artifactId>
-				<version>0.1.3-SNAPSHOT</version>
-			</dependency>
-			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 				<artifactId>rose.dp</artifactId>
-				<version>0.3.1</version>
+				<version>1.0.1-SNAPSHOT</version>
 				<type>deployment-package</type>
 			</dependency>
 

@@ -28,13 +28,13 @@
   </parent>
 
   <!-- Project coordinates -->
-  <artifactId>distribution.dev</artifactId>
+  <artifactId>icasa.teaching.distribution</artifactId>
   <packaging>pom</packaging>
   <name>${productName} :: ${projectName}</name>
 
   <properties>
       <!-- flag to flatten deployment packages -->
-      <flattenDP>false</flattenDP>
+      <flattenDP>true</flattenDP>
   </properties>
   
   <!-- Project dependencies -->
