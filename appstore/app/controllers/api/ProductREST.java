@@ -1,18 +1,16 @@
 package controllers.api;
 
-import java.util.List;
-
 import models.values.Product;
-
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
-
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
+
+import java.util.List;
 
 public class ProductREST extends Controller {
 
@@ -58,7 +56,7 @@ public class ProductREST extends Controller {
 	
 	public static Result productsPerPage(String page, String productsPerPage){
 		List<Product> allproducts = null;
-		System.out.println("calling products per page" );
+		System.out.println("calling products per page" + page + " " + productsPerPage);
 		int _page;
 		int _productsPerPage;
 		try{

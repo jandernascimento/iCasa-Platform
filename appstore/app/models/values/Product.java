@@ -17,18 +17,14 @@
  */
 package models.values;
 
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import org.codehaus.jackson.node.ObjectNode;
-
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 import play.libs.Json;
+
+import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author <a href="mailto:cilia-devel@lists.ligforge.imag.fr">Cilia Project
@@ -38,6 +34,7 @@ import play.libs.Json;
 @Entity
 @Table(name="products")
 public class Product extends Model  {
+
 
 	/**
 	 * 
@@ -57,7 +54,20 @@ public class Product extends Model  {
 	
 	@Column(name="imageURL")
 	public String imageURL;
-	
+
+    @OneToMany (cascade=CascadeType.ALL)
+    @JoinTable(name = "productVersion")
+    public List<ProductVersion> productVersion;
+
+
+    @OneToOne
+    @JoinColumn(name="ProductVersion_id", referencedColumnName = "id")
+    public ProductVersion lastVersion;
+
+/*    @ManyToMany
+    public Set<Application> getApplications(){
+        return applications;
+    };*/
 	/**
 	 * To locate Products
 	 */
@@ -80,8 +90,7 @@ public class Product extends Model  {
 	}
 	
 	public static List<Product> getPageProducts(int pageSize, int pageNumber){
-		List<Product> topProducts = find.findPagingList(pageSize).getPage(pageNumber).getList();
-		return topProducts;
+        return find.findPagingList(pageSize).getPage(pageNumber).getList();
 	}
 	
 	public static int getPageCount(int pageSize){
@@ -109,6 +118,9 @@ public class Product extends Model  {
 		result.put("id", product.id);
 		result.put("name", product.name);
 		result.put("description", product.description);
+        result.put("imageURL", product.imageURL);
+        result.put("versions", ProductVersion.toJson(product.productVersion));
+        result.put("lastVersion", ProductVersion.toJson(product.lastVersion));
 		return result;
 	}
 

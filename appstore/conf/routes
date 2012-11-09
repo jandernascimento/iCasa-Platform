@@ -5,6 +5,19 @@
 # Home page
 GET     /                           controllers.MainController.index()
 
+# Login page
+GET     /login                      securesocial.controllers.LoginPage.login
+GET     /logout                     securesocial.controllers.LoginPage.logout
+
+# User Registration
+GET     /signup                     securesocial.controllers.Registration.signUp
+POST    /signup                     securesocial.controllers.Registration.handleSignUp
+
+# Providers entry points
+GET     /authenticate/:provider     securesocial.controllers.LoginPage.authenticate(provider)
+POST    /authenticate/:provider     securesocial.controllers.LoginPage.authenticateByPost(provider)
+
+
 
 #Product Controllers PAGE
 

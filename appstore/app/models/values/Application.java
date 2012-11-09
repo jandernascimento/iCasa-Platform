@@ -17,14 +17,13 @@
  */
 package models.values;
 
-import java.util.List;
+import play.db.ebean.Model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import play.db.ebean.Model;
+import java.util.List;
 
 
 

@@ -3,14 +3,14 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
-DROP SCHEMA IF EXISTS `appstore` ;
+
 CREATE SCHEMA IF NOT EXISTS `appstore` DEFAULT CHARACTER SET latin1 ;
 USE `appstore` ;
 
 -- -----------------------------------------------------
 -- Table `appstore`.`appstores`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `appstore`.`appstores` ;
+
 
 CREATE  TABLE IF NOT EXISTS `appstore`.`appstores` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
@@ -305,3 +305,76 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+# --- !Downs
+DROP SCHEMA IF EXISTS `appstore` ;
+
+DROP TABLE IF EXISTS `appstore`.`appstores` ;
+-- -----------------------------------------------------
+-- Table `appstore`.`products`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `appstore`.`products` ;
+
+
+-- -----------------------------------------------------
+-- Table `appstore`.`users`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `appstore`.`users` ;
+
+-- -----------------------------------------------------
+-- Table `appstore`.`appstore_has_users`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `appstore`.`appstore_has_users` ;
+
+-- -----------------------------------------------------
+-- Table `appstore`.`categories`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `appstore`.`categories` ;
+
+-- -----------------------------------------------------
+-- Table `appstore`.`products_has_categories`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `appstore`.`products_has_categories` ;
+
+-- -----------------------------------------------------
+-- Table `appstore`.`product_has_price`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `appstore`.`product_has_price` ;
+
+-- -----------------------------------------------------
+-- Table `appstore`.`services`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `appstore`.`services` ;
+-- -----------------------------------------------------
+-- Table `appstore`.`applications`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `appstore`.`applications` ;
+
+-- -----------------------------------------------------
+-- Table `appstore`.`ProductVersion`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `appstore`.`ProductVersion` ;
+-- -----------------------------------------------------
+-- Table `appstore`.`ServiceVersion`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `appstore`.`ServiceVersion` ;
+
+-- -----------------------------------------------------
+-- Table `appstore`.`products_has_services`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `appstore`.`products_has_services` ;
+
+-- -----------------------------------------------------
+-- Table `appstore`.`applicationVersion`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `appstore`.`applicationVersion` ;
+
+-- -----------------------------------------------------
+-- Table `appstore`.`products_has_applications`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `appstore`.`products_has_applications` ;
+
+-- -----------------------------------------------------
+-- Table `appstore`.`orders`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `appstore`.`orders` ;

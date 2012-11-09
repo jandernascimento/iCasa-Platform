@@ -24,12 +24,14 @@ define ['backbone'], (bb) ->
 	
 	class ProductModel extends bb.Model
 		constructor: ()->
-		 	super
- 		urlRoot: 'api/product'
+			super
+		urlRoot: 'api/product'
 		defaults:
 			name: 'my product name'
 			description: 'my description'
 			imageURL: 'assets/images/products/default.jpg'
+			versions: new bb.Collection()
+			lastVersion: new bb.Model()
 
 	
 	class ProductModelCollection extends bb.Collection
@@ -43,10 +45,10 @@ define ['backbone'], (bb) ->
 			@.fetch({ data: $.param({ topNumber: topProducts})})
 
 		getNextPage:(currentPage, productsPerPage) ->
-			@.fetch({ data: $.param({ page: currentPage, productsPerPage: productsPerPage})})
-			currentPage++
+			@.fetch({ data: $.param({ page: currentPage, productsPerPage: productsPerPage}), add: true})
 		parse: (response) ->
 			#test if the list of products is located in an internal list called products
+			console.log response
 			if response.totalPages
 				@.totalPages = response.totalPages
 			if response.products
