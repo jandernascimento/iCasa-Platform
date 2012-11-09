@@ -24,31 +24,52 @@
 	<div class ="row offset1">
 		<div   id="product_list" >
  			<div   id="product_list" data-bind="foreach: products">
-				<!--   -->
-				<!-- <div > -->
-				<!-- /-->
 				<div >
-					<div style="width:300px;height:230px" class="span3 well" data-bind="bsToggle:{firstElement: firstElement, secondElement: secondElement}">
-						<!-- <div >
-						</div> -->
-						<div style="z-index:0" data-bind="attr:{id: firstElement}">
-							<img  src="assets/images/products/1.jpg"/>
+					<div style="width:300px;height:230px" class="span3 well" data-bind="bsToggle:{}"> <!-- style="width:300px;height:230px" -->
+						<div style="z-index:0" >
+							<img  data-bind="attr:{src: imageURL}" />
 						</div>
-						<div  style="z-index:0"  data-bind="attr:{id: secondElement}">
-							<img  src="assets/images/products/2.jpg"/>
+						<div style="z-index:0"> <!-- class="hero-unit" -->
+							<p>
+							    <button   href="#myModal2" data-toggle="modal" >Details</button> <!-- data-bind="attr:{href: modalRefId}" -->
+							 </p>
+							  <h3 data-bind="text: name">Loading</h3>
+							  <p data-bind="text: shortDescription">Loading</p>
 						</div>
 					</div>
-						
-						<!-- 
-						<img  data-bind="attr: {src: imageURL}">
-						<a  href="#" rel="popover" onclick="return false"
-							data-bind="bsPopover:{title: name, content: description}, text: name" data-placement="bottom">
-						</a> -->
-				<!--/-->
 				</div>
 			</div>
+			<div data-bind="template: { name: 'modal-product-template', foreach: products}"></div>
 		</div>
 	</div>
+
+	<script type="text/html" id="modal-product-template" src="templates/template.html">
+		
+		<div id="myModal2" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+		    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		    <h3 id="myModalLabel">Product Description</h3>
+		  </div>
+		  <div class="modal-body">
+		  	<ul class="nav nav-tabs">
+			  <li class="active"><a href="#description" data-toggle="tab">Description</a></li>
+			  <li><a href="#services" data-toggle="tab">Services</a></li>
+			  <li><a href="#applications" data-toggle="tab">Applications</a></li>
+			</ul>
+		  </div>
+		  <div class="tab-content">
+			  <div class="tab-pane active" id="description">This is the product description</div>
+			  <div class="tab-pane" id="services">The list of services this product has</div>
+			  <div class="tab-pane" id="applications">The list of applications this product has</div>
+		</div>
+		  <div class="modal-footer">
+		    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+		    <button class="btn btn-primary">Buy</button>
+		  </div>
+		</div>
+		
+
+	</script>
 
 	<script src="@routes.Assets.at("javascripts/frameworks/require/require.js")" data-main="@routes.Assets.at("javascripts/usersPage")" > </script>
 }

@@ -19,6 +19,7 @@ package controllers;
 
 import play.mvc.Controller;
 import play.mvc.Result;
+import securesocial.core.java.SecureSocial;
 
 /**
  * @author <a href="mailto:cilia-devel@lists.ligforge.imag.fr">Cilia Project
@@ -26,8 +27,9 @@ import play.mvc.Result;
  *
  */
 public class MainController extends Controller {
-
+    @SecureSocial.Secured
 	public static Result index(){
+
 		return ok(views.html.index.render());
 	}
 }
