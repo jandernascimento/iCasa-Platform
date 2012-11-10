@@ -11,7 +11,7 @@
 	</parent>
 
 	<!-- Project Description -->
-	<artifactId>simulator.core.dp</artifactId>
+	<artifactId>icasa.core.dp</artifactId>
 	<packaging>deployment-package</packaging>
 	<name>${productName} :: ${projectName}</name>
 	<version>${iCasaVersion}</version>

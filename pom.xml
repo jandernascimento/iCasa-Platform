@@ -34,7 +34,7 @@
 		<module>platform</module>
 		<module>distribution</module>
         <module>applications</module>
-        <module>appstore</module>
+        <!--module>appstore</module-->
 		<module>tests</module>
 	</modules>
 

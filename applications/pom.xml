@@ -29,7 +29,7 @@
 	<name>${productName} :: ${projectName}</name>
 
 	<modules>
-		<module>simulator</module>
+		<module>icasa</module>
 	</modules>
 
 	<build>
