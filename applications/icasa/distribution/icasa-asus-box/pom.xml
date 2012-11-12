@@ -28,17 +28,26 @@
   </parent>
 
   <!-- Project coordinates -->
-  <artifactId>icasa.teaching.distribution</artifactId>
+  <artifactId>icasa.asus.box</artifactId>
   <packaging>pom</packaging>
   <name>${productName} :: ${projectName}</name>
-
-  <properties>
-      <!-- flag to flatten deployment packages -->
-      <flattenDP>true</flattenDP>
-  </properties>
   
   <!-- Project dependencies -->
   <dependencies>
+	
+	<!-- Device widgets -->
+	<dependency>
+  		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+		<artifactId>tikitag.widget</artifactId>
+	</dependency>
+	<dependency>
+  		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+		<artifactId>upnp.widget</artifactId>
+	</dependency>
+	<dependency>
+  		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+		<artifactId>x10.widget</artifactId>
+	</dependency>
 	
 	<!-- deployed packages -->
 	<dependency>
@@ -51,24 +60,36 @@
 		<artifactId>rose.dp</artifactId>
 		<type>deployment-package</type>
 	</dependency>
+	<!--dependency>
+		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+		<artifactId>cilia.dp</artifactId>
+		<type>deployment-package</type>
+	</dependency-->
 	<dependency>
 		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-		<artifactId>simulator.core.dp</artifactId>
+		<artifactId>icasa.core.dp</artifactId>
 		<type>deployment-package</type>
 	</dependency>
 	<dependency>
 		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-		<artifactId>simulator.ihm.dp</artifactId>
+		<artifactId>icasa.ihm.dp</artifactId>
 		<type>deployment-package</type>
 	</dependency>
-
-      <!-- Play 2 applications-->
-      <dependency>
-          <groupId>fr.liglab.adele.icasa</groupId>
-          <artifactId>icasa.web</artifactId>
-          <version>0.0.1-SNAPSHOT</version>
-          <type>zip</type>
-      </dependency>
+	<dependency>
+		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+		<artifactId>x10.presence.sensor.core.dp</artifactId>
+		<type>deployment-package</type>
+	</dependency>
+	<dependency>
+		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+		<artifactId>upnp.settopbox.core.dp</artifactId>
+		<type>deployment-package</type>
+	</dependency>
+	<dependency>
+		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+		<artifactId>tikitag.core.dp</artifactId>
+		<type>deployment-package</type>
+	</dependency>
 	
   </dependencies>
   

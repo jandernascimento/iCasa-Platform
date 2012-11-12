@@ -280,13 +280,13 @@
 			<!-- iCasa Simulator -->
 			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-				<artifactId>simulator.core.dp</artifactId>
+				<artifactId>icasa.core.dp</artifactId>
 				<version>${m2mAppBuilderVersion}</version>
 				<type>deployment-package</type>
 			</dependency>
 			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-				<artifactId>simulator.ihm.dp</artifactId>
+				<artifactId>icasa.ihm.dp</artifactId>
 				<version>${m2mAppBuilderVersion}</version>
 				<type>deployment-package</type>
 			</dependency>

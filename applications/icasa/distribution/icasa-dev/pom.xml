@@ -28,7 +28,7 @@
   </parent>
 
   <!-- Project coordinates -->
-  <artifactId>distribution.dev</artifactId>
+  <artifactId>icasa.dev</artifactId>
   <packaging>pom</packaging>
   <name>${productName} :: ${projectName}</name>
 
@@ -53,12 +53,12 @@
 	</dependency>
 	<dependency>
 		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-		<artifactId>simulator.core.dp</artifactId>
+		<artifactId>icasa.core.dp</artifactId>
 		<type>deployment-package</type>
 	</dependency>
 	<dependency>
 		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-		<artifactId>simulator.ihm.dp</artifactId>
+		<artifactId>icasa.ihm.dp</artifactId>
 		<type>deployment-package</type>
 	</dependency>
 
