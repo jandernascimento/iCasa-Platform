@@ -71,11 +71,11 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 			@pmodel.save()
 		
 	class ProductViewModelGrid extends kb.ViewModel
-			constructor: (@pmodel) ->
-				@id = @pmodel.get('id')
-				@name = @pmodel.get('name')
-				@imageURL = @pmodel.get('imageURL')
-				@description = @pmodel.get('description')
+			constructor: (pmodel) ->
+				@id = pmodel.get('id')
+				@name = pmodel.get('name')
+				@imageURL = pmodel.get('imageURL')
+				@description = pmodel.get('description')
 				@shortDescription = ko.computed(()=>
 				 	if @description.length > 200
 				 		shortD = @description.substring(0,200) + "..."
@@ -83,8 +83,13 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 				 		shortD = @description
 				 	shortD
 				 )
-				@modalRef = "modal" + @id
-				@modalRefId = "#" + @modalRef
+				@modalId = "modal" + @id
+				@modalIdRef = "#" + @modalId
+				@modalTabDescriptionId = @
+				@lastVersion = pmodel.get('lastVersion')
+				@services = pmodel.get('services')
+				@applications = pmodel.get('applications')
+
 
 	class ProductViewModelCollection
 		constructor: (pmodel) ->

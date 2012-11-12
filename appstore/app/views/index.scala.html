@@ -25,13 +25,13 @@
 		<div   id="product_list" >
  			<div   id="product_list" data-bind="foreach: products">
 				<div >
-					<div style="width:300px;height:230px" class="span3 well" data-bind="bsToggle:{}"> <!-- style="width:300px;height:230px" -->
+					<div style="width:300px;height:230px" class="span3 well" data-bind="bsToggle:{}"> 
 						<div style="z-index:0" >
 							<img  data-bind="attr:{src: imageURL}" />
 						</div>
-						<div style="z-index:0"> <!-- class="hero-unit" -->
+						<div style="z-index:0">
 							<p>
-							    <button   href="#myModal2" data-toggle="modal" >Details</button> <!-- data-bind="attr:{href: modalRefId}" -->
+							    <button data-bind="attr:{href: modalIdRef}"  href="#myModal2" data-toggle="modal" >Details</button> 
 							 </p>
 							  <h3 data-bind="text: name">Loading</h3>
 							  <p data-bind="text: shortDescription">Loading</p>
@@ -42,33 +42,52 @@
 			<div data-bind="template: { name: 'modal-product-template', foreach: products}"></div>
 		</div>
 	</div>
-
-	<script type="text/html" id="modal-product-template" src="templates/template.html">
-		
-		<div id="myModal2" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<!-- The template for the modal window with three tabs: description/services/applications-->
+	<script type="text/html" id="modal-product-template">
+		<div data-bind="attr:{id: modalId}" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-header">
 		    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		    <h3 id="myModalLabel">Product Description</h3>
+		    <h3 id="myModalLabel" data-bind="text: name">Product Description</h3>
 		  </div>
 		  <div class="modal-body">
 		  	<ul class="nav nav-tabs">
-			  <li class="active"><a href="#description" data-toggle="tab">Description</a></li>
+			  <li class="active"><a href="#description" data-toggle="tab" >Description</a></li>
 			  <li><a href="#services" data-toggle="tab">Services</a></li>
 			  <li><a href="#applications" data-toggle="tab">Applications</a></li>
 			</ul>
 		  </div>
 		  <div class="tab-content">
-			  <div class="tab-pane active" id="description">This is the product description</div>
-			  <div class="tab-pane" id="services">The list of services this product has</div>
-			  <div class="tab-pane" id="applications">The list of applications this product has</div>
+			  <div class="tab-pane active" data-bind="template: { name: 'modal-description-template', data: $data}" id="description">...</div>
+			  <div class="tab-pane" data-bind="template: { name: 'modal-service-template', data: $data}" id="services">...</div>
+			  <div class="tab-pane" data-bind="template: { name: 'modal-application-template', data: $data}" id="applications">...</div>
 		</div>
 		  <div class="modal-footer">
 		    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
 		    <button class="btn btn-primary">Buy</button>
 		  </div>
 		</div>
-		
+	</script>
+	<!--The template for the description tab in the modal window-->
+	<script type="text/html" id="modal-description-template">
+		<div class="well">
+			<h4>Current Version</h4> <span data-bind="text: lastVersion.version">0.0.0</span>
+			<p data-bind="text: description" ></p>
+		</div>
+	</script>
 
+	<!--The template for the applications tab in the modal window-->
+	<script type="text/html" id="modal-service-template">
+		<div class="well">
+			<h4>Services</h4> <span data-bind="text: lastVersion.version">0.0.0</span>
+			<p data-bind="text: description" ></p>
+		</div>
+	</script>
+	<!--The template for the applications tab in the modal window-->
+	<script type="text/html" id="modal-application-template">
+		<div class="well">
+			<h4>Applications</h4> <span data-bind="text: lastVersion.version">0.0.0</span>
+			<p data-bind="text: description" ></p>
+		</div>
 	</script>
 
 	<script src="@routes.Assets.at("javascripts/frameworks/require/require.js")" data-main="@routes.Assets.at("javascripts/usersPage")" > </script>
