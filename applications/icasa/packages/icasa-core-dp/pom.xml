@@ -90,6 +90,14 @@
 			<groupId>fr.liglab.adele.icasa</groupId>
 			<artifactId>simulator.remote</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>org.barjo.atmosgi</groupId>
+            <artifactId>atmosgi-service</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.barjo.atmosgi</groupId>
+            <artifactId>atmosgi-component</artifactId>
+        </dependency>
 		<dependency>		
 			<groupId>org.ow2.chameleon.rose.rest</groupId>
 			<artifactId>jersey-exporter</artifactId>
