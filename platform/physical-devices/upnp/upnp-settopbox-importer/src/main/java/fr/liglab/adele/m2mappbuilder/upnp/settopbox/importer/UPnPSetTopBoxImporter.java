@@ -120,7 +120,7 @@ public class UPnPSetTopBoxImporter extends AbstractImporterComponent {
 	 * 
 	 * @see org.ow2.chameleon.rose.AbstractImporterComponent#getRoseMachine()
 	 */
-	protected RoseMachine getRoseMachine() {
+	public RoseMachine getRoseMachine() {
 		return roseMachine;
 	}
 

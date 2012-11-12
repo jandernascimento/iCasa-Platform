@@ -128,7 +128,7 @@ public class USBFRIDReaderImporter extends AbstractImporterComponent {
 	 * 
 	 * @see org.ow2.chameleon.rose.AbstractImporterComponent#getRoseMachine()
 	 */
-	protected RoseMachine getRoseMachine() {
+	public RoseMachine getRoseMachine() {
 		return roseMachine;
 	}
 
