@@ -6,7 +6,7 @@
 		"connection" : [
 				{
 				"out" : {
-					"service_filter" : "(|(objectClass=fr.liglab.adele.icasa.remote.impl.DeviceREST)(objectClass=fr.liglab.adele.cilia.remote.impl.DeviceREST))"
+					"service_filter" : "(|(objectClass=fr.liglab.adele.icasa.remote.impl.PersonREST)(objectClass=fr.liglab.adele.icasa.remote.impl.DeviceREST))"
 					}
 				}
 		],
@@ -16,6 +16,6 @@
 			  "factory" : "RoSe_exporter.jersey",
 			  "properties" : { "jersey.servlet.name" : "/icasa" }
 			}
-		],
+		]
 	}
 }

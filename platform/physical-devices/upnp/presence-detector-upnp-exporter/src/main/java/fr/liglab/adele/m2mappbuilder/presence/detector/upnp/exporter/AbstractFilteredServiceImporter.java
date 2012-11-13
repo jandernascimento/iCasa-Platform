@@ -118,7 +118,7 @@ public abstract class AbstractFilteredServiceImporter implements ImporterService
 	/**
 	 * @return The {@link RoseMachine} service.
 	 */
-	protected abstract RoseMachine getRoseMachine();
+	public abstract RoseMachine getRoseMachine();
 	
 	/**
 	 * Returns true if this end point is managed by this service importer.

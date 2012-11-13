@@ -76,7 +76,7 @@
 		<dependency>
 			<groupId>fr.liglab.adele.icasa</groupId>
 			<artifactId>script.executor.impl</artifactId>
-		</dependency>
+		</dependency>		
 		<dependency>
 			<groupId>fr.liglab.adele.icasa</groupId>
 			<artifactId>simulated.sensor.importer</artifactId>
@@ -90,6 +90,14 @@
 			<groupId>fr.liglab.adele.icasa</groupId>
 			<artifactId>simulator.remote</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>org.barjo.atmosgi</groupId>
+            <artifactId>atmosgi-service</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.barjo.atmosgi</groupId>
+            <artifactId>atmosgi-component</artifactId>
+        </dependency>
 		<dependency>		
 			<groupId>org.ow2.chameleon.rose.rest</groupId>
 			<artifactId>jersey-exporter</artifactId>
