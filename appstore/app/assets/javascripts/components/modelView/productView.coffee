@@ -85,7 +85,16 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 				 )
 				@modalId = "modal" + @id
 				@modalIdRef = "#" + @modalId
-				@modalTabDescriptionId = @
+
+				@modalTabDescriptionId = @modalId + "_desc"
+				@modalTabDescriptionIdRef = "#" + @modalTabDescriptionId
+
+				@modalTabServicesId = @modalId + "_serv"
+				@modalTabServicesIdRef = "#" + @modalTabServicesId
+
+				@modalTabAppsId = @modalId + "_apps"
+				@modalTabAppsIdRef = "#" + @modalTabAppsId
+
 				@lastVersion = pmodel.get('lastVersion')
 				@services = pmodel.get('services')
 				@applications = pmodel.get('applications')

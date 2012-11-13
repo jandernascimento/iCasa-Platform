@@ -51,15 +51,15 @@
 		  </div>
 		  <div class="modal-body">
 		  	<ul class="nav nav-tabs">
-			  <li class="active"><a href="#description" data-toggle="tab" >Description</a></li>
-			  <li><a href="#services" data-toggle="tab">Services</a></li>
-			  <li><a href="#applications" data-toggle="tab">Applications</a></li>
+			  <li class="active"><a data-bind="attr:{href: modalTabDescriptionIdRef}" data-toggle="tab" >Description</a></li>
+			  <li><a data-bind="attr:{href: modalTabServicesIdRef}" data-toggle="tab">Services</a></li>  
+			  <li><a data-bind="attr:{href: modalTabAppsIdRef}"data-toggle="tab">Applications</a></li>
 			</ul>
 		  </div>
 		  <div class="tab-content">
-			  <div class="tab-pane active" data-bind="template: { name: 'modal-description-template', data: $data}" id="description">...</div>
-			  <div class="tab-pane" data-bind="template: { name: 'modal-service-template', data: $data}" id="services">...</div>
-			  <div class="tab-pane" data-bind="template: { name: 'modal-application-template', data: $data}" id="applications">...</div>
+			  <div class="tab-pane active" data-bind="template: { name: 'modal-description-template', data: $data}, attr:{id: modalTabDescriptionId}">...</div>
+			  <div class="tab-pane" data-bind="template: { name: 'modal-service-template', data: $data} , attr:{id: modalTabServicesId}">...</div>
+			  <div class="tab-pane" data-bind="template: { name: 'modal-application-template', data: $data} , attr:{id: modalTabAppsId}">...</div>
 		</div>
 		  <div class="modal-footer">
 		    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
