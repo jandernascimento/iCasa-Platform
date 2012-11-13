@@ -22,8 +22,9 @@ public class ProductREST extends Controller {
 	
 	private static final String PRODUCTS_PER_PAGE = "productsPerPage";
 	
-	@BodyParser.Of(play.mvc.BodyParser.Json.class)
-	public static Result products(){ 
+	//@BodyParser.Of(play.mvc.BodyParser.Json.class)
+	public static Result products(){
+        System.out.println("Getting products");
 		if (form().bindFromRequest().get(TOP_NUMBER) != null) {
 			return topProducts(form().bindFromRequest().get(TOP_NUMBER));
 		} else if (form().bindFromRequest().get(PAGE) != null){

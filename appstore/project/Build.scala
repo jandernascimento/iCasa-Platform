@@ -1,5 +1,5 @@
 import sbt._
-import Keys._
+import sbt.Keys._
 import PlayProject._
 
 object ApplicationBuild extends Build {
@@ -9,13 +9,13 @@ object ApplicationBuild extends Build {
 
     val appDependencies = Seq(
        "mysql" % "mysql-connector-java" % "5.1.18"
-
     )
   val ssDependencies = Seq(
-    // Add your project dependencies here,
-    "com.typesafe" %% "play-plugins-util" % "2.0.1",
+    "com.typesafe" %% "play-plugins-util" % "2.0.3",
+    "com.typesafe" %% "play-plugins-mailer" % "2.0.4",
     "org.mindrot" % "jbcrypt" % "0.3m"
   )
+
   val secureSocial = PlayProject(
     "securesocial", appVersion, ssDependencies, mainLang = SCALA, path = file("modules/securesocial")
   ).settings(
@@ -27,6 +27,9 @@ object ApplicationBuild extends Build {
 
     val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(
       templatesImport += "models.values._"
-    ).dependsOn(secureSocial).aggregate(secureSocial)
+      //resolvers ++= Seq(
+      //  "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
+      //)
+    ).dependsOn(secureSocial)//.aggregate(secureSocial)
 
 }

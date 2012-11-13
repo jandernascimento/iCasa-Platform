@@ -24,6 +24,7 @@ import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.With;
 import scala.Option;
+import securesocial.core.providers.utils.RoutesHelper;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -63,18 +64,18 @@ public class SecureSocial {
      * An annotation to mark actions as protected by SecureSocial
      * When the user is not logged in the action redirects the browser to the login page.
      *
-     * If the isApiClient parameter is set to true SecureSocial will return a forbidden error
+     * If the isAjaxCall parameter is set to true SecureSocial will return a forbidden error
      * with a json error instead.
      */
-    @With(SecuredAction.class)
+    @With(Secured.class)
     @Target({ElementType.TYPE, ElementType.METHOD})
     @Retention(RetentionPolicy.RUNTIME)
-    public @interface Secured {
+    public @interface SecuredAction {
         /**
-         * Specifies wether the action handles an API call or not. Default is false.
+         * Specifies whether the action handles an ajax call or not. Default is false.
          * @return
          */
-        boolean isApiClient() default false;
+        boolean ajaxCall() default false;
     }
 
     /**
@@ -117,7 +118,8 @@ public class SecureSocial {
     }
 
     /**
-     * Generates the json required for API calls.
+     * Generates the error json required for ajax calls calls when the
+     * user is not authenticated
      *
      * @return
      */
@@ -139,7 +141,7 @@ public class SecureSocial {
     /**
      * Protects an action with SecureSocial
      */
-    public static class SecuredAction extends Action<Secured> {
+    public static class Secured extends Action<SecuredAction> {
 
         @Override
         public Result call(Http.Context ctx) throws Throwable {
@@ -151,12 +153,12 @@ public class SecureSocial {
                     if ( Logger.isDebugEnabled() ) {
                         Logger.debug("Anonymous user trying to access : " + ctx.request().uri());
                     }
-                    if ( configuration.isApiClient() ) {
+                    if ( configuration.ajaxCall() ) {
                         return forbidden( forbiddenJson() );
                     } else {
                         ctx.flash().put("error", play.i18n.Messages.get("securesocial.loginRequired"));
                         ctx.session().put(ORIGINAL_URL, ctx.request().uri());
-                        return redirect(securesocial.controllers.routes.LoginPage.login());
+                        return redirect(RoutesHelper.login());
                     }
                 } else {
                     SocialUser user = currentUser();
@@ -166,12 +168,12 @@ public class SecureSocial {
                     } else {
                         // there is no user in the backing store matching the credentials sent by the client.
                         // we need to remove the credentials from the session
-                        if ( configuration.isApiClient() ) {
+                        if ( configuration.ajaxCall() ) {
                             ctx.session().remove(USER_KEY);
                             ctx.session().remove(PROVIDER_KEY);
                             return forbidden( forbiddenJson() );
                         } else {
-                            return redirect(securesocial.controllers.routes.LoginPage.logout());
+                            return redirect(RoutesHelper.logout());
                         }
                     }
                 }
@@ -187,17 +189,17 @@ public class SecureSocial {
      * Actions annotated with UserAwareAction get the current user set in the Context.args holder
      * if there's one available.
      */
-    @With(UserAwareAction.class)
+    @With(UserAware.class)
     @Target({ElementType.TYPE, ElementType.METHOD})
     @Retention(RetentionPolicy.RUNTIME)
-    public @interface UserAware {
+    public @interface UserAwareAction {
     }
 
     /**
      * An action that puts the current user in the context if there's one available. This is useful in
      * public actions that need to access the user information if there's one logged in.
      */
-    public static class UserAwareAction extends Action<UserAware> {
+    public static class UserAware extends Action<UserAwareAction> {
         @Override
         public Result call(Http.Context ctx) throws Throwable {
             SecureSocial.fixHttpContext(ctx);

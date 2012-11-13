@@ -64,7 +64,7 @@ public class User extends Model {
         System.out.println("Writing user on the DB");
         newUser.username = user.id.id;
         newUser.userId = user.id.id ;
-        newUser.fullname = user.displayName;
+        newUser.fullname = user.fullName;
         newUser.email = user.email;
         newUser.provider = user.id.provider;
         newUser.authMethod = AuthenticationMethod.toSala(user.authMethod).method();
@@ -88,11 +88,11 @@ public class User extends Model {
             socialUser.id = new UserId();
             socialUser.id.id = userId;
             socialUser.id.provider = user.provider;
-            socialUser.displayName = user.username;
+            socialUser.fullName = user.username;
             socialUser.avatarUrl = null;
             socialUser.email = user.email;
 
-            socialUser.isEmailVerified = true;
+            //socialUser.isEmailVerified = true;
             if (user.authMethod.compareToIgnoreCase(securesocial.core.AuthenticationMethod.UserPassword().method())==0){
                 socialUser.authMethod = AuthenticationMethod.USERNAME_PASSWORD;
                 socialUser.passwordInfo = new PasswordInfo();

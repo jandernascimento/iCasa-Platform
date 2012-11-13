@@ -20,6 +20,7 @@ import models.User;
 import play.Application;
 import securesocial.core.java.BaseUserService;
 import securesocial.core.java.SocialUser;
+import securesocial.core.java.Token;
 import securesocial.core.java.UserId;
 
 import java.util.HashMap;
@@ -40,8 +41,33 @@ public class InMemoryUserService extends BaseUserService {
     }
 
     @Override
+    public Token doFindToken(String s) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public SocialUser doFindByEmail(String s, String s1) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void doDeleteToken(String s) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void doDeleteExpiredTokens() {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
     public void doSave(SocialUser user) {
         User.create(user);
+    }
+
+    @Override
+    public void doSave(Token token) {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
 }
