@@ -53,11 +53,18 @@
 		</repository>
 
 		<!-- Cilia mediation framework repository -->
-		<repository>
-			<id>cilia-repository</id>
-			<name>Cilia repository</name>
-			<url>http://cilia.ligforge.imag.fr/repo</url>
-		</repository>
+        <repository>
+            <id>maven-cilia-repository-release</id>
+            <name>Cilia - Release</name>
+            <url>http://repository-cilia.forge.cloudbees.com/release/</url>
+            <layout>default</layout>
+        </repository>
+        <repository>
+            <id>maven-cilia-repository-snapshot</id>
+            <name>Cilia - Snapshot</name>
+            <url>http://repository-cilia.forge.cloudbees.com/snapshot/</url>
+            <layout>default</layout>
+        </repository>
 		
 	</repositories>
 	
@@ -91,32 +98,22 @@
 			<dependency>
 				<groupId>fr.liglab.adele.cilia</groupId>
 				<artifactId>cilia-core</artifactId>
-				<version>1.2.1</version>
+				<version>1.5.3-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>fr.liglab.adele.cilia</groupId>
-				<artifactId>cilia-ipojo-compendium</artifactId>
-				<version>1.2.1</version>
+				<artifactId>cilia-runtime</artifactId>
+                <version>1.5.3-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>fr.liglab.adele.cilia</groupId>
-				<artifactId>cilia-ipojo-runtime</artifactId>
-				<version>1.2.1</version>
-			</dependency>
-			<dependency>
-				<groupId>fr.liglab.adele.cilia</groupId>
-				<artifactId>cilia-deployer</artifactId>
-				<version>2.2.1</version>
-			</dependency>
-			<dependency>
-				<groupId>fr.liglab.adele.cilia</groupId>
-				<artifactId>cilia-chain-parser</artifactId>
-				<version>1.2.3</version>
+				<artifactId>cilia-remote</artifactId>
+                <version>1.5.3-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 				<artifactId>cilia.dp</artifactId>
-				<version>1.2.1</version>
+                <version>1.5.3-SNAPSHOT</version>
 				<type>deployment-package</type>
 			</dependency>
 
