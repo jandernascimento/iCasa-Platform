@@ -11,7 +11,6 @@
 	<move-device deviceID="IKAE-79C-WXFHH-532349-K4" location="kitchen" />
 	<modify-environment location="kitchen" variable="temperature" value="296.15"/>
 	
-	<delay value="100" />		
 	<create-environment envId="livingroom"  leftX="414" topY="18" rightX="658" bottomY="370" />
 	<add-device deviceID="TermoSensor-AAA-20119915-F" type="iCASA.Thermometer" />
 	<add-device deviceID="Elektro-Halogen4000-453147-08234-88" type="iCASA.DimmerLight" />	
@@ -26,7 +25,6 @@
 	<modify-environment location="livingroom" variable="temperature" value="295.15"/>
 	
 	
-	<delay value="100" />	
 	<create-environment envId="bedroom"  leftX="55" topY="371" rightX="314" bottomY="580" />	
 	<add-device deviceID="TermoSensor-AAA-201168416-D" type="iCASA.Thermometer" />	
 	<add-device deviceID="Elektro-Halogen4000-985614-65891-78" type="iCASA.DimmerLight" />	
@@ -34,7 +32,6 @@
 	<move-device deviceID="Elektro-Halogen4000-985614-65891-78" location="bedroom" />	
 	<modify-environment location="bedroom" variable="temperature" value="294.15"/>
 
-	<delay value="100" />	
 	<create-environment envId="bathroom"  leftX="58" topY="18" rightX="312" bottomY="370" />	
 	<add-device deviceID="TermoSensor-ABC-1231234-ZZ" type="iCASA.Thermometer" />	
 	<add-device deviceID="IKAE-Chb-45X-DDPQS-254-33" type="iCASA.BinaryLight" />		
