@@ -446,6 +446,17 @@
                     startUnixScriptFile.write("#!/usr/bin/env sh\ncd $tempDistribDir\nexec java -jar bin/felix.jar\n")
                     startUnixScriptFile.setExecutable(true,true)
 
+                    def debugWinScriptFileName = "debug.bat"
+                    File debugWinScriptFile = new File("$baseDir/$debugWinScriptFileName")
+                    debugWinScriptFile.createNewFile()
+                    debugWinScriptFile.write("cd $tempDistribDir\njava -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=y -jar bin\\felix.jar\n")
+
+                    def debugUnixScriptFileName = "debug"
+                    File debugUnixScriptFile = new File("$baseDir/$debugUnixScriptFileName")
+                    debugUnixScriptFile.createNewFile()
+                    debugUnixScriptFile.write("#!/usr/bin/env sh\ncd $tempDistribDir\nexec java -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=y -jar bin/felix.jar\n")
+                    debugUnixScriptFile.setExecutable(true,true)
+
                     File.metaClass.unzip = { String dest ->
                         //in metaclass added methods, 'delegate' is the object on which
                         //the method is called. Here it's the file to unzip

@@ -41,11 +41,11 @@
   <dependencies>
 	
 	<!-- deployed packages -->
-	<dependency>
+	<!--dependency>
 		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 		<artifactId>platform.core.dp</artifactId>
 		<type>deployment-package</type>
-	</dependency>
+	</dependency-->
 	<dependency>
 		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 		<artifactId>rose.dp</artifactId>
