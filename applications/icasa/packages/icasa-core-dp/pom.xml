@@ -77,10 +77,10 @@
 			<groupId>fr.liglab.adele.icasa</groupId>
 			<artifactId>script.executor.impl</artifactId>
 		</dependency>		
-		<dependency>
+		<!--dependency>
 			<groupId>fr.liglab.adele.icasa</groupId>
 			<artifactId>simulated.sensor.importer</artifactId>
-		</dependency>
+		</dependency-->
 		<dependency>
 			<groupId>fr.liglab.adele.icasa</groupId>
 			<artifactId>gogo.adapter</artifactId>
@@ -154,10 +154,10 @@
 								<filePath>/src/main/resources/simulation.icasa</filePath>
 							</processedResource>
 							
-							<processedResource>
+							<!--processedResource>
 								<processor>org.osgi.deployment.rp.autoload</processor>
 								<filePath>/src/main/resources/rose-conf-simulated0.json</filePath>
-							</processedResource>
+							</processedResource-->
                             
                             <processedResource>
 								<processor>org.osgi.deployment.rp.autoload</processor>
