@@ -14,19 +14,17 @@
 	<artifactId>rose.dp</artifactId>
 	<packaging>deployment-package</packaging>
 	<description>Rose Core DP</description>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>{roseVersion}</version>
 	<name>${productName} :: ${projectName}</name>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.ow2.chameleon.rose</groupId>
 			<artifactId>rose-core</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.ow2.chameleon.rose</groupId>
 			<artifactId>json-configurator</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.ow2.chameleon.json</groupId>

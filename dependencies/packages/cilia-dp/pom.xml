@@ -13,7 +13,7 @@
 	<!-- Project Description -->
 	<artifactId>cilia.dp</artifactId>
 	<packaging>deployment-package</packaging>
-    <version>1.5.3-SNAPSHOT</version>
+    <version>${ciliaVersion}</version>
 	<name>${productName} :: ${projectName}</name>
 
 	<dependencies>
