@@ -14,7 +14,7 @@
 	<artifactId>rose.dp</artifactId>
 	<packaging>deployment-package</packaging>
 	<description>Rose Core DP</description>
-	<version>{roseVersion}</version>
+	<version>${roseVersion}</version>
 	<name>${productName} :: ${projectName}</name>
 
 	<dependencies>
