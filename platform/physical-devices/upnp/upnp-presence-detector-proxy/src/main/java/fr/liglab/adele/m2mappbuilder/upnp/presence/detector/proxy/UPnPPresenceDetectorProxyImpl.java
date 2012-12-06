@@ -19,6 +19,8 @@ import java.util.Dictionary;
 import java.util.Locale;
 import java.util.Properties;
 
+import fr.liglab.adele.icasa.device.DeviceEvent;
+import fr.liglab.adele.icasa.device.DeviceEventType;
 import fr.liglab.adele.icasa.device.presence.PresenceSensor;
 import fr.liglab.adele.icasa.device.util.AbstractDevice;
 import org.osgi.framework.BundleContext;
@@ -31,10 +33,10 @@ import org.osgi.service.upnp.UPnPStateVariable;
 
 import fr.liglab.adele.icasa.environment.SimulatedDevice;
 import fr.liglab.adele.icasa.environment.SimulatedEnvironment;
-import fr.liglab.adele.icasa.environment.SimulatedEnvironmentListener;
+import fr.liglab.adele.icasa.environment.ZoneListener;
 
 public class UPnPPresenceDetectorProxyImpl extends AbstractDevice implements PresenceSensor, SimulatedDevice,
-      SimulatedEnvironmentListener {
+      ZoneListener {
 
 	private UPnPDevice device;
 	private UPnPService presenceService;
@@ -68,10 +70,6 @@ public class UPnPPresenceDetectorProxyImpl extends AbstractDevice implements Pre
 		return presenceSensed;
 	}
 
-	public String getLocation() {
-      return getEnvironmentId();
-	}
-
 	@Override
 	public String getSerialNumber() {
       return m_serialNumber;
@@ -102,7 +100,7 @@ public class UPnPPresenceDetectorProxyImpl extends AbstractDevice implements Pre
 	}
 
 	private void registerListener() {
-		UPnPEventListenerImpl listener = new UPnPEventListenerImpl();
+		UPnPEventListenerImpl listener = new UPnPEventListenerImpl(this);
 		String keys = "(UPnP.device.UDN="+ m_serialNumber + ")";
 		try {
 			Filter filter = m_context.createFilter(keys);
@@ -112,30 +110,6 @@ public class UPnPPresenceDetectorProxyImpl extends AbstractDevice implements Pre
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}
-	}
-		
-	@Override
-	public void environmentPropertyChanged(String arg0, Double arg1, Double arg2) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public synchronized void bindSimulatedEnvironment(SimulatedEnvironment environment) {
-		m_env = environment;
-		m_env.addListener(this);
-	}
-
-	@Override
-	public String getEnvironmentId() {
-      return m_env != null ? m_env.getEnvironmentId() : null;
-	}
-
-	@Override
-	public synchronized void unbindSimulatedEnvironment(SimulatedEnvironment arg0) {
-      m_env.removeListener(this);
-      m_env = null;
-
 	}
 	
 	@Override
@@ -150,18 +124,25 @@ public class UPnPPresenceDetectorProxyImpl extends AbstractDevice implements Pre
 	
 	class UPnPEventListenerImpl implements UPnPEventListener {
 
+        private final UPnPPresenceDetectorProxyImpl _device;
+
+        public UPnPEventListenerImpl(UPnPPresenceDetectorProxyImpl device) {
+            _device = device;
+        }
+
 		@Override
 		public void notifyUPnPEvent(String deviceId, String serviceId, Dictionary events) {
 			System.out.println("+++++ Device ID: " + deviceId);
 			System.out.println("+++++ Service ID: " + serviceId);
 			Boolean temp = (Boolean) events.get("DetectedPresence");
 			if (temp!=null) {
+                final boolean oldPresencedSensed = presenceSensed;
 				presenceSensed = temp;
-								
+
 				Runnable notificator = new Runnable() {					
 					@Override
 					public void run() {
-						notifyListeners();						
+						notifyListeners(new DeviceEvent(_device, DeviceEventType.PROP_MODIFIED, PRESENCE_SENSOR_SENSED_PRESENCE, oldPresencedSensed));
 					}
 				};
 				
@@ -171,4 +152,36 @@ public class UPnPPresenceDetectorProxyImpl extends AbstractDevice implements Pre
 			}
 		}		
 	}
+
+    public void zoneAdded(fr.liglab.adele.icasa.environment.Zone zone) {
+        // do nothing
+    }
+
+    public void zoneRemoved(fr.liglab.adele.icasa.environment.Zone zone) {
+        // do nothing
+    }
+
+    public void zoneMoved(fr.liglab.adele.icasa.environment.Zone zone, fr.liglab.adele.icasa.environment.Position position) {
+        // do nothing
+    }
+
+    public void zoneResized(fr.liglab.adele.icasa.environment.Zone zone) {
+        // do nothing
+    };
+
+    public void zoneParentModified(fr.liglab.adele.icasa.environment.Zone zone, fr.liglab.adele.icasa.environment.Zone zone1) {
+        // do nothing
+    }
+
+    public void zoneVariableAdded(fr.liglab.adele.icasa.environment.Zone zone, java.lang.String s) {
+        // do nothing
+    }
+
+    public void zoneVariableRemoved(fr.liglab.adele.icasa.environment.Zone zone, java.lang.String s) {
+        // do nothing
+    }
+
+    public void zoneVariableModified(fr.liglab.adele.icasa.environment.Zone zone, java.lang.String s, java.lang.Object o) {
+        // do nothing
+    }
 }

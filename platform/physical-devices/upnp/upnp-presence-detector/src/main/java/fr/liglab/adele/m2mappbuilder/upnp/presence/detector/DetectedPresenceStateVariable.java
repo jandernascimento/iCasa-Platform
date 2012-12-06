@@ -211,8 +211,24 @@ public class DetectedPresenceStateVariable implements UPnPLocalStateVariable, De
 			}
 		}
 	}
-	
-	public void notifyDeviceEvent(String arg0) {
-		setPresence(getCurrentPresence());
-	}
+
+    public void deviceAdded(fr.liglab.adele.icasa.device.GenericDevice genericDevice) {
+        //do nothing
+    }
+
+    public void deviceRemoved(fr.liglab.adele.icasa.device.GenericDevice genericDevice) {
+        //do nothing
+    }
+
+    public void devicePropertyModified(fr.liglab.adele.icasa.device.GenericDevice genericDevice, java.lang.String s, java.lang.Object o) {
+        setPresence(getCurrentPresence());
+    }
+
+    public void devicePropertyAdded(fr.liglab.adele.icasa.device.GenericDevice genericDevice, java.lang.String s) {
+        setPresence(getCurrentPresence());
+    }
+
+    public void devicePropertyRemoved(fr.liglab.adele.icasa.device.GenericDevice genericDevice, java.lang.String s) {
+        //do nothing
+    }
 }
