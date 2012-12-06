@@ -32,10 +32,10 @@ import org.osgi.service.upnp.UPnPStateVariable;
 
 import fr.liglab.adele.icasa.environment.SimulatedDevice;
 import fr.liglab.adele.icasa.environment.SimulatedEnvironment;
-import fr.liglab.adele.icasa.environment.SimulatedEnvironmentListener;
+import fr.liglab.adele.icasa.environment.ZoneListener;
 
 public class UPnPSetTopBoxProxyImpl extends AbstractDevice implements PresenceSensor, SetTopBox, SimulatedDevice,
-      SimulatedEnvironmentListener {
+      ZoneListener {
 
 	private UPnPDevice device;
 
@@ -105,30 +105,6 @@ public class UPnPSetTopBoxProxyImpl extends AbstractDevice implements PresenceSe
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}
-	}
-		
-	@Override
-	public void environmentPropertyChanged(String arg0, Double arg1, Double arg2) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public synchronized void bindSimulatedEnvironment(SimulatedEnvironment environment) {
-		m_env = environment;
-		m_env.addListener(this);
-	}
-
-	@Override
-	public String getEnvironmentId() {
-      return m_env != null ? m_env.getEnvironmentId() : null;
-	}
-
-	@Override
-	public synchronized void unbindSimulatedEnvironment(SimulatedEnvironment arg0) {
-      m_env.removeListener(this);
-      m_env = null;
-
 	}
 	
 	@Override

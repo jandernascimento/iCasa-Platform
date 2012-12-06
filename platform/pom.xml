@@ -30,8 +30,8 @@
 
 	<modules>
 		<module>core</module>
-		<module>physical-devices</module>
-		<module>packages</module>
+		<!--module>physical-devices</module>
+		<module>packages</module-->
 	</modules>
 
 	<build>
