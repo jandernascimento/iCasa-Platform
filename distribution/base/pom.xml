@@ -90,7 +90,7 @@
 				<artifactItem>
 					<groupId>org.apache.felix</groupId>
 					<artifactId>org.apache.felix.main</artifactId>
-					<version>3.0.8</version>
+					<version>${felixVersion}</version>
 					<destFileName>felix.jar</destFileName>
 				</artifactItem>
               </artifactItems>
@@ -112,7 +112,7 @@
 				<artifactItem>
 					<groupId>log4j</groupId>
 					<artifactId>log4j</artifactId>
-					<version>1.2.16</version>
+					<version>${log4jVersion}</version>
 				</artifactItem>
 				<artifactItem>
 					<groupId>org.ow2.chameleon.handies</groupId>
@@ -127,7 +127,7 @@
 				<artifactItem>
 					<groupId>org.apache.felix</groupId>
 					<artifactId>org.apache.felix.fileinstall</artifactId>
-					<version>3.1.10</version>
+					<version>${fileinstallVersion}</version>
 				</artifactItem>
 				<artifactItem>
 					<groupId>org.apache.felix</groupId>
@@ -147,7 +147,7 @@
 				<artifactItem>
 					<groupId>org.apache.felix</groupId>
 					<artifactId>org.apache.felix.http.jetty</artifactId>
-					<version>2.2.0</version>
+					<version>${jettyVersion}</version>
 				</artifactItem>
 				<artifactItem>
 					<groupId>org.apache.felix</groupId>
@@ -157,12 +157,12 @@
 				<artifactItem>
 					<groupId>org.apache.felix</groupId>
 					<artifactId>org.apache.felix.ipojo.api</artifactId>
-					<version>1.6.0</version>
+					<version>${iPojoAPIVersion}</version>
 				</artifactItem>
 				<artifactItem>
 					<groupId>org.apache.felix</groupId>
 					<artifactId>org.apache.felix.ipojo.arch.gogo</artifactId>
-					<version>1.0.1</version>
+					<version>${iPojoArchVersion}</version>
 				</artifactItem>
 				<artifactItem>
 					<groupId>org.apache.felix</groupId>
@@ -212,17 +212,17 @@
 				<artifactItem>
 					<groupId>org.osgi</groupId>
 					<artifactId>org.osgi.compendium</artifactId>
-					<version>4.2.0</version>
+					<version>${osgiVersion}</version>
 				</artifactItem>
 				<artifactItem>
 					<groupId>org.slf4j</groupId>
 					<artifactId>slf4j-api</artifactId>
-					<version>1.6.1</version>
+					<version>${slf4jVersion}</version>
 				</artifactItem>
 				<artifactItem>
 					<groupId>org.slf4j</groupId>
 					<artifactId>slf4j-simple</artifactId>
-					<version>1.6.1</version>
+					<version>${slf4jVersion}</version>
 				</artifactItem>
                 <artifactItem>
 					<groupId>de.akquinet.gomobile</groupId>

@@ -5,10 +5,10 @@
 	<div id="myCarousel" class="carousel slide">
 		<!-- Carousel items -->
 		<div class="carousel-inner" data-bind="foreach: products">
-			<div data-bind="attr: {class: classItem}"> <!--   -->
+			<div data-bind="attr: {class: classItem}"> 
 				<center>
 				<a href="#" >
-            		<img data-bind="attr: {src: imageURL}" alt=""> <!--  -->
+            		<img data-bind="attr: {src: imageURL}" alt=""> 
                 </a>
                 </center>
                 <div class="carousel-caption">
@@ -31,7 +31,7 @@
 						</div>
 						<div style="z-index:0">
 							<p>
-							    <button data-bind="attr:{href: modalIdRef}"  href="#myModal2" data-toggle="modal" >Details</button> 
+							    <button data-bind="attr:{href: modalIdRef}" data-toggle="modal" >Details</button> 
 							 </p>
 							  <h3 data-bind="text: name">Loading</h3>
 							  <p data-bind="text: shortDescription">Loading</p>
@@ -70,7 +70,12 @@
 	<!--The template for the description tab in the modal window-->
 	<script type="text/html" id="modal-description-template">
 		<div class="well">
-			<h4>Current Version</h4> <span data-bind="text: lastVersion.version">0.0.0</span>
+			<h4>Description</h4> 
+			(<span data-bind="text: lastVersion.version">0.0.0</span>)
+			<h5>Categories:</h5>
+			<div data-bind="foreach: categories">
+				<span data-bind="text: name">Generic</span>
+			</div>
 			<p data-bind="text: description" ></p>
 		</div>
 	</script>

@@ -76,6 +76,17 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 				@name = pmodel.get('name')
 				@imageURL = pmodel.get('imageURL')
 				@description = pmodel.get('description')
+				
+				@lastVersion = pmodel.get('lastVersion')
+				#The collection of  services
+				@services = pmodel.get('services')
+				#The collection of applications
+				@applications = pmodel.get('applications')
+				#The collection of categories of the product
+				@categories = pmodel.get('categories')
+
+
+				#These fields are used only to the template.
 				@shortDescription = ko.computed(()=>
 				 	if @description.length > 200
 				 		shortD = @description.substring(0,200) + "..."
@@ -95,9 +106,7 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 				@modalTabAppsId = @modalId + "_apps"
 				@modalTabAppsIdRef = "#" + @modalTabAppsId
 
-				@lastVersion = pmodel.get('lastVersion')
-				@services = pmodel.get('services')
-				@applications = pmodel.get('applications')
+				
 
 
 	class ProductViewModelCollection

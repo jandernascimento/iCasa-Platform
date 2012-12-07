@@ -30,26 +30,26 @@ public class ProductREST extends Controller {
 		} else if (form().bindFromRequest().get(PAGE) != null){
 			return productsPerPage(form().bindFromRequest().get(PAGE), form().bindFromRequest().get(PRODUCTS_PER_PAGE));
 		}
-		List<Product> allproducts = null;
-		allproducts = Product.all();
+		List<Product> allProducts = null;
+		allProducts = Product.all();
 		ArrayNode products = Json.newObject().arrayNode();
-		for (Product product : allproducts) {
+		for (Product product : allProducts) {
 			products.add(Product.toJson(product));
 		}
 		return ok(products);
 	}	
 	
 	public static Result topProducts(String topNumber){
-		List<Product> allproducts = null;
+		List<Product> allProducts = null;
 		int top = 10;
 		try{
 			top = Integer.valueOf(topNumber);
 		}catch(Exception ex){
 			top = 10;
 		}
-		allproducts = Product.getTopProducts(top);
+		allProducts = Product.getTopProducts(top);
 		ArrayNode products = Json.newObject().arrayNode();
-		for (Product product : allproducts) {
+		for (Product product : allProducts) {
 			products.add(Product.toJson(product));
 		}
 		return ok(products);
