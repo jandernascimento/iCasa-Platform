@@ -32,9 +32,8 @@ import java.util.Set;
  *
  */
 @Entity
-@Table(name="products")
+@Table(name="Product")
 public class Product extends Model  {
-
 
 	/**
 	 * 
@@ -56,12 +55,15 @@ public class Product extends Model  {
 	public String imageURL;
 
     @OneToMany (cascade=CascadeType.ALL)
-    @JoinTable(name = "productVersion")
-    public List<ProductVersion> productVersion;
+    @JoinTable(name = "ProductVersion")
+    public List<ProductVersion> versions;
 
+    @ManyToMany
+    @JoinTable(name = "Product_has_Category")
+    public List<Category> categories;
 
     @OneToOne
-    @JoinColumn(name="ProductVersion_id", referencedColumnName = "id")
+    @JoinColumn(name="productVersion_id", referencedColumnName = "id")
     public ProductVersion lastVersion;
 
 /*    @ManyToMany
@@ -119,8 +121,9 @@ public class Product extends Model  {
 		result.put("name", product.name);
 		result.put("description", product.description);
         result.put("imageURL", product.imageURL);
-        result.put("versions", ProductVersion.toJson(product.productVersion));
+        result.put("versions", ProductVersion.toJson(product.versions));
         result.put("lastVersion", ProductVersion.toJson(product.lastVersion));
+        result.put("categories", Category.toJson(product.categories));
 		return result;
 	}
 

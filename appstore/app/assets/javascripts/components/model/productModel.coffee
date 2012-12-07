@@ -10,10 +10,6 @@ define ['backbone'], (bb) ->
 	class ServiceModelCollection extends bb.Collection
 # 		url: '/services'
 		model: ServiceModel
-	
-	class ApplicationModelCollection extends bb.Collection
-# 		url: '/applications'
-		model: ApplicationModel
 
 	class ApplicationModel extends bb.Model
 # 		urlRoot: '/application'
@@ -21,6 +17,20 @@ define ['backbone'], (bb) ->
 			name: 'man'
 			description: 'mad'
 			version: '0.0.0'
+	
+	class ApplicationModelCollection extends bb.Collection
+# 		url: '/applications'
+		model: ApplicationModel
+
+	class CategoryModel extends bb.Model
+		defaults:
+			name: 'generic'
+			description: 'Generic product'
+
+	class CategoryModelCollection extends bb.Collection
+		model: CategoryModel
+
+
 	
 	class ProductModel extends bb.Model
 		constructor: ()->
@@ -32,6 +42,9 @@ define ['backbone'], (bb) ->
 			imageURL: 'assets/images/products/default.jpg'
 			versions: new bb.Collection()
 			lastVersion: new bb.Model()
+			applications: new ApplicationModelCollection()
+			services: new ServiceModelCollection()
+			categories: new CategoryModelCollection()
 
 	
 	class ProductModelCollection extends bb.Collection

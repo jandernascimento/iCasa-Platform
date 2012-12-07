@@ -28,8 +28,15 @@ public class ProductVersion {
     public int product_id;
 
     @ManyToOne
-    @JoinColumn(table = "products", name="product_id", referencedColumnName = "id")
+    @JoinColumn(table = "Product", name="product_id", referencedColumnName = "id")
     Product product;
+
+//    @ManyToMany
+//    @JoinTable(
+//            name="product_has_services",
+//            joinColumns={@JoinColumn(name="ProductVersion_id", referencedColumnName="ID")},
+//            inverseJoinColumns={@JoinColumn(name="ServiceVersion_id", referencedColumnName="version_id")})
+    List<Service> services;
 
     public static ObjectNode toJson(ProductVersion product){
         ObjectNode result = Json.newObject();

@@ -31,10 +31,12 @@ import java.util.List;
  *
  */
 @Entity
-@Table(name="services")
+@Table(name="Service")
 public class Service extends Model  {
 
 	private static final long serialVersionUID = 498903206959165812L;
+
+
 
 	@Id
 	@Column(name="id", length=25)
