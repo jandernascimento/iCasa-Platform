@@ -29,8 +29,7 @@
 	<name>${productName} :: ${projectName}</name>
 
 	<modules>
-		<module>icasa-asus-box</module>
         <module>icasa-dev</module>
-        <module>icasa-teaching-distribution</module>
+		<module>icasa-asus-box</module>
 	</modules>
 </project>

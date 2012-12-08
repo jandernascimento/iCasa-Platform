@@ -21,10 +21,10 @@
   
   <!-- Project parent -->
   <parent>
-	<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+	<groupId>fr.liglab.adele.common</groupId>
 	<artifactId>distribution.base</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<relativePath>../../../../distribution/base</relativePath>
+	<version>1.0.0-SNAPSHOT</version>
+	<relativePath></relativePath>
   </parent>
 
   <!-- Project coordinates -->
@@ -33,6 +33,9 @@
   <name>${productName} :: ${projectName}</name>
 
   <properties>
+      <productName>M2MAppBuilder</productName>
+      <productVersion>${m2mAppBuilderVersion}</productVersion>
+
       <!-- flag to flatten deployment packages -->
       <flattenDP>false</flattenDP>
   </properties>
@@ -44,15 +47,16 @@
 	<dependency>
 		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 		<artifactId>platform.core.dp</artifactId>
+        <version>${m2mAppBuilderVersion}</version>
 		<type>deployment-package</type>
 	</dependency>
 	<dependency>
-		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+		<groupId>fr.liglab.adele.common</groupId>
 		<artifactId>rose.dp</artifactId>
 		<type>deployment-package</type>
 	</dependency>
 	<dependency>
-		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+		<groupId>fr.liglab.adele.icasa</groupId>
 		<artifactId>icasa.core.dp</artifactId>
 		<type>deployment-package</type>
 	</dependency>

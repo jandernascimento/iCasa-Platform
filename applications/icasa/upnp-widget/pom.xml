@@ -15,10 +15,6 @@
   <name>${productName} :: ${projectName}</name>
 
   <dependencies>
-  	<dependency>
-      <groupId>fr.liglab.adele.icasa</groupId>
-      <artifactId>web.common</artifactId>
-    </dependency>
     <dependency>
       <groupId>fr.liglab.adele.icasa</groupId>
       <artifactId>device.api</artifactId>
