@@ -30,7 +30,6 @@
 
 	<modules>
 		<module>icasa-core-dp</module>
-		<module>icasa-ihm-dp</module>
 	</modules>
 
 </project>

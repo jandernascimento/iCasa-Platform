@@ -56,11 +56,6 @@
 		<artifactId>icasa.core.dp</artifactId>
 		<type>deployment-package</type>
 	</dependency>
-	<dependency>
-		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-		<artifactId>icasa.ihm.dp</artifactId>
-		<type>deployment-package</type>
-	</dependency>
 
       <!-- Play 2 applications-->
       <dependency>
