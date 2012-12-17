@@ -1,0 +1,24 @@
+{
+	"machine" : {
+		"id" : "appstore",
+		"host" : "localhost",
+
+		"connection" : 
+			[
+				{
+				"out" :
+						{
+						"service_filter" : "(appstore.exporter.protocol=jax-rs)",
+						"protocol" : ["jax-rs"], "exporter_filter" : "(instance.name=appstore.admin.exporter)"
+						}
+				}
+			],
+		"component" : [
+			{ 
+			  "factory" : "RoSe_exporter.jersey",
+			  "properties" : { "jersey.servlet.name" : "/appstore" , "instance.name":"appstore.admin.exporter"}
+			}
+		]
+		
+	}
+}
