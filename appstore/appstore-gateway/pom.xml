@@ -16,6 +16,35 @@
 			<groupId>org.apache.felix</groupId>
 			<artifactId>org.apache.felix.ipojo.annotations</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.compendium</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.ipojo.annotations</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.ow2.chameleon.json</groupId>
+			<artifactId>json-service-json.org</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.akquinet.gomobile</groupId>
+			<artifactId>deployment-package-api</artifactId>
+			<version>1.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -27,8 +56,18 @@
 				<configuration>
 					<instructions>
 						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-						<Private-Package>fr.imag.liglab.adele.appstore.gateway.api</Private-Package>
-						<Import-Package>${import.packages}</Import-Package> <!-- defined in bundle.properties -->
+						<Private-Package>
+							fr.imag.liglab.adele.appstore.gateway.api,
+							fr.imag.liglab.adele.appstore.gateway.util
+						</Private-Package>
+						<Import-Package>
+							javax.ws.rs, 
+							javax.ws.rs.core, 
+							org.osgi.framework,
+							org.osgi.service.deploymentadmin, 
+							org.ow2.chameleon.json,
+							org.slf4j
+						</Import-Package>
 					</instructions>
 				</configuration>
 			</plugin>

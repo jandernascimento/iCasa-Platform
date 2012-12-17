@@ -56,7 +56,7 @@
 						<resources>
 							<processedResource>
 								<processor>org.osgi.deployment.rp.autoload</processor>
-								<filePath>/src/main/resources/appstore-rest.rose</filePath>
+								<filePath>/src/main/resources/rose-conf-Appstore.json</filePath>
 							</processedResource>
 						</resources>
 					</deploymentPackage>

@@ -30,6 +30,7 @@
 
 	<modules>
 		<module>gateway-server.dp</module>
+		<module>distribution</module>
 	</modules>
 
 </project>

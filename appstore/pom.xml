@@ -30,7 +30,7 @@
 
 	<modules>
 		<module>appstore-gateway</module>
-		<module>appstore-server</module>
+		<!--module>appstore-server</module-->
 		<module>packages</module>
 	</modules>
 
