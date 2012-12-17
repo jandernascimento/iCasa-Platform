@@ -28,7 +28,8 @@
   </parent>
 
   <!-- Project coordinates -->
-  <artifactId>icasa.asus.box</artifactId>
+  <groupId>fr.liglab.adele.m2mappbuilder</groupId>
+  <artifactId>light.follow.me.and.icasa</artifactId>
   <packaging>pom</packaging>
   <name>${productName} :: ${projectName}</name>
 
@@ -36,8 +37,8 @@
       <productName>M2MAppBuilder</productName>
       <productVersion>${m2mAppBuilderVersion}</productVersion>
 
-    <!-- flag to flatten deployment packages -->
-    <flattenDP>true</flattenDP>
+      <!-- flag to flatten deployment packages -->
+      <flattenDP>true</flattenDP>
   </properties>
 
     <repositories>
@@ -58,63 +59,25 @@
   <!-- Project dependencies -->
   <dependencies>
 	
-	<!-- Device widgets -->
-	<dependency>
-  		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-		<artifactId>tikitag.widget</artifactId>
-        <version>${m2mAppBuilderVersion}</version>
-	</dependency>
-	<dependency>
-  		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-		<artifactId>upnp.widget</artifactId>
-        <version>${m2mAppBuilderVersion}</version>
-	</dependency>
-	<dependency>
-  		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-		<artifactId>x10.widget</artifactId>
-        <version>${m2mAppBuilderVersion}</version>
-	</dependency>
-	
 	<!-- deployed packages -->
 	<dependency>
-		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-		<artifactId>platform.core.dp</artifactId>
+        <groupId>fr.liglab.adele.m2mappbuilder</groupId>
+		<artifactId>light.follow.me.application</artifactId>
         <version>${m2mAppBuilderVersion}</version>
-		<type>deployment-package</type>
 	</dependency>
-	<dependency>
-		<groupId>fr.liglab.adele.common</groupId>
-		<artifactId>rose.dp</artifactId>
-		<type>deployment-package</type>
-	</dependency>
-	<!--dependency>
-		<groupId>fr.liglab.adele.common</groupId>
-		<artifactId>cilia.dp</artifactId>
-		<type>deployment-package</type>
-	</dependency-->
 	<dependency>
 		<groupId>fr.liglab.adele.icasa</groupId>
 		<artifactId>icasa.core.dp</artifactId>
 		<type>deployment-package</type>
 	</dependency>
-	<dependency>
-		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-		<artifactId>x10.presence.sensor.core.dp</artifactId>
-        <version>${m2mAppBuilderVersion}</version>
-		<type>deployment-package</type>
-	</dependency>
-	<dependency>
-		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-		<artifactId>upnp.settopbox.core.dp</artifactId>
-        <version>${m2mAppBuilderVersion}</version>
-		<type>deployment-package</type>
-	</dependency>
-	<dependency>
-		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-		<artifactId>tikitag.core.dp</artifactId>
-        <version>${m2mAppBuilderVersion}</version>
-		<type>deployment-package</type>
-	</dependency>
+
+      <!-- Play 2 applications-->
+      <dependency>
+          <groupId>fr.liglab.adele.icasa</groupId>
+          <artifactId>icasa.web</artifactId>
+          <version>${iCasaVersion}</version>
+          <type>zip</type>
+      </dependency>
 	
   </dependencies>
   
