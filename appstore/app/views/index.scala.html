@@ -70,12 +70,13 @@
 	<!--The template for the description tab in the modal window-->
 	<script type="text/html" id="modal-description-template">
 		<div class="well">
+			<h4>Categories:	<div data-bind="foreach: categories">
+					<span data-bind="text: '|' + name +'|'" >Generic</span>
+				</div>
+			</h4>
 			<h4>Description</h4> 
-			(<span data-bind="text: lastVersion.version">0.0.0</span>)
-			<h5>Categories:</h5>
-			<div data-bind="foreach: categories">
-				<span data-bind="text: name">Generic</span>
-			</div>
+			<span data-bind="text:'current version: ' + lastVersion.version">0.0.0</span>
+			
 			<p data-bind="text: description" ></p>
 		</div>
 	</script>

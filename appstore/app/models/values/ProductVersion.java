@@ -6,6 +6,7 @@ import play.libs.Json;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -37,6 +38,13 @@ public class ProductVersion {
 //            joinColumns={@JoinColumn(name="ProductVersion_id", referencedColumnName="ID")},
 //            inverseJoinColumns={@JoinColumn(name="ServiceVersion_id", referencedColumnName="version_id")})
     List<Service> services;
+
+        @ManyToMany
+    @JoinTable(
+            name="ProductVersion_has_ApplicationVersion",
+            joinColumns={@JoinColumn(name="ApplicationVersion_id", referencedColumnName="ID")},
+            inverseJoinColumns={@JoinColumn(name="ApplicationVersion_id", referencedColumnName="version_id")})
+        Set<ApplicationVersion> applicationVersions;
 
     public static ObjectNode toJson(ProductVersion product){
         ObjectNode result = Json.newObject();

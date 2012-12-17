@@ -66,10 +66,7 @@ public class Product extends Model  {
     @JoinColumn(name="productVersion_id", referencedColumnName = "id")
     public ProductVersion lastVersion;
 
-/*    @ManyToMany
-    public Set<Application> getApplications(){
-        return applications;
-    };*/
+
 	/**
 	 * To locate Products
 	 */
