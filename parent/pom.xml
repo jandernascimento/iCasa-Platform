@@ -68,6 +68,18 @@
 	<dependencyManagement>
 		<dependencies>
 
+            <!-- CXF -->
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-transports-http</artifactId>
+                <version>2.3.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-frontend-jaxws</artifactId>
+                <version>2.3.2</version>
+            </dependency>
+
 			<!-- UPNP -->
 			<dependency>
 				<groupId>org.apache.felix</groupId>
@@ -223,6 +235,28 @@
 				<artifactId>icasa.device.model.bridge</artifactId>
 				<version>${m2mAppBuilderVersion}</version>
 			</dependency>
+
+            <!-- Habits monitoring application -->
+            <dependency>
+                <groupId>fr.liglab.adele.m2mappbuilder</groupId>
+                <artifactId>event.webservice.mock.impl</artifactId>
+                <version>${m2mAppBuilderVersion}</version>
+            </dependency>
+            <dependency>
+                <groupId>fr.liglab.adele.m2mappbuilder</groupId>
+                <artifactId>event.webservice.api</artifactId>
+                <version>${m2mAppBuilderVersion}</version>
+            </dependency>
+            <dependency>
+                <groupId>fr.liglab.adele.m2mappbuilder</groupId>
+                <artifactId>event.webservice.impl</artifactId>
+                <version>${m2mAppBuilderVersion}</version>
+            </dependency>
+            <dependency>
+                <groupId>fr.liglab.adele.m2mappbuilder</groupId>
+                <artifactId>measure.generator</artifactId>
+                <version>${m2mAppBuilderVersion}</version>
+            </dependency>
 			
 		</dependencies>
 	</dependencyManagement>
