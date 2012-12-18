@@ -19,19 +19,18 @@
 		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 		<artifactId>parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../parent</relativePath>
+		<relativePath>../../parent</relativePath>
 	</parent>
 
 	<!-- Project Descrkiption -->
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>appstore-reactor</artifactId>
+	<artifactId>appstore-packages-reactor</artifactId>
 	<packaging>pom</packaging>
 	<name>${productName} :: ${projectName}</name>
 
 	<modules>
-		<module>appstore-gateway</module>
-		<!--module>appstore-server</module-->
-		<module>distributions</module>
+		<module>gateway-server.dp</module>
+		<module>minimal-distribution</module>
 	</modules>
 
 </project>
