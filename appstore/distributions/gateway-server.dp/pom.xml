@@ -15,7 +15,9 @@
 	<packaging>deployment-package</packaging>
 	<name>${productName} :: ${projectName}</name>
 
-
+       <properties>
+	       <mimpullVersion>1.4</mimpullVersion>
+       </properties>
 	<dependencies>
 		<dependency>
 			<groupId>fr.liglab.adele.m2mappbuilder</groupId>
@@ -41,6 +43,16 @@
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>jaxb-api-osgi</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey.contribs</groupId>
+			<artifactId>jersey-multipart</artifactId>
+			<version>${jerseyVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jvnet</groupId>
+			<artifactId>mimepull</artifactId>
+			<version>${mimpullVersion}</version>
 		</dependency>
 	</dependencies>
 

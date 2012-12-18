@@ -41,9 +41,14 @@
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.sun.jersey.contribs</groupId>
+			<artifactId>jersey-multipart</artifactId>
+			<version>${jerseyVersion}</version>
+		</dependency>
+		<dependency>
 			<groupId>de.akquinet.gomobile</groupId>
 			<artifactId>deployment-package-api</artifactId>
-			<version>1.0.1-SNAPSHOT</version>
+			<version>${deploymentPackageVersion}</version>
 		</dependency>
 	</dependencies>
 
@@ -63,6 +68,8 @@
 						<Import-Package>
 							javax.ws.rs, 
 							javax.ws.rs.core, 
+							com.sun.jersey.core.header, 
+							com.sun.jersey.multipart,
 							org.osgi.framework,
 							org.osgi.service.deploymentadmin, 
 							org.ow2.chameleon.json,
