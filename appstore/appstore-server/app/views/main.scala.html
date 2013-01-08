@@ -13,8 +13,6 @@
 <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
 
 
-
-
 </head>
 <body>
 	<div class="navbar navbar-inverse navbar-fixed-top">
@@ -24,18 +22,73 @@
 			</div>
 		</div>
 	</div>
-	<!-- <div class="container-fluid"> -->
-		<!-- <div class="row-fluid"> -->
-			<div data-spy="affix" data-offset-top="200" class="span3">@sidebar
-			</div>
-		<!-- <div> -->
-		<!-- <div class="row-fluid"> -->
+	<div class="span3">@sidebar
+	</div>
+
 		<div class="row-fluid">
 			<div class="span9 ">
 				<div class="well">@content</div>
 			</div>
-		<!-- </div> -->
-
 	</div>
+
+		
+
 </body>
+<!-- TEMPLATES-->
+		<!-- The template for the modal window with three tabs: description/services/applications-->
+		<script type="text/html" id="modal-product-template" >
+	        <div data-bind="attr:{id: modalId}" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	                <h3 id="myModalLabel" data-bind="text: name">Product Description</h3>
+	            </div>
+	            <div class="modal-body">
+	                <ul class="nav nav-tabs">
+	                    <li class="active"><a data-bind="attr:{href: modalTabDescriptionIdRef}" data-toggle="tab" >Description</a></li>
+	                    <li><a data-bind="attr:{href: modalTabServicesIdRef}" data-toggle="tab">Services</a></li>
+	                    <li><a data-bind="attr:{href: modalTabAppsIdRef}"data-toggle="tab">Applications</a></li>
+	                </ul>
+	            </div>
+	            <div class="tab-content">
+	                <div class="tab-pane active" data-bind="template: { name: 'modal-description-template', data: $data}, attr:{id: modalTabDescriptionId}">...</div>
+	                <div class="tab-pane" data-bind="template: { name: 'modal-service-template', data: $data} , attr:{id: modalTabServicesId}">...</div>
+	                <div class="tab-pane" data-bind="template: { name: 'modal-application-template', data: $data} , attr:{id: modalTabAppsId}">...</div>
+	            </div>
+	            <div class="modal-footer">
+	                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+	                <button class="btn btn-primary">Buy</button>
+	            </div>
+	        </div>
+		</script>
+		<!--The template for the description tab in the modal window-->
+		<script type="text/html" id="modal-description-template">
+			<div class="well">
+				<h4>Categories:	<div data-bind="foreach: categories">
+						<span data-bind="text: '|' + name +'|'" >Generic</span>
+					</div>
+				</h4>
+				<h4>Description</h4> 
+				<span data-bind="text:'current version: ' + lastVersion.version">0.0.0</span>
+				
+				<p data-bind="text: description" ></p>
+			</div>
+		</script>
+
+		<!--The template for the applications tab in the modal window-->
+		<script type="text/html" id="modal-service-template">
+			<div class="well">
+				<h4>Services</h4> <span data-bind="text: lastVersion.version">0.0.0</span>
+				<p data-bind="text: description" ></p>
+			</div>
+		</script>
+		<!--The template for the applications tab in the modal window-->
+		<script type="text/html" id="modal-application-template">
+			<div class="well">
+				<h4>Applications</h4> <span data-bind="text: lastVersion.version">0.0.0</span>
+				<p data-bind="text: description" ></p>
+			</div>
+		</script>
+
+
+<script src="@routes.Assets.at("javascripts/frameworks/require/require.js")" data-main="@routes.Assets.at("javascripts/usersPage")" > </script>
 </html>

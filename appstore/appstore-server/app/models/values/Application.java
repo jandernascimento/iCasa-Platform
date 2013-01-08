@@ -17,7 +17,10 @@
  */
 package models.values;
 
+import org.codehaus.jackson.node.ArrayNode;
+import org.codehaus.jackson.node.ObjectNode;
 import play.db.ebean.Model;
+import play.libs.Json;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,7 +36,7 @@ import java.util.List;
  *
  */
 @Entity
-@Table(name="applications")
+@Table(name="Application")
 public class Application extends Model  {
 
 	private static final long serialVersionUID = 7658036868515739627L;
@@ -60,5 +63,25 @@ public class Application extends Model  {
 	public static void remove(String identifier){
 		find.byId(identifier).delete();
 	}
+
+    public static ObjectNode toJson(Application application){
+        ObjectNode result = Json.newObject();
+        if (application != null) {
+            result.put("id", application.id);
+            result.put("name", application.name);
+            result.put("description", application.description);
+        }
+        return result;
+    }
+
+    public static ArrayNode toJson(List<Application> list){
+        ArrayNode result = Json.newObject().arrayNode();
+        if (list != null ){
+            for (Application application: list){
+                result.add(Application.toJson(application));
+            }
+        }
+        return result;
+    }
 	
 }

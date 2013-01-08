@@ -1,5 +1,20 @@
 define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','components/model/productModel'], ($,ui,bs,_,kb,ko, model) ->
 	
+	# The accordion first configuration used in buyed products
+	$(()->
+  		$(".accordion-products .hidden-table:not(maccordion)").hide()
+  		# $(".accordion-products table:first-child").show()
+  	)
+
+	#Register the knockout custom handler to handle clicks in accordion table
+	ko.bindingHandlers.bsAccordionTable = {
+		init: (element) ->
+			$(element).click(()->
+				$(element).nextAll(".hidden-table").fadeToggle("fast")
+			)
+			return { controlsDescendantBindings: false}
+	}
+
 	#Register the knockout custom handler to the carousel bootstrap effect
 	ko.bindingHandlers.bsPopover = {
 		init: (element, valueAccessor) ->
@@ -8,6 +23,7 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 			$(element).popover(@options)
 			return { controlsDescendantBindings: false}
 	}
+
 	#Register the knockout custom handler to the jQuery.ui toggle effect
 	ko.bindingHandlers.bsToggle = {
 		init: (element, valueAccessor) ->
@@ -48,52 +64,43 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 		constructor: (amodel) ->
 			@id = amodel.id
 			@name = ko.observable(amodel.name)
-			@description = ko.observable(amodel.name)
+			@description = ko.observable(amodel.description)
 			@version = ko.observable(amodel.version)
+		
+	class ProductViewModelBase extends kb.ViewModel
+		constructor:(@pmodel) ->
+			@id = pmodel.get('id')
+			@name = pmodel.get('name')
+			@imageURL = pmodel.get('imageURL')
+			@description = pmodel.get('description')
 			
-	class ProductViewModel extends kb.ViewModel
+			@lastVersion = pmodel.get('lastVersion')
+			#The collection of  services
+			@services = pmodel.get('services')
+			#The collection of applications
+			@applications = pmodel.get('applications')
+			#The collection of categories of the product
+			@categories = pmodel.get('categories')
+
+			#These fields are used only to the template.
+			@shortDescription = ko.computed(()=>
+			 	if @description.length > 100
+			 		shortD = @description.substring(0,100) + "..."
+			 	else
+			 		shortD = @description
+			 	shortD
+			 )
+
+	class ProductViewModel extends ProductViewModelBase
 		constructor: (@pmodel) ->
-			@id = @pmodel.get('id')
-			@name = @pmodel.get('name')
+			super
 			@classItem = "item"
-			# @firstElement = "firstElement"+ @id
-			# @secondElement = "secondElement"+ @id
-			@imageURL = @pmodel.get('imageURL')
-			@description = @pmodel.get('description')
-			# @shortDescription = ko.computed(()=>
-			#  	if @description.length > 200
-			#  		shortD = @description.substring(0,200) + "..."
-			#  	else
-			#  		shortD = @description
-			#  	shortD
-			#  )
 		saveModel: () ->
 			@pmodel.save()
 		
-	class ProductViewModelGrid extends kb.ViewModel
+	class ProductViewModelGrid extends ProductViewModelBase
 			constructor: (pmodel) ->
-				@id = pmodel.get('id')
-				@name = pmodel.get('name')
-				@imageURL = pmodel.get('imageURL')
-				@description = pmodel.get('description')
-				
-				@lastVersion = pmodel.get('lastVersion')
-				#The collection of  services
-				@services = pmodel.get('services')
-				#The collection of applications
-				@applications = pmodel.get('applications')
-				#The collection of categories of the product
-				@categories = pmodel.get('categories')
-
-
-				#These fields are used only to the template.
-				@shortDescription = ko.computed(()=>
-				 	if @description.length > 200
-				 		shortD = @description.substring(0,200) + "..."
-				 	else
-				 		shortD = @description
-				 	shortD
-				 )
+				super
 				@modalId = "modal" + @id
 				@modalIdRef = "#" + @modalId
 
@@ -107,7 +114,10 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 				@modalTabAppsIdRef = "#" + @modalTabAppsId
 
 				
-
+	class OwnedProductViewModelCollection
+		constructor:(pmodel) ->
+			@products = kb.collectionObservable(pmodel, {view_model: ProductViewModelBase})
+			console.log pmodel
 
 	class ProductViewModelCollection
 		constructor: (pmodel) ->
@@ -133,4 +143,4 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 				@.pageIndex++
 				@.pmodel.getNextPage(@.pageIndex, @.pageSize)
 
-	return {ProductViewModelCollection,ProductViewModel, ProductViewModelCollectionGrid}
+	return {ProductViewModelCollection,ProductViewModel, ProductViewModelBase, ProductViewModelCollectionGrid, OwnedProductViewModelCollection}

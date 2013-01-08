@@ -6,4 +6,15 @@ body {
 .sidebar-nav {
 	padding: 9px 0;
 }
-.tohide #accordion {display: none;}
+
+.center-table
+{
+  margin: 0 auto !important;
+  float: none !important;
+}
+
+#thumb-well {
+    width:300px;
+    height:230px;
+}
+

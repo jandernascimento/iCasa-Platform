@@ -121,6 +121,8 @@ public class Product extends Model  {
         result.put("versions", ProductVersion.toJson(product.versions));
         result.put("lastVersion", ProductVersion.toJson(product.lastVersion));
         result.put("categories", Category.toJson(product.categories));
+        result.put("applications", ProductVersion.getApplications(product.lastVersion));
+        //result.put("services", ProductVersion.getServices(product.lastVersion));
 		return result;
 	}
 

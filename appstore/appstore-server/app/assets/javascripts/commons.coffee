@@ -62,8 +62,8 @@ require.config({
         },
 
         'jquery.ui': {
-            deps: ['jquery',
-                'css!jquery.ui.dir/css/smoothness/jquery-ui-1.9.0.custom.modified'],
+            deps: ['jquery'],
+            #     'css!jquery.ui.dir/css/smoothness/jquery-ui-1.9.0.custom.modified'],
 
             exports: 'window.jQuery.ui'
         },

@@ -37,14 +37,11 @@ public class ProductVersion {
 //            name="product_has_services",
 //            joinColumns={@JoinColumn(name="ProductVersion_id", referencedColumnName="ID")},
 //            inverseJoinColumns={@JoinColumn(name="ServiceVersion_id", referencedColumnName="version_id")})
-    List<Service> services;
+    //List<Service> services;
 
-        @ManyToMany
-    @JoinTable(
-            name="ProductVersion_has_ApplicationVersion",
-            joinColumns={@JoinColumn(name="ApplicationVersion_id", referencedColumnName="ID")},
-            inverseJoinColumns={@JoinColumn(name="ApplicationVersion_id", referencedColumnName="version_id")})
-        Set<ApplicationVersion> applicationVersions;
+    @ManyToMany
+    @JoinTable(name="ProductVersion_has_ApplicationVersion")
+    List<ApplicationVersion> applicationVersions;
 
     public static ObjectNode toJson(ProductVersion product){
         ObjectNode result = Json.newObject();
@@ -65,6 +62,25 @@ public class ProductVersion {
         return result;
     }
 
+    public static ArrayNode getApplications(ProductVersion productVersion){
+        ArrayNode result = Json.newObject().arrayNode();
+        if (productVersion != null && productVersion.applicationVersions != null){
+            for (ApplicationVersion apVersion: productVersion.applicationVersions) {
+                     result.add(Application.toJson(apVersion.application));
+            }
+        }
+        return result;
+    }
+
+//    public static ArrayNode getServices(ProductVersion productVersion){
+//        ArrayNode result = Json.newObject().arrayNode();
+//        if (productVersion != null && productVersion.applicationVersions != null){
+//            for (ApplicationVersion apVersion: productVersion.applicationVersions) {
+//                result.add(Application.toJson(apVersion.application));
+//            }
+//        }
+//        return result;
+//    }
 
 
 }

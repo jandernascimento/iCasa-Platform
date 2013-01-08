@@ -33,6 +33,8 @@ GET      /products                          controllers.ProductController.produc
 
 GET      /api/products                          controllers.api.ProductREST.products()
 
+GET /api/owned/products                        controllers.api.ProductREST.ownedProducts()
+
 POST     /api/product                          controllers.api.ProductREST.addProduct()
 
 

@@ -4,6 +4,7 @@ import models.values.Product;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.BodyParser;
@@ -25,10 +26,14 @@ public class ProductREST extends Controller {
 	//@BodyParser.Of(play.mvc.BodyParser.Json.class)
 	public static Result products(){
         System.out.println("Getting products");
-		if (form().bindFromRequest().get(TOP_NUMBER) != null) {
-			return topProducts(form().bindFromRequest().get(TOP_NUMBER));
-		} else if (form().bindFromRequest().get(PAGE) != null){
-			return productsPerPage(form().bindFromRequest().get(PAGE), form().bindFromRequest().get(PRODUCTS_PER_PAGE));
+        DynamicForm requestData = form().bindFromRequest();
+        System.out.println("get params: " + requestData.toString());
+        if (requestData.get(TOP_NUMBER) != null) {
+            System.out.println("Getting top products");
+            return topProducts(requestData.get(TOP_NUMBER));
+        } else if (requestData.get(PAGE) != null){
+            System.out.println("Getting products per page");
+			return productsPerPage(requestData.get(PAGE), requestData.get(PRODUCTS_PER_PAGE));
 		}
 		List<Product> allProducts = null;
 		allProducts = Product.all();
@@ -54,10 +59,20 @@ public class ProductREST extends Controller {
 		}
 		return ok(products);
 	}
-	
+
+    public static Result ownedProducts(){
+        List<Product> allProducts = null;
+        int top = 10;
+        allProducts = Product.getTopProducts(top);
+        ArrayNode products = Json.newObject().arrayNode();
+        for (Product product : allProducts) {
+            products.add(Product.toJson(product));
+        }
+        return ok(products);
+    }
+
 	public static Result productsPerPage(String page, String productsPerPage){
 		List<Product> allproducts = null;
-		System.out.println("calling products per page" + page + " " + productsPerPage);
 		int _page;
 		int _productsPerPage;
 		try{

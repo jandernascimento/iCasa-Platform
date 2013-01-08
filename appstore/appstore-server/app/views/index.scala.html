@@ -1,100 +1,109 @@
 @() 
 @import helper._ 
 @main("Appstore") {@userMenu.render}{
-	<h1>Just A Simple AppStore</h1>
-	<div id="myCarousel" class="carousel slide">
-		<!-- Carousel items -->
-		<div class="carousel-inner" data-bind="foreach: products">
-			<div data-bind="attr: {class: classItem}"> 
-				<center>
-				<a href="#" >
-            		<img data-bind="attr: {src: imageURL}" alt=""> 
-                </a>
-                </center>
-                <div class="carousel-caption">
-	                <h4 data-bind="text: name"></h4>
-	                <p data-bind="text: description"></p>
-             	</div>
-             </div>
-		</div>
-		<!-- Carousel nav -->
-		<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-		<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
-	</div>
-	<div class ="row offset1">
-		<div   id="product_list" >
- 			<div   id="product_list" data-bind="foreach: products">
-				<div >
-					<div style="width:300px;height:230px" class="span3 well" data-bind="bsToggle:{}"> 
-						<div style="z-index:0" >
-							<img  data-bind="attr:{src: imageURL}" />
-						</div>
-						<div style="z-index:0">
-							<p>
-							    <button data-bind="attr:{href: modalIdRef}" data-toggle="modal" >Details</button> 
-							 </p>
-							  <h3 data-bind="text: name">Loading</h3>
-							  <p data-bind="text: shortDescription">Loading</p>
+<!-- Users Main page, right side pane-->
+	<div class="tab-content">
+		<!-- Main pane, list of available products-->
+		<div class="tab-pane active" id="products">
+			<h1>Just A Simple AppStore</h1>
+			<div id="myCarousel" class="carousel slide">
+				<!-- Carousel items -->
+				<div class="carousel-inner" data-bind="foreach: products">
+					<div data-bind="attr: {class: classItem}"> 
+						<center>
+						<a href="#" >
+		            		<img data-bind="attr: {src: imageURL}" alt=""> 
+		                </a>
+		                </center>
+		                <div class="carousel-caption">
+			                <h4 data-bind="text: name"></h4>
+			                <p data-bind="text: description"></p>
+		             	</div>
+		             </div>
+				</div>
+				<!-- Carousel nav -->
+				<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+				<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+			</div>
+			<div class ="row offset1">
+				<div   id="product_list" >
+		 			<div  id="product_list" data-bind="foreach: products">
+						<div >
+							<div id="thumb-well" class="span3 well" data-bind="bsToggle:{}"> 
+								<div style="z-index:0" >
+									<img  data-bind="attr:{src: imageURL}" />
+								</div>
+								<div style="z-index:0">
+									<p>
+									    <button data-bind="attr:{href: modalIdRef}" data-toggle="modal" >Details</button> 
+									 </p>
+									  <h3 data-bind="text: name">Loading</h3>
+									  <p data-bind="text: shortDescription">Loading</p>
+								</div>
+							</div>
 						</div>
 					</div>
+					<div data-bind="template: { name: 'modal-product-template', foreach: products}"></div>
 				</div>
 			</div>
-			<div data-bind="template: { name: 'modal-product-template', foreach: products}"></div>
 		</div>
+		<!-- Main pane, list of purshased products-->
+		<div class="tab-pane" id="ownedProducts">
+			<div class="page-header">
+            	<h3>Purshased products</h3>
+         	</div>
+			<div id="purshased-products" data-bind="foreach: products">
+
+		 		<div class="accordion-products ">
+		 			<div class="maccordion" data-bind="bsAccordionTable:{}">
+		 				<ul class="nav nav-list">
+							<li><h4><a href="#" data-bind="text: name"></a></h4>
+							</li>	
+						</ul> 				
+					</div>
+					<div class="hidden-table">
+						<p data-bind="text: description"></p>
+					</div>
+					<div class="well hidden-table">
+			 			<table class="table table-bordered table-condensed">
+							<thead >
+								<tr>
+									<th>Application ID</th>
+									<th>Name</th>
+									<th>Short Description</th>
+								 </tr>
+							</thead>
+							<tbody>
+								<!--ko foreach: applications -->
+									<tr>
+										<td data-bind="text: id"></td>
+										<td data-bind="text: name"></td>
+										<td data-bind="text: description"></td>
+									</tr>
+								<!--/ko -->
+							</tbody>
+			 			</table>
+			 			<table class="table table-bordered table-condensed">
+							<thead >
+								<tr>
+									<th>Service ID</th>
+									<th>Name</th>
+									<th>Short Description</th>
+								 </tr>
+							</thead>
+							<tbody>
+								<!--ko foreach: services -->
+									<tr>
+										<td data-bind="text: id"></td>
+										<td data-bind="text: name"></td>
+										<td data-bind="text: description"></td>
+									</tr>
+								<!--/ko -->
+							</tbody>
+			 			</table>
+		 			</div>
+				</div> 
+	  		</div>
 	</div>
-	<!-- The template for the modal window with three tabs: description/services/applications-->
-	<script type="text/html" id="modal-product-template">
-		<div data-bind="attr:{id: modalId}" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-header">
-		    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		    <h3 id="myModalLabel" data-bind="text: name">Product Description</h3>
-		  </div>
-		  <div class="modal-body">
-		  	<ul class="nav nav-tabs">
-			  <li class="active"><a data-bind="attr:{href: modalTabDescriptionIdRef}" data-toggle="tab" >Description</a></li>
-			  <li><a data-bind="attr:{href: modalTabServicesIdRef}" data-toggle="tab">Services</a></li>  
-			  <li><a data-bind="attr:{href: modalTabAppsIdRef}"data-toggle="tab">Applications</a></li>
-			</ul>
-		  </div>
-		  <div class="tab-content">
-			  <div class="tab-pane active" data-bind="template: { name: 'modal-description-template', data: $data}, attr:{id: modalTabDescriptionId}">...</div>
-			  <div class="tab-pane" data-bind="template: { name: 'modal-service-template', data: $data} , attr:{id: modalTabServicesId}">...</div>
-			  <div class="tab-pane" data-bind="template: { name: 'modal-application-template', data: $data} , attr:{id: modalTabAppsId}">...</div>
-		</div>
-		  <div class="modal-footer">
-		    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-		    <button class="btn btn-primary">Buy</button>
-		  </div>
-		</div>
-	</script>
-	<!--The template for the description tab in the modal window-->
-	<script type="text/html" id="modal-description-template">
-		<div class="well">
-			<h4>Categories:	<div data-bind="foreach: categories">
-					<span data-bind="text: '|' + name +'|'" >Generic</span>
-				</div>
-			</h4>
-			<h4>Description</h4> 
-			<span data-bind="text:'current version: ' + lastVersion.version">0.0.0</span>
-			
-			<p data-bind="text: description" ></p>
-		</div>
-	</script>
 
-	<!--The template for the applications tab in the modal window-->
-	<script type="text/html" id="modal-service-template">
-		<div class="well">
-			<h4>Services</h4> <span data-bind="text: lastVersion.version">0.0.0</span>
-			<p data-bind="text: description" ></p>
-		</div>
-	</script>
-	<!--The template for the applications tab in the modal window-->
-	<script type="text/html" id="modal-application-template">
-		<div class="well">
-			<h4>Applications</h4> <span data-bind="text: lastVersion.version">0.0.0</span>
-			<p data-bind="text: description" ></p>
-		</div>
-	</script>
-
-	<script src="@routes.Assets.at("javascripts/frameworks/require/require.js")" data-main="@routes.Assets.at("javascripts/usersPage")" > </script>
 }

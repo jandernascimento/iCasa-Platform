@@ -46,7 +46,10 @@ define ['backbone'], (bb) ->
 			services: new ServiceModelCollection()
 			categories: new CategoryModelCollection()
 
-	
+	class OwnedProductModelCollection extends bb.Collection
+		model: ProductModel
+		url: 'api/owned/products'
+
 	class ProductModelCollection extends bb.Collection
 
 		url: 'api/products'
@@ -57,11 +60,14 @@ define ['backbone'], (bb) ->
 		getTopProducts: (topProducts) ->
 			@.fetch({ data: $.param({ topNumber: topProducts})})
 
+		getBuyed:()->
+			@.fetch({ data: $.param({ topNumber: topProducts})})
+
 		getNextPage:(currentPage, productsPerPage) ->
 			@.fetch({ data: $.param({ page: currentPage, productsPerPage: productsPerPage}), add: true})
 		parse: (response) ->
 			#test if the list of products is located in an internal list called products
-			console.log response
+			#console.log response
 			if response.totalPages
 				@.totalPages = response.totalPages
 			if response.products
@@ -69,4 +75,4 @@ define ['backbone'], (bb) ->
    		 	else
    		 		return response
 
-	return {ProductModelCollection, ProductModel,ApplicationModel,ServiceModel}
+	return {ProductModelCollection, ProductModel,ApplicationModel,ServiceModel, OwnedProductModelCollection}
