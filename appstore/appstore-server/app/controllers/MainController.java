@@ -27,9 +27,8 @@ import securesocial.core.java.SecureSocial;
  *
  */
 public class MainController extends Controller {
-    //@SecureSocial.SecuredAction
+    @SecureSocial.SecuredAction
 	public static Result index(){
-
-		return ok(views.html.index.render());
+    	return ok(views.html.index.render());
 	}
 }

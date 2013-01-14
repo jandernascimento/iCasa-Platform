@@ -1,4 +1,4 @@
-define ['backbone'], (bb) ->
+define ['backbone', 'relational'], (bb,Relational) ->
  
 	class ServiceModel extends bb.Model
 # 		urlRoot: '/service'
@@ -17,6 +17,7 @@ define ['backbone'], (bb) ->
 			name: 'man'
 			description: 'mad'
 			version: '0.0.0'
+	# ApplicationModel.setup()
 	
 	class ApplicationModelCollection extends bb.Collection
 # 		url: '/applications'
@@ -33,6 +34,7 @@ define ['backbone'], (bb) ->
 
 	
 	class ProductModel extends bb.Model
+
 		constructor: ()->
 			super
 		urlRoot: 'api/product'
@@ -45,6 +47,16 @@ define ['backbone'], (bb) ->
 			applications: new ApplicationModelCollection()
 			services: new ServiceModelCollection()
 			categories: new CategoryModelCollection()
+		# relations: [{
+		# 	type: Relational.HasMany
+		# 	key: 'applications'
+		# 	relatedModel: 'ApplicationModel'
+		# 	reverseRelation: {
+		# 		key: 'product',
+		# 	}
+		# }]
+		
+	# ProductModel.setup()
 
 	class OwnedProductModelCollection extends bb.Collection
 		model: ProductModel
@@ -67,7 +79,7 @@ define ['backbone'], (bb) ->
 			@.fetch({ data: $.param({ page: currentPage, productsPerPage: productsPerPage}), add: true})
 		parse: (response) ->
 			#test if the list of products is located in an internal list called products
-			#console.log response
+			console.log response
 			if response.totalPages
 				@.totalPages = response.totalPages
 			if response.products

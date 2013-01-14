@@ -1,4 +1,4 @@
-define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','components/model/productModel'], ($,ui,bs,_,kb,ko, model) ->
+define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','components/model/productModel','backbone'], ($,ui,bs,_,kb,ko, model,bb) ->
 	
 	# The accordion first configuration used in buyed products
 	$(()->
@@ -55,17 +55,18 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 
 	class ServiceViewModel extends kb.ViewModel
 		constructor: (smodel) ->
-			@id = smodel.id
-			@name = ko.observable(smodel.name)
-			@description = ko.observable(smodel.name)
-			@version = ko.observable(smodel.version)
+			@id = smodel.get('id')
+			@name = ko.observable(smodel.get('name'))
+			@description = ko.observable(smodel.get('name'))
+			@version = ko.observable(smodel.get('version'))
 			
 	class ApplicationViewModel extends kb.ViewModel
 		constructor: (amodel) ->
-			@id = amodel.id
-			@name = ko.observable(amodel.name)
-			@description = ko.observable(amodel.description)
-			@version = ko.observable(amodel.version)
+			@id = amodel.get('id')
+			@name = ko.observable(amodel.get('name'))
+			@description = ko.observable(amodel.get('description'))
+			@version = ko.observable(amodel.get('version'))
+			console.log "Creating application view model" + @id
 		
 	class ProductViewModelBase extends kb.ViewModel
 		constructor:(@pmodel) ->
@@ -78,7 +79,8 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 			#The collection of  services
 			@services = pmodel.get('services')
 			#The collection of applications
-			@applications = pmodel.get('applications')
+			#@applications = pmodel.get('applications')
+			@applications = kb.collectionObservable(new bb.Collection(pmodel.get('applications')), {view_model: ApplicationViewModel})
 			#The collection of categories of the product
 			@categories = pmodel.get('categories')
 
@@ -91,6 +93,12 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 			 	shortD
 			 )
 
+	class ProductViewModelOwned extends ProductViewModelBase
+		constructor: (@pmodel) ->
+			super
+			@modalId = "modal-application-owned-" + @id
+			@modalIdRef = "#" + @modalId
+
 	class ProductViewModel extends ProductViewModelBase
 		constructor: (@pmodel) ->
 			super
@@ -99,19 +107,19 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 			@pmodel.save()
 		
 	class ProductViewModelGrid extends ProductViewModelBase
-			constructor: (pmodel) ->
-				super
-				@modalId = "modal" + @id
-				@modalIdRef = "#" + @modalId
+		constructor: (pmodel) ->
+			super
+			@modalId = "modal-product-grid" + @id
+			@modalIdRef = "#" + @modalId
 
-				@modalTabDescriptionId = @modalId + "_desc"
-				@modalTabDescriptionIdRef = "#" + @modalTabDescriptionId
+			@modalTabDescriptionId = @modalId + "_desc"
+			@modalTabDescriptionIdRef = "#" + @modalTabDescriptionId
 
-				@modalTabServicesId = @modalId + "_serv"
-				@modalTabServicesIdRef = "#" + @modalTabServicesId
+			@modalTabServicesId = @modalId + "_serv"
+			@modalTabServicesIdRef = "#" + @modalTabServicesId
 
-				@modalTabAppsId = @modalId + "_apps"
-				@modalTabAppsIdRef = "#" + @modalTabAppsId
+			@modalTabAppsId = @modalId + "_apps"
+			@modalTabAppsIdRef = "#" + @modalTabAppsId
 
 				
 	class OwnedProductViewModelCollection

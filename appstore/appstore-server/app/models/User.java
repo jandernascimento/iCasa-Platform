@@ -20,7 +20,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @Entity
-@Table(name="users")
+@Table(name="User")
 public class User extends Model {
 
 
@@ -64,7 +64,11 @@ public class User extends Model {
         System.out.println("Writing user on the DB");
         newUser.username = user.id.id;
         newUser.userId = user.id.id ;
-        newUser.fullname = user.fullName;
+        if (user.fullName != null){
+            newUser.fullname = user.fullName;
+        } else {
+            newUser.fullname = newUser.username;
+        }
         newUser.email = user.email;
         newUser.provider = user.id.provider;
         newUser.authMethod = AuthenticationMethod.toSala(user.authMethod).method();
@@ -77,6 +81,7 @@ public class User extends Model {
         } else if (user.authMethod == AuthenticationMethod.OAUTH2){
             newUser.password = user.oAuth2Info.accessToken;
         }
+        System.out.println("Fullname" + user.fullName);
         newUser.save();
     }
 
@@ -88,7 +93,7 @@ public class User extends Model {
             socialUser.id = new UserId();
             socialUser.id.id = userId;
             socialUser.id.provider = user.provider;
-            socialUser.fullName = user.username;
+            socialUser.fullName = user.fullname;
             socialUser.avatarUrl = null;
             socialUser.email = user.email;
 

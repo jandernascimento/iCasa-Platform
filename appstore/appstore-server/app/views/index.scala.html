@@ -52,8 +52,8 @@
 			<div class="page-header">
             	<h3>Purshased products</h3>
          	</div>
-			<div id="purshased-products" data-bind="foreach: products">
-
+         	<!--ko foreach: products -->
+			<div id="purshased-products">
 		 		<div class="accordion-products ">
 		 			<div class="maccordion" data-bind="bsAccordionTable:{}">
 		 				<ul class="nav nav-list">
@@ -70,7 +70,7 @@
 								<tr>
 									<th>Application ID</th>
 									<th>Name</th>
-									<th>Short Description</th>
+									<th colspan="2">Description</th>
 								 </tr>
 							</thead>
 							<tbody>
@@ -79,6 +79,16 @@
 										<td data-bind="text: id"></td>
 										<td data-bind="text: name"></td>
 										<td data-bind="text: description"></td>
+										<td>
+											<div class="dropdown">
+												<a class="dropdown-toggle" id="drop5" role="button" data-toggle="dropdown" href="#">Install on<b class="caret"></b></a>
+												<ul id="menu3" class="dropdown-menu" role="menu" aria-labelledby="drop5">
+													<li><a tabindex="-1" href="#">Dispositive 1</a></li>
+													<li><a tabindex="-1" href="#">Dispositive 2</a></li>
+												</ul>
+											</div>
+										</td>
+										<!-- <td ><button  data-toggle="modal" >Install</button> </td> -->
 									</tr>
 								<!--/ko -->
 							</tbody>
@@ -88,7 +98,7 @@
 								<tr>
 									<th>Service ID</th>
 									<th>Name</th>
-									<th>Short Description</th>
+									<th>Description</th>
 								 </tr>
 							</thead>
 							<tbody>
@@ -104,6 +114,7 @@
 		 			</div>
 				</div> 
 	  		</div>
+	  		<!-- /ko -->
 	</div>
 
 }

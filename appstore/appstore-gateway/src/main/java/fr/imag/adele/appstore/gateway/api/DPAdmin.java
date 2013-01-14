@@ -8,12 +8,14 @@ import java.util.Map;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 
 import org.apache.felix.ipojo.annotations.Component;
@@ -33,76 +35,111 @@ import com.sun.jersey.multipart.FormDataParam;
 
 import fr.imag.adele.appstore.gateway.util.DPResourceManipulator;
 
-
-@Component(name="deployment-admin-rest-api")
-@Instantiate(name="deployment-admin-rest-api-0")
-@Provides(specifications={DPAdmin.class}, properties= {
-		@StaticServiceProperty(name="appstore.exporter.protocol", type="java.lang.String", value="jax-rs")})
-@Path(value="/")
+@Component(name = "deployment-admin-rest-api")
+@Instantiate(name = "deployment-admin-rest-api-0")
+@Provides(specifications = { DPAdmin.class }, properties = { @StaticServiceProperty(name = "appstore.exporter.protocol", type = "java.lang.String", value = "jax-rs") })
+@Path(value = "/")
 public class DPAdmin {
 
 	@Requires
-	private JSONService jsonservice; //JsonService, in order to parse request and build responses
-	
+	private JSONService jsonservice; // JsonService, in order to parse request
+										// and build responses
+
 	@Requires
 	private DeploymentAdmin dadmin;
-	
-	protected static Logger coreLogger = LoggerFactory.getLogger("appstore.logger");
 
+	protected static Logger coreLogger = LoggerFactory
+			.getLogger("appstore.logger");
+
+	private Response makeCORS(ResponseBuilder req) {
+		ResponseBuilder rb = req
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods",
+						"GET, POST, PUT, DELETE, OPTIONS")
+				.header("Access-Control-Expose-Headers",
+						"X-Cache-Date, X-Atmosphere-tracking-id")
+				.header("Access-Control-Allow-Headers",
+						"Origin, Content-Type, X-Atmosphere-Framework, X-Cache-Date, X-Atmosphere-Tracking-id, X-Atmosphere-Transport")
+				.header("Access-Control-Max-Age", "-1")
+				.header("Pragma", "no-cache");
+
+		return rb.build();
+	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/applications/")
 	public Response getInstalledApplications() {
 		DeploymentPackage[] installed = dadmin.listDeploymentPackages();
-		List<Map<String, String>> installedInfo = DPResourceManipulator.toList(installed);
-		String result = jsonservice.toJSON(Collections.singletonMap("installedPackages", installedInfo));
-		return Response.ok(result).build();
+		List<Map<String, String>> installedInfo = DPResourceManipulator
+				.toList(installed);
+		String result = jsonservice.toJSON(Collections.singletonMap(
+				"installedPackages", installedInfo));
+		return makeCORS(Response.ok(result));
+	}
+
+	@OPTIONS
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/applications/")
+	public Response getInstalledApplicationsOptions() {
+		return makeCORS(Response.ok());
+	}
+	
+	@OPTIONS
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/applications/{name}")
+	public Response getApplicationOptions(@PathParam("name") String name) {
+		return makeCORS(Response.ok());
 	}
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/applications/{name}")
-	public Response getApplication(@PathParam("name")String name) {
+	public Response getApplication(@PathParam("name") String name) {
 		DeploymentPackage ipackage = dadmin.getDeploymentPackage(name);
 		if (ipackage == null) {
-			return Response.status(Status.NOT_FOUND).build();
+			return makeCORS(Response.status(Status.NOT_FOUND));
 		}
-		String result = jsonservice.toJSON(DPResourceManipulator.toMap(ipackage));
-		return Response.ok(result).build();
+		String result = jsonservice.toJSON(DPResourceManipulator
+				.toMap(ipackage));
+		return makeCORS(Response.ok(result));
 	}
-	
+
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Path("/applications/")
-	public Response installApplication(@FormDataParam("file") InputStream uploadedInputStream,
+	public Response installApplication(
+			@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail) {
 		DeploymentPackage newPackage = null;
 		try {
 			newPackage = dadmin.installDeploymentPackage(uploadedInputStream);
 		} catch (DeploymentException e) {
 			e.printStackTrace();
-			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+			return makeCORS(Response.status(Status.INTERNAL_SERVER_ERROR));
 		}
-		return Response.ok(jsonservice.toJSON(DPResourceManipulator.toMap(newPackage))).build();
+		return makeCORS(Response.ok(
+				jsonservice.toJSON(DPResourceManipulator.toMap(newPackage)))
+				);
 	}
-	
+
 	@DELETE
 	@Path("/applications/{name}")
-	public Response removeApplication(@PathParam("name")String name) {
+	public Response removeApplication(@PathParam("name") String name) {
 		DeploymentPackage ipackage = dadmin.getDeploymentPackage(name);
 		if (ipackage == null) {
-			return Response.status(Status.NOT_FOUND).build();
+			return makeCORS(Response.status(Status.NOT_FOUND));
 		}
 		try {
 			ipackage.uninstallForced();
 		} catch (DeploymentException e) {
 			e.printStackTrace();
-			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+			return makeCORS(Response.status(Status.INTERNAL_SERVER_ERROR));
 		}
-		String result = jsonservice.toJSON(DPResourceManipulator.toMap(ipackage));
-		return Response.ok(result).build();
+		String result = jsonservice.toJSON(DPResourceManipulator
+				.toMap(ipackage));
+		return makeCORS(Response.ok(result));
 	}
-	
+
 }

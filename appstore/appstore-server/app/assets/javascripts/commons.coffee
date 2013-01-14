@@ -21,6 +21,7 @@ require.config({
         'jquery.mobile' : 'frameworks/jquery/mobile/1.2.0/jquery.mobile-1.2.0.min',
         'knockback' : 'frameworks/knockback/knockback-core', # AMD module
         'knockout' : 'frameworks/knockout/knockout-2.1.0', # AMD module
+        'relational' : 'frameworks/backbone-relational/backbone-relational',
         'modernizr' : 'frameworks/modernizr/modernizr.custom.min',
         'sammy' : 'frameworks/sammy/sammy-latest.min', # AMD module
         'templates' : 'templates',
@@ -45,6 +46,10 @@ require.config({
             #module value.
             exports: 'Backbone'
         },
+        'relational': {
+              deps: ['underscore', 'jquery', 'backbone'],
+              exports: "Backbone"
+         },
 
         'bootstrap': [
             'jquery'#,
