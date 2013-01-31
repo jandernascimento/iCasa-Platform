@@ -16,152 +16,104 @@
 package fr.liglab.adele.m2mappbuilder.light.follow.me;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import fr.liglab.adele.icasa.device.DeviceListener;
 import fr.liglab.adele.icasa.device.GenericDevice;
 import fr.liglab.adele.icasa.device.light.BinaryLight;
 import fr.liglab.adele.icasa.device.presence.PresenceSensor;
 
-public class LightFollowMeApplication {
+public class LightFollowMeApplication implements DeviceListener {
 
-    /**
-     * Liste contenant l'ensemble des lampes de la maison :
-     */
-    List<BinaryLight> binaryLights = new ArrayList<BinaryLight>();
+	public static String LOCATION_PROPERTY_NAME = "Location";
+	public static String LOCATION_UNKNOWN = "unknown";	
+	
+	private Map<String, PresenceSensor> detectors;
+	
+	private List<BinaryLight> lights;
+	
+	
+	public void bindDetector(PresenceSensor detector) {
+		detector.addListener(this);
+		detectors.put(detector.getSerialNumber(), detector);		
+	}
 
-    /**
-     * Liste contenant l'ensemble des detecteurs de présence de la maison :
-     */
-    List<PresenceSensor> presenceSensors = new ArrayList<PresenceSensor>();
+	public void unbindDetector(PresenceSensor detector) {
+		detector.removeListener(this);
+		detectors.remove(detector.getSerialNumber());
+	}
+	
+	public void bindLight(BinaryLight light) {
+		lights.add(light);
+	}
 
-    PresenceSensorListener presenceSensorListener = new PresenceSensorListener();
+	public void unbindLight(BinaryLight light) {
+		lights.remove(light);
+	}
+	
+	
+	public void start() {
+		detectors = new HashMap<String, PresenceSensor>();
+		lights = new ArrayList<BinaryLight>();
+	}
+
+	public void stop() {
+		detectors = null;
+		lights = null;
+	}
+	
+	private List<BinaryLight> getLigthByLocation(String location) {
+		List<BinaryLight> sameLocationLigths = new ArrayList<BinaryLight>();
+		for (BinaryLight light : lights) {
+			String lightLocation = (String) light.getPropertyValue(LOCATION_PROPERTY_NAME);
+			if (lightLocation.equals(location))
+				sameLocationLigths.add(light);
+		}
+		return sameLocationLigths;
+	}
+	
+	
+	@Override
+	public void devicePropertyModified(GenericDevice device, String propertyName, Object oldValue) {
+		PresenceSensor detector = detectors.get(device.getSerialNumber());
+		if (detector!=null && propertyName.equals(PresenceSensor.PRESENCE_SENSOR_SENSED_PRESENCE)) {
+			String detectorLocation = (String)detector.getPropertyValue(LOCATION_PROPERTY_NAME);
+			if (!detectorLocation.equals(LOCATION_UNKNOWN)) {
+				List<BinaryLight> sameLocationLigths = getLigthByLocation(detectorLocation);
+				for (BinaryLight binaryLight : sameLocationLigths) {
+					binaryLight.setPowerStatus(!(Boolean) oldValue);						
+				}				
+			}
+		}				
+	}
+		
+	
+	@Override
+	public void deviceAdded(GenericDevice arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void devicePropertyAdded(GenericDevice arg0, String arg1) {
+		// TODO Auto-generated method stub
+		
+	}
 
 
-    /** Bind Method for binaryLights dependency */
-    public void bindBinaryLight(BinaryLight binaryLight) {
-        //ajoutte la nouvelle lampe à la liste des lampes
-        binaryLights.add(binaryLight);
-        System.out.println("Add lamp "+ binaryLight);
-    }
 
-    /** Unbind Method for binaryLights dependency */
-    public void unbindBinaryLight(BinaryLight binaryLight) {
-        //Retire la lampe de la liste des lampes
-        binaryLights.remove(binaryLight);
-        System.out.println("Remove lamp "+ binaryLight);
-    }
+	@Override
+	public void devicePropertyRemoved(GenericDevice arg0, String arg1) {
+		// TODO Auto-generated method stub
+		
+	}
 
-    /** Bind Method for presenceSensors dependency */
-    public void bindPresenceSensor(PresenceSensor presenceSensor) {
-        //ajoutte le nouveau détecteur à la liste des detecteurs
-        presenceSensors.add(presenceSensor);
-        System.out.println("Add presence detector "+ presenceSensor);
-
-        //enrigistrement du listener d'evennement :
-        presenceSensor.addListener(presenceSensorListener);
-    }
-
-    /** Unbind Method for presenceSensors dependency */
-    public void unbindPresenceSensor(PresenceSensor presenceSensor) {
-        //Retire le detecteur de la liste des detecteurs
-        presenceSensors.remove(presenceSensor);
-        System.out.println("Remove presence detector "+ presenceSensor);
-
-        presenceSensor.removeListener(presenceSensorListener);
-    }
-
-    /** Component Lifecycle Method */
-    public void stop() {
-        System.out.println("The follow me is stopping");
-    }
-
-    /** Component Lifecycle Method */
-    public void start() {
-        System.out.println("The follow me is starting");
-    }
-
-    /**
-     * Cherche le PresenceSensor possédant le sn donné
-     * @param deviceSerialNumber : le sn recherché
-     * @return le sensor ou null si non trouvé.
-     */
-    public PresenceSensor getPresenceSensor(String deviceSerialNumber){
-        for (PresenceSensor sensor : presenceSensors) {
-            if (sensor.getSerialNumber().equals(deviceSerialNumber)){
-                return sensor;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Retourne les lampes dans la piece donnée
-     * @param location : la piece cherchée
-     * @return les lampes de la piéce
-     */
-    public List<BinaryLight> getBinaryLightFromLocation(String location){
-        List<BinaryLight> ligths = new ArrayList<BinaryLight>();
-        for (BinaryLight binaryLight : binaryLights) {
-            if(binaryLight.getPropertyValue("location").equals(location)){
-                ligths.add(binaryLight);
-            }
-        }
-        return ligths;
-    }
-
-    public class PresenceSensorListener implements DeviceListener {
-
-        public void notifyDeviceEvent(String deviceSerialNumber) {
-            System.out.println("The presence detector "+ deviceSerialNumber+ " has changed.");
-            PresenceSensor sensor = getPresenceSensor(deviceSerialNumber);
-            if(sensor!=null){
-                String location = (String) sensor.getPropertyValue("location");
-                System.out.println("this detector is into room " + location);
-                List<BinaryLight> ligths = getBinaryLightFromLocation(location);
-                System.out.println("There are "+ ligths.size()+ " lamps in this room.");
-
-                //vérifie l'état du detecteur :
-                System.out.println("Présence detectée ? " + sensor.getSensedPresence());
-                if(sensor.getSensedPresence()){
-                    //si presence detectée :
-                    for (BinaryLight binaryLight : ligths) {
-                        //allume toute les lampes
-                        binaryLight.setPowerStatus(true);
-                        binaryLight.setState(GenericDevice.STATE_ACTIVATED);
-                        System.out.println("Light up "+ binaryLight.getSerialNumber());
-                    }
-                }else{
-                    //si presence plus detectée :
-                    for (BinaryLight binaryLight : ligths) {
-                        //éteinds toute les lampes
-                        binaryLight.setState(GenericDevice.STATE_DEACTIVATED);
-                        System.out.println("Light down "+ binaryLight.getSerialNumber());
-                    }
-                }
-            }
-        }
-
-        public void deviceAdded(GenericDevice device) {
-            notifyDeviceEvent(device.getSerialNumber());
-        }
-
-        public void deviceRemoved(GenericDevice device) {
-            notifyDeviceEvent(device.getSerialNumber());
-        }
-
-        public void devicePropertyModified(GenericDevice device, String property, Object oldValue) {
-            notifyDeviceEvent(device.getSerialNumber());
-        }
-
-        public void devicePropertyAdded(GenericDevice device, String property) {
-            notifyDeviceEvent(device.getSerialNumber());
-        }
-
-        public void devicePropertyRemoved(GenericDevice device, String property) {
-            notifyDeviceEvent(device.getSerialNumber());
-        }
-
-    }
-
+	@Override
+	public void deviceRemoved(GenericDevice arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }
