@@ -25,7 +25,7 @@
     </dependency>
     <dependency>
       <groupId>fr.liglab.adele.icasa</groupId>
-      <artifactId>environment.api</artifactId>
+      <artifactId>simulator.api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.felix</groupId>
