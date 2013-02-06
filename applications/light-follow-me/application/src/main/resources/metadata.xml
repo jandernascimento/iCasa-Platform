@@ -16,18 +16,22 @@
       limitations under the License.
 
 -->
-<ipojo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="org.apache.felix.ipojo" xmlns:jmx="org.apache.felix.ipojo.handlers.jmx" xsi:schemaLocation="org.apache.felix.ipojo.handlers.jmx http://felix.apache.org/ipojo/schemas/CURRENT/jmx.xsd org.apache.felix.ipojo http://felix.apache.org/ipojo/schemas/CURRENT/core.xsd">
-  <component classname="fr.liglab.adele.m2mappbuilder.light.follow.me.LightFollowMeApplication" name="LightFollowMeApplication">
+<ipojo xmlns="org.apache.felix.ipojo">
+<component classname="fr.liglab.adele.m2mappbuilder.light.follow.me.LightFollowMeApplication" name="LightFollowMeApplication">
+    <requires aggregate="true" optional="true" specification="fr.liglab.adele.icasa.device.light.BinaryLight" field="binaryLight">
+        <callback method="bindBinary" type="bind"/>
+        <callback method="unbindBinary" type="unbind"/>
+    </requires>
+    <requires aggregate="true" optional="true" specification="fr.liglab.adele.icasa.device.presence.PresenceSensor" field="presenceSensor">
+        <callback method="bindPresenceSensor" type="bind"/>
+        <callback method="unbindPrensenceSensor" type="unbind"/>
+    </requires>
     <callback method="start" transition="validate"/>
     <callback method="stop" transition="invalidate"/>
-    <requires aggregate="true" optional="true" specification="fr.liglab.adele.icasa.device.light.BinaryLight">
-      <callback method="bindLight" type="bind"/>
-      <callback method="unbindLight" type="unbind"/>
+    <requires aggregate="true" optional="true" specification="fr.liglab.adele.icasa.device.power.PowerSwitch" field="powerswitch">
+        <callback method="bindPowerSwitch" type="bind"/>
+        <callback method="unbindPowerswitch" type="unbind"/>
     </requires>
-    <requires aggregate="true" optional="true" specification="fr.liglab.adele.icasa.device.presence.PresenceSensor">
-      <callback method="bindDetector" type="bind"/>
-      <callback method="unbindDetector" type="unbind"/>
-    </requires>
-  </component>
-  <instance component="LightFollowMeApplication" name="LightFollowMeApplication-1"/>
+</component>
+<instance component="LightFollowMeApplication" name="LightFollowMeApplication-1"/>
 </ipojo>
