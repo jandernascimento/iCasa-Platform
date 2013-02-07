@@ -29,7 +29,7 @@
 
   <!-- Project coordinates -->
   <groupId>fr.liglab.adele.m2mappbuilder</groupId>
-  <artifactId>light.follow.me.and.icasa</artifactId>
+  <artifactId>rose.marie.light.follow.me.and.icasa</artifactId>
   <packaging>pom</packaging>
   <name>${productName} :: ${projectName}</name>
 

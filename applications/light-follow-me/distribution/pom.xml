@@ -29,6 +29,7 @@
 	<name>${productName} :: ${projectName}</name>
 
 	<modules>
-        <module>light-follow-me-and-icasa</module>
+        <module>paul-light-follow-me-and-icasa</module>
+        <module>rose-marie-light-follow-me-and-icasa</module>
 	</modules>
 </project>
