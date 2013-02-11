@@ -1,12 +1,15 @@
 package fr.imag.adele.appstore.gateway.api;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
@@ -105,10 +108,10 @@ public class DPAdmin {
 		return makeCORS(Response.ok(result));
 	}
 
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	@Path("/applications/")
+	//@POST
+	//@Produces(MediaType.APPLICATION_JSON)
+	//@Consumes(MediaType.MULTIPART_FORM_DATA)
+	//@Path("/applications/")
 	public Response installApplication(
 			@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail) {
@@ -116,6 +119,31 @@ public class DPAdmin {
 		try {
 			newPackage = dadmin.installDeploymentPackage(uploadedInputStream);
 		} catch (DeploymentException e) {
+			e.printStackTrace();
+			return makeCORS(Response.status(Status.INTERNAL_SERVER_ERROR));
+		}
+		return makeCORS(Response.ok(
+				jsonservice.toJSON(DPResourceManipulator.toMap(newPackage)))
+				);
+	}
+	@POST
+	@Path("/applications/")
+	public Response installApplication(@FormParam("location")String location) {
+		System.out.println("Gateway will install application " + location);
+		DeploymentPackage newPackage = null;
+		URL file = null;
+		try {
+			file = new URL(location);
+		} catch (MalformedURLException e1) {
+			e1.printStackTrace();
+			return makeCORS(Response.status(Status.INTERNAL_SERVER_ERROR));
+		}
+		try {
+			newPackage = dadmin.installDeploymentPackage(file.openStream());
+		} catch (DeploymentException e) {
+			e.printStackTrace();
+			return makeCORS(Response.status(Status.INTERNAL_SERVER_ERROR));
+		} catch (IOException e) {
 			e.printStackTrace();
 			return makeCORS(Response.status(Status.INTERNAL_SERVER_ERROR));
 		}
