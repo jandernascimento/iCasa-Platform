@@ -1,3 +1,3 @@
 #!/usr/bin/env sh
-cd /Users/thomas/workspaces/M2MAppBuilder/applications/habits-monitoring/distribution/box-aurelie/target/distrib-temp
+cd F:\GitProjects\M2MAppBuilder\applications\habits-monitoring\distribution\box-aurelie\target\distrib-temp
 sh habits.monitoring.distribution.box.aurelie

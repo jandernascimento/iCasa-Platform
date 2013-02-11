@@ -35,9 +35,7 @@ import fr.liglab.adele.icasa.device.util.AbstractDevice;
 import fr.liglab.adele.m2mappbuilder.rfid.reader.RFIDDeviceReader;
 import org.osgi.framework.Constants;
 
-import fr.liglab.adele.icasa.environment.SimulatedDevice;
-import fr.liglab.adele.icasa.environment.SimulatedEnvironment;
-import fr.liglab.adele.icasa.environment.SimulatedEnvironmentListener;
+import fr.liglab.adele.icasa.simulator.SimulatedDevice;
 
 /**
  * @author Gabriel
@@ -46,18 +44,10 @@ import fr.liglab.adele.icasa.environment.SimulatedEnvironmentListener;
 @Component(name="TikitagRFIDReader")
 @Provides(properties = {
         @StaticServiceProperty(type = "java.lang.String", name = Constants.SERVICE_DESCRIPTION)})
-public class RFIDDeviceReaderImpl extends AbstractDevice implements RFIDDeviceReader, PresenceSensor, SimulatedDevice, SimulatedEnvironmentListener {
+public class RFIDDeviceReaderImpl extends AbstractDevice implements RFIDDeviceReader, PresenceSensor, SimulatedDevice {
 
    @ServiceProperty(name = PresenceSensor.DEVICE_SERIAL_NUMBER, mandatory = true)
    private String m_serialNumber;
-   
-   @ServiceProperty(name = "state", value = "deactivated")
-   private String state;
-   
-   @ServiceProperty(name = "fault", value = "no")
-   private String fault;
-   
-   
    
    @Requires
 	private UsbDevice myDevice; //TODO manage multiple usb devices !!!
@@ -76,43 +66,17 @@ public class RFIDDeviceReaderImpl extends AbstractDevice implements RFIDDeviceRe
 	private Thread uniqueThread;
 	
 	private volatile boolean polling = false;
-	
-	private volatile SimulatedEnvironment m_env;
 
 	private static final long DEFAULT_POLL_INTERVAL = 800;
 
 	
 	/** the buffer of read tags */
 	protected List<String> readingBuffer = new ArrayList<String>();
-	
-	/* (non-Javadoc)
-	 * @see fr.liglab.adele.m2mappbuilder.device.generic.MedicalGenericDevice#getState()
-	 */
-	public String getState() {
-		return state;
-	}
 
-	/* (non-Javadoc)
-	 * @see fr.liglab.adele.m2mappbuilder.device.generic.MedicalGenericDevice#setState(java.lang.String)
-	 */
-	public void setState(String state) {
-		this.state = state;
+    public RFIDDeviceReaderImpl() {
+        setPropertyValue(PRESENCE_SENSOR_SENSED_PRESENCE, false);
+    }
 
-	}
-
-	/* (non-Javadoc)
-	 * @see fr.liglab.adele.m2mappbuilder.device.generic.MedicalGenericDevice#getFault()
-	 */
-	public String getFault() {
-		return fault;
-	}
-
-	/* (non-Javadoc)
-	 * @see fr.liglab.adele.m2mappbuilder.device.generic.MedicalGenericDevice#setFault(java.lang.String)
-	 */
-	public void setFault(String fault) {
-		this.fault = fault;
-	}
 
 	/* (non-Javadoc)
 	 * @see fr.liglab.adele.icasa.device.GenericDevice#getSerialNumber()
@@ -138,33 +102,10 @@ public class RFIDDeviceReaderImpl extends AbstractDevice implements RFIDDeviceRe
    }
 
 	@Override
-	public String getLocation() {
-		return getEnvironmentId();
-	}
-
-	@Override
 	public boolean getSensedPresence() {
 		return m_currentPresence;
 	}
 
-	@Override
-	public synchronized void bindSimulatedEnvironment(
-			SimulatedEnvironment environment) {
-		m_env = environment;
-	}
-
-	@Override
-	public synchronized String getEnvironmentId() {
-		return m_env != null ? m_env.getEnvironmentId() : null;
-	}
-
-	@Override
-	public synchronized void unbindSimulatedEnvironment(
-			SimulatedEnvironment environment) {
-		m_env = null;
-	}
-	
-	
 	@Invalidate
 	protected void stop() {
 		stopPooling();
@@ -194,7 +135,7 @@ public class RFIDDeviceReaderImpl extends AbstractDevice implements RFIDDeviceRe
 					final boolean oldPresence = m_currentPresence;
 					m_currentPresence = (tag!=null);
 	            if (oldPresence != m_currentPresence) {
-	                notifyListeners();
+                    setPropertyValue(PRESENCE_SENSOR_SENSED_PRESENCE, m_currentPresence);
 	            }
 					try {
 						Thread.sleep(DEFAULT_POLL_INTERVAL);
@@ -209,8 +150,6 @@ public class RFIDDeviceReaderImpl extends AbstractDevice implements RFIDDeviceRe
 		polling = true;
 		uniqueThread= new Thread(runnable, "Tikitag Thread");
 		uniqueThread.start();
-
-
 	}
 
 	
@@ -218,5 +157,13 @@ public class RFIDDeviceReaderImpl extends AbstractDevice implements RFIDDeviceRe
 		polling = false;
 		uniqueThread = null;
 	}
+
+    public void enterInZones(java.util.List<fr.liglab.adele.icasa.simulator.Zone> zones) {
+        //do nothing
+    }
+
+    public void leavingZones(java.util.List<fr.liglab.adele.icasa.simulator.Zone> zones) {
+        //do nothing
+    }
 
 }
