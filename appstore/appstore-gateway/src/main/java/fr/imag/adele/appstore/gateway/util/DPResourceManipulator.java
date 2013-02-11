@@ -30,8 +30,8 @@ public class DPResourceManipulator {
 	
 	public static Map<String, String> toMap(DeploymentPackage dpackage){
 		Map<String, String> resultMap = new Hashtable<String, String>();
-		resultMap.put("version", dpackage.getVersion().getQualifier());
-		resultMap.put("displayName", dpackage.getDisplayName());
+		resultMap.put("version", dpackage.getVersion().toString());
+		resultMap.put("description", dpackage.getDisplayName());
 		resultMap.put("name", dpackage.getName());
 		if(dpackage.getIcon() != null) {
 			resultMap.put("iconUrl", dpackage.getIcon().toExternalForm());
