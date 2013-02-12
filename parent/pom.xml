@@ -7,20 +7,22 @@
 	OR CONDITIONS OF ANY KIND, either express or implied. See the License for 
 	the specific language governing permissions and limitations under the License. -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	
 	<parent>
 		<groupId>fr.liglab.adele.common</groupId>
 		<artifactId>base</artifactId>
 		<version>1.0.3</version>
-      <relativePath />
+      <relativePath/>
 	</parent>
 
 	<!-- Project coordinates -->
 	<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 	<artifactId>parent</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<!-- Project description -->
@@ -32,7 +34,7 @@
 	<properties>
 		<productName>M2MAppBuilder</productName>
 		<productVersion>${m2mAppBuilderVersion}</productVersion>
-		<m2mAppBuilderVersion>0.0.1</m2mAppBuilderVersion>
+		<m2mAppBuilderVersion>0.0.1-SNAPSHOT</m2mAppBuilderVersion>
 		<iCasaVersion>0.0.1</iCasaVersion>
       <ciliaVersion>1.6.3</ciliaVersion>
       <cxfVersion>2.3.2</cxfVersion>
@@ -181,7 +183,7 @@
 			<dependency>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>org.apache.felix.usb.basedriver</artifactId>
-				<version>0.0.1</version>
+				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>fr.liglab.adele.m2mappbuilder</groupId>
@@ -354,6 +356,6 @@
       <connection>scm:git:ssh://git@github.com/AdeleResearchGroup/M2MAppBuilder.git</connection>
       <url>https://github.com/AdeleResearchGroup/M2MAppBuilder.git</url>
       <developerConnection>scm:git:ssh://git@github.com/AdeleResearchGroup/M2MAppBuilder.git</developerConnection>
-      <tag>M2MAppBuilder-0.0.1</tag>
+      <tag>HEAD</tag>
    </scm>
 </project>

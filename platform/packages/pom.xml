@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--
  Copyright Adele Team LIG
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +18,7 @@
 	<parent>
 		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 		<artifactId>parent</artifactId>
-		<version>0.0.1</version>
+		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../../parent</relativePath>
 	</parent>
 
@@ -30,10 +30,8 @@
 
 	<modules>
 		<module>platform-core-dp</module>
-		<!--
-      <module>upnp-settopbox-core-dp</module>
+		<module>upnp-settopbox-core-dp</module>
 		<module>x10-presence-sensor-core-dp</module>
-      -->
 		<module>tikitag-core-dp</module>
 	</modules>
    <build>

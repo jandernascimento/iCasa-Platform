@@ -14,7 +14,9 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   
   <!-- Project parent -->
@@ -22,18 +24,18 @@
 	<groupId>fr.liglab.adele.common</groupId>
 	<artifactId>distribution.base</artifactId>
 	<version>1.0.3</version>
-	<relativePath />
+	<relativePath></relativePath>
   </parent>
 
   <!-- Project coordinates -->
   <artifactId>icasa.asus.box</artifactId>
   <packaging>pom</packaging>
-  <version>0.0.1</version>
+  <version>0.0.1-SNAPSHOT</version>
   <name>${productName} :: ${projectName}</name>
 
   <properties>
       <productName>M2MAppBuilder</productName>
-      <m2mAppBuilderVersion>0.0.1</m2mAppBuilderVersion>
+      <m2mAppBuilderVersion>0.0.1-SNAPSHOT</m2mAppBuilderVersion>
       <ciliaVersion>1.6.3</ciliaVersion>
       <productVersion>${m2mAppBuilderVersion}</productVersion>
     <!-- flag to flatten deployment packages -->
@@ -118,8 +120,4 @@
 	
   </dependencies>
   
-
-  <scm>
-    <tag>M2MAppBuilder-0.0.1</tag>
-  </scm>
 </project>
