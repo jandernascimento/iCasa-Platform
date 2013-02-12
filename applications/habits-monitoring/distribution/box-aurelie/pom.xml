@@ -39,7 +39,7 @@
         <productName>M2MAppBuilder</productName>
         <m2mAppBuilderVersion>0.0.1-SNAPSHOT</m2mAppBuilderVersion>
         <productVersion>${m2mAppBuilderVersion}</productVersion>
-        <ciliaVersion>1.6.2</ciliaVersion>
+        <ciliaVersion>1.6.3</ciliaVersion>
 
         <!-- flag to flatten deployment packages -->
         <flattenDP>false</flattenDP>

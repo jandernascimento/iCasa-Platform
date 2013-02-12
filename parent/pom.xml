@@ -36,7 +36,7 @@
 		<productVersion>${m2mAppBuilderVersion}</productVersion>
 		<m2mAppBuilderVersion>0.0.1-SNAPSHOT</m2mAppBuilderVersion>
 		<iCasaVersion>0.0.1</iCasaVersion>
-      <ciliaVersion>1.6.2</ciliaVersion>
+      <ciliaVersion>1.6.3</ciliaVersion>
       <cxfVersion>2.3.2</cxfVersion>
       <!--UPNP -->
       <UPnPBDVersion>0.8.0</UPnPBDVersion>
