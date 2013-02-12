@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
  Copyright Adele Team LIG
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,7 +19,7 @@
 	<parent>
 		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 		<artifactId>parent</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.1</version>
 		<relativePath>parent</relativePath>
 	</parent>
 
@@ -50,6 +50,6 @@
       <connection>scm:git:ssh://git@github.com/AdeleResearchGroup/M2MAppBuilder.git</connection>
       <url>https://github.com/AdeleResearchGroup/M2MAppBuilder.git</url>
       <developerConnection>scm:git:ssh://git@github.com/AdeleResearchGroup/M2MAppBuilder.git</developerConnection>
-      <tag>HEAD</tag>
+      <tag>M2MAppBuilder-0.0.1</tag>
    </scm>
 </project>
