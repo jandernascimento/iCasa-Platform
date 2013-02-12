@@ -45,6 +45,22 @@
         <flattenDP>false</flattenDP>
     </properties>
   
+    <!-- Project repositories -->
+    <repositories>
+       <!-- iCASA repositories -->
+       <repository>
+          <id>icasa-snapshot-repository</id>
+          <name>iCASA Snapshot repository</name>
+          <url>https://repository-icasa.forge.cloudbees.com/snapshot/</url>
+       </repository>
+       <repository>
+          <id>icasa-release-repository</id>
+          <name>iCASA Release repository</name>
+          <url>https://repository-icasa.forge.cloudbees.com/release/</url>
+       </repository>
+       
+    </repositories>
+    
   <!-- Project dependencies -->
   <dependencies>
 	
