@@ -14,9 +14,9 @@
 	
 	<parent>
 		<groupId>fr.liglab.adele.common</groupId>
-		<artifactId>parent</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
-		<relativePath></relativePath>
+		<artifactId>base</artifactId>
+		<version>1.0.3</version>
+      <relativePath/>
 	</parent>
 
 	<!-- Project coordinates -->
@@ -35,7 +35,13 @@
 		<productName>M2MAppBuilder</productName>
 		<productVersion>${m2mAppBuilderVersion}</productVersion>
 		<m2mAppBuilderVersion>0.0.1-SNAPSHOT</m2mAppBuilderVersion>
-		<iCasaVersion>0.0.1-SNAPSHOT</iCasaVersion>
+		<iCasaVersion>0.0.1</iCasaVersion>
+      <ciliaVersion>1.6.2</ciliaVersion>
+      <cxfVersion>2.3.2</cxfVersion>
+      <!--UPNP -->
+      <UPnPBDVersion>0.8.0</UPnPBDVersion>
+      <UPnPBDExtrasVersion>0.4.0</UPnPBDExtrasVersion>
+      
 	</properties>
 
 	<!-- Project repositories -->
@@ -72,24 +78,24 @@
             <dependency>
                 <groupId>org.apache.cxf</groupId>
                 <artifactId>cxf-rt-transports-http</artifactId>
-                <version>2.3.2</version>
+                <version>${cxfVersion}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.cxf</groupId>
                 <artifactId>cxf-rt-frontend-jaxws</artifactId>
-                <version>2.3.2</version>
+                <version>${cxfVersion}</version>
             </dependency>
 
 			<!-- UPNP -->
 			<dependency>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>org.apache.felix.upnp.basedriver</artifactId>
-				<version>0.8.0</version>
+            <version>${UPnPBDVersion}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>org.apache.felix.upnp.extra</artifactId>
-				<version>0.4.0</version>
+            <version>${UPnPBDExtrasVersion}</version>
 			</dependency>
 
 			<!-- JUnit 4 and Mockito for tests -->
@@ -104,11 +110,6 @@
 				<version>1.7</version>
 			</dependency>
 			
-			<dependency>
-				<groupId>org.apache.felix</groupId>
-				<artifactId>org.apache.felix.http.jetty</artifactId>
-				<version>2.2.0</version>
-			</dependency>
 			
 			<!-- M2MAppBuilder -->
 			<dependency>
@@ -235,6 +236,32 @@
 				<artifactId>icasa.device.model.bridge</artifactId>
 				<version>${m2mAppBuilderVersion}</version>
 			</dependency>
+         <dependency>
+            <groupId>fr.liglab.adele.icasa</groupId>
+            <artifactId>device.api</artifactId>
+            <version>${iCasaVersion}</version>
+         </dependency>
+         <dependency>
+            <groupId>fr.liglab.adele.icasa</groupId>
+            <artifactId>simulator.api</artifactId>
+            <version>${iCasaVersion}</version>
+         </dependency>
+         <dependency>
+            <groupId>fr.liglab.adele.icasa</groupId>
+            <artifactId>clock.api</artifactId>
+            <version>${iCasaVersion}</version>
+         </dependency>
+         <!-- Cilia Dependencies-->
+         <dependency>
+            <groupId>fr.liglab.adele.cilia</groupId>
+            <artifactId>cilia-core</artifactId>
+            <version>${ciliaVersion}</version>
+         </dependency>
+         <dependency>
+            <groupId>fr.liglab.adele.cilia</groupId>
+            <artifactId>cilia-runtime</artifactId>
+            <version>${ciliaVersion}</version>
+         </dependency>
 
             <!-- Habits monitoring application -->
             <dependency>
@@ -266,29 +293,6 @@
 		<!-- Plugins version management -->
 		<pluginManagement>
 			<plugins>
-
-				<!-- Bundle plugin -->
-				<plugin>
-					<groupId>org.apache.felix</groupId>
-					<artifactId>maven-bundle-plugin</artifactId>
-					<version>2.3.4</version>
-					<extensions>true</extensions>
-					<configuration>
-						<instructions>
-							<!-- Default bundle headers -->
-							<Bundle-Name>${project.name}</Bundle-Name>
-							<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-							<Bundle-Version>${project.version}</Bundle-Version>
-							<Bundle-Vendor>${project.organization.name}</Bundle-Vendor>
-							<Bundle-DocURL>https://github.com/AdeleResearchGroup/M2MAppBuilder</Bundle-DocURL>
-							<Bundle-RequiredExecutionEnvironment>J2SE-1.5</Bundle-RequiredExecutionEnvironment>
-							<Bundle-ContactAddress>leveque.thomas@gmail.com</Bundle-ContactAddress>
-							<Bundle-Copyright>Copyright 2011-2012 Joseph Fourier University</Bundle-Copyright>
-							<Bundle-License>Apache License - Version 2.0;
-								link=http://www.apache.org/licenses/LICENSE-2.0.txt</Bundle-License>
-						</instructions>
-					</configuration>
-				</plugin>
 				
 				<!-- License plugin -->
 				<plugin>
@@ -325,7 +329,10 @@
 						</execution>
 					</executions>
 				</plugin>
-				
+            <plugin>
+               <artifactId>maven-deploy-plugin</artifactId>
+               <version>2.7</version>
+            </plugin>
 			</plugins>
 		</pluginManagement>
 
@@ -338,4 +345,17 @@
 		  
 		</plugins>
 	</build>
+   <distributionManagement>
+      <repository>
+         <id>cloudbees-adele-release</id>
+         <name>Cloudbees Adele Repository</name>
+         <url>dav:https://repository-icasa.forge.cloudbees.com/release</url>
+      </repository>
+   </distributionManagement>
+   <scm>
+      <connection>scm:git:ssh://git@github.com/AdeleResearchGroup/M2MAppBuilder.git</connection>
+      <url>https://github.com/AdeleResearchGroup/M2MAppBuilder.git</url>
+      <developerConnection>scm:git:ssh://git@github.com/AdeleResearchGroup/M2MAppBuilder.git</developerConnection>
+      <tag>HEAD</tag>
+   </scm>
 </project>

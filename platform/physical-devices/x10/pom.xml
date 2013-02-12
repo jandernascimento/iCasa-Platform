@@ -35,5 +35,14 @@
 		<module>x10-presence-sensor</module>
 		<module>x10-presence-sensor-importer</module>
 	</modules>
-
+   <build>
+      <plugins>
+         <plugin>
+            <artifactId>maven-deploy-plugin</artifactId>
+            <configuration>
+               <skip>true</skip>
+            </configuration>
+         </plugin>
+      </plugins>
+   </build>
 </project>

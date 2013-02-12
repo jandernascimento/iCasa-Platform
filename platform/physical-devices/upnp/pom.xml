@@ -36,5 +36,14 @@
 		<module>upnp-presence-detector-proxy</module>
 		<module>upnp-settopbox-importer</module>
 	</modules>
-
+   <build>
+      <plugins>
+         <plugin>
+            <artifactId>maven-deploy-plugin</artifactId>
+            <configuration>
+               <skip>true</skip>
+            </configuration>
+         </plugin>
+      </plugins>
+   </build>
 </project>

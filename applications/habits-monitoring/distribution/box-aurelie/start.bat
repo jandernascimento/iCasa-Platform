@@ -13,5 +13,5 @@
 @REM   See the License for the specific language governing permissions and
 @REM   limitations under the License.
 @REM
-cd F:\GitProjects\M2MAppBuilder\applications\habits-monitoring\distribution\box-aurelie\target\distrib-temp
+cd /home/torito/workspace/M2MAppBuilder/applications/habits-monitoring/distribution/box-aurelie/target/distrib-temp
 habits.monitoring.distribution.box.aurelie.bat
