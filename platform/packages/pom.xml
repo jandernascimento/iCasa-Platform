@@ -30,8 +30,10 @@
 
 	<modules>
 		<module>platform-core-dp</module>
+      <!--
 		<module>upnp-settopbox-core-dp</module>
 		<module>x10-presence-sensor-core-dp</module>
+      -->
 		<module>tikitag-core-dp</module>
 	</modules>
    <build>
