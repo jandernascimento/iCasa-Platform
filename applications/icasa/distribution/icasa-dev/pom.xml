@@ -29,11 +29,13 @@
 
   <!-- Project coordinates -->
   <artifactId>icasa.dev</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>${productName} :: ${projectName}</name>
 
   <properties>
       <productName>M2MAppBuilder</productName>
+      <m2mAppBuilderVersion>0.0.1-SNAPSHOT</m2mAppBuilderVersion>
       <productVersion>${m2mAppBuilderVersion}</productVersion>
 
       <!-- flag to flatten deployment packages -->

@@ -23,7 +23,7 @@
   <parent>
 	<groupId>fr.liglab.adele.common</groupId>
 	<artifactId>distribution.base</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.3</version>
 	<relativePath></relativePath>
   </parent>
 
@@ -35,6 +35,7 @@
 
   <properties>
       <productName>M2MAppBuilder</productName>
+      <m2mAppBuilderVersion>0.0.1-SNAPSHOT</m2mAppBuilderVersion>
       <productVersion>${m2mAppBuilderVersion}</productVersion>
 
       <!-- flag to flatten deployment packages -->
