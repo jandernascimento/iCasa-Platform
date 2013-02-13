@@ -28,15 +28,21 @@
 
   <adapter name="PresenceDetectorAdapter" pattern="in-only">
     <collector type="MeasureCollector" />
+    <ports>
+       <out-port name="out" type="*" />
+    </ports>
   </adapter>
 
 
-  <sender classname="fr.liglab.adele.habits.monitoring.measure.generator.MeasureSender" name="MeasureSender" architecture="false">
-    <requires field="eventService" />
+  <sender classname="fr.liglab.adele.habits.monitoring.measure.generator.MeasureSender" name="MeasureSender" architecture="true">
+    <requires field="eventService" proxy="false"/>
   </sender>
 
   <adapter name="EventServiceAdapter" pattern="out-only">
     <sender type="MeasureSender" />
+    <ports>
+       <in-port name="in" type="*" />
+    </ports>
   </adapter>
 
   <processor name="MeasureFilterProcessor" classname="fr.liglab.adele.habits.monitoring.measure.generator.MeasureFilter">
@@ -47,6 +53,10 @@
     <cilia:processor name="MeasureFilterProcessor" />
     <cilia:scheduler name="immediate-scheduler" />
     <cilia:dispatcher name="multicast-dispatcher" />
+    <ports>
+       <in-port name="in" type="*" />
+       <out-port name="out" type="*" />
+    </ports>
   </mediator-component>
 
   <processor name="MeasureEnricherProcessor" classname="fr.liglab.adele.habits.monitoring.measure.generator.MeasureEnricher">
@@ -57,6 +67,10 @@
     <cilia:processor name="MeasureEnricherProcessor" />
     <cilia:scheduler name="immediate-scheduler" />
     <cilia:dispatcher name="multicast-dispatcher" />
+    <ports>
+       <in-port name="in" type="*" />
+       <out-port name="out" type="*" />
+    </ports>    
   </mediator-component>
 
   <processor name="MeasureTransformerProcessor" classname="fr.liglab.adele.habits.monitoring.measure.generator.MeasureTransformer">
@@ -70,6 +84,10 @@
     <cilia:processor name="MeasureTransformerProcessor" />
     <cilia:scheduler name="immediate-scheduler" />
     <cilia:dispatcher name="multicast-dispatcher" />
+    <ports>
+       <in-port name="in" type="*" />
+       <out-port name="out" type="*" />
+    </ports>    
   </mediator-component>
 
 </ipojo>

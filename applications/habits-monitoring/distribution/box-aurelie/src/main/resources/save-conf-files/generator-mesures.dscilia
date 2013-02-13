@@ -13,35 +13,26 @@
 		<mediators>
 
 			<mediator-instance id="filter" type="MeasureFilterMediator" >
-				<ports>
-					<in-port name="in"/>
-					<out-port name="out"/>
-				</ports>
+
 			</mediator-instance>
 			
 			<mediator-instance id="enricher" type="MeasureEnricherMediator" >
-				<ports>
-					<in-port name="in"/>
-					<out-port name="out"/>
-				</ports>
+
 			</mediator-instance>
 			
 			<mediator-instance id="transformer" type="MeasureTransformerMediator" >
 				<processor>
 					<property name="user" value="Aurelie"/>
 				</processor>
-				<ports>
-					<in-port name="in"/>
-					<out-port name="out"/>
-				</ports>
+
 			</mediator-instance>
 
 		</mediators>
 		<bindings>
-			<binding from="presence-collector" to="filter:in" />
+			<binding from="presence-collector:out" to="filter:in" />
 			<binding from="filter:out" to="enricher:in" />
 			<binding from="enricher:out" to="transformer:in" />
-			<binding from="transformer:out" to="event-webservice" />
+			<binding from="transformer:out" to="event-webservice:in" />
 		</bindings>
 	</chain>
 </cilia>
