@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-cd /home/torito/workspace/M2MAppBuilder/applications/habits-monitoring/distribution/box-aurelie/target/distrib-temp
-sh habits.monitoring.distribution.box.aurelie
