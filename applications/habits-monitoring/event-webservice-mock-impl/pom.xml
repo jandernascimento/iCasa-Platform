@@ -48,9 +48,7 @@ limitations under the License.
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Private-Package>YOUR_PRIVATE_PACKAGES</Private-Package>
-            <Import-Package>*</Import-Package>
-            <Export-Package>*</Export-Package>
+            <Private-Package>fr.liglab.adele.habits.monitoring.event.webservice.mock.impl</Private-Package>
           </instructions>
         </configuration>
       </plugin>
