@@ -21,7 +21,7 @@
     <parent>
         <groupId>fr.liglab.adele.common</groupId>
         <artifactId>distribution.base</artifactId>
-        <version>1.0.3</version>
+        <version>1.0.4</version>
         <relativePath />
     </parent>
 
@@ -37,8 +37,6 @@
         <productName>M2MAppBuilder</productName>
         <m2mAppBuilderVersion>0.0.2-SNAPSHOT</m2mAppBuilderVersion>
         <productVersion>${m2mAppBuilderVersion}</productVersion>
-        <ciliaVersion>1.6.3</ciliaVersion>
-
         <!-- flag to flatten deployment packages -->
         <flattenDP>false</flattenDP>
     </properties>
@@ -71,7 +69,6 @@
 	<dependency>
 		<groupId>fr.liglab.adele.cilia</groupId>
 		<artifactId>cilia.dp</artifactId>
-      <version>${ciliaVersion}</version>
 		<type>deployment-package</type>
 	</dependency>
 	<dependency>
