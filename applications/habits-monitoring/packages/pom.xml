@@ -19,22 +19,18 @@
 		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 		<artifactId>parent</artifactId>
 		<version>0.0.2-SNAPSHOT</version>
-		<relativePath>../../parent</relativePath>
+      <relativePath>../../../parent</relativePath>
 	</parent>
 
 	<!-- Project Descrkiption -->
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>habits.monitoring</artifactId>
+	<artifactId>habits.monitoring.packages</artifactId>
 	<packaging>pom</packaging>
-	<name>${productName} :: ${projectName}</name>
+   <name>${productName} :: Habits Monitoring :: Deployment Packages</name>
 
 	<modules>
-		<module>event-webservice-api</module>
-		<module>event-webservice-mock-impl</module>
-		<module>event-webservice-impl</module>
-		<module>measure-generator</module>
-      <module>packages</module>
-		<module>distribution</module>
+      <module>measure-generator-mock.dp</module>
+		<module>measure-generator.dp</module>
 	</modules>
    <build>
       <plugins>
