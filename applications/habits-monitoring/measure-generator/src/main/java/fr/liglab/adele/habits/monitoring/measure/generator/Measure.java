@@ -15,12 +15,19 @@
  */
 package fr.liglab.adele.habits.monitoring.measure.generator;
 
+import java.io.Serializable;
+
 /**
  * @author Gabriel Pedraza Ferreira
  *
  */
-public class Measure {
+public class Measure implements Serializable{
    
+   /**
+	 * 
+	 */
+   private static final long serialVersionUID = -3384373522563403670L;
+
    private String gatewayId;
    private String patientId;
    private String deviceId;
