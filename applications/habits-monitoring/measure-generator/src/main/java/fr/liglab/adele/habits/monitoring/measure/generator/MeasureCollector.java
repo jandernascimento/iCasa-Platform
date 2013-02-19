@@ -85,7 +85,7 @@ public class MeasureCollector extends AbstractCollector implements DeviceListene
 			if (detector.getSensedPresence()) {
 				Measure measure = new Measure();
 				measure.setDeviceId(deviceSerialNumber);
-				measure.setLocalisation((String) detector.getPropertyValue("location"));
+				measure.setLocalisation((String) detector.getPropertyValue("Location"));
 				long date = clock.currentTimeMillis();
 				measure.setTimestamp(date);
 				Data data = new Data(measure);
