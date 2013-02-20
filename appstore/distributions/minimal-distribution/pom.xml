@@ -23,7 +23,7 @@
   <parent>
 	<groupId>fr.liglab.adele.common</groupId>
 	<artifactId>distribution.base</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.4</version>
 	<relativePath></relativePath>
   </parent>
 
@@ -61,7 +61,7 @@
     </repositories>
 
   <properties>
-	  <appstoreVersion>0.0.1-SNAPSHOT</appstoreVersion>
+	  <appstoreVersion>0.0.2-SNAPSHOT</appstoreVersion>
 	  <productName>M2MAppBuilder</productName>
       <!-- flag to flatten deployment packages -->
       <flattenDP>false</flattenDP>
@@ -78,7 +78,7 @@
 	</dependency>
 	<dependency>
 		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-		<artifactId>gateway-server.dp</artifactId>
+		<artifactId>dp-rest-installer.dp</artifactId>
 		<version>${appstoreVersion}</version>
 		<type>deployment-package</type>
 	</dependency>

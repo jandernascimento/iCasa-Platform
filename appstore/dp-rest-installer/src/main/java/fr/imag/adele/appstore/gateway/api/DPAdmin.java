@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -108,13 +109,14 @@ public class DPAdmin {
 		return makeCORS(Response.ok(result));
 	}
 
-	//@POST
-	//@Produces(MediaType.APPLICATION_JSON)
-	//@Consumes(MediaType.MULTIPART_FORM_DATA)
-	//@Path("/applications/")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Path("/applications/stream/")
 	public Response installApplication(
 			@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail) {
+
 		DeploymentPackage newPackage = null;
 		try {
 			newPackage = dadmin.installDeploymentPackage(uploadedInputStream);
@@ -127,7 +129,7 @@ public class DPAdmin {
 				);
 	}
 	@POST
-	@Path("/applications/")
+	@Path("/applications/url/")
 	public Response installApplication(@FormParam("location")String location) {
 		System.out.println("Gateway will install application " + location);
 		DeploymentPackage newPackage = null;

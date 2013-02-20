@@ -21,12 +21,12 @@ limitations under the License.
 	<parent>
 		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
 		<artifactId>parent</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.2-SNAPSHOT</version>
 		<relativePath>../../../parent</relativePath>
 	</parent>
 
 	<!-- Project Description -->
-	<artifactId>gateway-server.dp</artifactId>
+	<artifactId>dp-rest-installer.dp</artifactId>
 	<packaging>deployment-package</packaging>
 	<name>${productName} :: ${projectName}</name>
 
@@ -36,7 +36,7 @@ limitations under the License.
 	<dependencies>
 		<dependency>
 			<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-			<artifactId>appstore-gateway</artifactId>
+         <artifactId>dp-rest-installer</artifactId>
 			<version>${project.version}</version>		
 		</dependency>
 		<dependency>
