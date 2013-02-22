@@ -10,7 +10,7 @@
 	</parent>
 
 	<!-- Project Description -->
-	<artifactId>platform.core.dp</artifactId>
+	<artifactId>icasa.platform.dp</artifactId>
 	<packaging>deployment-package</packaging>
 	<name>${productName} :: ${projectName}</name>
 

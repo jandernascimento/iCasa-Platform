@@ -71,8 +71,9 @@
         <version>${iCasaPlatformVersion}</version>
 	</dependency>
 	<dependency>
-		<groupId>fr.liglab.adele.icasa</groupId>
-		<artifactId>icasa.core.dp</artifactId>
+		<groupId>${project.groupId}</groupId>
+		<artifactId>icasa.platform.dp</artifactId>
+      <version>${project.version}</version>
 		<type>deployment-package</type>
 	</dependency>
 
