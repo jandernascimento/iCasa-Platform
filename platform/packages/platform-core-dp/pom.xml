@@ -3,10 +3,10 @@
 
 	<!-- Project parent -->
 	<parent>
-		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-		<artifactId>parent</artifactId>
-		<version>0.0.2-SNAPSHOT</version>
-		<relativePath>../../../parent</relativePath>
+		<groupId>fr.liglab.adele.icasa</groupId>
+		<artifactId>platform.parent</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+      <relativePath>../../../parent</relativePath>
 	</parent>
 
 	<!-- Project Description -->
@@ -16,27 +16,41 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>common</artifactId>
+         <version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+         <groupId>${project.groupId}</groupId>
 			<artifactId>application.api</artifactId>
+         <version>${project.version}</version>
 		</dependency>
-		
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>context.api</artifactId>
+         <version>${project.version}</version>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>context.impl</artifactId>
+         <version>${project.version}</version>
+      </dependency>
 		<dependency>
-			<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+         <groupId>${project.groupId}</groupId>
 			<artifactId>application.impl</artifactId>
+         <version>${project.version}</version>
 		</dependency>
 		
 		<dependency>
-			<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+         <groupId>${project.groupId}</groupId>
 			<artifactId>device.manager.api</artifactId>
+         <version>${project.version}</version>
 		</dependency>
 		
 		<dependency>
-			<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+         <groupId>${project.groupId}</groupId>
 			<artifactId>device.manager.impl</artifactId>
+         <version>${project.version}</version>
 		</dependency>
 		
 	</dependencies>

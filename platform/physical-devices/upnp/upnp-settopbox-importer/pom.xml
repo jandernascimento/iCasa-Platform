@@ -3,10 +3,10 @@
 
    <!-- Project parent -->
    <parent>
-	<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-	<artifactId>parent</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<relativePath>../../../../parent</relativePath>
+	<groupId>fr.liglab.adele.icasa</groupId>
+	<artifactId>platform.parent</artifactId>
+   <version>1.0.0-SNAPSHOT</version>
+   <relativePath>../../../../parent</relativePath>
    </parent>
 
   <!-- Project Descrkiption -->
@@ -34,11 +34,7 @@
 		</dependency>
 		<dependency>
 			<groupId>fr.liglab.adele.icasa</groupId>
-			<artifactId>device.api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>fr.liglab.adele.icasa</groupId>
-			<artifactId>environment.api</artifactId>
+			<artifactId>context.api</artifactId>
 		</dependency>
   </dependencies>
 
@@ -50,7 +46,7 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Export-Package>fr.liglab.adele.m2mappbuilder.upnp.settopbox.importer,fr.liglab.adele.m2mappbuilder.upnp.settopbox.proxy</Export-Package>            
+            <Export-Package>fr.liglab.adele.icasa.upnp.settopbox.importer,fr.liglab.adele.icasa.upnp.settopbox.proxy</Export-Package>            
           </instructions>
         </configuration>
       </plugin>

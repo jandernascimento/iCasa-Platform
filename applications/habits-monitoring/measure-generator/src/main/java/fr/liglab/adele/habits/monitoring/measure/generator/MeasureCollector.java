@@ -18,15 +18,15 @@ package fr.liglab.adele.habits.monitoring.measure.generator;
 import java.util.HashMap;
 import java.util.Map;
 
-import fr.liglab.adele.icasa.clock.api.Clock;
-import fr.liglab.adele.icasa.device.presence.PresenceSensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import fr.liglab.adele.cilia.Data;
 import fr.liglab.adele.cilia.framework.AbstractCollector;
+import fr.liglab.adele.icasa.clock.Clock;
 import fr.liglab.adele.icasa.device.DeviceListener;
 import fr.liglab.adele.icasa.device.GenericDevice;
+import fr.liglab.adele.icasa.device.presence.PresenceSensor;
 
 /**
  * @author Gabriel Pedraza Ferreira

@@ -17,7 +17,7 @@
 
 -->
 <ipojo xmlns="org.apache.felix.ipojo">
-<component classname="fr.liglab.adele.m2mappbuilder.light.follow.me.LightFollowMeApplication" name="LightFollowMeApplication">
+<component classname="fr.liglab.adele.icasa.light.follow.me.LightFollowMeApplication" name="LightFollowMeApplication">
     <requires aggregate="true" optional="true" specification="fr.liglab.adele.icasa.device.light.BinaryLight" field="binaryLight">
         <callback method="bindBinary" type="bind"/>
         <callback method="unbindBinary" type="unbind"/>

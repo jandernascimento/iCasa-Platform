@@ -2,10 +2,10 @@
 
 	<!-- Project parent -->
 	<parent>
-		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-		<artifactId>parent</artifactId>
-		<version>0.0.2-SNAPSHOT</version>
-		<relativePath>../../../../parent</relativePath>
+		<groupId>fr.liglab.adele.icasa</groupId>
+		<artifactId>platform.parent</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+      <relativePath>../../../../parent</relativePath>
 	</parent>
 
 	<!-- Project Description -->
@@ -24,8 +24,9 @@
 			<artifactId>org.osgi.compendium</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>common</artifactId>
+         <version>${project.version}</version>
 		</dependency>
 	</dependencies>
 
@@ -37,7 +38,7 @@
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
-						<Export-Package>fr.liglab.adele.m2mappbuilder.application</Export-Package>
+						<Export-Package>fr.liglab.adele.icasa.application</Export-Package>
 					</instructions>
 				</configuration>
 			</plugin>

@@ -2,10 +2,10 @@
 
 	<!-- Project parent -->
 	<parent>
-		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-		<artifactId>parent</artifactId>
-		<version>0.0.2-SNAPSHOT</version>
-		<relativePath>../../../../parent</relativePath>
+		<groupId>fr.liglab.adele.icasa</groupId>
+		<artifactId>platform.parent</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+      <relativePath>../../../../parent</relativePath>
 	</parent>
 
 	<!-- Project Description -->
@@ -24,12 +24,14 @@
 			<artifactId>org.osgi.compendium</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+         <groupId>${project.groupId}</groupId>
 			<artifactId>application.api</artifactId>
+         <version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+         <groupId>${project.groupId}</groupId>
 			<artifactId>common</artifactId>
+         <version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.osgi</groupId>
@@ -45,7 +47,7 @@
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
-						<Export-Package>fr.liglab.adele.m2mappbuilder.device.manager, fr.liglab.adele.m2mappbuilder.device.manager.util</Export-Package>
+						<Export-Package>fr.liglab.adele.icasa.device.manager, fr.liglab.adele.icasa.device.manager.util</Export-Package>
 					</instructions>
 				</configuration>
 			</plugin>

@@ -2,9 +2,9 @@
 
   <!-- Project parent -->
   <parent>
-    <groupId>fr.liglab.adele.m2mappbuilder</groupId>
-    <artifactId>parent</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <groupId>fr.liglab.adele.icasa</groupId>
+    <artifactId>platform.parent</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
     <relativePath>../../../../parent</relativePath>
   </parent>
   
@@ -16,12 +16,14 @@
   
   <dependencies>
     <dependency>
-      <groupId>fr.liglab.adele.m2mappbuilder</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>application.api</artifactId>
+      <version>${project.version}</version>
     </dependency>
 	<dependency>
-      <groupId>fr.liglab.adele.m2mappbuilder</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>device.manager.api</artifactId>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.felix</groupId>
@@ -45,7 +47,7 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Private-Package>fr.liglab.adele.m2mappbuilder.device.manager.impl.app, fr.liglab.adele.m2mappbuilder.device.manager.impl.scope.mgt, fr.liglab.adele.m2mappbuilder.device.manager.impl.util, fr.liglab.adele.m2mappbuilder.device.manager.impl</Private-Package>
+            <Private-Package>fr.liglab.adele.icasa.device.manager.impl.app, fr.liglab.adele.icasa.device.manager.impl.scope.mgt, fr.liglab.adele.icasa.device.manager.impl.util, fr.liglab.adele.icasa.device.manager.impl</Private-Package>
           </instructions>
         </configuration>
       </plugin>

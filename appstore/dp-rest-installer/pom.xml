@@ -17,10 +17,10 @@ limitations under the License.
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-		<artifactId>parent</artifactId>
-		<version>0.0.2-SNAPSHOT</version>
-		<relativePath>../../parent</relativePath>
+		<groupId>fr.liglab.adele.icasa</groupId>
+		<artifactId>platform.parent</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+      <relativePath>../../parent</relativePath>
 	</parent>
 	<artifactId>dp-rest-installer</artifactId>
 	<packaging>bundle</packaging>

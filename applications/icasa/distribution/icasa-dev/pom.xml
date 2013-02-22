@@ -23,20 +23,21 @@
   <parent>
 	<groupId>fr.liglab.adele.common</groupId>
 	<artifactId>distribution.base</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.3</version>
 	<relativePath></relativePath>
   </parent>
 
   <!-- Project coordinates -->
+  <groupId>fr.liglab.adele.icasa</groupId>
   <artifactId>icasa.dev</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>${productName} :: ${projectName}</name>
 
   <properties>
-      <productName>M2MAppBuilder</productName>
-      <m2mAppBuilderVersion>0.0.1-SNAPSHOT</m2mAppBuilderVersion>
-      <productVersion>${m2mAppBuilderVersion}</productVersion>
+      <productName>iCasa Platform</productName>
+      <iCasaPlatformVersion>1.0.0-SNAPSHOT</iCasaPlatformVersion>
+      <productVersion>${iCasaPlatformVersion}</productVersion>
 
       <!-- flag to flatten deployment packages -->
       <flattenDP>false</flattenDP>
@@ -62,9 +63,9 @@
 	
 	<!-- deployed packages -->
 	<dependency>
-		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+		<groupId>fr.liglab.adele.icasa</groupId>
 		<artifactId>platform.core.dp</artifactId>
-        <version>${m2mAppBuilderVersion}</version>
+        <version>${iCasaPlatformVersion}</version>
 		<type>deployment-package</type>
 	</dependency>
 	<dependency>
@@ -82,7 +83,7 @@
       <dependency>
           <groupId>fr.liglab.adele.icasa</groupId>
           <artifactId>icasa.web</artifactId>
-          <version>0.0.1-SNAPSHOT</version>
+          <version>0.0.2-SNAPSHOT</version>
           <type>zip</type>
       </dependency>
 	

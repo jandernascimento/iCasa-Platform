@@ -16,10 +16,10 @@
 
 	<!-- Project parent -->
 	<parent>
-		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-		<artifactId>parent</artifactId>
-		<version>0.0.2-SNAPSHOT</version>
-		<relativePath>../../../parent</relativePath>
+		<groupId>fr.liglab.adele.icasa</groupId>
+		<artifactId>platform.parent</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+      <relativePath>../../../parent</relativePath>
 	</parent>
 
 	<!-- Project Descrkiption -->
@@ -30,6 +30,7 @@
 
 	<modules>
 		<module>common</module>
+      <module>context-api</module>
 		<module>application-api</module>
 		<module>device-manager-api</module>
 	</modules>

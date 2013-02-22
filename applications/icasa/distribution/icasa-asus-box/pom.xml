@@ -30,14 +30,14 @@
   <!-- Project coordinates -->
   <artifactId>icasa.asus.box</artifactId>
   <packaging>pom</packaging>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
   <name>${productName} :: ${projectName}</name>
 
   <properties>
-      <productName>M2MAppBuilder</productName>
-      <m2mAppBuilderVersion>0.0.1-SNAPSHOT</m2mAppBuilderVersion>
+      <productName>iCasa Platform</productName>
+      <iCasaPlatformVersion>1.0.0-SNAPSHOT</iCasaPlatformVersion>
       <ciliaVersion>1.6.3</ciliaVersion>
-      <productVersion>${m2mAppBuilderVersion}</productVersion>
+      <productVersion>${iCasaPlatformVersion}</productVersion>
     <!-- flag to flatten deployment packages -->
     <flattenDP>true</flattenDP>
   </properties>
@@ -62,26 +62,26 @@
 	
 	<!-- Device widgets -->
 	<dependency>
-  		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+  		<groupId>fr.liglab.adele.icasa</groupId>
 		<artifactId>tikitag.widget</artifactId>
-        <version>${m2mAppBuilderVersion}</version>
+        <version>${iCasaPlatformVersion}</version>
 	</dependency>
 	<dependency>
-  		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+  		<groupId>fr.liglab.adele.icasa</groupId>
 		<artifactId>upnp.widget</artifactId>
-        <version>${m2mAppBuilderVersion}</version>
+        <version>${iCasaPlatformVersion}</version>
 	</dependency>
 	<dependency>
-  		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+  		<groupId>fr.liglab.adele.icasa</groupId>
 		<artifactId>x10.widget</artifactId>
-        <version>${m2mAppBuilderVersion}</version>
+        <version>${iCasaPlatformVersion}</version>
 	</dependency>
 	
 	<!-- deployed packages -->
 	<dependency>
-		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+		<groupId>fr.liglab.adele.icasa</groupId>
 		<artifactId>platform.core.dp</artifactId>
-        <version>${m2mAppBuilderVersion}</version>
+        <version>${iCasaPlatformVersion}</version>
 		<type>deployment-package</type>
 	</dependency>
 	<dependency>
@@ -100,21 +100,21 @@
 		<type>deployment-package</type>
 	</dependency>
 	<dependency>
-		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+		<groupId>fr.liglab.adele.icasa</groupId>
 		<artifactId>x10.presence.sensor.core.dp</artifactId>
-        <version>${m2mAppBuilderVersion}</version>
+        <version>${iCasaPlatformVersion}</version>
 		<type>deployment-package</type>
 	</dependency>
 	<dependency>
-		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+		<groupId>fr.liglab.adele.icasa</groupId>
 		<artifactId>upnp.settopbox.core.dp</artifactId>
-        <version>${m2mAppBuilderVersion}</version>
+        <version>${iCasaPlatformVersion}</version>
 		<type>deployment-package</type>
 	</dependency>
 	<dependency>
-		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+		<groupId>fr.liglab.adele.icasa</groupId>
 		<artifactId>tikitag.core.dp</artifactId>
-        <version>${m2mAppBuilderVersion}</version>
+        <version>${iCasaPlatformVersion}</version>
 		<type>deployment-package</type>
 	</dependency>
 	

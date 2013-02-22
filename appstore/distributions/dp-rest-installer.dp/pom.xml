@@ -19,10 +19,10 @@ limitations under the License.
 
 	<!-- Project parent -->
 	<parent>
-		<groupId>fr.liglab.adele.m2mappbuilder</groupId>
-		<artifactId>parent</artifactId>
-		<version>0.0.2-SNAPSHOT</version>
-		<relativePath>../../../parent</relativePath>
+		<groupId>fr.liglab.adele.icasa</groupId>
+		<artifactId>platform.parent</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+      <relativePath>../../../parent</relativePath>
 	</parent>
 
 	<!-- Project Description -->
@@ -35,7 +35,7 @@ limitations under the License.
        </properties>
 	<dependencies>
 		<dependency>
-			<groupId>fr.liglab.adele.m2mappbuilder</groupId>
+			<groupId>fr.liglab.adele.icasa</groupId>
          <artifactId>dp-rest-installer</artifactId>
 			<version>${project.version}</version>		
 		</dependency>

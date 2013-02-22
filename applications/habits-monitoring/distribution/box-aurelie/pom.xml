@@ -27,18 +27,16 @@ limitations under the License.
          </parent>
          
          <!-- Project coordinates -->
+         <groupId>fr.liglab.adele.icasa</groupId>
          <artifactId>habits.monitoring.distribution.box.aurelie</artifactId>
          <packaging>pom</packaging>
-         <version>0.0.2-SNAPSHOT</version>
-         
+         <version>1.0.0-SNAPSHOT</version>         
          <!-- Project description -->
          <name>${productName} :: Habits Monitoring :: Distribution :: Box Aurelie</name>
          
          <properties>
-            <productName>M2MAppBuilder</productName>
-            <m2mAppBuilderVersion>0.0.2-SNAPSHOT</m2mAppBuilderVersion>
-            <icasaVersion>0.0.2-SNAPSHOT</icasaVersion>
-            <productVersion>${m2mAppBuilderVersion}</productVersion>
+            <productName>iCasa Platform</productName>
+            <iCasaPlatformVersion>1.0.0-SNAPSHOT</iCasaPlatformVersion>
             <!-- flag to flatten deployment packages -->
             <flattenDP>false</flattenDP>
          </properties>
@@ -80,17 +78,17 @@ limitations under the License.
             </dependency>
             <dependency>
                <groupId>fr.liglab.adele.icasa</groupId>
-               <artifactId>icasa.core.dp</artifactId>
-               <version>${icasaVersion}</version>
+               <artifactId>platform.core.dp</artifactId>
+               <version>${iCasaPlatformVersion}</version>
                <type>deployment-package</type>
             </dependency>
             
             
             <!-- habits monitoring application -->
             <dependency>
-               <groupId>fr.liglab.adele.m2mappbuilder</groupId>
+               <groupId>fr.liglab.adele.icasa</groupId>
                <artifactId>measure.generator.mock.dp</artifactId>
-               <version>${m2mAppBuilderVersion}</version>
+               <version>${iCasaPlatformVersion}</version>
                <type>deployment-package</type>
             </dependency>
             

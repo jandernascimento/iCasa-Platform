@@ -28,7 +28,7 @@
   </parent>
 
   <!-- Project coordinates -->
-  <groupId>fr.liglab.adele.m2mappbuilder</groupId>
+  <groupId>fr.liglab.adele.icasa</groupId>
   <artifactId>appstore.distribution</artifactId>
   <version>${appstoreVersion}</version>
   <packaging>pom</packaging>
@@ -61,8 +61,8 @@
     </repositories>
 
   <properties>
-	  <appstoreVersion>0.0.2-SNAPSHOT</appstoreVersion>
-	  <productName>M2MAppBuilder</productName>
+	  <appstoreVersion>1.0.0-SNAPSHOT</appstoreVersion>
+	  <productName>iCasa Platform</productName>
       <!-- flag to flatten deployment packages -->
       <flattenDP>false</flattenDP>
   </properties>

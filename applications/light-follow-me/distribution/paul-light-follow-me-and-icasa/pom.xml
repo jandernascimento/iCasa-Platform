@@ -26,16 +26,16 @@
   </parent>
 
   <!-- Project coordinates -->
-  <groupId>fr.liglab.adele.m2mappbuilder</groupId>
+  <groupId>fr.liglab.adele.icasa</groupId>
   <artifactId>paul.light.follow.me.and.icasa</artifactId>
-  <version>1.0.3</version>
+  <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>${productName} :: ${projectName}</name>
 
   <properties>
-      <productName>M2MAppBuilder</productName>
-      <m2mAppBuilderVersion>0.0.2-SNAPSHOT</m2mAppBuilderVersion>
-      <productVersion>${m2mAppBuilderVersion}</productVersion>
+      <productName>iCasa Platform</productName>
+      <iCasaPlatformVersion>1.0.0-SNAPSHOT</iCasaPlatformVersion>
+      <productVersion>${iCasaPlatformVersion}</productVersion>
 
       <!-- flag to flatten deployment packages -->
       <flattenDP>true</flattenDP>
@@ -66,9 +66,9 @@
 		<type>deployment-package</type>
 	</dependency>
 	<dependency>
-        <groupId>fr.liglab.adele.m2mappbuilder</groupId>
+        <groupId>fr.liglab.adele.icasa</groupId>
 		<artifactId>light.follow.me.application</artifactId>
-        <version>${m2mAppBuilderVersion}</version>
+        <version>${iCasaPlatformVersion}</version>
 	</dependency>
 	<dependency>
 		<groupId>fr.liglab.adele.icasa</groupId>

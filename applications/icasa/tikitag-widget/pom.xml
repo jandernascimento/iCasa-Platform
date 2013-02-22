@@ -4,9 +4,9 @@
 
   <!-- Project parent -->
   <parent>
-    <groupId>fr.liglab.adele.m2mappbuilder</groupId>
-    <artifactId>parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <groupId>fr.liglab.adele.icasa</groupId>
+    <artifactId>platform.parent</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
     <relativePath>../../../parent</relativePath>
   </parent>
 
@@ -17,10 +17,10 @@
   <dependencies>
     <dependency>
       <groupId>fr.liglab.adele.icasa</groupId>
-      <artifactId>device.api</artifactId>
+      <artifactId>context.api</artifactId>
     </dependency>
     <dependency>
-      <groupId>fr.liglab.adele.m2mappbuilder</groupId>
+      <groupId>fr.liglab.adele.icasa</groupId>
       <artifactId>rfid.reader</artifactId>
     </dependency>
   </dependencies>
