@@ -32,6 +32,11 @@
       </dependency>
       <dependency>
          <groupId>${project.groupId}</groupId>
+         <artifactId>context.remote</artifactId>
+         <version>${project.version}</version>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
          <artifactId>context.impl</artifactId>
          <version>${project.version}</version>
       </dependency>
