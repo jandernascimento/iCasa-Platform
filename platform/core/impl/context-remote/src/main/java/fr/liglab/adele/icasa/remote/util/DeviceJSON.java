@@ -13,7 +13,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package fr.liglab.adele.icasa.remote.impl;
+package fr.liglab.adele.icasa.remote.util;
 
 import org.json.JSONException;
 import org.json.JSONObject;

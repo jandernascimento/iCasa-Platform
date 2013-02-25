@@ -33,6 +33,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import org.apache.felix.ipojo.annotations.Component;
 import org.apache.felix.ipojo.annotations.Instantiate;
@@ -47,6 +48,8 @@ import fr.liglab.adele.icasa.device.GenericDevice;
 import fr.liglab.adele.icasa.location.LocatedDevice;
 import fr.liglab.adele.icasa.location.Position;
 import fr.liglab.adele.icasa.remote.AbstractREST;
+import fr.liglab.adele.icasa.remote.SimulatedDeviceManager;
+import fr.liglab.adele.icasa.remote.util.DeviceJSON;
 import fr.liglab.adele.icasa.remote.util.IcasaJSONUtil;
 
 /**
@@ -61,6 +64,9 @@ public class DeviceREST extends AbstractREST {
 
     @Requires
     private ContextManager _contextMgr;
+    
+    @Requires (optional = true) 
+    SimulatedDeviceManager simulator;
     
     @OPTIONS
     @Produces(MediaType.APPLICATION_JSON)
@@ -173,6 +179,76 @@ public class DeviceREST extends AbstractREST {
         return makeCORS(Response.ok(deviceJSON.toString()));
     }
 
+    /**
+     * Create a new device.
+     *
+     * @return
+     */
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path(value="/device/")
+    public Response createDevice(String content) {
+   
+    	if(simulator == null) {
+    		return makeCORS(Response.status(Status.SERVICE_UNAVAILABLE));
+    	}
+        DeviceJSON deviceJSON = DeviceJSON.fromString(content);
+
+        String deviceType = deviceJSON.getType();
+
+        LocatedDevice newDevice = null;
+        if (deviceType != null) {
+
+            String deviceId = deviceJSON.getId();
+            
+            Map<String, Object> properties = new HashMap<String, Object>();
+            properties.put(GenericDevice.DEVICE_SERIAL_NUMBER, deviceId);
+
+            try {
+            	simulator.createDevice(deviceType, deviceId, properties);
+            } catch (Exception e) {
+                e.printStackTrace();
+                newDevice = null;
+            }
+
+            newDevice = _contextMgr.getDevice(deviceId);
+        }
+
+        if (newDevice == null)
+            return makeCORS(Response.status(Response.Status.INTERNAL_SERVER_ERROR));
+
+        JSONObject newDeviceJSON = IcasaJSONUtil.getDeviceJSON(newDevice, _contextMgr);
+
+        return makeCORS(Response.ok(newDeviceJSON.toString()));
+    }
+
+    /**
+     * Delete specified device.
+     *
+     * @param deviceId device id
+     * @return true if chain is successful deleted, false if it does not exist.
+     */
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path(value="/device/{deviceId}")
+    public Response deleteDevice(@PathParam("deviceId") String deviceId) {
+
+    	if(simulator == null) {
+    		return makeCORS(Response.status(Status.SERVICE_UNAVAILABLE));
+    	}
+        LocatedDevice foundDevice = findDevice(deviceId);
+        if (foundDevice == null)
+            return Response.status(404).build();
+        try {
+            simulator.removeDevice(deviceId);
+        } catch (Exception e) {
+            return makeCORS(Response.status(Response.Status.INTERNAL_SERVER_ERROR));
+        }
+
+        return makeCORS(Response.ok());
+    }
+    
     
     /**
      * Returns a JSON array containing all devices.

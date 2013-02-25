@@ -40,6 +40,7 @@ import fr.liglab.adele.icasa.location.Position;
 import fr.liglab.adele.icasa.location.Zone;
 import fr.liglab.adele.icasa.remote.AbstractREST;
 import fr.liglab.adele.icasa.remote.util.IcasaJSONUtil;
+import fr.liglab.adele.icasa.remote.util.ZoneJSON;
 
 /**
  * @author Thomas Leveque

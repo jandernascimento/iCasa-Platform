@@ -15,12 +15,25 @@
  */
 package fr.liglab.adele.icasa.remote;
 
-import org.json.JSONObject;
+import java.util.Map;
 
 /**
  * @author <a href="mailto:cilia-devel@lists.ligforge.imag.fr">Cilia Project
  *         Team</a>
  */
-public interface RemoteEventBroadcast {
-	void sendEvent(String eventType, JSONObject event);
+public interface SimulatedDeviceManager {
+
+	/**
+	 * @param deviceType
+	 * @param deviceId
+	 * @param properties
+	 */
+	void createDevice(String deviceType, String deviceId,
+			Map<String, Object> properties);
+
+	/**
+	 * @param deviceId
+	 */
+	void removeDevice(String deviceId);
+
 }

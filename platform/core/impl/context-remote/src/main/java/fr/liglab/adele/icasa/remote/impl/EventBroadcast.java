@@ -25,6 +25,7 @@ import org.apache.felix.ipojo.annotations.Component;
 import org.apache.felix.ipojo.annotations.Instantiate;
 import org.apache.felix.ipojo.annotations.Invalidate;
 import org.apache.felix.ipojo.annotations.Property;
+import org.apache.felix.ipojo.annotations.Provides;
 import org.apache.felix.ipojo.annotations.Requires;
 import org.apache.felix.ipojo.annotations.Validate;
 import org.atmosphere.cpr.AtmosphereInterceptor;
@@ -50,6 +51,7 @@ import fr.liglab.adele.icasa.remote.RemoteEventBroadcast;
 import fr.liglab.adele.icasa.remote.util.IcasaJSONUtil;
 
 @Component(name = "iCasa-event-broadcast")
+@Provides(specifications = RemoteEventBroadcast.class)
 @Instantiate(name = "iCasa-event-broadcast-1")
 public class EventBroadcast extends OnMessage<String> implements RemoteEventBroadcast{
 
