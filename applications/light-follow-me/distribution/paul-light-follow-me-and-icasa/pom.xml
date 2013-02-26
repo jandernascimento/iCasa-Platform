@@ -76,6 +76,12 @@
       <version>${project.version}</version>
 		<type>deployment-package</type>
 	</dependency>
+   <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>icasa.simulator.dp</artifactId>
+      <version>${project.version}</version>
+      <type>deployment-package</type>
+   </dependency>
 
       <!-- Play 2 applications-->
       <dependency>

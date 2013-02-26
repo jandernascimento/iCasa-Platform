@@ -82,6 +82,12 @@ limitations under the License.
                <version>${iCasaPlatformVersion}</version>
                <type>deployment-package</type>
             </dependency>
+            <dependency>
+               <groupId>fr.liglab.adele.icasa</groupId>
+               <artifactId>icasa.simulator.dp</artifactId>
+               <version>${iCasaPlatformVersion}</version>
+               <type>deployment-package</type>
+            </dependency>
             
             
             <!-- habits monitoring application -->
