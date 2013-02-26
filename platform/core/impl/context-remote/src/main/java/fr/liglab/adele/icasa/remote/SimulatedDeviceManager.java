@@ -16,6 +16,7 @@
 package fr.liglab.adele.icasa.remote;
 
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author <a href="mailto:cilia-devel@lists.ligforge.imag.fr">Cilia Project
@@ -35,5 +36,11 @@ public interface SimulatedDeviceManager {
 	 * @param deviceId
 	 */
 	void removeDevice(String deviceId);
+	
+	/**
+	 * Retrieve the list of simulated devices
+	 * @return the list of types.
+	 */
+	Set<String> getDeviceTypes();
 
 }

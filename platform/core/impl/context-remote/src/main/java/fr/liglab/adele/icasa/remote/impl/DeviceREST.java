@@ -84,6 +84,23 @@ public class DeviceREST extends AbstractREST {
 
     @OPTIONS
     @Produces(MediaType.APPLICATION_JSON)
+    @Path(value="/simulatedDeviceTypes/")
+    public Response getSimulatedDeviceTypesOptions() {
+        return makeCORS(Response.ok());
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path(value="/simulatedDeviceTypes/")
+    public Response simulatedDeviceTypes() {
+    	if(simulator == null) {
+    		return makeCORS(Response.status(Status.SERVICE_UNAVAILABLE));
+    	}
+        return makeCORS(Response.ok(getSimulatedDeviceTypes()));
+    }
+    
+    @OPTIONS
+    @Produces(MediaType.APPLICATION_JSON)
     @Path(value="/device/")
     public Response createsDeviceOptions() {
         return makeCORS(Response.ok());
@@ -258,6 +275,24 @@ public class DeviceREST extends AbstractREST {
     private String getDeviceTypes() {
         JSONArray currentDevices = new JSONArray();
         for (String deviceTypeStr : _contextMgr.getDeviceTypes()) {
+            JSONObject deviceType = IcasaJSONUtil.getDeviceTypeJSON(deviceTypeStr);
+            if (deviceType == null)
+                continue;
+
+            currentDevices.put(deviceType);
+        }
+
+        return currentDevices.toString();
+    }
+    
+    /**
+     * Returns a JSON array containing all devices.
+     *
+     * @return a JSON array containing all devices.
+     */
+    private String getSimulatedDeviceTypes() {
+        JSONArray currentDevices = new JSONArray();
+        for (String deviceTypeStr : simulator.getDeviceTypes()) {
             JSONObject deviceType = IcasaJSONUtil.getDeviceTypeJSON(deviceTypeStr);
             if (deviceType == null)
                 continue;
