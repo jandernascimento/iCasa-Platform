@@ -86,8 +86,6 @@ public class DistributionFrameworkFactory implements FrameworkFactory {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("*********PATH*******");
-		System.out.println(currentpath);
 
 		//Get the bundle folder.
 		File folder = null;
@@ -104,7 +102,6 @@ public class DistributionFrameworkFactory implements FrameworkFactory {
 				String file = listOfFiles[i].getName();
 				if (file.endsWith(".jar") && !file.contains("org.osgi.compendium")) { // It is added by pax exam. We skip to avoid test fail
 					try {
-						System.out.println(listOfFiles[i].getCanonicalPath());
 						listOfBundles.append("file://");
 						listOfBundles.append(listOfFiles[i].getCanonicalPath());
 						listOfBundles.append(" ");
@@ -162,7 +159,6 @@ public class DistributionFrameworkFactory implements FrameworkFactory {
 		public void init() throws BundleException {
 			_fwk.init();
 			AutoProcessor.process(felixConfiguration, _fwk.getBundleContext());
-			System.out.println("AutoProcessor will start" + felixConfiguration);
 		}
 		/**
 		 * @param timeout
