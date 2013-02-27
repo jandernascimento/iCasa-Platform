@@ -16,6 +16,9 @@
 	<properties>
 		<exam.version>3.0.0</exam.version>
 		<url.version>1.5.2</url.version>
+		<distrib.groupId>${project.groupId}</distrib.groupId>
+		<distrib.artifactId>habits.monitoring.distribution.box.aurelie</distrib.artifactId>
+		<distrib.version>${project.version}</distrib.version>
 	</properties>
 
 	<dependencies>
@@ -69,9 +72,9 @@
 		</dependency>
       <!-- Distribution to test-->
 		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>habits.monitoring.distribution.box.aurelie</artifactId>
-			<version>${project.version}</version>
+			<groupId>${distrib.groupId}</groupId>
+			<artifactId>${distrib.artifactId}</artifactId>
+			<version>${distrib.version}</version>
 			<type>zip</type>
 		</dependency>
 
@@ -103,13 +106,9 @@
 							<goal>unpack-dependencies</goal>
 						</goals>
 						<configuration>
-							<outputAbsoluteArtifactFilename>true</outputAbsoluteArtifactFilename>
-							<includeGroupIds>${project.groupId}</includeGroupIds>
-							<includeArtifactIds>habits.monitoring.distribution.box.aurelie</includeArtifactIds>
-							<outputDirectory>
-								${project.build.directory}/distribution
-								<!-- or: ${project.basedir}/wherever/you/want/it -->
-							</outputDirectory>
+							<includeGroupIds>${distrib.groupId}</includeGroupIds>
+							<includeArtifactIds>${distrib.artifactId}</includeArtifactIds>
+							<outputDirectory>${project.build.directory}/distribution</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
