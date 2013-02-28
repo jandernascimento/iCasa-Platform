@@ -15,6 +15,7 @@
  */
 package fr.liglab.adele.icasa.remote.util;
 
+import fr.liglab.adele.icasa.remote.impl.ClockREST;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -122,6 +123,7 @@ public class IcasaJSONUtil {
 		JSONObject clockJSON = null;
 		try {
 			clockJSON = new JSONObject();
+            clockJSON.putOnce("id", ClockREST.DEFAULT_INSTANCE_NAME); //TODO should be changed to manage multiple clocks
 			clockJSON.putOnce("startDateStr", DateTextUtil.getTextDate(clock.getStartDate()));
 			clockJSON.putOnce("startDate", clock.getStartDate());
 			clockJSON.putOnce("currentDateStr", DateTextUtil.getTextDate((clock.currentTimeMillis())));
