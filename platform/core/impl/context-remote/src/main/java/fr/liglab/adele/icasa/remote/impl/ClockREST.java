@@ -15,12 +15,7 @@
  */
 package fr.liglab.adele.icasa.remote.impl;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.OPTIONS;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -29,6 +24,7 @@ import org.apache.felix.ipojo.annotations.Instantiate;
 import org.apache.felix.ipojo.annotations.Provides;
 import org.apache.felix.ipojo.annotations.Requires;
 import org.apache.felix.ipojo.annotations.StaticServiceProperty;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,28 +40,70 @@ import fr.liglab.adele.icasa.remote.util.IcasaJSONUtil;
 @Component(name = "remote-rest-clock")
 @Instantiate(name = "remote-rest-clock-0")
 @Provides(specifications = { ClockREST.class }, properties = {@StaticServiceProperty(name = AbstractREST.ICASA_REST_PROPERTY_NAME, value="true", type="java.lang.Boolean")} )
-@Path(value = "/clock/")
+@Path(value = "/clocks/")
 public class ClockREST extends AbstractREST {
 
-	@Requires
+    public static final String DEFAULT_INSTANCE_NAME = "default";
+
+    @Requires(optional = true)
 	private Clock clock;
+
+    @OPTIONS
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path(value="/clocks/")
+    public Response clocksOptions() {
+        return makeCORS(Response.ok());
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path(value="/clocks/")
+    public Response clocks() {
+        return makeCORS(Response.ok(getClocks()));
+    }
+
+    /**
+     * Returns a JSON array containing all clocks.
+     *
+     * @return a JSON array containing all clocks.
+     */
+    private String getClocks() {
+        JSONArray currentClocks = new JSONArray();
+
+        if (clock != null) {
+            JSONObject currentClock = IcasaJSONUtil.getClockJSON(clock);
+            if (currentClock != null)
+                currentClocks.put(currentClock);
+        }
+
+        return currentClocks.toString();
+    }
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response clock() {
+    @Path(value="/clock/{clockId}")
+	public Response clock(@PathParam("clockId") String clockId) {
+        if ((clock == null) || (clockId == null) || (! DEFAULT_INSTANCE_NAME.equals(clockId)))
+            return makeCORS(Response.status(404));
+
 		return makeCORS(Response.ok(IcasaJSONUtil.getClockJSON(clock).toString()));
 	}
 
 	@OPTIONS
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response clockOptions() {
+    @Path(value="/clock/{clockId}")
+	public Response clockOptions(@PathParam("clockId") String clockId) {
 		return makeCORS(Response.ok());
 	}
 
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateClock(String content) {
+    @Path(value="/clock/{clockId}")
+	public Response updateClock(@PathParam("clockId") String clockId, String content) {
+        if ((clock == null) || (clockId == null) || (! "default".equals(clockId)))
+            return makeCORS(Response.status(404));
+
 		try {
 			JSONObject clockObject = new JSONObject(content);
 			int factor = clockObject.getInt("factor");
