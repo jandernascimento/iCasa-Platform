@@ -31,7 +31,6 @@
 
 	<modules>
 		<module>core-platform-tests</module>
-      <module>distribution-tests</module>
 	</modules>
 
 	<build>
