@@ -32,7 +32,6 @@
 	<modules>
 		<module>parent</module>
 		<module>platform</module>
-        <module>applications</module>
         <!--module>appstore</module-->
 		<!--module>tests</module-->
 	</modules>
