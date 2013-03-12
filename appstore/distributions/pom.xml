@@ -30,7 +30,6 @@
 
 	<modules>
 		<module>dp-rest-installer.dp</module>
-		<module>minimal-distribution</module>
 	</modules>
    <build>
       <plugins>
