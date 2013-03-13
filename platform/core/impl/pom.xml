@@ -32,6 +32,7 @@
 	<modules>
       <module>context-impl</module>
       <module>context-remote</module>
+      <module>clock-system-impl</module>
 		<module>device-manager-impl</module>
 		<module>application-impl</module>
 		<module>application-mock-impl</module>
