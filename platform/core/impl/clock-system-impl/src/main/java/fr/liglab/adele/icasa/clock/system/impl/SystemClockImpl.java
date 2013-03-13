@@ -16,6 +16,7 @@
 package fr.liglab.adele.icasa.clock.system.impl;
 
 import org.apache.felix.ipojo.annotations.Component;
+import org.apache.felix.ipojo.annotations.Instantiate;
 import org.apache.felix.ipojo.annotations.Provides;
 
 import fr.liglab.adele.icasa.clock.Clock;
@@ -27,6 +28,7 @@ import fr.liglab.adele.icasa.clock.ClockListener;
  */
 
 @Component(name="SystemClock")
+@Instantiate(name="System-clock")
 @Provides
 public class SystemClockImpl implements Clock {
 
