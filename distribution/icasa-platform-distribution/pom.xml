@@ -77,7 +77,7 @@
                 <groupId>fr.liglab.adele.common</groupId>
                 <artifactId>maven-osgi-distribution-plugin</artifactId>
                 <configuration>
-                    <flattenDP>true</flattenDP>
+                    <flattenDP>false</flattenDP>
                 </configuration>
             </plugin>
         </plugins>
