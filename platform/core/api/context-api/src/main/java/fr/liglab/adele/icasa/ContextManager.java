@@ -32,18 +32,61 @@ public interface ContextManager {
 
 	// -- Zone related methods --//
 
+	/**
+	 * Create a new zone
+	 * @param id the identifier of the zone.
+	 * @param leftX the left X value of the zone.
+	 * @param topY the top X value of the zone.
+	 * @param width the width of the zone.
+	 * @param height the height of the zone.
+	 * @return the new zone.
+	 */
 	public Zone createZone(String id, int leftX, int topY, int width, int height);
-
+	/**
+	 * Creates a new square zone with a center position.  
+	 * @param id The identifier of the zone.
+	 * @param center The center position of the new zone. 
+	 * @param detectionScope used to calculate the width/height of the zone.
+	 * 		width = detectionScope * 2
+	 * 		height = detectionScope * 2
+	 * @return
+	 */
 	public Zone createZone(String id, Position center, int detectionScope);
 	
+	/**
+	 * Remove a zone given his identifier
+	 * @param id The zone identifier.
+	 */
 	public void removeZone(String id);
-
+	/**
+	 * Move a zone to a new top left corner position. 
+	 * @param id The identifier of the zone to move.
+	 * @param leftX The new X corner value.
+	 * @param topY The new Y corner value
+	 * @throws Exception when new position does not fit in the parent zone.
+	 */
 	public void moveZone(String id, int leftX, int topY) throws Exception;
-
+	/**
+	 * Resize a zone to a new width and height.
+	 * @param id The identifier of the zone to resize.
+	 * @param width the new width of the zone.
+	 * @param height The new height of the zone
+	 * @throws Exception Throws an exception when the zone does not fit in the parent zone.
+	 */
 	public void resizeZone(String id, int width, int height) throws Exception; 
 		
+	/**
+	 * Get the set of available variables in a given zone.
+	 * @param zoneId the zone identifier.
+	 * @return The set of the variables of the zone.
+	 */
 	public Set<String> getZoneVariables(String zoneId);
-
+	/**
+	 * Get the value of a given variable in a specified zone.
+	 * @param zoneId The zone identifier to inspect the variables.
+	 * @param variable The variable name to retrieve its value.
+	 * @return The value of the variable in the given zone.
+	 */
 	public Object getZoneVariableValue(String zoneId, String variable);
 
 	public void addZoneVariable(String zoneId, String variable);

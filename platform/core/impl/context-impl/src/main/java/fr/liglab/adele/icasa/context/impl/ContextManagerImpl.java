@@ -63,9 +63,7 @@ public class ContextManagerImpl implements ContextManager {
 
 	private List<LocatedDeviceListener> deviceListeners = new ArrayList<LocatedDeviceListener>();
 
-
 	private List<ZoneListener> zoneListeners = new ArrayList<ZoneListener>();
-
 
 	public ContextManagerImpl() {
 

@@ -17,14 +17,33 @@ package fr.liglab.adele.icasa.location;
 
 
 public interface ZoneListener extends ZonePropListener {
-
+	/**
+	 * Called callback when a new zone has been added.
+	 * This method will not be called for added zones previous the zone listener registration.
+	 * @param zone The new zone.
+	 */
     public void zoneAdded(Zone zone);
-
+    /**
+     * Called callback when a zone is removed.
+     * @param zone
+     */
     public void zoneRemoved(Zone zone);
-
+    /**
+     * Called callback when the zone has move.
+     * @param zone The zone that has move.
+     * @param oldPosition The old top-left relative position.
+     */
     public void zoneMoved(Zone zone, Position oldPosition);
-
+    /**
+     * Called callback when a zone has been resized.
+     * @param zone The resized zone.
+     */
     public void zoneResized(Zone zone);
-
+    /**
+     * Called callback when adding a parent to an existent zone.
+     * @param zone The zone with new parent.
+     * @param oldParentZone The old parent of the zone.
+     * 			null for the first time.
+     */
     public void zoneParentModified(Zone zone, Zone oldParentZone);
 }
