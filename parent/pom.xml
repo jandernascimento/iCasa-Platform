@@ -32,7 +32,7 @@
 	<properties>
 		<productName>iCasa Platform</productName>
       <productVersion>${project.version}</productVersion>
-      <AdeleBaseVersion>${project.parent.version} </AdeleBaseVersion>
+      <AdeleBaseVersion>1.0.4-SNAPSHOT</AdeleBaseVersion>
       <cxfVersion>2.3.2</cxfVersion>
       <!--UPNP -->
       <UPnPBDVersion>0.8.0</UPnPBDVersion>
@@ -94,6 +94,11 @@
                <artifactId>distribution.base</artifactId>
                <version>${AdeleBaseVersion}</version>
                <type>osgi-distribution</type>
+            </dependency>
+            <dependency>
+               <groupId>fr.liglab.adele.common</groupId>
+               <artifactId>distribution.factory</artifactId>
+               <version>${AdeleBaseVersion}</version>
             </dependency>
 			<!-- UPNP -->
 			<dependency>
