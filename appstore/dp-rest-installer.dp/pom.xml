@@ -22,8 +22,8 @@ limitations under the License.
 		<groupId>fr.liglab.adele.icasa</groupId>
 		<artifactId>platform.parent</artifactId>
       <version>1.0.0-SNAPSHOT</version>
-      <relativePath>../../../parent</relativePath>
-	</parent>
+      <relativePath>../../parent</relativePath>
+   </parent>
 
 	<!-- Project Description -->
 	<artifactId>dp-rest-installer.dp</artifactId>

@@ -30,8 +30,8 @@
 
 	<modules>
 		<module>dp-rest-installer</module>
+      <module>dp-rest-installer.dp</module>
 		<!--module>appstore-server</module-->
-		<module>distributions</module>
 	</modules>
    <build>
       <plugins>
