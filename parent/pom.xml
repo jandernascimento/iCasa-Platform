@@ -33,7 +33,7 @@
 		<productName>iCasa Platform</productName>
       <productVersion>${project.version}</productVersion>
       <AdeleBaseVersion>1.0.4</AdeleBaseVersion>
-      <DistributionFactoryVersion>1.0.4-SNAPSHOT</DistributionFactoryVersion>
+      <DistributionTestVersion>1.0.4-SNAPSHOT</DistributionTestVersion>
       <cxfVersion>2.3.2</cxfVersion>
       <!--UPNP -->
       <UPnPBDVersion>0.8.0</UPnPBDVersion>
@@ -99,7 +99,7 @@
             <dependency>
                <groupId>fr.liglab.adele.common</groupId>
                <artifactId>distribution.factory</artifactId>
-               <version>${DistributionFactoryVersion}</version>
+               <version>${DistributionTestVersion}</version>
             </dependency>
 			<!-- UPNP -->
 			<dependency>
