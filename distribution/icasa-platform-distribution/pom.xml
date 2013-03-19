@@ -68,14 +68,6 @@
         </dependency>
 
 
-        <!-- Play 2 applications-->
-        <dependency>
-            <groupId>fr.liglab.adele.icasa</groupId>
-            <artifactId>icasa.web</artifactId>
-            <version>${project.version}</version>
-            <type>play2</type>
-        </dependency>
-
     </dependencies>
 
     <build>
