@@ -83,10 +83,6 @@ limitations under the License.
 					<writeExtraData>true</writeExtraData>
 					<deploymentPackage>
 						<resources>
-							<processedResource>
-								<processor>org.osgi.deployment.rp.autoload</processor>
-								<filePath>/src/main/resources/rose-conf-Appstore.json</filePath>
-							</processedResource>
 						</resources>
 					</deploymentPackage>
 				</configuration>

@@ -38,10 +38,11 @@ import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
 import fr.imag.adele.appstore.gateway.util.DPResourceManipulator;
+import fr.liglab.adele.icasa.remote.AbstractREST;
 
 @Component(name = "deployment-admin-rest-api")
 @Instantiate(name = "deployment-admin-rest-api-0")
-@Provides(specifications = { DPAdmin.class }, properties = { @StaticServiceProperty(name = "appstore.exporter.protocol", type = "java.lang.String", value = "jax-rs") })
+@Provides(specifications = { DPAdmin.class }, properties = {@StaticServiceProperty(name = AbstractREST.ICASA_REST_PROPERTY_NAME, value="true", type="java.lang.Boolean")} )
 @Path(value = "/")
 public class DPAdmin {
 
