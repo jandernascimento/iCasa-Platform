@@ -20,7 +20,7 @@
 	<!-- Project coordinates -->
 	<groupId>fr.liglab.adele.icasa</groupId>
 	<artifactId>platform.parent</artifactId>
-   <version>1.0.0</version>
+   <version>1.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<!-- Project description -->
@@ -129,7 +129,7 @@
 			<dependency>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>org.apache.felix.usb.basedriver</artifactId>
-				<version>1.0.0</version>
+				<version>1.0.1-SNAPSHOT</version>
 			</dependency>
 
 
@@ -213,6 +213,6 @@
       <connection>scm:git:ssh://git@github.com/AdeleResearchGroup/iCasa-Platform.git</connection>
       <url>https://github.com/AdeleResearchGroup/iCasa-Platform.git</url>
       <developerConnection>scm:git:ssh://git@github.com/AdeleResearchGroup/iCasa-Platform.git</developerConnection>
-      <tag>iCasaPlatform-1.0.0</tag>
+      <tag>HEAD</tag>
    </scm>
 </project>
