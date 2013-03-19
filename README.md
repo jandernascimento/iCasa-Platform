@@ -1,4 +1,4 @@
-M2MAppBuilder
+iCasa Platform
 =====
 
 This project aims at providing a complete toolkit to build M2M applications.
@@ -43,14 +43,14 @@ Install all build prerequisites.
 Then add the following maven repositories to your project pom.xml file.
 ```xml
 <repository>
-	<id>maven-m2mappbuilder-repository-release</id>
-	<name>M2MAppBuilder - Release</name>
+	<id>maven-icasa-repository-release</id>
+	<name>icasa - Release</name>
 	<url>https://repository-icasa.forge.cloudbees.com/release/</url>
 	<layout>default</layout>
 </repository>
 <repository>
-	<id>maven-m2mappbuilder-repository-snapshot</id>
-	<name>M2MAppBuilder - Snapshot</name>
+	<id>maven-icasa-repository-snapshot</id>
+	<name>icasa - Snapshot</name>
 	<url>https://repository-icasa.forge.cloudbees.com/snapshot/</url>
 	<layout>default</layout>
 </repository>
@@ -83,14 +83,14 @@ Maven Repositories
 
 ```xml
 <repository>
-	<id>maven-m2mappbuilder-repository-release</id>
-	<name>M2MAppBuilder - Release</name>
+	<id>maven-icasa-repository-release</id>
+	<name>icasa - Release</name>
 	<url>https://repository-icasa.forge.cloudbees.com/release/</url>
 	<layout>default</layout>
 </repository>
 <repository>
-	<id>maven-m2mappbuilder-repository-snapshot</id>
-	<name>M2MAppBuilder - Snapshot</name>
+	<id>maven-icasa-repository-snapshot</id>
+	<name>icasa - Snapshot</name>
 	<url>https://repository-icasa.forge.cloudbees.com/snapshot/</url>
 	<layout>default</layout>
 </repository>
@@ -115,7 +115,7 @@ If you want to contribute to this project, you MUST follow the developper guidel
 - Use Sun naming convention in your code.
 - You should prefix private class member by an underscore (e.g. : _bundleContext).
 - All project directory names must be lower case without dots (you can use - instead of underscores).
-- All packages must start with fr.liglab.adele.m2mappbuilder
-- All Maven artifact group id must be fr.liglab.adele.m2mappbuilder
-- All maven artifact id must not contain fr.liglab.adele.m2mappbuilder and must be lower case (cannot use underscore, prefer dots)
-- All maven project pom.xml file must inherent from parent pom (group id = fr.liglab.adele.m2mappbuilder and artifact id = parent)
+- All packages must start with fr.liglab.adele.icasa
+- All Maven artifact group id must be fr.liglab.adele.icasa
+- All maven artifact id must not contain fr.liglab.adele.icasa and must be lower case (cannot use underscore, prefer dots)
+- All maven project pom.xml file must inherent from parent pom (group id = fr.liglab.adele.icasa and artifact id = platform-parent)

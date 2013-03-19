@@ -1,6 +1,6 @@
 Development Environment Install Guide
 -------
-This document explains how to setup a development environment for M2MAppBuilder applications
+This document explains how to setup a development environment for iCasa applications
 
 Prerequisites
 -------
@@ -41,7 +41,6 @@ dev
 -maven-repo
 -workspaces
 --iCasa
---M2MAppBuilder
 --Medical
 --Project4
 ...

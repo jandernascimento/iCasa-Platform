@@ -210,9 +210,9 @@
       </repository>
    </distributionManagement>
    <scm>
-      <connection>scm:git:ssh://git@github.com/AdeleResearchGroup/M2MAppBuilder.git</connection>
-      <url>https://github.com/AdeleResearchGroup/M2MAppBuilder.git</url>
-      <developerConnection>scm:git:ssh://git@github.com/AdeleResearchGroup/M2MAppBuilder.git</developerConnection>
+      <connection>scm:git:ssh://git@github.com/AdeleResearchGroup/iCasa-Platform.git</connection>
+      <url>https://github.com/AdeleResearchGroup/iCasa-Platform.git</url>
+      <developerConnection>scm:git:ssh://git@github.com/AdeleResearchGroup/iCasa-Platform.git</developerConnection>
       <tag>HEAD</tag>
    </scm>
 </project>
