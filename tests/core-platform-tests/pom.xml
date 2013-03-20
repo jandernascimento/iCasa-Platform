@@ -29,9 +29,10 @@
 	<name>${productName} :: ${projectName}</name>
 
 	<modules>
-		<module>test-common</module>
+		<!--<module>test-common</module>
 		<module>device-manager-tests</module>
-		<module>icasa-bridge-tests</module>
+		<module>icasa-bridge-tests</module>-->
+      <module>distributions-test</module>
 	</modules>
    <build>
       <plugins>

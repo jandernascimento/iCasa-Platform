@@ -81,7 +81,7 @@
 		<dependency>
 			<groupId>fr.liglab.adele.common</groupId>
 			<artifactId>base.distribution.test</artifactId>
-			<version>${AdeleBaseVersion}</version>
+         <version>${DistributionTestVersion}</version>
 		</dependency>
 
 		<dependency>
