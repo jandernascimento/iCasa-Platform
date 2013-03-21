@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Simple Photometer</string>
+
+    <string name="search_lan">Search LAN</string>
+    <string name="switch_router">Network On/Off</string>
+    <string name="toggle_debug_logging">Toggle debug logging</string>
+
+    <string name="searching_lan">Searching LAN for UPnP devices...</string>
+    <string name="enabling_router">Enabling network router...</string>
+    <string name="disabling_router">Disabling network router...</string>
+    <string name="enabling_debug_logging">Enabling debug logging...</string>
+    <string name="disabling_debug_logging">Disabling debug logging...</string>
+
+    <string name="registering_demo_device">Registering UPnP demo device...</string>
+    <string name="create_demo_failed">Creating of demo device failed, check the log!</string>
+
+    <string name="light_value">The light value is %1$d lux (same brightness than
+		%2$s)</string>
+	<string name="LIGHT_NO_MOON">a night without moon</string>
+	<string name="LIGHT_FULLMOON">a night with full moon</string>
+	<string name="LIGHT_CLOUDY">a cloudy day</string>
+	<string name="LIGHT_SUNRISE">a sunrise moment</string>
+	<string name="LIGHT_OVERCAST">an overcast moment</string>
+	<string name="LIGHT_SHADE">under the shades</string>
+	<string name="LIGHT_SUNLIGHT">in the sunlight</string>
+	<string name="LIGHT_SUNLIGHT_MAX">burning in the sun</string>
+	
+</resources>

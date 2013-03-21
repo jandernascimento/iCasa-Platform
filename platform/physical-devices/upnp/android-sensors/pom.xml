@@ -19,31 +19,26 @@
 		<groupId>fr.liglab.adele.icasa</groupId>
 		<artifactId>platform.parent</artifactId>
       <version>1.0.1-SNAPSHOT</version>
-      <relativePath>../../../parent</relativePath>
+      <relativePath>../../../../parent</relativePath>
 	</parent>
 
 	<!-- Project Descrkiption -->
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>upnp.physical.devices</artifactId>
+	<artifactId>upnp.android.sensors</artifactId>
 	<packaging>pom</packaging>
 	<name>${productName} :: ${projectName}</name>
 
-
-	<modules>
-      <module>upnp-binary-light-importer</module>
-      <module>upnp-binary-light-proxy</module>
-      <module>upnp-photometer-importer</module>
-      <module>upnp-photometer-proxy</module>
-      <module>upnp-rose-discovery</module>
-      <module>android-sensors</module>
-      <!--
-		<module>presence-detector-upnp-exporter</module>
-		<module>upnp-presence-detector</module>
-		<module>upnp-presence-detector-importer</module>
-		<module>upnp-presence-detector-proxy</module>
-		<module>upnp-settopbox-importer</module>
-      -->
-	</modules>
+  <profiles>
+     <profile>
+        <id>android</id>
+        <modules>
+           <module>binary-light</module>
+           <module>gyroscope</module>
+           <module>photometer</module>
+           <module>power-slider</module>
+        </modules>
+     </profile>
+  </profiles>
    <build>
       <plugins>
          <plugin>

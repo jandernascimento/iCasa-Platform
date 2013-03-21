@@ -39,6 +39,7 @@
       <UPnPBDVersion>0.8.0</UPnPBDVersion>
       <UPnPBDExtrasVersion>0.4.0</UPnPBDExtrasVersion>
       <roseVersion>1.0.2</roseVersion>
+      <androidPlatform>16</androidPlatform>
       
 	</properties>
 
@@ -55,7 +56,14 @@
 			<name>iCASA Release repository</name>
 			<url>https://repository-icasa.forge.cloudbees.com/release/</url>
 		</repository>
-		
+      <!-- For android apps-->
+      <repository>
+         <id>teleal-repo</id>
+         <url>http://teleal.org/m2</url>
+         <snapshots>
+            <enabled>true</enabled>
+         </snapshots>
+      </repository>
 	</repositories>
 	
 	 <pluginRepositories>
@@ -112,7 +120,18 @@
 				<artifactId>org.apache.felix.upnp.extra</artifactId>
             <version>${UPnPBDExtrasVersion}</version>
 			</dependency>
-
+         <!-- For android-->
+         <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>android</artifactId>
+            <version>4.1.1.4</version>
+            <scope>provided</scope>
+         </dependency>
+         <dependency>
+            <groupId>org.teleal.cling</groupId>
+            <artifactId>cling-support</artifactId>
+            <version>1.0.3</version>
+         </dependency>
 			<!-- JUnit 4 and Mockito for tests -->
 			<dependency>
 				<groupId>junit</groupId>
@@ -190,6 +209,31 @@
                   <generateScripts>true</generateScripts>
                </configuration>
             </plugin>
+           
+            <!-- Android plugin-->
+            <plugin>
+               <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+               <artifactId>android-maven-plugin</artifactId>
+               <version>3.5.1</version>
+               <configuration>
+                  <sdk>
+                     <!-- Don't forget to set your ANDROID_HOME environment variable to your SDK directory! -->
+                     <path>${env.ANDROID_HOME}</path>
+                     <platform>${androidPlatform}</platform>
+                  </sdk>
+                  <!-- All of these go into the /src/main/android/ directory, we don't
+                     want to polute the project root directory. -->
+                        <androidManifestFile>${project.basedir}/src/main/android/AndroidManifest.xml</androidManifestFile>
+                        <resourceDirectory>${project.basedir}/src/main/android/res</resourceDirectory>
+                        <assetsDirectory>${project.basedir}/src/main/android/assets</assetsDirectory>
+                        <nativeLibrariesDirectory>${project.basedir}/src/main/android/native</nativeLibrariesDirectory>
+                        <resourceOverlayDirectory>${project.basedir}/src/main/android/overlay</resourceOverlayDirectory>
+                        <!-- Read the Android Maven plugin documentation about these settings -->
+                        <deleteConflictingFiles>true</deleteConflictingFiles>
+                        <undeployBeforeDeploy>true</undeployBeforeDeploy>
+                     </configuration>
+                     <extensions>true</extensions>
+                  </plugin>
 			</plugins>
 		</pluginManagement>
 
