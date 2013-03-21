@@ -34,11 +34,7 @@
     </dependency>
     <dependency>
       <groupId>fr.liglab.adele.icasa</groupId>
-      <artifactId>device.api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>fr.liglab.adele.icasa</groupId>
-      <artifactId>environment.api</artifactId>
+      <artifactId>context.api</artifactId>
     </dependency>
   </dependencies>
 
