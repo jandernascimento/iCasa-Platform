@@ -21,5 +21,4 @@ For example, in the maven settings file `settings.xml`
   <activeProfiles>
     <activeProfile>android</activeProfile>
   </activeProfiles>
-</settings>
 ```
