@@ -34,6 +34,6 @@ public class MainController extends Controller {
 
     @SecureSocial.SecuredAction
     public static Result admin(){
-        return ok(views.html.index.render());
+        return ok(views.html.admin.render());
     }
 }

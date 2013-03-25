@@ -1,3 +1,3 @@
 require(['./commons'], (common) ->
-	require(['main/MainAddProduct'])
+	require(['main/MainAdminPage'])
 )

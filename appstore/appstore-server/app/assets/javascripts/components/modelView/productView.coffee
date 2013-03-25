@@ -200,5 +200,34 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 			console.log  application.model
 			device.model.installApplication(application.model)
 
+	class MainAdminView
+		constructor:(@availableProductsModelGrid)->
+			@pageSize= 8 
+			@pageIndex= 0 
+
+			# The available products
+			@availableProductsGrid = kb.collectionObservable(availableProductsModelGrid, {view_model: ProductViewModelGrid})
+			#Get the first page
+			availableProductsModelGrid.getNextPage(@.pageIndex, @.pageSize)
+			#Souscribe to get newer pages on scroll down
+			$(window).scroll(@.fetchNewPage)
+
+		addItemClass:(pmodels)->
+					if pmodels.length > 0
+						firstModel = pmodels[0]
+						firstModel.classItem = 'active item'
+		fetchNewPage:()=>
+			if $(window).scrollTop() == $(document).height() - $(window).height()
+				@.pageIndex++
+				@.availableProductsModelGrid.getNextPage(@.pageIndex, @.pageSize)
+		installApplication:(application, device)=>
+			# console.log "application id " + @.id
+			# console.log "application name" + @.name()
+			console.log "appli " + application.name()
+			console.log "dev "+device.name()
+			console.log "app model" + application.model
+			console.log  application.model
+			device.model.installApplication(application.model)
+
 
 	return {MainUserView}

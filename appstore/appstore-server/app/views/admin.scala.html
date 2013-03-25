@@ -1,14 +1,3 @@
 @() 
 @import helper._ 
-@main("Appstore") {@adminMenu.render}{
-<!-- Users Main page, right side pane-->
-	<div class="tab-content" id="main-tab-content">
-		<!-- Main pane, list of available availableProducts-->
-		<div class="tab-pane active" id="products">
-			<h1>Just A Simple AppStore</h1>
-
-		</div>
-
-	</div> <!-- END of Users Main page, right side pane-->
-
-}
+@main("Appstore") {@adminMenu.render}{@adminMenuTabs.render}{@adminTemplates.render}

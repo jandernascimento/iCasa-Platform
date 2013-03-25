@@ -1,0 +1,41 @@
+<!-- Users Main page, right side pane-->
+<div class="tab-content" id="main-tab-content">
+    <!-- Main pane, list of available availableProducts-->
+    <div class="tab-pane active" id="products">
+        <div class ="row offset1" >
+            <div >
+                <div  id="product_list" data-bind="foreach: availableProductsGrid">
+                    <div class="span3 well thumb-well" >
+                        <table width="100%">
+                            <tr><td height="160" >
+                                <div data-bind="bsToggle:{}">
+                                    <div  style="z-index:0" >
+                                        <center>
+                                            <img  class="grid-img" data-bind="attr:{src: imageURL}" />
+                                        </center>
+                                    </div>
+                                    <div style="z-index:0">
+                                        <h4 data-bind="text: name">Loading</h4>
+                                        <p data-bind="text: shortDescription">Loading</p>
+                                    </div>
+                                </div>
+                            </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <center>
+                                        <p><span data-bind="text: name">Loading</span></p>
+                                        <button data-bind="buyModalButton: {}" data-toggle="modal" >Buy</button>
+                                        <button data-bind="attr:{href: modalIdRef}" data-toggle="modal" >Details</button>
+                                    </center>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div data-bind="template: { name: 'modal-product-template', foreach: availableProductsGrid}"></div>
+            </div>
+        </div>
+    </div>
+
+</div> <!-- END of Users Main page, right side pane-->
