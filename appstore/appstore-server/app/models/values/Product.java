@@ -23,6 +23,7 @@ import play.db.ebean.Model;
 import play.libs.Json;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -42,6 +43,7 @@ public class Product extends Model  {
 
 	@Id
 	@Column(name="id")
+    @GeneratedValue
 	public int id;
 	
 	@Required
@@ -66,6 +68,9 @@ public class Product extends Model  {
     @JoinColumn(name="productVersion_id", referencedColumnName = "id")
     public ProductVersion lastVersion;
 
+    @OneToMany
+    @JoinTable(name = "Product_Price")
+    public List<ProductPrice> prices;
 
 	/**
 	 * To locate Products
@@ -125,6 +130,29 @@ public class Product extends Model  {
         //result.put("services", ProductVersion.getServices(product.lastVersion));
 		return result;
 	}
+
+
+    public ProductPrice getPrice(){
+        ProductPrice price = null;
+        if (prices == null){
+            prices = new ArrayList();
+        }
+        if (prices.size()<1){
+            price = new ProductPrice();
+            price.price = 0.0f;
+            price.product = this;
+            price.unit = "€";
+            prices.add(price);
+            price.save();
+            this.save();
+            System.out.println("New Price");
+        } else {
+            price = prices.get(0);
+            System.out.println("Existing Price");
+
+        }
+        return price;
+    }
 
 	
 }

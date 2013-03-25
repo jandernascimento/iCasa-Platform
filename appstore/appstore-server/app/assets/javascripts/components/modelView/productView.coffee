@@ -6,6 +6,16 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
   		# $(".accordion-products table:first-child").show()
   	)
 
+	# Add a new Device
+	window.addDevice = ()->
+            deviceName = document.getElementById("inputDeviceName").value
+            deviceUrl = document.getElementById("inputDeviceURL").value
+            device = new model.DeviceModel({name: deviceName, url: deviceUrl})
+            device.save()
+            alert("New Device Added")
+            return true
+
+
 	#Register the knockout custom handler to handle clicks in accordion table
 	ko.bindingHandlers.bsAccordionTable = {
 		init: (element) ->
@@ -39,6 +49,21 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 			handler = new ToggleHandler(element, firstElement, secondElement, effect)
 			return { controlsDescendantBindings: false}
 	}
+
+	#Register the knockout custom handler to register event when buy products
+	ko.bindingHandlers.buyModalButton = {
+		init: (element, valueAccessor, allBindingsAccessor, viewModel) ->
+			handler = new BuyHandler(element, viewModel.model)
+			return { controlsDescendantBindings: false}
+	}
+
+	class BuyHandler
+		constructor:(@button, @model)->
+			$(@button).click(@.buyProduct)
+		buyProduct:()=>
+			# console.log @.model
+			@.model.buyProduct()
+
 	#Class to handle the toggle effect for each product.
 	class ToggleHandler
 		constructor:(element, @firstElement, @secondElement, @effect)->
@@ -57,58 +82,65 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 		constructor: (smodel) ->
 			@id = smodel.get('id')
 			@name = ko.observable(smodel.get('name'))
-			@description = ko.observable(smodel.get('name'))
+			@description = ko.observable(smodel.get('description'))
 			@version = ko.observable(smodel.get('version'))
 			
 	class ApplicationViewModel extends kb.ViewModel
-		constructor: (amodel) ->
-			@id = amodel.get('id')
-			@name = ko.observable(amodel.get('name'))
-			@description = ko.observable(amodel.get('description'))
-			@version = ko.observable(amodel.get('version'))
-			console.log "Creating application view model" + @id
+		constructor: (@model) ->
+			@id = model.get('id')
+			@name = ko.observable(model.get('name'))
+			@description = ko.observable(model.get('description'))
+			@version = ko.observable(model.get('version'))
+			console.log "Creating Application"
+		
+
+
+			
+
+
+			
 		
 	class ProductViewModelBase extends kb.ViewModel
-		constructor:(@pmodel) ->
-			@id = pmodel.get('id')
-			@name = pmodel.get('name')
-			@imageURL = pmodel.get('imageURL')
-			@description = pmodel.get('description')
+		constructor:(@model) ->
+			@id = model.get('id')
+			@name = model.get('name')
+			@imageURL = model.get('imageURL')
+			@description = model.get('description')
 			
-			@lastVersion = pmodel.get('lastVersion')
+			@lastVersion = model.get('lastVersion')
 			#The collection of  services
-			@services = pmodel.get('services')
+			@services = model.get('services')
 			#The collection of applications
 			#@applications = pmodel.get('applications')
-			@applications = kb.collectionObservable(new bb.Collection(pmodel.get('applications')), {view_model: ApplicationViewModel})
+			@applications = kb.collectionObservable(new bb.Collection(model.get('applications')), {view_model: ApplicationViewModel})
 			#The collection of categories of the product
-			@categories = pmodel.get('categories')
+			@categories = model.get('categories')
 
 			#These fields are used only to the template.
 			@shortDescription = ko.computed(()=>
-			 	if @description.length > 100
-			 		shortD = @description.substring(0,100) + "..."
+			 	if @description.length > 160
+			 		shortD = @description.substring(0,160) + "..."
 			 	else
 			 		shortD = @description
 			 	shortD
 			 )
 
 	class ProductViewModelOwned extends ProductViewModelBase
-		constructor: (@pmodel) ->
-			super
+		constructor: (@model) ->
+			super(model)
 			@modalId = "modal-application-owned-" + @id
 			@modalIdRef = "#" + @modalId
 
 	class ProductViewModel extends ProductViewModelBase
-		constructor: (@pmodel) ->
-			super
+		constructor: (@model) ->
+			super(model)
 			@classItem = "item"
 		saveModel: () ->
 			@pmodel.save()
 		
-	class ProductViewModelGrid extends ProductViewModelBase
-		constructor: (pmodel) ->
-			super
+	class ProductViewModelGrid extends ProductViewModel
+		constructor: (@model) ->
+			super(model)
 			@modalId = "modal-product-grid" + @id
 			@modalIdRef = "#" + @modalId
 
@@ -121,34 +153,52 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 			@modalTabAppsId = @modalId + "_apps"
 			@modalTabAppsIdRef = "#" + @modalTabAppsId
 
-				
-	class OwnedProductViewModelCollection
-		constructor:(pmodel) ->
-			@products = kb.collectionObservable(pmodel, {view_model: ProductViewModelBase})
-			console.log pmodel
+	class OwnedDeviceViewModel #extends kb.ViewModel
+		constructor:(@model) ->
+			@id = model.get('id')
+			@name = ko.observable(model.get('name'))
+			@url = ko.observable(model.get('url'))
+			console.log "Creating Owned Device Model"
+			console.log model.get('installedPackages')
+			console.log model.get('name')
+			console.log model
+			console.log model.attributes
+			@installedPackages = kb.collectionObservable(model.get('installedPackages'), {view_model: ApplicationViewModel})
 
-	class ProductViewModelCollection
-		constructor: (pmodel) ->
-			@products = kb.collectionObservable(pmodel, {view_model: ProductViewModel})
-			@products.subscribe(@.addItemClass)
-		addItemClass:(pmodels)->
-			if pmodels.length > 0
-				firstModel = pmodels[0]
-				firstModel.classItem = 'active item'
 	
-	class ProductViewModelCollectionGrid
-		constructor: (@pmodel) ->
-			@pageSize= 8 #ko.observable(5);
-			@pageIndex= 0 #ko.observable(0);
-			@products = kb.collectionObservable(pmodel, {view_model: ProductViewModelGrid})
+
+	class MainUserView
+		constructor:(@ownedProductsModel, @ownedDevicesModel, @availableProductsModel, @availableProductsModelGrid)->
+			@pageSize= 8 
+			@pageIndex= 0 
+			@ownedProducts = kb.collectionObservable(ownedProductsModel, {view_model: ProductViewModelBase})
+			@ownedDevices = kb.collectionObservable(ownedDevicesModel, {view_model: OwnedDeviceViewModel})
+			# Configure the top 10 item class to display in carrousel
+			@availableProducts = kb.collectionObservable(availableProductsModel, {view_model: ProductViewModelGrid})
+			@availableProducts.subscribe(@.addItemClass)
+			# The available products
+			@availableProductsGrid = kb.collectionObservable(availableProductsModelGrid, {view_model: ProductViewModelGrid})
 			#Get the first page
-			pmodel.getNextPage(@.pageIndex, @.pageSize)
+			availableProductsModelGrid.getNextPage(@.pageIndex, @.pageSize)
 			#Souscribe to get newer pages on scroll down
 			$(window).scroll(@.fetchNewPage)
 
+		addItemClass:(pmodels)->
+					if pmodels.length > 0
+						firstModel = pmodels[0]
+						firstModel.classItem = 'active item'
 		fetchNewPage:()=>
 			if $(window).scrollTop() == $(document).height() - $(window).height()
 				@.pageIndex++
-				@.pmodel.getNextPage(@.pageIndex, @.pageSize)
+				@.availableProductsModelGrid.getNextPage(@.pageIndex, @.pageSize)
+		installApplication:(application, device)=>
+			# console.log "application id " + @.id
+			# console.log "application name" + @.name()
+			console.log "appli " + application.name()
+			console.log "dev "+device.name()
+			console.log "app model" + application.model
+			console.log  application.model
+			device.model.installApplication(application.model)
 
-	return {ProductViewModelCollection,ProductViewModel, ProductViewModelBase, ProductViewModelCollectionGrid, OwnedProductViewModelCollection}
+
+	return {MainUserView}

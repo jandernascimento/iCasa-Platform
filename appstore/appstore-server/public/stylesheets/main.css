@@ -13,8 +13,24 @@ body {
   float: none !important;
 }
 
-#thumb-well {
-    width:300px;
-    height:230px;
+.thumb-well {
+    width:266px;
+    height:266px;
+}
+
+.carrousel-img {
+    width:456px;
+    height:456px;
+}
+
+.grid-img {
+    width:160px;
+    height:160px;
+}
+
+.dropdown-menu
+{
+    padding: 15px;
+    padding-bottom: 0px;
 }
 

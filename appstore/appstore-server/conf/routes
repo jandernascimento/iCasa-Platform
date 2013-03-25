@@ -5,11 +5,13 @@
 # Home page
 GET     /                           controllers.MainController.index()
 
+GET     /admin                           controllers.MainController.admin()
+
 # Login page
 GET     /login                      securesocial.controllers.LoginPage.login
 GET     /logout                     securesocial.controllers.LoginPage.logout
 
-# User Registration
+# User Registration and password handling
 GET     /signup                     securesocial.controllers.Registration.startSignUp
 POST    /signup                     securesocial.controllers.Registration.handleStartSignUp
 GET     /signup/:token              securesocial.controllers.Registration.signUp(token)
@@ -18,10 +20,13 @@ GET     /reset                      securesocial.controllers.Registration.startR
 POST    /reset                      securesocial.controllers.Registration.handleStartResetPassword
 GET     /reset/:token               securesocial.controllers.Registration.resetPassword(token)
 POST    /reset/:token               securesocial.controllers.Registration.handleResetPassword(token)
+GET     /password                   securesocial.controllers.PasswordChange.page
+POST    /password                   securesocial.controllers.PasswordChange.handlePasswordChange
 
 # Providers entry points
 GET     /authenticate/:provider     securesocial.controllers.ProviderController.authenticate(provider)
 POST    /authenticate/:provider     securesocial.controllers.ProviderController.authenticateByPost(provider)
+GET     /not-authorized             securesocial.controllers.ProviderController.notAuthorized
 
 #Product Controllers PAGE
 
@@ -31,12 +36,17 @@ GET      /products                          controllers.ProductController.produc
 
 #Product Controllers REST
 
-GET      /api/products                          controllers.api.ProductREST.products()
+GET      /user/products                          controllers.api.ProductREST.products()
 
-GET /api/owned/products                        controllers.api.ProductREST.ownedProducts()
+PUT      /user/buy/product/:id                          controllers.api.ProductREST.buyProduct(id)
 
-POST     /api/product                          controllers.api.ProductREST.addProduct()
+GET      /user/buy/products                        controllers.api.ProductREST.ownedProducts()
 
+POST     /user/product                          controllers.api.ProductREST.addProduct()
+
+GET     /usr/devices                                controllers.DeviceController.getDevices
+
+POST     /user/device                                controllers.DeviceController.addDevice
 
 
 #Application Controllers

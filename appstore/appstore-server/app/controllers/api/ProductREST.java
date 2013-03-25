@@ -1,6 +1,9 @@
 package controllers.api;
 
+import models.User;
+import models.values.Order;
 import models.values.Product;
+import models.values.ProductPrice;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
@@ -9,7 +12,10 @@ import play.data.Form;
 import play.libs.Json;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
+import securesocial.core.Identity;
+import securesocial.core.java.SecureSocial;
 
 import java.util.List;
 
@@ -22,9 +28,9 @@ public class ProductREST extends Controller {
 	private static final String PAGE = "page";
 	
 	private static final String PRODUCTS_PER_PAGE = "productsPerPage";
-	
-	//@BodyParser.Of(play.mvc.BodyParser.Json.class)
-	public static Result products(){
+
+    @SecureSocial.SecuredAction
+    public static Result products(){
         System.out.println("Getting products");
         DynamicForm requestData = form().bindFromRequest();
         System.out.println("get params: " + requestData.toString());
@@ -42,9 +48,19 @@ public class ProductREST extends Controller {
 			products.add(Product.toJson(product));
 		}
 		return ok(products);
-	}	
-	
-	public static Result topProducts(String topNumber){
+	}
+
+    @SecureSocial.SecuredAction
+    public static Result buyProduct(String id){
+        Identity socialUser = (Identity) ctx().args.get(SecureSocial.USER_KEY);
+        User user = User.getUserByUserId(socialUser.id().id());
+        Product toBuy = Product.find.byId(id);
+        user.buyProduct(toBuy);
+
+        return ok();
+    }
+    @SecureSocial.SecuredAction
+    public static Result topProducts(String topNumber){
 		List<Product> allProducts = null;
 		int top = 10;
 		try{
@@ -59,19 +75,22 @@ public class ProductREST extends Controller {
 		}
 		return ok(products);
 	}
-
+    @SecureSocial.SecuredAction
     public static Result ownedProducts(){
+        Identity socialUser = (Identity) ctx().args.get(SecureSocial.USER_KEY);
+        User user = User.getUserByUserId(socialUser.id().id());
+        List<Order> buy = user.orders;
         List<Product> allProducts = null;
-        int top = 10;
-        allProducts = Product.getTopProducts(top);
+
+        allProducts = user.getOwnedProducts();
         ArrayNode products = Json.newObject().arrayNode();
         for (Product product : allProducts) {
             products.add(Product.toJson(product));
         }
         return ok(products);
     }
-
-	public static Result productsPerPage(String page, String productsPerPage){
+    @SecureSocial.SecuredAction
+    public static Result productsPerPage(String page, String productsPerPage){
 		List<Product> allproducts = null;
 		int _page;
 		int _productsPerPage;
@@ -100,7 +119,7 @@ public class ProductREST extends Controller {
 		System.out.println("hello add product  ");
 		System.out.println("aDD PRODUCT " + request().body());
 		JsonNode body = request().body().asJson();
-		System.out.println("aDD PRODUCT " + body.get(0));
+		//System.out.println("aDD PRODUCT " + body.get(0));
 		
 		Form<Product> filledForm = productForm.bindFromRequest();
 		System.out.println(filledForm);

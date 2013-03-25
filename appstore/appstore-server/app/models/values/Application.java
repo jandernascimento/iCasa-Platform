@@ -47,7 +47,10 @@ public class Application extends Model  {
 	public String name;
 	@Column(name="description", columnDefinition="TEXT")
 	public String description;
-	
+
+    @Column(name="url")
+    public String url;
+
 	public static Finder<String,Application> find = new Finder<String, Application>(
 		    String.class, Application.class
 		  );
@@ -70,6 +73,7 @@ public class Application extends Model  {
             result.put("id", application.id);
             result.put("name", application.name);
             result.put("description", application.description);
+            result.put("url", application.url);
         }
         return result;
     }

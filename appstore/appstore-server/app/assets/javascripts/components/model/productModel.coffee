@@ -1,4 +1,4 @@
-define ['backbone', 'relational'], (bb,Relational) ->
+define ['backbone'], (bb) ->
  
 	class ServiceModel extends bb.Model
 # 		urlRoot: '/service'
@@ -33,11 +33,13 @@ define ['backbone', 'relational'], (bb,Relational) ->
 
 
 	
+
 	class ProductModel extends bb.Model
 
 		constructor: ()->
 			super
-		urlRoot: 'api/product'
+		urlRoot: 'user/product'
+		
 		defaults:
 			name: 'my product name'
 			description: 'my description'
@@ -47,24 +49,87 @@ define ['backbone', 'relational'], (bb,Relational) ->
 			applications: new ApplicationModelCollection()
 			services: new ServiceModelCollection()
 			categories: new CategoryModelCollection()
-		# relations: [{
-		# 	type: Relational.HasMany
-		# 	key: 'applications'
-		# 	relatedModel: 'ApplicationModel'
-		# 	reverseRelation: {
-		# 		key: 'product',
-		# 	}
-		# }]
-		
-	# ProductModel.setup()
+		buyProduct:()->
+			#only send product ID as part of URL, user association handled by secure social
+			$.ajax(
+				type: "PUT",
+				url: 'user/buy/product/' + @.id,
+			)
+
+
+
 
 	class OwnedProductModelCollection extends bb.Collection
 		model: ProductModel
-		url: 'api/owned/products'
+		url: 'user/buy/products'
+		constructor:()->
+			super
+
+		updateOwnedModel:()=>
+			@.fetch()
+
+	class DeviceModel extends bb.Model
+			constructor: ()->
+				console.log "in device constructor"
+				console.log @
+				super
+				console.log "end device constructor"
+				@.on("sync", @.getInstalledApplication())
+				
+				
+			getInstalledApplication:()=>
+				@appurl = @.get("url")+"/appstore/applications"
+				console.log "will call " + @.appurl
+				$.ajax({
+					url: @.appurl,
+					success: @.getAppsSuccess,
+					error: @.getAppsError
+					})
+				# $.get(@.appurl, (data)=>
+				# 	console.log "loaded apps" + data
+				# 	# console.log data
+				# 	# @.set(data)
+				# 	# console.log @
+				# )
+				return
+			getAppsSuccess:(data,  textStatus, jqXHR)=>
+				console.log "get apps success on " + @.appurl
+				console.log "status: " + textStatus
+				json_data = JSON.stringify(data)
+				console.log "set" + json_data
+				console.log json_data
+				@.set(data)
+			getAppsError:(jqXHR, textStatus, errorThrown)=>
+				console.log "error when getting installed applications: " + errorThrown
+
+
+			installApplication: (application)->
+				$.ajax(
+	   				type: "POST",
+	   				url: @.appurl,
+	   				data: { 
+        				'location':application.get("url")
+    				},
+				)
+			urlRoot: 'user/device'
+			defaults:
+				name: 'generic'
+				# installedPackages: new ApplicationModelCollection()
+			
+
+	class OwnedDeviceModelCollection extends bb.Collection
+		model: DeviceModel
+		url: '/usr/devices'
+		constructor:()->
+			console.log "creating device collection"
+			super
+
+
+
 
 	class ProductModelCollection extends bb.Collection
 
-		url: 'api/products'
+		url: 'user/products'
 		model: ProductModel
 		constructor:()->
 			@totalPages = 0
@@ -72,8 +137,6 @@ define ['backbone', 'relational'], (bb,Relational) ->
 		getTopProducts: (topProducts) ->
 			@.fetch({ data: $.param({ topNumber: topProducts})})
 
-		getBuyed:()->
-			@.fetch({ data: $.param({ topNumber: topProducts})})
 
 		getNextPage:(currentPage, productsPerPage) ->
 			@.fetch({ data: $.param({ page: currentPage, productsPerPage: productsPerPage}), add: true})
@@ -87,4 +150,17 @@ define ['backbone', 'relational'], (bb,Relational) ->
    		 	else
    		 		return response
 
-	return {ProductModelCollection, ProductModel,ApplicationModel,ServiceModel, OwnedProductModelCollection}
+   		 class DPSoftware extends bb.Model
+   		 	constructor: () ->
+   		 		super
+   		 	defaults:
+   		 		name: 'Application name'
+   		 		description: 'Application description'
+
+
+   		 class DPSoftwareCollection extends bb.Collection
+   		 	constructor:()->
+   		 		super
+
+
+	return {ProductModelCollection, ProductModel,ApplicationModel,ServiceModel, OwnedProductModelCollection, OwnedDeviceModelCollection, DeviceModel}

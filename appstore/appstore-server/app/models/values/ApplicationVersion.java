@@ -21,6 +21,7 @@ import java.util.Set;
 public class ApplicationVersion extends Model {
     @Id
     @Column(name="id")
+    @GeneratedValue
     public int id;
 
     @Column(name="version")

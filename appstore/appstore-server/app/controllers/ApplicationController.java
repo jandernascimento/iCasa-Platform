@@ -22,11 +22,7 @@ import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 
-/**
- * @author <a href="mailto:cilia-devel@lists.ligforge.imag.fr">Cilia Project
- *         Team</a>
- *
- */
+
 public class ApplicationController extends Controller {
 	static Form<Application> applicationForm = form(Application.class);
 
