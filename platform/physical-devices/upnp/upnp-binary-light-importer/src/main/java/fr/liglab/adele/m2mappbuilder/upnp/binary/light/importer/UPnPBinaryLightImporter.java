@@ -78,7 +78,6 @@ public class UPnPBinaryLightImporter extends AbstractImporterComponent {
 			System.out.println("device.serialNumber" + epd.getId());
 			conf.put("device.serialNumber", epd.getId());
 			conf.put("requires.filters", filter);
-			System.out.println("[DEBUG IMPORTER] config : " + conf);
 	      instance = proxyFactory.createComponentInstance(conf);
 	      
 			if (instance != null) {

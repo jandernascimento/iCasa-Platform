@@ -86,7 +86,7 @@ public class UPnPBinaryLightProxyImpl extends AbstractDevice implements BinaryLi
 		if (device != null) {
 			UPnPService[] services = device.getServices();
 			for (UPnPService uPnPService : services) {
-				System.out.println("---- UPnP Service " + uPnPService.getId());
+//				System.out.println("---- UPnP Service " + uPnPService.getId());
 				UPnPStateVariable[] variables = uPnPService.getStateVariables();
 			}
 
@@ -136,8 +136,8 @@ public class UPnPBinaryLightProxyImpl extends AbstractDevice implements BinaryLi
 
 		@Override
 		public void notifyUPnPEvent(String deviceId, String serviceId, Dictionary events) {
-			System.out.println("+++++ Device ID: " + deviceId);
-			System.out.println("+++++ Service ID: " + serviceId);
+//			System.out.println("+++++ Device ID: " + deviceId);
+//			System.out.println("+++++ Service ID: " + serviceId);
 
 			Runnable notificator = new Runnable() {					
 				@Override
