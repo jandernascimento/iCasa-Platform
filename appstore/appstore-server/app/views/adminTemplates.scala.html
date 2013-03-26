@@ -1,55 +1,78 @@
 <!-- TEMPLATES-->
 <!-- The template for the modal window with three tabs: description/services/applications-->
-<script type="text/html" id="modal-product-template" >
-    <div data-bind="attr:{id: modalId}" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="myModalLabel" data-bind="text: name">Product Description</h3>
-        </div>
-        <div class="modal-body">
-            <ul class="nav nav-tabs">
-                <li class="active"><a data-bind="attr:{href: modalTabDescriptionIdRef}" data-toggle="tab" >Description</a></li>
-                <li><a data-bind="attr:{href: modalTabServicesIdRef}" data-toggle="tab">Services</a></li>
-                <li><a data-bind="attr:{href: modalTabAppsIdRef}"data-toggle="tab">Applications</a></li>
-            </ul>
-        </div>
-        <div class="tab-content">
-            <div class="tab-pane active" data-bind="template: { name: 'modal-description-template', data: $data}, attr:{id: modalTabDescriptionId}">...</div>
-            <div class="tab-pane" data-bind="template: { name: 'modal-service-template', data: $data} , attr:{id: modalTabServicesId}">...</div>
-            <div class="tab-pane" data-bind="template: { name: 'modal-application-template', data: $data} , attr:{id: modalTabAppsId}">...</div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <button class="btn btn-primary" data-bind="buyModalButton: {}" data-dismiss="modal">Buy</button>
-        </div>
+<!-- Add Application modal activated with the Admin menu-->
+<div id="addApplicationModal" class="modal hide fade" role="dialog" aria-labelledby="myModalLabelNewApplication" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabelNewApplication" >@Messages("icasa.newApplication")</h3>
     </div>
-</script>
-<!--The template for the description tab in the modal window-->
-<script type="text/html" id="modal-description-template">
-    <div class="well">
-        <h4>Categories:	<div data-bind="foreach: categories">
-            <span data-bind="text: '|' + name +'|'" >Generic</span>
-        </div>
-        </h4>
-        <h4>Description</h4>
-        <span data-bind="text:'current version: ' + lastVersion.version">0.0.0</span>
+    <div class="modal-body">
+        <form class="form-horizontal" onSubmit = "return addApplication()" >
+            <div class="control-group">
+                <label class="control-label" for="inputApplicationName">@Messages("icasa.name")</label>
+                <div class="controls">
+                    <input type="text" maxlength="20" id="inputApplicationName" placeholder="Name">
+                </div>
+            </div>
 
-        <p data-bind="text: description" ></p>
+            <div class="control-group">
+                <div class="controls">
+                    <button class="btn btn-success" >@Messages("icasa.add")</button>
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">@Messages("icasa.close")</button>
+                </div>
+            </div>
+        </form>
     </div>
-</script>
+</div>
 
-<!--The template for the applications tab in the modal window-->
-<script type="text/html" id="modal-service-template">
-    <div class="well">
-        <h4>Services</h4> <span data-bind="text: lastVersion.version">0.0.0</span>
-        <p data-bind="text: description" ></p>
+<!-- Add Product modal activated with the Admin menu-->
+<div id="addProductModal" class="modal hide fade" role="dialog" aria-labelledby="myModalLabelNewProduct" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabelNewProduct">@Messages("icasa.newProduct")</h3>
     </div>
-</script>
-<!--The template for the applications tab in the modal window-->
-<script type="text/html" id="modal-application-template">
-    <div class="well">
-        <h4>Applications</h4> <span data-bind="text: lastVersion.version">0.0.0</span>
-        <p data-bind="text: description" ></p>
+    <div class="modal-body">
+        <form class="form-horizontal" onSubmit = "return addProduct()" >
+            <div class="control-group">
+                <label class="control-label" for="inputProductName">@Messages("icasa.name")</label>
+                <div class="controls">
+                    <input type="text" maxlength="20" id="inputProductName" placeholder="Name">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="controls">
+                    <button class="btn btn-success" >@Messages("icasa.add")</button>
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">@Messages("icasa.close")</button>
+                </div>
+            </div>
+        </form>
     </div>
-</script>
+</div>
+
+
+<!-- Add Product modal activated with the Admin menu-->
+<div id="addServiceModal" class="modal hide fade" role="dialog" aria-labelledby="myModalLabelNewService" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabelNewService">@Messages("icasa.newService")</h3>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" onSubmit = "return addProduct()" >
+            <div class="control-group">
+                <label class="control-label" for="inputServiceName">@Messages("icasa.name")</label>
+                <div class="controls">
+                    <input type="text" maxlength="20" id="inputServiceName" placeholder="Name">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="controls">
+                    <button class="btn btn-success" >@Messages("icasa.add")</button>
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">@Messages("icasa.close")</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 <script src="@routes.Assets.at("javascripts/frameworks/require/require.js")" data-main="@routes.Assets.at("javascripts/usersPage")" > </script>

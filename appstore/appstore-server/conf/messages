@@ -1,0 +1,34 @@
+securesocial.appName=iCasa Store
+icasa.appName=iCasa Store
+icasa.service=Subscription
+icasa.services=Subscriptions
+icasa.product=Service
+icasa.application=Application
+icasa.applications=Applications
+icasa.devices=Devices
+icasa.name=Name
+icasa.description=Description
+icasa.logout=Logout
+icasa.buy=Buy
+icasa.close=Close
+icasa.details=Details
+icasa.purshasedProducts=Purshased products
+icasa.productName=Product Name
+icasa.productDescription=Product description
+icasa.installOn=Install on
+icasa.categories=Categories
+icasa.newDevice=New Device
+icasa.add=Add
+icasa.all=All
+icasa.installedProductsOn=Installed products on
+icasa.availableProducts= Available Services
+icasa.yourProducts= Your Services
+icasa.yourDevices= Your Devices
+icasa.box= Box
+icasa.addBox=Add Box
+icasa.newApplication= New Application
+icasa.newProduct= New Service
+icasa.newService= New Subscription
+icasa.administration= Administration
+
+

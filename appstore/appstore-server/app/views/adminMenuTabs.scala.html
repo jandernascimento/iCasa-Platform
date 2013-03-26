@@ -2,40 +2,62 @@
 <div class="tab-content" id="main-tab-content">
     <!-- Main pane, list of available availableProducts-->
     <div class="tab-pane active" id="products">
-        <div class ="row offset1" >
-            <div >
-                <div  id="product_list" data-bind="foreach: availableProductsGrid">
-                    <div class="span3 well thumb-well" >
-                        <table width="100%">
-                            <tr><td height="160" >
-                                <div data-bind="bsToggle:{}">
-                                    <div  style="z-index:0" >
-                                        <center>
-                                            <img  class="grid-img" data-bind="attr:{src: imageURL}" />
-                                        </center>
-                                    </div>
-                                    <div style="z-index:0">
-                                        <h4 data-bind="text: name">Loading</h4>
-                                        <p data-bind="text: shortDescription">Loading</p>
-                                    </div>
-                                </div>
+        <div class="page-header">
+            <h3>@Messages("icasa.availableProducts")</h3>
+        </div>
+        <!--ko foreach: availableProductsGrid -->
+        <div id="purshased-products">
+            <div class="accordion-products ">
+                <div class="maccordion" data-bind="bsAccordionTable:{}">
+                    <center><h4>@Messages("icasa.productName"): <span data-bind="text: name"></span></h4></center>
+                    <table class="table-products table table-hover">
+                        <tr >
+                            <td><img  class="grid-img" data-bind="attr:{src: imageURL}" /></td>
+                            <td>
+                                <h4>@Messages("icasa.description"):</h4> <p><span href="#" data-bind="text: description"></span></p>
                             </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <center>
-                                        <p><span data-bind="text: name">Loading</span></p>
-                                        <button data-bind="buyModalButton: {}" data-toggle="modal" >Buy</button>
-                                        <button data-bind="attr:{href: modalIdRef}" data-toggle="modal" >Details</button>
-                                    </center>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                        </tr>
+                    </table>
                 </div>
-                <div data-bind="template: { name: 'modal-product-template', foreach: availableProductsGrid}"></div>
+
+                <div class="well hidden-table">
+                    <table class="table table-bordered table-condensed">
+                        <thead >
+                        <tr>
+                            <th>@Messages("icasa.name")</th>
+                            <th colspan="2">@Messages("icasa.description")</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!--ko foreach: applications -->
+                        <tr>
+                            <td data-bind="text: name"></td>
+                            <td data-bind="text: description"></td>
+                        </tr>
+                        <!--/ko -->
+                        </tbody>
+                    </table>
+
+                    <table class="table table-bordered table-condensed">
+                        <thead >
+                        <tr>
+                            <th>@Messages("icasa.name")</th>
+                            <th>@Messages("icasa.description")</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!--ko foreach: services -->
+                        <tr>
+                            <td data-bind="text: name"></td>
+                            <td data-bind="text: description"></td>
+                        </tr>
+                        <!--/ko-->
+                        </tbody>
+                    </table>
+
+                </div>
             </div>
         </div>
+        <!--/ko-->
     </div>
-
 </div> <!-- END of Users Main page, right side pane-->
