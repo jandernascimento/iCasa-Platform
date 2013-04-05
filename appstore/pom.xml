@@ -29,9 +29,10 @@
 	<name>${productName} :: ${projectName}</name>
 
 	<modules>
+      <module>repository</module>
 		<module>dp-rest-installer</module>
       <module>dp-rest-installer.dp</module>
-		<!--module>appstore-server</module-->
+		<module>appstore-server</module>
 	</modules>
    <build>
       <plugins>
