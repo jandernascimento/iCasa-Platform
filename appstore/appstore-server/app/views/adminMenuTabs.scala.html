@@ -20,42 +20,53 @@
                     </table>
                 </div>
 
+                <!--ko if: applications.collection().length + services.collection().length > 0 -->
                 <div class="well hidden-table">
-                    <table class="table table-bordered table-condensed">
-                        <thead >
-                        <tr>
-                            <th>@Messages("icasa.name")</th>
-                            <th colspan="2">@Messages("icasa.description")</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <!--ko foreach: applications -->
-                        <tr>
-                            <td data-bind="text: name"></td>
-                            <td data-bind="text: description"></td>
-                        </tr>
-                        <!--/ko -->
-                        </tbody>
-                    </table>
-
-                    <table class="table table-bordered table-condensed">
-                        <thead >
-                        <tr>
-                            <th>@Messages("icasa.name")</th>
-                            <th>@Messages("icasa.description")</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <!--ko foreach: services -->
-                        <tr>
-                            <td data-bind="text: name"></td>
-                            <td data-bind="text: description"></td>
-                        </tr>
-                        <!--/ko-->
-                        </tbody>
-                    </table>
-
+                    <!--ko if: applications.collection().length > 0-->
+                        <center><h5>@Messages("icasa.applications")</h5></center>
+                        <table class="table table-bordered table-condensed">
+                            <thead >
+                            <tr>
+                                <th>@Messages("icasa.name")</th>
+                                <th colspan="2">@Messages("icasa.description")</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!--ko foreach: applications -->
+                            <tr>
+                                <td data-bind="text: name"></td>
+                                <td data-bind="text: description"></td>
+                            </tr>
+                            <!--/ko -->
+                            </tbody>
+                        </table>
+                    <!--/ko-->
+                    <!--ko if: services.collection().length > 0-->
+                        <center><h5>@Messages("icasa.services")</h5></center>
+                        <table class="table table-bordered table-condensed">
+                            <thead >
+                            <tr>
+                                <th>@Messages("icasa.name")</th>
+                                <th>@Messages("icasa.description")</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!--ko foreach: services -->
+                            <tr>
+                                <td data-bind="text: name"></td>
+                                <td data-bind="text: description"></td>
+                            </tr>
+                            <!--/ko-->
+                            </tbody>
+                        </table>
+                    <!--/ko-->
                 </div>
+                <!--/ko-->
+                <!-- ko ifnot: applications.collection().length + services.collection().length > 0 -->
+                <div class="hidden-table alert alert-block">
+                        @Messages("icasa.thereIsAnyServiceApplications")
+                </div>
+                <!--/ko-->
             </div>
         </div>
         <!--/ko-->

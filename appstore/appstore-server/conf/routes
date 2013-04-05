@@ -28,40 +28,43 @@ GET     /authenticate/:provider     securesocial.controllers.ProviderController.
 POST    /authenticate/:provider     securesocial.controllers.ProviderController.authenticateByPost(provider)
 GET     /not-authorized             securesocial.controllers.ProviderController.notAuthorized
 
-#Product Controllers PAGE
+#Product Catalog Controllers PAGE
 
-GET      /product                          controllers.ProductController.addProductForm()
+GET      /catalog/products             controllers.ProductController.products()
 
-GET      /products                          controllers.ProductController.products()
+POST     /catalog/products              controllers.ProductController.addProduct()
 
-#Product Controllers REST
+GET      /catalog/categories       controllers.CategoryController.getAvailableCategories()
 
-GET      /user/products                          controllers.api.ProductREST.products()
+GET      /catalog/products/category/:category   controllers.ProductController.getProductsPerCategory(category)
 
-PUT      /user/buy/product/:id                          controllers.api.ProductREST.buyProduct(id)
 
-GET      /user/buy/products                        controllers.api.ProductREST.ownedProducts()
 
-POST     /user/product                          controllers.api.ProductREST.addProduct()
+#Product User Controllers REST
 
-GET     /usr/devices                                controllers.DeviceController.getDevices
+PUT      /user/products/:id      controllers.ProductController.buyProduct(id)
 
-POST     /user/device                                controllers.DeviceController.addDevice
+GET      /user/products         controllers.ProductController.ownedProducts()
+
+GET      /user/devices               controllers.DeviceController.getDevices
+
+POST     /user/devices               controllers.DeviceController.addDevice
+
 
 
 #Application Controllers
-POST     /application                          controllers.ApplicationController.addApplication()
+POST     /application               controllers.ApplicationController.addApplication()
 
-GET      /application                          controllers.ApplicationController.addApplicationForm()
+GET      /application               controllers.ApplicationController.addApplicationForm()
 
-GET      /applications                          controllers.ApplicationController.applications()
+GET      /applications              controllers.ApplicationController.applications()
 
 #Servuce Controllers
-POST     /service                          controllers.ServiceController.addService()
+POST     /service                   controllers.ServiceController.addService()
 
-GET      /service                          controllers.ServiceController.addServiceForm()
+GET      /service                   controllers.ServiceController.addServiceForm()
 
-GET      /services                          controllers.ServiceController.services()
+GET      /services                  controllers.ServiceController.services()
 
 
 # Map static resources from the /public folder to the /assets URL path

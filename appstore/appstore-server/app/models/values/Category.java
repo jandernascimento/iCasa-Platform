@@ -34,6 +34,13 @@ public class Category extends Model{
     @JoinTable(name = "Product_has_Category")
     public List<Product> products;
 
+    /**
+     * To locate Products
+     */
+    public static Finder<String,Category> find = new Finder<String, Category>(
+            String.class, Category.class
+    );
+
     public static ArrayNode toJson(List<Category> categories){
         ArrayNode result = Json.newObject().arrayNode();
         for(Category category: categories){
@@ -49,5 +56,16 @@ public class Category extends Model{
         result.put("description", category.description);
         return result;
     }
+
+    /**
+     * get the list of all products
+     * @return the list of products
+     */
+    public static List<Category> allAvailable() {
+        List<Category> cats = find.all();
+        System.out.println(cats);
+        return cats;
+    }
+
 }
 

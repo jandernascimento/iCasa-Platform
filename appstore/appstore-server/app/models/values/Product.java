@@ -17,6 +17,7 @@
  */
 package models.values;
 
+import com.avaje.ebean.Ebean;
 import org.codehaus.jackson.node.ObjectNode;
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
@@ -56,8 +57,7 @@ public class Product extends Model  {
 	@Column(name="imageURL")
 	public String imageURL;
 
-    @OneToMany (cascade=CascadeType.ALL)
-    @JoinTable(name = "ProductVersion")
+    @OneToMany (cascade=CascadeType.ALL, mappedBy = "product")
     public List<ProductVersion> versions;
 
     @ManyToMany
@@ -106,7 +106,12 @@ public class Product extends Model  {
 	 * @param product
 	 */
 	public static void create(Product product) {
+        //Add the given version as the current version
 		product.save();
+        if (product.versions != null && product.lastVersion == null) {
+            product.lastVersion = product.versions.get(product.versions.size()-1); //get the last, usually there is only one.
+            product.save();
+        }
 	}
 	
 	/**
@@ -127,7 +132,7 @@ public class Product extends Model  {
         result.put("lastVersion", ProductVersion.toJson(product.lastVersion));
         result.put("categories", Category.toJson(product.categories));
         result.put("applications", ProductVersion.getApplications(product.lastVersion));
-        //result.put("services", ProductVersion.getServices(product.lastVersion));
+        result.put("services", ProductVersion.getServices(product.lastVersion));
 		return result;
 	}
 
@@ -154,5 +159,9 @@ public class Product extends Model  {
         return price;
     }
 
+    public static List<Product> getProductByCategory(int categoryId){
+        List <Product> products = Ebean.find(Product.class).fetch("categories").where().eq("category_id",categoryId).findList();
+        return products;
+    }
 	
 }

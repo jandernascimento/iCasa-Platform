@@ -2,7 +2,10 @@
 <div  id="userMenu"class="well sidebar-nav affix" >
 	<ul class="nav nav-list ">
         <li class="nav-header">@Messages("icasa.availableProducts")</li>
-        <li class="active"><a  href="#products" data-toggle="tab">@Messages("icasa.all")</a></li>
+        <li class="active"><a  href="#products" data-toggle="tab" data-bind="click: $root.updateCategory">@Messages("icasa.all")</a></li>
+        <!-- ko foreach: categories-->
+            <li ><a href="#products" data-toggle="tab" data-bind="text: name, click: $root.updateCategory">...</a></li>
+        <!--/ko-->
         <li class="nav-header">@Messages("icasa.yourProducts")</li>
         <li><a  id="ownedProductLink" href="#ownedProducts" data-toggle="tab">@Messages("icasa.all")</a></li>
 

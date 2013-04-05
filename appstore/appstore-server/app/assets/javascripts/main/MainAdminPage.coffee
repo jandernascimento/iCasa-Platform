@@ -8,9 +8,9 @@ require([
     'components/model/productModel',
     'components/modelView/productView',
     ],
-	($, ui,bs,kb, bb,ko, model, view) ->
+	($, ui,bs,kb, bb,ko, DataModel, view) ->
         # Get first page product list
-        pageCollection = new model.ProductModelCollection()
+        pageCollection = new DataModel.Collections.Products()
         
         mainView = new view.MainAdminView(pageCollection)
         ko.applyBindings(mainView)

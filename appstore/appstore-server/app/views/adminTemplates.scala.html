@@ -1,30 +1,6 @@
 <!-- TEMPLATES-->
 <!-- The template for the modal window with three tabs: description/services/applications-->
 <!-- Add Application modal activated with the Admin menu-->
-<div id="addApplicationModal" class="modal hide fade" role="dialog" aria-labelledby="myModalLabelNewApplication" aria-hidden="true">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabelNewApplication" >@Messages("icasa.newApplication")</h3>
-    </div>
-    <div class="modal-body">
-        <form class="form-horizontal" onSubmit = "return addApplication()" >
-            <div class="control-group">
-                <label class="control-label" for="inputApplicationName">@Messages("icasa.name")</label>
-                <div class="controls">
-                    <input type="text" maxlength="20" id="inputApplicationName" placeholder="Name">
-                </div>
-            </div>
-
-            <div class="control-group">
-                <div class="controls">
-                    <button class="btn btn-success" >@Messages("icasa.add")</button>
-                    <button class="btn" data-dismiss="modal" aria-hidden="true">@Messages("icasa.close")</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-
 <!-- Add Product modal activated with the Admin menu-->
 <div id="addProductModal" class="modal hide fade" role="dialog" aria-labelledby="myModalLabelNewProduct" aria-hidden="true">
     <div class="modal-header">
@@ -32,23 +8,73 @@
         <h3 id="myModalLabelNewProduct">@Messages("icasa.newProduct")</h3>
     </div>
     <div class="modal-body">
-        <form class="form-horizontal" onSubmit = "return addProduct()" >
+        <form class="form-horizontal" >
             <div class="control-group">
                 <label class="control-label" for="inputProductName">@Messages("icasa.name")</label>
                 <div class="controls">
-                    <input type="text" maxlength="20" id="inputProductName" placeholder="Name">
+                    <input type="text" maxlength="20" id="inputProductName" data-bind="value: newProductName" placeholder=@Messages("icasa.name")>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputProductDescription">@Messages("icasa.description")</label>
+                <div class="controls">
+                    <textarea rows="3" id="inputProductDescription" data-bind="value: newProductDescription" placeholder=@Messages("icasa.description")></textarea>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputProductVersion">@Messages("icasa.version")</label>
+                <div class="controls">
+                    <input type="text" maxlength="20" id="inputProductVersion" data-bind="value: newProductVersion" placeholder=@Messages("icasa.version")>
                 </div>
             </div>
 
             <div class="control-group">
                 <div class="controls">
-                    <button class="btn btn-success" >@Messages("icasa.add")</button>
+                    <button class="btn btn-success" data-dismiss="modal" data-bind="click: addProduct"  >@Messages("icasa.add")</button>
                     <button class="btn" data-dismiss="modal" aria-hidden="true">@Messages("icasa.close")</button>
                 </div>
             </div>
         </form>
     </div>
 </div>
+
+
+<div id="addApplicationModal" class="modal hide fade" role="dialog" aria-labelledby="myModalLabelNewApplication" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabelNewApplication" >@Messages("icasa.newApplication")</h3>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal"  >
+            <div class="control-group">
+                <label class="control-label" for="inputApplicationName">@Messages("icasa.name")</label>
+                <div class="controls">
+                    <input type="text" maxlength="20" id="inputApplicationName" placeholder=@Messages("icasa.name")>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputApplicationDescription">@Messages("icasa.description")</label>
+                <div class="controls">
+                    <input type="text"  id="inputApplicationDescription" placeholder=@Messages("icasa.description")>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputApplicationVersion">@Messages("icasa.version")</label>
+                <div class="controls">
+                    <input type="text" maxlength="20" id="inputApplicationVersion" placeholder=@Messages("icasa.version")>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="controls">
+                    <button class="btn btn-success" data-dismiss="modal" data-bind="click: addApplication">@Messages("icasa.add")</button>
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">@Messages("icasa.close")</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 
 
 <!-- Add Product modal activated with the Admin menu-->
@@ -58,21 +84,33 @@
         <h3 id="myModalLabelNewService">@Messages("icasa.newService")</h3>
     </div>
     <div class="modal-body">
-        <form class="form-horizontal" onSubmit = "return addProduct()" >
+        <form class="form-horizontal"  >
             <div class="control-group">
                 <label class="control-label" for="inputServiceName">@Messages("icasa.name")</label>
                 <div class="controls">
-                    <input type="text" maxlength="20" id="inputServiceName" placeholder="Name">
+                    <input type="text" maxlength="20" id="inputServiceName" placeholder=@Messages("icasa.name")>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputServiceDescription">@Messages("icasa.description")</label>
+                <div class="controls">
+                    <input type="text"  id="inputServiceDescription" placeholder=@Messages("icasa.description")>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputServiceVersion">@Messages("icasa.version")</label>
+                <div class="controls">
+                    <input type="text" maxlength="20" id="inputServiceVersion" placeholder=@Messages("icasa.version")>
                 </div>
             </div>
 
             <div class="control-group">
                 <div class="controls">
-                    <button class="btn btn-success" >@Messages("icasa.add")</button>
+                    <button class="btn btn-success" data-dismiss="modal" data-bind="click: addService">@Messages("icasa.add")</button>
                     <button class="btn" data-dismiss="modal" aria-hidden="true">@Messages("icasa.close")</button>
                 </div>
             </div>
         </form>
     </div>
 </div>
-<script src="@routes.Assets.at("javascripts/frameworks/require/require.js")" data-main="@routes.Assets.at("javascripts/usersPage")" > </script>
+<script src="@routes.Assets.at("javascripts/frameworks/require/require.js")" data-main="@routes.Assets.at("javascripts/adminPage")" > </script>

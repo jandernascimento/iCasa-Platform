@@ -9,6 +9,7 @@ icasa.applications=Applications
 icasa.devices=Devices
 icasa.name=Name
 icasa.description=Description
+icasa.version=Version
 icasa.logout=Logout
 icasa.buy=Buy
 icasa.close=Close
@@ -31,5 +32,6 @@ icasa.newApplication= New Application
 icasa.newProduct= New Service
 icasa.newService= New Subscription
 icasa.administration= Administration
+icasa.thereIsAnyServiceApplications=There is no applications and no subscriptions in this product.
 
 

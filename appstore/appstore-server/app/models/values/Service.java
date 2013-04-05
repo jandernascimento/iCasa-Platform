@@ -17,7 +17,10 @@
  */
 package models.values;
 
+import org.codehaus.jackson.node.ArrayNode;
+import org.codehaus.jackson.node.ObjectNode;
 import play.db.ebean.Model;
+import play.libs.Json;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -66,6 +69,24 @@ public class Service extends Model  {
 		find.byId(identifier).delete();
 	}
 
+    public static ObjectNode toJson(Service service){
+        ObjectNode result = Json.newObject();
+        if (service != null) {
+            result.put("id", service.id);
+            result.put("name", service.name);
+            result.put("description", service.description);
+        }
+        return result;
+    }
 
+    public static ArrayNode toJson(List<Service> list){
+        ArrayNode result = Json.newObject().arrayNode();
+        if (list != null ){
+            for (Service service: list){
+                result.add(Service.toJson(service));
+            }
+        }
+        return result;
+    }
 
 }
