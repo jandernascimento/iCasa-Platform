@@ -15,6 +15,8 @@
  */
 package fr.liglab.adele.icasa.device;
 
+import fr.liglab.adele.icasa.listener.IcasaListener;
+
 import java.util.EventListener;
 
 /**
@@ -24,7 +26,7 @@ import java.util.EventListener;
  * @author Gabriel Pedraza Ferreira
  *
  */
-public interface DeviceListener {
+public interface DeviceListener extends IcasaListener {
 
     public void deviceAdded(GenericDevice device);
 
