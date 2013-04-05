@@ -16,7 +16,7 @@ define(['backbone', 'underscore'],
 				version: '0.0.0'
 		
 		class DataModel.Collections.Services extends bb.Collection
-	# 		url: '/services'
+	 		url: 'catalog/services'
 			model: DataModel.Models.Service
 
 		class DataModel.Models.Application extends bb.Model
@@ -28,7 +28,7 @@ define(['backbone', 'underscore'],
 		# ApplicationModel.setup()
 		
 		class DataModel.Collections.Applications extends bb.Collection
-	# 		url: '/applications'
+	 		url: 'catalog/applications'
 			model: DataModel.Models.Application
 
 		class DataModel.Models.Category extends bb.Model

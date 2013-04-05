@@ -17,10 +17,15 @@
  */
 package controllers;
 
+import models.values.Application;
 import models.values.Service;
+import org.codehaus.jackson.node.ArrayNode;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+
+import java.util.List;
 
 /**
  * @author <a href="mailto:cilia-devel@lists.ligforge.imag.fr">Cilia Project
@@ -32,8 +37,16 @@ public class ServiceController extends Controller {
 
 
 	public static Result services(){
-		return ok(views.html.products.services.services.render(Service.all()));
-	}
+        System.out.println("Getting applications");
+
+        List<Service> serviceList = null;
+        serviceList = Service.all();
+        ArrayNode services = Json.newObject().arrayNode();
+        for (Service application : serviceList) {
+            services.add(Service.toJson(application));
+        }
+        return ok(services);
+    }
 
 	public static Result addServiceForm(){
 		return ok(views.html.products.services.newService.render(form(Service.class)));

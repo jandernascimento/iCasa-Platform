@@ -19,6 +19,7 @@ icasa.productName=Service name
 icasa.productDescription=Service description
 icasa.installOn=Install on
 icasa.categories=Categories
+icasa.category=Category
 icasa.newDevice=New Device
 icasa.add=Add
 icasa.all=All

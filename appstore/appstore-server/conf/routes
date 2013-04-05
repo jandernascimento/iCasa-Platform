@@ -28,7 +28,7 @@ GET     /authenticate/:provider     securesocial.controllers.ProviderController.
 POST    /authenticate/:provider     securesocial.controllers.ProviderController.authenticateByPost(provider)
 GET     /not-authorized             securesocial.controllers.ProviderController.notAuthorized
 
-#Product Catalog Controllers PAGE
+#Product Catalog Controllers REST
 
 GET      /catalog/products             controllers.ProductController.products()
 
@@ -52,19 +52,16 @@ POST     /user/devices               controllers.DeviceController.addDevice
 
 
 
-#Application Controllers
-POST     /application               controllers.ApplicationController.addApplication()
+#Applications Catalog Controllers REST
+POST     /catalog/applications               controllers.ApplicationController.addApplication()
 
-GET      /application               controllers.ApplicationController.addApplicationForm()
+GET      /catalog/applications              controllers.ApplicationController.applications()
 
-GET      /applications              controllers.ApplicationController.applications()
+#Service Catalog Controllers REST
 
-#Servuce Controllers
-POST     /service                   controllers.ServiceController.addService()
+POST     /catalog/services                   controllers.ServiceController.addService()
 
-GET      /service                   controllers.ServiceController.addServiceForm()
-
-GET      /services                  controllers.ServiceController.services()
+GET      /catalog/services                  controllers.ServiceController.services()
 
 
 # Map static resources from the /public folder to the /assets URL path

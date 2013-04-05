@@ -18,17 +18,31 @@
 package controllers;
 
 import models.values.Application;
+import models.values.Product;
+import org.codehaus.jackson.node.ArrayNode;
+import play.data.DynamicForm;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+
+import java.util.List;
 
 
 public class ApplicationController extends Controller {
 	static Form<Application> applicationForm = form(Application.class);
 
 	public static Result applications(){
-		return ok(views.html.products.applications.applications.render(Application.all()));
-	}
+        System.out.println("Getting applications");
+
+        List<Application> allProducts = null;
+        allProducts = Application.all();
+        ArrayNode applications = Json.newObject().arrayNode();
+        for (Application application : allProducts) {
+            applications.add(Application.toJson(application));
+        }
+        return ok(applications);
+    }
 
 	public static Result addApplicationForm(){
 		return ok(views.html.products.applications.newApplication.render(form(Application.class)));

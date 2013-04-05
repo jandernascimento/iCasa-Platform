@@ -80,20 +80,20 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 	class IdentifiedViewModel extends kb.ViewModel
 		constructor:(model)->
 			@id = model.get('id')
-			@name = ko.observable(model.get('name'))
-			@description = ko.observable(model.get('description'))
+			@name = kb.observable(model, 'name')
+			@description = kb.observable(model, 'description')
 
 	class VersionedViewModel extends IdentifiedViewModel
 		constructor:(model)->
 			super(model)
-			@version = ko.observable(model.get('version'))
+			@version = kb.observable(model,'version')
 
 
 	class ServiceViewModel extends VersionedViewModel
 		constructor: (smodel) ->
 			super(smodel)
 
-	class CategoryViewModel extends VersionedViewModel
+	class CategoryViewModel extends IdentifiedViewModel
 		constructor: (smodel) ->
 			super(smodel)
 			
@@ -101,12 +101,11 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 		constructor: (@model) ->
 			super(model)
 		
-	class ProductViewModelBase extends kb.ViewModel
+	class ProductViewModelBase extends IdentifiedViewModel
 		constructor:(@model) ->
-			@id = model.get('id')
-			@name = model.get('name')
+			super(model)
 			@imageURL = model.get('imageURL')
-			@description = model.get('description')
+			
 			
 			@lastVersion = model.get('lastVersion')
 			#The collection of  services
@@ -206,14 +205,21 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 		
 
 	class MainAdminView
-		constructor:(@availableProductsModelGrid)->
+		constructor:()->
 			@pageSize= 8 
 			@pageIndex= 0 
 
 			# The available products
-			@availableProductsGrid = kb.collectionObservable(availableProductsModelGrid, {view_model: ProductViewModelGrid})
+			@availableProductsGrid = kb.collectionObservable(DataModel.collections.products, {view_model: ProductViewModelGrid})
+			# The available categories
+			@categories = kb.collectionObservable(DataModel.collections.categories, {view_model: CategoryViewModel})
+			#Get available applications
+			@applications = kb.collectionObservable(DataModel.collections.applications, {view_model: ApplicationViewModel})
+			#Get available applications
+			@services = kb.collectionObservable(DataModel.collections.services, {view_model: ServiceViewModel})
+
 			#Get the first page
-			availableProductsModelGrid.getNextPage(@.pageIndex, @.pageSize)
+			DataModel.collections.products.getNextPage(@.pageIndex, @.pageSize)
 			#Souscribe to get newer pages on scroll down
 			$(window).scroll(@.fetchNewPage)
 			#new product
@@ -226,20 +232,20 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 				versions = new DataModel.Collections.Versions([version]);
 				product = new DataModel.Models.Product({name: @newProductName(), description: @newProductDescription(), versions: versions})
 				product.save()
-				availableProductsModelGrid.push(product)
+				DataModel.collections.products.push(product)
 			@addApplication = ()=>
 				application = new DataModel.Models.Application({name: @newProductName(), description: @newProductDescription(), version: @newProductVersion()})
 				application.save()
-				availableProductsModelGrid.push(application)
+				DataModel.collections.products.push(application)
 			@addService = ()=>
 				service = new DataModel.Models.Service({name: @newServiceName(), description: @newServiceDescription(), version: @newServiceVersion()})
 				service.save()
-				availableProductsModelGrid.push(service)
+				DataModel.collections.products.push(service)
 
 		fetchNewPage:()=>
 			if $(window).scrollTop() == $(document).height() - $(window).height()
 				@.pageIndex++
-				@.availableProductsModelGrid.getNextPage(@.pageIndex, @.pageSize)
+				@.DataModel.collections.products.getNextPage(@.pageIndex, @.pageSize)
 
 
 	return {MainUserView, MainAdminView}
