@@ -16,6 +16,7 @@
 package fr.liglab.adele.icasa.context.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -55,7 +56,6 @@ public class ContextManagerImpl implements ContextManager {
 	private Map<String, LocatedDevice> locatedDevices = new HashMap<String, LocatedDevice>();
 
 	private Map<String, GenericDevice> m_devices = new HashMap<String, GenericDevice>();
-
 
 	private Map<String, Factory> m_factories = new HashMap<String, Factory>();
 
@@ -124,6 +124,14 @@ public class ContextManagerImpl implements ContextManager {
 		if (zone == null)
 			return;
 		zone.resize(width, height);
+	}
+
+	@Override
+	public void removeAllZones() {
+		List<Zone> tempZones = getZones();
+		for (Zone zone : tempZones) {
+			removeZone(zone.getId());
+		}
 	}
 
 	@Override
@@ -265,10 +273,9 @@ public class ContextManagerImpl implements ContextManager {
 		return zones;
 	}
 
-
 	@Override
 	public void setDeviceState(String deviceId, boolean value) {
-		
+
 		GenericDevice device = m_devices.get(deviceId);
 
 		if (device == null && !(device instanceof GenericDevice))
@@ -280,14 +287,12 @@ public class ContextManagerImpl implements ContextManager {
 			device.setState(GenericDevice.STATE_DEACTIVATED);
 	}
 
-
 	@Override
 	public LocatedDevice getDevice(String deviceId) {
 		synchronized (locatedDevices) {
 			return locatedDevices.get(deviceId);
 		}
 	}
-
 
 	@Override
 	public Set<String> getDeviceTypes() {
@@ -398,16 +403,12 @@ public class ContextManagerImpl implements ContextManager {
 			}
 		}
 
-
-
 		if (listener instanceof DeviceTypeListener) {
 			DeviceTypeListener deviceTypeListener = (DeviceTypeListener) listener;
 			synchronized (deviceTypeListeners) {
 				deviceTypeListeners.add(deviceTypeListener);
 			}
 		}
-
-
 
 	}
 
@@ -431,7 +432,6 @@ public class ContextManagerImpl implements ContextManager {
 			}
 		}
 
-
 		if (listener instanceof DeviceTypeListener) {
 			DeviceTypeListener deviceTypeListener = (DeviceTypeListener) listener;
 			synchronized (deviceTypeListeners) {
@@ -439,8 +439,6 @@ public class ContextManagerImpl implements ContextManager {
 			}
 		}
 	}
-
-
 
 	private int random(int min, int max) {
 		final double range = (max - 10) - (min + 10);
@@ -461,7 +459,9 @@ public class ContextManagerImpl implements ContextManager {
 		return new Position(newX, newY);
 	}
 
-
-
+	@Override
+	public void resetContext() {
+		removeAllZones();
+	}
 
 }
