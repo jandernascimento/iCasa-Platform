@@ -5,6 +5,9 @@ SET foreign_key_checks = 0;
 SET time_zone = 'SYSTEM';
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
+CREATE DATABASE `appstore` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `appstore`;
+
 DROP TABLE IF EXISTS `Application`;
 CREATE TABLE `Application` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -248,4 +251,4 @@ INSERT INTO `User` (`id`, `userId`, `username`, `fullname`, `password`, `email`,
 (2,   '115199325219308345825',   '115199325219308345825',   'Issac Noé García',  'ya29.AHES6ZR08OTSTkmb38SMIjITqj6J2OI3FeU1YlwFRCxTCi0yIQ',  'Some(issac@torito.org)',  'google',   'oauth2'),
 (3,   '101452069845754362646',   '101452069845754362646',   'Thomas Leveque', 'ya29.AHES6ZRn84ZNXsfQoaQ-1MpX4AjDcimKWcAlHFsSu97c_J3I', 'Some(leveque.thomas@gmail.com)',   'google',   'oauth2');
 
--- 2013-04-09 11:39:11
+-- 2013-04-09 11:42:32
