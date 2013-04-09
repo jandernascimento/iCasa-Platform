@@ -74,6 +74,11 @@ public interface ContextManager {
 	 * @throws Exception Throws an exception when the zone does not fit in the parent zone.
 	 */
 	public void resizeZone(String id, int width, int height) throws Exception; 
+	
+	/**
+	 * Remove all zones in the context
+	 */
+	public void removeAllZones();
 		
 	/**
 	 * Get the set of available variables in a given zone.
@@ -132,5 +137,7 @@ public interface ContextManager {
 	public void addListener(IcasaListener listener);
 
 	public void removeListener(IcasaListener listener);
+	
+	public void resetContext();
 
 }
