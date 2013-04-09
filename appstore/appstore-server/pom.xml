@@ -65,7 +65,7 @@
         <plugins>
 
             <plugin>
-                <groupId>de.akquinet.innovation.play2</groupId>
+                <groupId>org.nanoko.playframework</groupId>
                 <artifactId>play2-maven-plugin</artifactId>
                 <extensions>true</extensions>
 				<configuration>
