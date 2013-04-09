@@ -28,21 +28,27 @@
                 </div>
             </div>
             <div class="control-group">
+                <label class="control-label" for="newProductPicture">@Messages("icasa.imageFile")</label>
+                <div class="controls">
+                    <input type="file" name="picture" id="newProductPicture" />
+                </div>
+            </div>
+            <div class="control-group">
                 <label class="control-label" for="inputProductCategory">@Messages("icasa.category")</label>
                 <div class="controls">
-                    <select id="inputProductCategory" data-bind="options: categories, optionsText: 'name', value: 'id'" size="5" multiple="true"></select>
+                    <select id="inputProductCategory" data-bind="options: categories, selectedOptions: chosenCategories, optionsText: 'name', optionValue: 'id'" size="5" multiple="true"></select>
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label" for="inputProductApplications">@Messages("icasa.applications")</label>
                 <div class="controls">
-                    <select id="inputProductApplications" data-bind="options: applications, optionsText: 'name', value: 'id'" size="5" multiple="true"></select>
+                    <select id="inputProductApplications" data-bind="options: applications, selectedOptions: chosenApplications, optionsText: 'name', optionValue: 'id'" size="5" multiple="true"></select>
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label" for="inputProductServices">@Messages("icasa.services")</label>
                 <div class="controls">
-                    <select id="inputProductServices" data-bind="options: services, optionsText: 'name', value: 'id'" size="5" multiple="true"></select>
+                    <select id="inputProductServices" data-bind="options: services, selectedOptions: chosenServices, optionsText: 'name', optionValue: 'id'" size="5" multiple="true"></select>
                 </div>
             </div>
             <div class="control-group">

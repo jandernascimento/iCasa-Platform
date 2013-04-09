@@ -14,10 +14,12 @@ import play.libs.Json;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Http;
+import play.mvc.Http.MultipartFormData;
 import play.mvc.Result;
 import securesocial.core.Identity;
 import securesocial.core.java.SecureSocial;
 
+import java.io.File;
 import java.sql.DriverManager;
 import java.util.List;
 
@@ -140,7 +142,8 @@ public class ProductController extends Controller {
 		Form<Product> filledForm = productForm.bindFromRequest();
 		System.out.println(filledForm);
 		if (filledForm.hasErrors()){
-			return badRequest(views.html.products.newProduct.render(filledForm));
+            System.out.println("bad form");
+			return badRequest();
 		} else {
 			try{
                 Product product = filledForm.get();
@@ -152,5 +155,23 @@ public class ProductController extends Controller {
 			return ok();
 		}
 	}
+
+    @SecureSocial.SecuredAction
+    public static Result uploadImage(String productId){
+        Product product = Product.find.byId(productId);
+        MultipartFormData body = request().body().asMultipartFormData();
+        MultipartFormData.FilePart picture = body.getFile("picture");
+        System.out.println("Upload file" + product);
+        if (picture != null) {
+            String fileName = picture.getFilename();
+            String contentType = picture.getContentType();
+            File file = picture.getFile();
+            System.out.println("Upload file:" + fileName);
+            return ok("File uploaded");
+        } else {
+            flash("error", "Missing file");
+            return badRequest();
+        }
+    }
 
 }

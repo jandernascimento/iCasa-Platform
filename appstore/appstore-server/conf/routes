@@ -34,6 +34,8 @@ GET      /catalog/products             controllers.ProductController.products()
 
 POST     /catalog/products              controllers.ProductController.addProduct()
 
+POST     /catalog/products/:productId/image              controllers.ProductController.uploadImage(productId)
+
 GET      /catalog/categories       controllers.CategoryController.getAvailableCategories()
 
 GET      /catalog/products/category/:category   controllers.ProductController.getProductsPerCategory(category)

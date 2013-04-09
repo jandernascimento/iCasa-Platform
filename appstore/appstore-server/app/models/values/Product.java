@@ -109,7 +109,7 @@ public class Product extends Model  {
         //Add the given version as the current version
 		product.save();
         if (product.versions != null && product.lastVersion == null) {
-            product.lastVersion = product.versions.get(product.versions.size()-1); //get the last, usually there is only one.
+            product.lastVersion = product.versions.get(product.versions.size()-1); //When creating there is only one
             product.save();
         }
 	}
@@ -163,5 +163,6 @@ public class Product extends Model  {
         List <Product> products = Ebean.find(Product.class).fetch("categories").where().eq("category_id",categoryId).findList();
         return products;
     }
-	
+
+
 }

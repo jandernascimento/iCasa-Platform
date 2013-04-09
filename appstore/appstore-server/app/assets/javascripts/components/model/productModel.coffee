@@ -61,12 +61,22 @@ define(['backbone', 'underscore'],
 			buyProduct:()->
 				#only send product ID as part of URL, user association handled by secure social
 				$.ajax(
-					type: "PUT",
+					type: 'PUT',
 					url: 'user/products/' + @.id,
 				);
+			setImage:(file)->
+				data = new FormData();
+				data.append('file', file)
+				$.ajax(
+					url: 'catalog/products/'+@.id+'/image'
+					type: 'POST',
+					processData: false,
+  					contentType: false,
+					data: data,
+					success: ()->
+						alert("succefully updloaded");
 
-
-
+				);
 
 		class DataModel.Collections.OwnedProducts extends bb.Collection
 			model: DataModel.Models.Product
