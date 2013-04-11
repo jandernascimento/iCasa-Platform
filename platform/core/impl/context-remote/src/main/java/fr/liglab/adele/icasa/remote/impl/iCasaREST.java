@@ -15,11 +15,16 @@
  */
 package fr.liglab.adele.icasa.remote.impl;
 
+import fr.liglab.adele.icasa.location.Zone;
 import fr.liglab.adele.icasa.remote.AbstractREST;
+import fr.liglab.adele.icasa.remote.util.IcasaJSONUtil;
 import org.apache.felix.ipojo.annotations.Component;
 import org.apache.felix.ipojo.annotations.Instantiate;
 import org.apache.felix.ipojo.annotations.Provides;
 import org.apache.felix.ipojo.annotations.StaticServiceProperty;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.osgi.framework.BundleContext;
 
 import javax.ws.rs.GET;
@@ -39,7 +44,7 @@ import javax.ws.rs.core.Response;
 @Component(name = "remote-rest-icasa")
 @Instantiate(name = "remote-rest-icasa-0")
 @Provides(specifications = { iCasaREST.class }, properties = {@StaticServiceProperty(name = AbstractREST.ICASA_REST_PROPERTY_NAME, value="true", type="java.lang.Boolean")} )
-@Path(value = "/backend/")
+@Path(value = "/backend")
 public class iCasaREST extends AbstractREST{
 
     private BundleContext context;
@@ -50,18 +55,39 @@ public class iCasaREST extends AbstractREST{
 
     @OPTIONS
     @Produces(MediaType.APPLICATION_JSON)
-    @Path(value="/version/")
     public Response versionOptions() {
         return makeCORS(Response.ok());
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path(value="/version/")
-    public Response version() {
-        return makeCORS(Response.ok(getVersion()));
+    public Response info() {
+        String info = null;
+        try {
+            info = getInfo();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+        return makeCORS(Response.ok(info));
     }
 
+    /**
+     * Get the backend information
+     * @return the information of the backend in a JSON format String
+     * @throws JSONException if there is an error with the json object.
+     */
+    public String getInfo() throws JSONException {
+        JSONObject backendInfo = new JSONObject();
+        backendInfo.put("version", getVersion());
+        return backendInfo.toString();
+    }
+
+    /**
+     * Get the backend version obtained from the bundle context.
+     * If the version has SNAPSHOT as qualifier, this method will return the maven way (major.minor.micro-SNAPSHOT)
+     * @return the version of the icasa-remote bundle.
+     */
     private String getVersion() {
         String qualifiedVersion = context.getBundle().getVersion().toString();
         return qualifiedVersion.replace(".SNAPSHOT", "-SNAPSHOT");//This is to maintain maven version format
