@@ -21,10 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import fr.liglab.adele.icasa.location.LocatedObject;
-import fr.liglab.adele.icasa.location.Position;
-import fr.liglab.adele.icasa.location.Zone;
-import fr.liglab.adele.icasa.location.ZoneListener;
+import fr.liglab.adele.icasa.location.*;
 
 public class ZoneImpl extends LocatedObjectImpl implements Zone {
 
@@ -173,7 +170,37 @@ public class ZoneImpl extends LocatedObjectImpl implements Zone {
 		}		
    }
 
-	@Override
+    @Override
+    protected void notifyAttachedObject(LocatedObject attachedObject) {
+        LocatedDevice childDevice = null;
+        if (attachedObject instanceof  LocatedDevice){
+            childDevice = (LocatedDevice)attachedObject;
+        } else {
+            return; // If attached object is not a locatedDevice we do nothing.
+        }
+        synchronized (listeners){
+            for (ZoneListener listener : listeners) {
+                listener.deviceAttached(this, childDevice);
+            }
+        }
+    }
+
+    @Override
+    protected void notifyDetachedObject(LocatedObject attachedObject) {
+        LocatedDevice childDevice = null;
+        if (attachedObject instanceof  LocatedDevice){
+            childDevice = (LocatedDevice)attachedObject;
+        } else {
+            return; // If attached object is not a locatedDevice we do nothing.
+        }
+        synchronized (listeners){
+            for (ZoneListener listener : listeners) {
+                listener.deviceDetached(this, childDevice);
+            }
+        }
+    }
+
+    @Override
 	public void setParent(Zone parent) {
 		Zone oldParentZone = this.parent;
 		this.parent = parent;

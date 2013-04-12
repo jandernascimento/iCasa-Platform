@@ -15,6 +15,7 @@
  */
 package fr.liglab.adele.icasa.distribution.test.zone;
 
+import fr.liglab.adele.icasa.location.LocatedDevice;
 import fr.liglab.adele.icasa.location.Position;
 import fr.liglab.adele.icasa.location.Zone;
 import fr.liglab.adele.icasa.location.ZoneListener;
@@ -132,5 +133,25 @@ public class ZoneTestListener implements ZoneListener {
 		listenZone = zone;
 		listenParentZone = oldParentZone;
 	}
+
+    /**
+     * Invoked when a device has been attached a zone
+     *
+     * @param container
+     * @param child
+     */
+    public void deviceAttached(Zone container, LocatedDevice child) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    /**
+     * * Invoked when a device has been detached from a zone
+     *
+     * @param container
+     * @param child
+     */
+    public void deviceDetached(Zone container, LocatedDevice child) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
 
 }

@@ -22,10 +22,7 @@ import java.util.Set;
 import fr.liglab.adele.icasa.ContextManager;
 import fr.liglab.adele.icasa.device.DeviceListener;
 import fr.liglab.adele.icasa.device.GenericDevice;
-import fr.liglab.adele.icasa.location.LocatedDevice;
-import fr.liglab.adele.icasa.location.LocatedDeviceListener;
-import fr.liglab.adele.icasa.location.Position;
-import fr.liglab.adele.icasa.location.Zone;
+import fr.liglab.adele.icasa.location.*;
 
 public class LocatedDeviceImpl extends LocatedObjectImpl implements LocatedDevice, DeviceListener {
 
@@ -125,8 +122,38 @@ public class LocatedDeviceImpl extends LocatedObjectImpl implements LocatedDevic
 		}
 			
    }
-	
-	@Override
+
+    @Override
+    protected void notifyAttachedObject(LocatedObject attachedObject) {
+        LocatedDevice childDevice = null;
+        if (attachedObject instanceof  LocatedDevice){
+            childDevice = (LocatedDevice)attachedObject;
+        } else {
+            return; // If attached object is not a locatedDevice we do nothing.
+        }
+        synchronized (listeners){
+            for (LocatedDeviceListener listener : listeners) {
+                listener.deviceAttached(this, childDevice);
+            }
+        }
+    }
+
+    @Override
+    protected void notifyDetachedObject(LocatedObject attachedObject) {
+        LocatedDevice childDevice = null;
+        if (attachedObject instanceof  LocatedDevice){
+            childDevice = (LocatedDevice)attachedObject;
+        } else {
+            return; // If attached object is not a locatedDevice we do nothing.
+        }
+        synchronized (listeners){
+            for (LocatedDeviceListener listener : listeners) {
+                listener.deviceDetached(this, childDevice);
+            }
+        }
+    }
+
+    @Override
 	public String toString() {
 		return "Id: " + getSerialNumber() + " - Position: " + getCenterAbsolutePosition();
 	}
@@ -158,25 +185,30 @@ public class LocatedDeviceImpl extends LocatedObjectImpl implements LocatedDevic
 	@Override
    public void devicePropertyModified(GenericDevice device, String propertyName, Object oldValue) {
 		// Listeners notification
-		for (LocatedDeviceListener listener : listeners) {
-			listener.devicePropertyModified(this, propertyName, oldValue);
-		}		   
+        synchronized (listeners){
+            for (LocatedDeviceListener listener : listeners) {
+                listener.devicePropertyModified(this, propertyName, oldValue);
+            }
+        }
    }
 
 	@Override
    public void devicePropertyAdded(GenericDevice device, String propertyName) {
 		// Listeners notification
-		for (LocatedDeviceListener listener : listeners) {
-			listener.devicePropertyAdded(this, propertyName);
-		}		   	   
+        synchronized (listeners){
+            for (LocatedDeviceListener listener : listeners) {
+                listener.devicePropertyAdded(this, propertyName);
+            }
+        }
    }
 
 	@Override
    public void devicePropertyRemoved(GenericDevice device, String propertyName) {
-	   // TODO Auto-generated method stub
-		for (LocatedDeviceListener listener : listeners) {
-			listener.devicePropertyRemoved(this, propertyName);
-		}		
+        synchronized (listeners){
+            for (LocatedDeviceListener listener : listeners) {
+                listener.devicePropertyRemoved(this, propertyName);
+            }
+        }
    }
 
 }

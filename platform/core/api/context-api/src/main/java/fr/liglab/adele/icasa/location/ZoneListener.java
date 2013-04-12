@@ -46,4 +46,18 @@ public interface ZoneListener extends ZonePropListener {
      * 			null for the first time.
      */
     public void zoneParentModified(Zone zone, Zone oldParentZone);
+    /**
+     * Invoked when a device has been attached a zone
+     * @param container
+     * @param child
+     */
+    void deviceAttached(Zone container, LocatedDevice child);
+
+    /**
+     ** Invoked when a device has been detached from a zone
+     * @param container
+     * @param child
+     */
+    void deviceDetached(Zone container, LocatedDevice child);
+
 }

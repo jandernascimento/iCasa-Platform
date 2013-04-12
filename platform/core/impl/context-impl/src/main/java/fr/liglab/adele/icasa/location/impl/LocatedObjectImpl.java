@@ -21,7 +21,7 @@ import java.util.List;
 import fr.liglab.adele.icasa.location.LocatedObject;
 import fr.liglab.adele.icasa.location.Position;
 
-public class LocatedObjectImpl implements LocatedObject {
+public abstract class LocatedObjectImpl implements LocatedObject {
 
 	private Position m_position;
 	
@@ -59,6 +59,7 @@ public class LocatedObjectImpl implements LocatedObject {
 			return;
 		
 		attachedObjects.add(object);
+        notifyAttachedObject(object);
    }
 
 	@Override
@@ -66,7 +67,12 @@ public class LocatedObjectImpl implements LocatedObject {
 		if (object==this)
 			return;
 		
-		attachedObjects.remove(object);	   
+		attachedObjects.remove(object);
+        notifyDetachedObject(object);
    }
+
+   protected abstract void notifyAttachedObject(LocatedObject attachedObject);
+
+   protected abstract void notifyDetachedObject(LocatedObject attachedObject);
 
 }
