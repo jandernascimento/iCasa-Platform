@@ -69,6 +69,7 @@
                 <artifactId>play2-maven-plugin</artifactId>
                 <extensions>true</extensions>
 				<configuration>
+                    <buildWar>false</buildWar>
                     <play2Home>${user.home}/opt/play-${play2.version}</play2Home>
                 </configuration>
                 <executions>
