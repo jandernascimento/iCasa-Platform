@@ -19,11 +19,13 @@ The main contributors are
 Source Organization
 ====
 
-- _applications_: Contains M2M applications such as the iCasa simulator.  
+- _appstore_: Contains the iCasa store sources.
 - _dependencies_: Contains packages of used dependencies such as ROSE and Cilia.
 - _distribution_: Contains distributions.
+- _doc_: Contains documentation about development environment setup.
 - _parent_: Contain the global build configuration including licensing information.
-- _platform_: Contains technical services and device drivers used by the applications and distributions. 
+- _platform_: Contains technical services and device drivers used by the applications and distributions.
+- _portal_: Contains the iCasa web portal sources.
 - _tests_: Contains integration tests.
 
 How to use it

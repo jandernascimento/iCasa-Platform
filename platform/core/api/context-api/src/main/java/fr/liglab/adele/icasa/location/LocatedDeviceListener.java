@@ -38,5 +38,18 @@ public interface LocatedDeviceListener extends IcasaListener {
 
     public void devicePropertyRemoved(LocatedDevice device, String propertyName);
 
+    /**
+     * Invoked when a device has been attached to another device
+     * @param container
+     * @param child
+     */
+    void deviceAttached(LocatedDevice container, LocatedDevice child);
+
+    /**
+     ** Invoked when a device has been detached from another device
+     * @param container
+     * @param child
+     */
+    void deviceDetached(LocatedDevice container, LocatedDevice child);
 
 }

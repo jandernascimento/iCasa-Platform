@@ -18,6 +18,7 @@ package fr.liglab.adele.m2mappbuilder.upnp.photometer.proxy;
 import java.util.Dictionary;
 import java.util.Properties;
 
+import fr.liglab.adele.icasa.location.LocatedDevice;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Filter;
 import org.osgi.framework.ServiceRegistration;
@@ -223,4 +224,26 @@ public class UPnPPhotometerProxyImpl extends AbstractDevice implements Photomete
 		// TODO Auto-generated method stub
 
 	}
+
+    /**
+     * Invoked when a device has been attached a zone
+     *
+     * @param container
+     * @param child
+     */
+    @Override
+    public void deviceAttached(Zone container, LocatedDevice child) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    /**
+     * * Invoked when a device has been detached from a zone
+     *
+     * @param container
+     * @param child
+     */
+    @Override
+    public void deviceDetached(Zone container, LocatedDevice child) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

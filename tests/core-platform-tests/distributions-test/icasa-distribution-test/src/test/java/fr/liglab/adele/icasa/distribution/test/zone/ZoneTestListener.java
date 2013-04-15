@@ -1,19 +1,21 @@
-/*
- * Copyright Adele Team LIG
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+/**
  *
- *   http://www.apache.org/licenses/LICENSE-2.0
+ *   Copyright 2011-2012 Universite Joseph Fourier, LIG, ADELE team
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
  */
 package fr.liglab.adele.icasa.distribution.test.zone;
 
+import fr.liglab.adele.icasa.location.LocatedDevice;
 import fr.liglab.adele.icasa.location.Position;
 import fr.liglab.adele.icasa.location.Zone;
 import fr.liglab.adele.icasa.location.ZoneListener;
@@ -131,5 +133,25 @@ public class ZoneTestListener implements ZoneListener {
 		listenZone = zone;
 		listenParentZone = oldParentZone;
 	}
+
+    /**
+     * Invoked when a device has been attached a zone
+     *
+     * @param container
+     * @param child
+     */
+    public void deviceAttached(Zone container, LocatedDevice child) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    /**
+     * * Invoked when a device has been detached from a zone
+     *
+     * @param container
+     * @param child
+     */
+    public void deviceDetached(Zone container, LocatedDevice child) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
 
 }

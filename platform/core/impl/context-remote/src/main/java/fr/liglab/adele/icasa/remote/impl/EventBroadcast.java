@@ -67,7 +67,7 @@ public class EventBroadcast extends OnMessage<String> implements RemoteEventBroa
 	private HttpService _httpService;
 
 	@Requires
-	private ContextManager _simulMgr;
+	private ContextManager _ctxMgr;
 	
 	
 
@@ -92,7 +92,7 @@ public class EventBroadcast extends OnMessage<String> implements RemoteEventBroa
 
 		// Register iCasa listeners
 		_iCasaListener = new ICasaEventListener();
-		_simulMgr.addListener(_iCasaListener);
+		_ctxMgr.addListener(_iCasaListener);
 		
 
 		_clockListener = new ClockEventListener();
@@ -120,7 +120,7 @@ public class EventBroadcast extends OnMessage<String> implements RemoteEventBroa
 		// Unregister iCasa listeners
 
 		if (_iCasaListener != null) {
-			_simulMgr.removeListener(_iCasaListener);
+			_ctxMgr.removeListener(_iCasaListener);
 			_iCasaListener = null;
 		}
 		if (_clockListener != null) {
@@ -187,7 +187,7 @@ public class EventBroadcast extends OnMessage<String> implements RemoteEventBroa
 			JSONObject json = new JSONObject();
 			try {
 				json.put("deviceId", device.getSerialNumber());
-				json.put("device", IcasaJSONUtil.getDeviceJSON(device, _simulMgr));
+				json.put("device", IcasaJSONUtil.getDeviceJSON(device, _ctxMgr));
 				sendEvent("device-position-update", json);
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -199,7 +199,7 @@ public class EventBroadcast extends OnMessage<String> implements RemoteEventBroa
 			JSONObject json = new JSONObject();
 			try {
 				json.put("deviceId", device.getSerialNumber());
-				json.put("device", IcasaJSONUtil.getDeviceJSON(device, _simulMgr));
+				json.put("device", IcasaJSONUtil.getDeviceJSON(device, _ctxMgr));
 				sendEvent("device-added", json);
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -222,7 +222,7 @@ public class EventBroadcast extends OnMessage<String> implements RemoteEventBroa
 			JSONObject json = new JSONObject();
 			try {
 				json.put("deviceId", device.getSerialNumber());
-				json.put("device", IcasaJSONUtil.getDeviceJSON(device, _simulMgr));
+				json.put("device", IcasaJSONUtil.getDeviceJSON(device, _ctxMgr));
 				sendEvent("device-property-updated", json);
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -234,7 +234,7 @@ public class EventBroadcast extends OnMessage<String> implements RemoteEventBroa
 			JSONObject json = new JSONObject();
 			try {
 				json.put("deviceId", device.getSerialNumber());
-				json.put("device", IcasaJSONUtil.getDeviceJSON(device, _simulMgr));
+				json.put("device", IcasaJSONUtil.getDeviceJSON(device, _ctxMgr));
 				sendEvent("device-property-added", json);
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -246,15 +246,53 @@ public class EventBroadcast extends OnMessage<String> implements RemoteEventBroa
 			JSONObject json = new JSONObject();
 			try {
 				json.put("deviceId", device.getSerialNumber());
-				json.put("device", IcasaJSONUtil.getDeviceJSON(device, _simulMgr));
+				json.put("device", IcasaJSONUtil.getDeviceJSON(device, _ctxMgr));
 				sendEvent("device-property-removed", json);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 		}
 
+        /**
+         * Invoked when a device has been attached to another device
+         *
+         * @param container
+         * @param child
+         */
+        @Override
+        public void deviceAttached(LocatedDevice container, LocatedDevice child) {
+            JSONObject json = new JSONObject();
+            try {
+                json.put("deviceId", container.getSerialNumber());
+                json.put("container", IcasaJSONUtil.getDeviceJSON(container, _ctxMgr));
+                json.put("child", IcasaJSONUtil.getDeviceJSON(child, _ctxMgr));
+                sendEvent("device-attached-device", json);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
 
-		@Override
+        /**
+         * * Invoked when a device has been detached from another device
+         *
+         * @param container
+         * @param child
+         */
+        @Override
+        public void deviceDetached(LocatedDevice container, LocatedDevice child) {
+            JSONObject json = new JSONObject();
+            try {
+                json.put("deviceId", container.getSerialNumber());
+                json.put("container", IcasaJSONUtil.getDeviceJSON(container, _ctxMgr));
+                json.put("child", IcasaJSONUtil.getDeviceJSON(child, _ctxMgr));
+                sendEvent("device-detached-device", json);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        @Override
 		public void zoneVariableAdded(Zone zone, String variableName) {
 			JSONObject json = new JSONObject();
 			try {
@@ -326,7 +364,45 @@ public class EventBroadcast extends OnMessage<String> implements RemoteEventBroa
 			}
 		}
 
-		@Override
+        /**
+         * Invoked when a device has been attached a zone
+         *
+         * @param container
+         * @param child
+         */
+        @Override
+        public void deviceAttached(Zone container, LocatedDevice child) {
+            JSONObject json = new JSONObject();
+            try {
+                json.put("zoneId", container.getId());
+                json.put("zone", IcasaJSONUtil.getZoneJSON(container));
+                json.put("device", IcasaJSONUtil.getDeviceJSON(child, _ctxMgr));
+                sendEvent("device-attached-zone", json);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        /**
+         * * Invoked when a device has been detached from a zone
+         *
+         * @param container
+         * @param child
+         */
+        @Override
+        public void deviceDetached(Zone container, LocatedDevice child) {
+            JSONObject json = new JSONObject();
+            try {
+                json.put("zoneId", container.getId());
+                json.put("zone", IcasaJSONUtil.getZoneJSON(container));
+                json.put("device", IcasaJSONUtil.getDeviceJSON(child, _ctxMgr));
+                sendEvent("device-detached-zone", json);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
 		public void zoneAdded(Zone zone) {
 			JSONObject json = new JSONObject();
 			try {

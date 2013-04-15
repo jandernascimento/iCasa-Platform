@@ -44,13 +44,23 @@
          <groupId>${project.groupId}</groupId>
 			<artifactId>application.impl</artifactId>
          <version>${project.version}</version>
-		</dependency>
-		
+		</dependency>		
 		<dependency>
          <groupId>${project.groupId}</groupId>
 			<artifactId>device.manager.api</artifactId>
          <version>${project.version}</version>
 		</dependency>
+		<dependency>
+         <groupId>${project.groupId}</groupId>
+			<artifactId>zone.size.calculator.api</artifactId>
+         <version>${project.version}</version>
+		</dependency>
+		<dependency>
+         <groupId>${project.groupId}</groupId>
+			<artifactId>zone.size.calculator.impl</artifactId>
+         <version>${project.version}</version>
+		</dependency>		
+		
       <dependency>
          <groupId>org.barjo.atmosgi</groupId>
          <artifactId>atmosgi-service</artifactId>
