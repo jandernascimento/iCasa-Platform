@@ -37,7 +37,7 @@ public interface Thermometer extends GenericDevice {
      * 
      * @see #getTemperature()
      */
-    String THERMOMETER_CURRENT_TEMPERATURE = "current_temperature";
+    String THERMOMETER_CURRENT_TEMPERATURE = "thermometer.currentTemperature";
 
     /**
      * Return the current temperature sensed by this thermometer, expressed in

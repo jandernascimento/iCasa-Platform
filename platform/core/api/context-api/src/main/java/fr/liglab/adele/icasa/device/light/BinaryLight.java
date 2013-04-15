@@ -38,7 +38,7 @@ public interface BinaryLight extends GenericDevice {
 	 * @see #getPowerStatus()
 	 * @see #setPowerStatus(boolean)
 	 */
-	String LIGHT_POWER_STATUS = "power_status";
+	String BINARY_LIGHT_POWER_STATUS = "binaryLight.powerStatus";
 
 	/**
 	 * Device property indicating the maximum power level of the binary light.
@@ -52,7 +52,7 @@ public interface BinaryLight extends GenericDevice {
 	 * 
 	 * @see #getMaxPowerLevel()
 	 */
-	String LIGHT_MAX_POWER_LEVEL = "max_power";
+	String BINARY_LIGHT_MAX_POWER_LEVEL = "binaryLight.maxPowerLevel";
 	
 	
 	/**
@@ -64,7 +64,7 @@ public interface BinaryLight extends GenericDevice {
 	 * </ul>
 	 * 
 	 */
-	String LIGHT_MAX_ILLUMINANCE = "max_illuminance";
+	String BINARY_LIGHT_CURRENT_ILLUMINANCE = "binaryLight.currentIlluminance";
 
 
 	/**
@@ -72,7 +72,7 @@ public interface BinaryLight extends GenericDevice {
 	 * 
 	 * @return the current power state of this binary light.
 	 * @see #setPowerStatus(boolean)
-	 * @see #LIGHT_POWER_STATUS
+	 * @see #BINARY_LIGHT_POWER_STATUS
 	 */
 	boolean getPowerStatus();
 
@@ -83,7 +83,7 @@ public interface BinaryLight extends GenericDevice {
 	 *           the new power state of this binary light.
 	 * @return the previous power state of this binary light.
 	 * @see #getPowerStatus()
-	 * @see #LIGHT_POWER_STATUS
+	 * @see #BINARY_LIGHT_POWER_STATUS
 	 */
 	boolean setPowerStatus(boolean state);
 	
@@ -91,7 +91,7 @@ public interface BinaryLight extends GenericDevice {
 	 * Return the current power level of this binary light
 	 * @return the power level of this binary light
 	 * 
-	 * @see #LIGHT_MAX_POWER_LEVEL
+	 * @see #BINARY_LIGHT_MAX_POWER_LEVEL
 	 */
 	double getMaxPowerLevel();
 

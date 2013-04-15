@@ -52,7 +52,7 @@ public interface Cooler extends GenericDevice {
      * 
      */
     String COOLER_MAX_POWER_LEVEL ="cooler.maxPowerLevel";
-    
+
     String COOLER_UPDATE_PERIOD = "cooler.updaterThread.period";
 
     /**

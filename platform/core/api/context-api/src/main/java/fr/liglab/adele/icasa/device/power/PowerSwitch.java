@@ -36,7 +36,7 @@ public interface PowerSwitch extends GenericDevice {
      * </ul>
 	 * @see #getStatus()
 	 */
-	String POWERSWITCH_CURRENT_STATUS = "current_status";
+	String POWER_SWITCH_CURRENT_STATUS = "powerSwitch.currentStatus";
 	
 	/**
 	 * Return the current status of the powerswitch
@@ -44,7 +44,7 @@ public interface PowerSwitch extends GenericDevice {
 	 * 'false' if switch is off
 	 * 
 	 * @return the current status of the powerswitch
-	 * @see #POWERSWITCH_CURRENT_STATUS
+	 * @see #POWER_SWITCH_CURRENT_STATUS
 	 */
 	boolean getStatus();
 	

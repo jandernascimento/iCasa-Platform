@@ -17,11 +17,11 @@ package fr.liglab.adele.icasa.device.bathroomscale;
 
 public interface Sphygmometer {
 		
-	public final String SYSTOLIC_PROPERTY = "current_systolic";
+	public final String SPHYGMOMETER_CURRENT_SYSTOLIC = "sphygmometer.currentSystolic";
 	
-	public final String DIASTOLIC_PROPERTY = "current_diastolic";
+	public final String SPHYGMOMETER_CURRENT_DIASTOLIC = "sphygmometer.currentDiastolic";
 	
-	public final String PULSATIONS_PROPERTY = "current_pulsations";
+	public final String SPHYGMOMETER_CURRENT_PULSATIONS = "sphygmometer.currentPulsations";
 	
 	public int getSystolic();
 	

@@ -19,7 +19,7 @@ import fr.liglab.adele.icasa.device.GenericDevice;
 
 public interface BathroomScale extends GenericDevice {
 	
-	public final String WEIGHT_PROPERTY = "current_weight";
+	public final String BATHROOM_SCALE_WEIGHT_PROPERTY = "bathroomScale.currentWeight";
 	
 	public float getCurrentWeight();  
 	
