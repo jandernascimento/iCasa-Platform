@@ -34,7 +34,7 @@ public interface PowerDevice extends GenericDevice {
      * <li>Description : value is a String indicating the attached devices name</li>
      * </ul>
 	 */
-	String POWER_ATTACHED_DEVICE_NAME = "power.attachedDevice.name";
+	String POWER_DEVICE_ATTACHED_DEVICE_NAME = "powerDevice.attachedDeviceName";
 	
 	/**
 	 * Service property indicating the attached devices default Power Rating expressed in watt (W)
@@ -46,6 +46,6 @@ public interface PowerDevice extends GenericDevice {
      * <code>always positive</code>.</li>
      * </ul>
 	 */
-	String POWER_ATTACHED_DEVICE_WATT = "power.attachedDevice.watt";
+	String POWER_DEVICE_ATTACHED_DEVICE_WATT = "powerDevice.attachedDeviceWatt";
 	
 }

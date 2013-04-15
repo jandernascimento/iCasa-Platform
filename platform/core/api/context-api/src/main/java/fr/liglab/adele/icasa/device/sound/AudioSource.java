@@ -33,7 +33,7 @@ public interface AudioSource extends GenericDevice {
     /**
      * TODO comments.
      */
-    String AUDIO_SOURCE_IS_PLAYING = "audioSource.isplaying";
+    String AUDIO_SOURCE_IS_PLAYING = "audioSource.isPlaying";
 
     /**
      * Return the audio stream.

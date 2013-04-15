@@ -37,7 +37,7 @@ public interface Powermeter extends GenericDevice {
      * </ul>
 	 * @see #getCurrentPowerRating()
 	 */
-	String POWERMETER_CURRENT_RATING = "powermeter.currentrating";
+	String POWERMETER_CURRENT_RATING = "powermeter.currentRating";
 	
 	
 	/**

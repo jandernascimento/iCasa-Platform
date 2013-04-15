@@ -36,7 +36,7 @@ public interface CarbonMonoxydeSensor extends GenericDevice {
      * 
      * @see #getCOConcentration()
      */
-    String CO_CURRENT_CONCENTRATION = "co_current_concentration";
+    String CARBON_MONOXYDE_SENSOR_CURRENT_CONCENTRATION = "carbonMonoxydeSensor.currentConcentration";
 
     /**
      * Return the current CO concentration sensed by this gaz sensor, expressed in

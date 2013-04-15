@@ -44,7 +44,7 @@ public interface Speaker extends GenericDevice {
     /**
      * TODO comments.
      */
-    String SPEAKER_NOISE_LEVEL = "speaker.noiselevel";
+    String SPEAKER_NOISE_LEVEL = "speaker.noiseLevel";
 
     /**
      * Return the current volume of this speaker.

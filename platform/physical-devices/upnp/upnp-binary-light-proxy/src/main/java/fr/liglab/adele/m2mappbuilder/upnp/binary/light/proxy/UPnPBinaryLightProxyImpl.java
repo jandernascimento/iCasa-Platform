@@ -58,14 +58,14 @@ public class UPnPBinaryLightProxyImpl extends AbstractDevice implements BinaryLi
 		try {
 			value = test.invoke(null);
 			status = (Boolean) value.get("ResultStatus");
-			setPropertyValue(LIGHT_POWER_STATUS, status);
+			setPropertyValue(BINARY_LIGHT_POWER_STATUS, status);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 //		setPropertyValue(LIGHT_POWER_STATUS, status);
-		setPropertyValue(LIGHT_MAX_POWER_LEVEL, maxPowerLevel);
+		setPropertyValue(BINARY_LIGHT_MAX_POWER_LEVEL, maxPowerLevel);
 	}
 
 	public String getFault() {
@@ -149,12 +149,12 @@ public class UPnPBinaryLightProxyImpl extends AbstractDevice implements BinaryLi
 					try {
 						value = test.invoke(null);
 						status = (Boolean) value.get("ResultStatus");
-						setPropertyValue(LIGHT_POWER_STATUS, status);
+						setPropertyValue(BINARY_LIGHT_POWER_STATUS, status);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					notifyListeners(new DeviceEvent(_device, DeviceEventType.PROP_MODIFIED, LIGHT_POWER_STATUS, status));
+					notifyListeners(new DeviceEvent(_device, DeviceEventType.PROP_MODIFIED, BINARY_LIGHT_POWER_STATUS, status));
 				}
 			};
 

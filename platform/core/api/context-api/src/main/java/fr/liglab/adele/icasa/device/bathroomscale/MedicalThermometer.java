@@ -17,7 +17,7 @@ package fr.liglab.adele.icasa.device.bathroomscale;
 
 public interface MedicalThermometer {
 
-	public final String TEMPERATURE_PROPERTY = "current_temperature";
+	public final String MEDICAL_THERMOMETER_TEMPERATURE_PROPERTY = "medicalThermometer.currentTemperature";
 	
 	public float getCurrentTemperature();  
 	
