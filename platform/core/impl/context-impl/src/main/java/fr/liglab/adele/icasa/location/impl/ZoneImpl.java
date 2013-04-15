@@ -385,6 +385,21 @@ public class ZoneImpl extends LocatedObjectImpl implements Zone {
 		return "Zone: " + id + " X: " + leftTopPosition.x + " Y: " + leftTopPosition.y + " -- Width: " + width + " Height: " + height + " - Parent: " + parentId + " - Use parent: " + useParentVariable;
 	}
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        ZoneImpl zone = (ZoneImpl) o;
 
+        if (!id.equals(zone.id)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        return result;
+    }
 }

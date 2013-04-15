@@ -24,7 +24,7 @@ import fr.liglab.adele.icasa.device.DeviceListener;
 import fr.liglab.adele.icasa.device.GenericDevice;
 import fr.liglab.adele.icasa.location.*;
 
-public class LocatedDeviceImpl extends LocatedObjectImpl implements LocatedDevice, DeviceListener {
+public class LocatedDeviceImpl extends LocatedObjectImpl implements LocatedDevice, DeviceListener{
 
 	private String m_serialNumber;
 
@@ -41,7 +41,7 @@ public class LocatedDeviceImpl extends LocatedObjectImpl implements LocatedDevic
 		m_serialNumber = serialNumber;
 		this.deviceComponent = deviceComponent;			
 		this.manager = manager;
-      this._type = type;
+        this._type = type;
 	}
 
 	@Override
@@ -211,4 +211,23 @@ public class LocatedDeviceImpl extends LocatedObjectImpl implements LocatedDevic
         }
    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        LocatedDeviceImpl that = (LocatedDeviceImpl) o;
+
+        if (!_type.equals(that._type)) return false;
+        if (!m_serialNumber.equals(that.m_serialNumber)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = m_serialNumber.hashCode();
+        result = 31 * result + _type.hashCode();
+        return result;
+    }
 }
