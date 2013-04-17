@@ -23,6 +23,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.apache.felix.ipojo.Factory;
 import org.apache.felix.ipojo.Pojo;
@@ -61,9 +64,15 @@ public class ContextManagerImpl implements ContextManager {
 
 	private List<DeviceTypeListener> deviceTypeListeners = new ArrayList<DeviceTypeListener>();
 
-	private List<LocatedDeviceListener> deviceListeners = new ArrayList<LocatedDeviceListener>();
+    private List<LocatedDeviceListener> deviceListeners = new ArrayList<LocatedDeviceListener>();
 
 	private List<ZoneListener> zoneListeners = new ArrayList<ZoneListener>();
+
+    private ReadWriteLock lock = new ReentrantReadWriteLock();
+
+    private Lock readLock = lock.readLock();
+
+    private Lock writeLock = lock.writeLock();
 
 	public ContextManagerImpl() {
 
@@ -72,10 +81,17 @@ public class ContextManagerImpl implements ContextManager {
 	@Override
 	public Zone createZone(String id, int leftX, int topY, int width, int height) {
 		Zone zone = new ZoneImpl(id, leftX, topY, width, height);
-		zones.put(id, zone);
+        List<ZoneListener> snapshotZoneListener;
+        writeLock.lock();
+        try{
+		    zones.put(id, zone);
+            snapshotZoneListener = getZoneListeners();
+        }finally {
+            writeLock.unlock();
+        }
 
 		// Listeners notification
-		for (ZoneListener listener : zoneListeners) {
+		for (ZoneListener listener : snapshotZoneListener) {
 			try {
 				listener.zoneAdded(zone);
 				zone.addListener(listener);
@@ -94,12 +110,20 @@ public class ContextManagerImpl implements ContextManager {
 
 	@Override
 	public void removeZone(String id) {
-		Zone zone = zones.remove(id);
+        Zone zone;
+        List<ZoneListener> snapshotZoneListener;
+        writeLock.lock();
+        try {
+		    zone = zones.remove(id);
+            snapshotZoneListener = getZoneListeners();
+        }finally {
+            writeLock.unlock();
+        }
 		if (zone == null)
 			return;
 
 		// Listeners notification
-		for (ZoneListener listener : zoneListeners) {
+		for (ZoneListener listener : snapshotZoneListener) {
 			try {
 				zone.removeListener(listener);
 				listener.zoneRemoved(zone);
@@ -111,16 +135,17 @@ public class ContextManagerImpl implements ContextManager {
 
 	@Override
 	public void moveZone(String id, int leftX, int topY) throws Exception {
-		Zone zone = zones.get(id);
-		if (zone == null)
-			return;
+        Zone zone = getZone(id);
+        if (zone == null){
+            return;
+        }
 		Position newPosition = new Position(leftX, topY);
 		zone.setLeftTopRelativePosition(newPosition);
 	}
 
 	@Override
 	public void resizeZone(String id, int width, int height) throws Exception {
-		Zone zone = zones.get(id);
+		Zone zone = getZone(id);
 		if (zone == null)
 			return;
 		zone.resize(width, height);
@@ -136,7 +161,7 @@ public class ContextManagerImpl implements ContextManager {
 
 	@Override
 	public void addZoneVariable(String zoneId, String variable) {
-		Zone zone = zones.get(zoneId);
+		Zone zone = getZone(zoneId);
 		if (zone == null)
 			return;
 		zone.addVariable(variable);
@@ -144,7 +169,7 @@ public class ContextManagerImpl implements ContextManager {
 
 	@Override
 	public Set<String> getZoneVariables(String zoneId) {
-		Zone zone = zones.get(zoneId);
+		Zone zone = getZone(zoneId);
 		if (zone == null)
 			return null;
 		return zone.getVariableNames();
@@ -152,7 +177,7 @@ public class ContextManagerImpl implements ContextManager {
 
 	@Override
 	public Object getZoneVariableValue(String zoneId, String variable) {
-		Zone zone = zones.get(zoneId);
+		Zone zone = getZone(zoneId);
 		if (zone == null)
 			return null;
 		return zone.getVariableValue(variable);
@@ -160,7 +185,7 @@ public class ContextManagerImpl implements ContextManager {
 
 	@Override
 	public void setZoneVariable(String zoneId, String variableName, Object value) {
-		Zone zone = zones.get(zoneId);
+		Zone zone = getZone(zoneId);
 		if (zone == null)
 			return;
 		zone.setVariableValue(variableName, value);
@@ -168,23 +193,33 @@ public class ContextManagerImpl implements ContextManager {
 
 	@Override
 	public List<Zone> getZones() {
-		synchronized (zones) {
+		readLock.lock();
+        try{
 			return Collections.unmodifiableList(new ArrayList<Zone>(zones.values()));
+        }finally {
+            readLock.unlock();
 		}
 	}
 
 	@Override
 	public Set<String> getZoneIds() {
-		synchronized (zones) {
-			return Collections.unmodifiableSet(new HashSet<String>(zones.keySet()));
-		}
+        readLock.lock();
+        try{
+    	    return Collections.unmodifiableSet(new HashSet<String>(zones.keySet()));
+        }finally {
+            readLock.unlock();
+        }
+
 	}
 
 	@Override
 	public Zone getZone(String zoneId) {
-		synchronized (zones) {
-			return zones.get(zoneId);
-		}
+        readLock.lock();
+        try{
+    	    return zones.get(zoneId);
+        }finally {
+            readLock.unlock();
+        }
 	}
 
 	@Override
@@ -463,5 +498,39 @@ public class ContextManagerImpl implements ContextManager {
 	public void resetContext() {
 		removeAllZones();
 	}
+
+    private List<ZoneListener> getZoneListeners(){
+        List<ZoneListener> snapshotListeners;
+        readLock.lock();
+        try{
+            snapshotListeners = new ArrayList<ZoneListener>(zoneListeners);
+        } finally {
+            readLock.unlock();
+        }
+        return snapshotListeners;
+    }
+
+    private List<DeviceTypeListener> getDeviceTypeListeners(){
+        List<DeviceTypeListener> snapshotListeners;
+        readLock.lock();
+        try{
+            snapshotListeners = new ArrayList<DeviceTypeListener>(deviceTypeListeners);
+        } finally {
+            readLock.unlock();
+        }
+        return snapshotListeners;
+    }
+
+    private List<LocatedDeviceListener> getDeviceListeners() {
+        List<LocatedDeviceListener> snapshotListeners;
+        readLock.lock();
+        try{
+            snapshotListeners = new ArrayList<LocatedDeviceListener>(deviceListeners);
+        } finally {
+            readLock.unlock();
+        }
+        return snapshotListeners;
+    }
+
 
 }

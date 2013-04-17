@@ -15,9 +15,12 @@
  */
 package fr.liglab.adele.icasa.location.impl;
 
+import java.rmi.server.LogStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import fr.liglab.adele.icasa.ContextManager;
 import fr.liglab.adele.icasa.device.DeviceListener;
@@ -36,7 +39,9 @@ public class LocatedDeviceImpl extends LocatedObjectImpl implements LocatedDevic
 
     private String _type;
 
-	public LocatedDeviceImpl(String serialNumber, Position position, GenericDevice deviceComponent, String type, ContextManager manager) {
+    private ReadWriteLock lock = new ReentrantReadWriteLock();
+
+    public LocatedDeviceImpl(String serialNumber, Position position, GenericDevice deviceComponent, String type, ContextManager manager) {
 		super(position);
 		m_serialNumber = serialNumber;
 		this.deviceComponent = deviceComponent;			
@@ -56,11 +61,6 @@ public class LocatedDeviceImpl extends LocatedObjectImpl implements LocatedDevic
 
     @Override
 	public Set<String> getProperties() {
-		/*
-		synchronized (properties) {
-			return properties.keySet();
-		}
-		*/
 		return deviceComponent.getProperties();
 	}
 
@@ -81,23 +81,30 @@ public class LocatedDeviceImpl extends LocatedObjectImpl implements LocatedDevic
 	}
 
 	@Override
-	public synchronized void addListener(final LocatedDeviceListener listener) {
+	public void addListener(final LocatedDeviceListener listener) {
 		if (listener == null) {
 			throw new NullPointerException("listener");
 		}
-		synchronized (listeners) {
-			listeners.add(listener);
-		}
+        lock.writeLock().lock();
+        try{
+    	    listeners.add(listener);
+        }finally {
+            lock.writeLock().unlock();
+        }
+
 	}
 
 	@Override
-	public synchronized void removeListener(final LocatedDeviceListener listener) {
+	public void removeListener(final LocatedDeviceListener listener) {
 		if (listener == null) {
 			throw new NullPointerException("listener");
 		}
-		synchronized (listeners) {
+        lock.writeLock().lock();
+		try {
 			listeners.remove(listener);
-		}
+		}  finally {
+            lock.writeLock().unlock();
+        }
 	}
 
 
@@ -106,10 +113,15 @@ public class LocatedDeviceImpl extends LocatedObjectImpl implements LocatedDevic
    public void setCenterAbsolutePosition(Position position) {
 		Position oldPosition = getCenterAbsolutePosition();
 		super.setCenterAbsolutePosition(position);
-				
-		// Listeners notification
-		for (LocatedDeviceListener listener : listeners) {
-			listener.deviceMoved(this, oldPosition);
+        List<LocatedDeviceListener> snapshotListener = getListenerCopy();
+        // Listeners notification
+		for (LocatedDeviceListener listener : snapshotListener) {
+            try{
+			    listener.deviceMoved(this, oldPosition);
+            }catch (Exception ex){
+                System.err.println("Listener in deviceMoved event has throw an exception: " + listener);
+                ex.printStackTrace();
+            }
 		}
 		
 		// Computes the new location
@@ -131,9 +143,13 @@ public class LocatedDeviceImpl extends LocatedObjectImpl implements LocatedDevic
         } else {
             return; // If attached object is not a locatedDevice we do nothing.
         }
-        synchronized (listeners){
-            for (LocatedDeviceListener listener : listeners) {
+        List<LocatedDeviceListener> snapshotListener = getListenerCopy();
+        for (LocatedDeviceListener listener : snapshotListener) {
+            try{
                 listener.deviceAttached(this, childDevice);
+            }catch(Exception ex){
+                System.err.println("Listener has throw an exception: " + listener);
+                ex.printStackTrace();
             }
         }
     }
@@ -146,9 +162,13 @@ public class LocatedDeviceImpl extends LocatedObjectImpl implements LocatedDevic
         } else {
             return; // If attached object is not a locatedDevice we do nothing.
         }
-        synchronized (listeners){
-            for (LocatedDeviceListener listener : listeners) {
+        List<LocatedDeviceListener> snapshotListener = getListenerCopy();
+        for (LocatedDeviceListener listener : snapshotListener) {
+            try{
                 listener.deviceDetached(this, childDevice);
+            }catch(Exception ex){
+                System.err.println("Listener has throw an exception: " + listener);
+                ex.printStackTrace();
             }
         }
     }
@@ -184,29 +204,39 @@ public class LocatedDeviceImpl extends LocatedObjectImpl implements LocatedDevic
 
 	@Override
    public void devicePropertyModified(GenericDevice device, String propertyName, Object oldValue) {
-		// Listeners notification
-        synchronized (listeners){
-            for (LocatedDeviceListener listener : listeners) {
+        List<LocatedDeviceListener> snapshotListener = getListenerCopy();
+        for (LocatedDeviceListener listener : snapshotListener) {
+            try{
                 listener.devicePropertyModified(this, propertyName, oldValue);
+            }catch(Exception ex){
+                System.err.println("Listener has throw an exception: " + listener);
+                ex.printStackTrace();
             }
         }
    }
 
 	@Override
    public void devicePropertyAdded(GenericDevice device, String propertyName) {
-		// Listeners notification
-        synchronized (listeners){
-            for (LocatedDeviceListener listener : listeners) {
+        List<LocatedDeviceListener> snapshotListener = getListenerCopy();
+        for (LocatedDeviceListener listener : snapshotListener) {
+            try{
                 listener.devicePropertyAdded(this, propertyName);
+            }catch(Exception ex){
+                System.err.println("Listener has throw an exception: " + listener);
+                ex.printStackTrace();
             }
         }
-   }
+    }
 
 	@Override
    public void devicePropertyRemoved(GenericDevice device, String propertyName) {
-        synchronized (listeners){
-            for (LocatedDeviceListener listener : listeners) {
+        List<LocatedDeviceListener> snapshotListener = getListenerCopy();
+        for (LocatedDeviceListener listener : snapshotListener) {
+            try{
                 listener.devicePropertyRemoved(this, propertyName);
+            }catch(Exception ex){
+                System.err.println("Listener has throw an exception: " + listener);
+                ex.printStackTrace();
             }
         }
    }
@@ -230,4 +260,18 @@ public class LocatedDeviceImpl extends LocatedObjectImpl implements LocatedDevic
         result = 31 * result + _type.hashCode();
         return result;
     }
+
+    /**
+     * Get a copy of the listener to iterate in it.
+     * @return a copy of the listeners
+     */
+    private List<LocatedDeviceListener> getListenerCopy(){
+        lock.readLock().lock();
+        try {
+            return new ArrayList<LocatedDeviceListener>(listeners);
+        }finally {
+            lock.readLock().unlock();
+        }
+    }
+
 }

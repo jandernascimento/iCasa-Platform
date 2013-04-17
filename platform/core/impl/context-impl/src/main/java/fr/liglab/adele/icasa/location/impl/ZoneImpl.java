@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import fr.liglab.adele.icasa.location.*;
 
@@ -34,6 +36,7 @@ public class ZoneImpl extends LocatedObjectImpl implements Zone {
 	private List<ZoneListener> listeners = new ArrayList<ZoneListener>();
 	private Map<String, Object> variables = new HashMap<String, Object>();
 	private boolean useParentVariable = false;
+    private ReadWriteLock lock = new ReentrantReadWriteLock();
 
 	public ZoneImpl(String id, int x, int y, int width, int height) {
 		this(id, new Position(x, y), width, height);
@@ -47,46 +50,90 @@ public class ZoneImpl extends LocatedObjectImpl implements Zone {
 		this.width = width;
 	}
 
+    private static Zone clone(Zone zone){
+        if (zone == null){
+            return null;
+        }
+        Zone returningZone;
+        if (zone instanceof ZoneImpl){
+            ZoneImpl _zone = (ZoneImpl)zone;
+            _zone.lock.readLock().lock();
+            try{
+                returningZone = new ZoneImpl(_zone.getId(), _zone.getLeftTopRelativePosition(), _zone.getWidth(), _zone.getHeight());
+            }finally {
+                _zone.lock.readLock().unlock();
+            }
+       } else {
+            returningZone = new ZoneImpl(zone.getId(), zone.getLeftTopRelativePosition(), zone.getWidth(), zone.getHeight());
+        }
+        return returningZone;
+    }
+
 	public String getId() {
 		return id;
 	}
 
 	@Override
 	public boolean fits(Zone aZone) {
-		if (aZone.getLeftTopRelativePosition().x + aZone.getWidth() > width)
-			return false;
-		if (aZone.getLeftTopRelativePosition().y + aZone.getHeight() > height)
-			return false;
-		return true;
+        Zone clonedZone = ZoneImpl.clone(aZone);
+        Position aZonePosition =  clonedZone.getLeftTopRelativePosition();
+        int _width, _height;
+        lock.readLock().lock();
+        _width = width;
+        _height = height;
+        boolean fits = (aZonePosition.x + clonedZone.getWidth() > _width) || (aZonePosition.y + clonedZone.getHeight() > _height);
+        lock.readLock().unlock();
+		return !fits;
 	}
 
 	@Override
 	public Zone getParent() {
-		return parent;
+        lock.readLock().lock();
+        try{
+		    return parent;
+        }finally {
+            lock.readLock().unlock();
+        }
 	}
 
 	@Override
 	public List<Zone> getChildren() {
-		return children;
+        lock.readLock().lock();
+        try{
+		    return new ArrayList<Zone>(children);
+        } finally {
+            lock.readLock().unlock();
+        }
 	}
 
 	@Override
 	public int getLayer() {
-		if (parent == null)
+        lock.readLock().lock();
+        Zone localParent = getParent();
+        lock.readLock().unlock();
+		if (localParent == null)
 			return 0;
-		return parent.getLayer() + 1;
+		return localParent.getLayer() + 1;
+
 	}
 
 	@Override
 	public Position getLeftTopRelativePosition() {
-		return leftTopPosition.clone();
+        lock.readLock().lock();
+        try{
+		    return leftTopPosition.clone();
+        }finally {
+            lock.readLock().unlock();
+        }
 	}
 
     @Override
     public Position getLeftTopAbsolutePosition() {
+        lock.readLock().lock();
         Zone parentZone = getParent();
         int absoluteX = leftTopPosition.x;
         int absoluteY = leftTopPosition.y;
+        lock.readLock().unlock();
         if (parentZone!=null) {
             absoluteX += parentZone.getLeftTopAbsolutePosition().x;
             absoluteY += parentZone.getLeftTopAbsolutePosition().y;
@@ -96,12 +143,22 @@ public class ZoneImpl extends LocatedObjectImpl implements Zone {
 
 	@Override
 	public int getWidth() {
-		return width;
+        lock.readLock().lock();
+        try {
+		    return width;
+        }finally {
+            lock.readLock().unlock();
+        }
 	}
 
 	@Override
 	public int getHeight() {
-		return height;
+        lock.readLock().lock();
+        try {
+            return height;
+        }finally {
+            lock.readLock().unlock();
+        }
 	}
 
 	@Override
@@ -116,40 +173,53 @@ public class ZoneImpl extends LocatedObjectImpl implements Zone {
 	public boolean contains(Position position) {
 		if (position == null)
 			return false;
-
+        lock.readLock().lock();
+        try{
 		Position absolutePosition = getLeftTopAbsolutePosition();
 
 		return (position.x >= absolutePosition.x && position.x <= absolutePosition.x + width)
 		      && (position.y >= absolutePosition.y && position.y <= absolutePosition.y + height);
+        }finally {
+            lock.readLock().unlock();
+        }
 	}
 
 	@Override
 	public boolean addZone(Zone child) {
 		if (fits(child)) {
-			children.add(child);
+            lock.writeLock().lock();
+            try{
+			    children.add(child);
+            }finally {
+                lock.writeLock().unlock();
+            }
 			child.setParent(this);
 			return true;
 		}
 		return false;
 	}
 
-	
 	@Override
    public Position getCenterAbsolutePosition() {
+        lock.readLock().lock();
 		Zone parentZone = getParent();
 		int absoluteX = leftTopPosition.x;
 		int absoluteY = leftTopPosition.y;
+
 		if (parentZone!=null) {
 			absoluteX += parentZone.getCenterAbsolutePosition().x;
 			absoluteY += parentZone.getCenterAbsolutePosition().y;
 		}
 		absoluteX += width/2;
 		absoluteY += height/2;
+        lock.readLock().unlock();
 		return new Position(absoluteX, absoluteY);
    }
 
 	@Override
    public void setCenterAbsolutePosition(Position position) {
+        lock.writeLock().lock();
+        try{
 		if (parent==null) {
 	      try {
 	      	int newX = position.x - width/2;
@@ -159,7 +229,6 @@ public class ZoneImpl extends LocatedObjectImpl implements Zone {
 	         e.printStackTrace();
          }
 		} else {
-			
 			int newX = (position.x - (width/2)) - parent.getLeftTopAbsolutePosition().x;
 			int newY = (position.y -(height/2)) - parent.getLeftTopAbsolutePosition().y;
 			try {
@@ -167,20 +236,27 @@ public class ZoneImpl extends LocatedObjectImpl implements Zone {
          } catch (Exception e) {
 	         e.printStackTrace();
          }
-		}		
+		}
+        }finally {
+            lock.writeLock().unlock();
+        }
    }
 
     @Override
     protected void notifyAttachedObject(LocatedObject attachedObject) {
-        LocatedDevice childDevice = null;
+        LocatedDevice childDevice;
         if (attachedObject instanceof  LocatedDevice){
             childDevice = (LocatedDevice)attachedObject;
         } else {
             return; // If attached object is not a locatedDevice we do nothing.
         }
-        synchronized (listeners){
-            for (ZoneListener listener : listeners) {
+        List<ZoneListener> snapshotListener = getListenerCopy();
+        for (ZoneListener listener : snapshotListener) {
+            try{
                 listener.deviceAttached(this, childDevice);
+            }catch (Exception ex){
+                System.err.println("Listener error in event zoneVariableModified");
+                ex.printStackTrace();
             }
         }
     }
@@ -193,130 +269,224 @@ public class ZoneImpl extends LocatedObjectImpl implements Zone {
         } else {
             return; // If attached object is not a locatedDevice we do nothing.
         }
-        synchronized (listeners){
-            for (ZoneListener listener : listeners) {
+        List<ZoneListener> snapshotListener = getListenerCopy();
+        for (ZoneListener listener : snapshotListener) {
+            try{
                 listener.deviceDetached(this, childDevice);
+            }catch (Exception ex){
+                System.err.println("Listener error in event zoneVariableModified");
+                ex.printStackTrace();
             }
         }
     }
 
     @Override
 	public void setParent(Zone parent) {
+        lock.writeLock().lock();
 		Zone oldParentZone = this.parent;
 		this.parent = parent;
+        lock.writeLock().unlock();
 
 		// Listeners notification
-		for (ZoneListener listener : listeners) {
-			listener.zoneParentModified(this, oldParentZone);
+        List<ZoneListener> snapshotListener = getListenerCopy();
+
+        for (ZoneListener listener : snapshotListener) {
+            try{
+			    listener.zoneParentModified(this, oldParentZone);
+            }catch (Exception ex){
+                System.err.println("Listener error in event zoneVariableModified");
+                ex.printStackTrace();
+            }
 		}
 	}
 
 	@Override
 	public void addListener(ZoneListener listener) {
-		listeners.add(listener);
+        synchronized (listeners){
+		    listeners.add(listener);
+        }
 	}
 
 	@Override
 	public void removeListener(ZoneListener listener) {
-		listeners.remove(listener);
+        synchronized (listeners){
+		    listeners.remove(listener);
+        }
 	}
 
 	@Override
 	public Object getVariableValue(String name) {
-		if (useParentVariable)
-			if (parent != null)
-				return parent.getVariableValue(name);
-			else
-				return null;
-
-		if (!variables.containsKey(name))
-			return null;
-		
-		return variables.get(name);
+        Object value = null;
+        lock.readLock().lock();
+        boolean _useParent = useParentVariable;
+        Zone localParent = getParent();
+        lock.readLock().unlock();
+		if (_useParent){
+			if (localParent != null){
+				value = localParent.getVariableValue(name);
+            } else {
+				value = null;
+            }
+            return value;
+        }//if using parent Variable
+        lock.readLock().lock();
+		if (variables.containsKey(name)) {
+			value = variables.get(name);
+        }
+        lock.readLock().unlock();
+		return value;
 	}
 
 	@Override
 	public void setVariableValue(String name, Object newValue) {
-		if (useParentVariable)
+        Object oldValue = null;
+        lock.readLock().lock();
+        boolean _useParent = useParentVariable;
+        lock.readLock().unlock();
+		if (_useParent)
 			return;
 
-		if (!variables.containsKey(name))
-			throw new NullPointerException("Variable " + name + " does not exist");
-
-		Object oldValue = variables.get(name);
-		variables.put(name, newValue);
-
+       lock.writeLock().lock();
+        try{
+            if (!variables.containsKey(name)){
+                throw new NullPointerException("Variable " + name + " does not exist");
+            }
+            oldValue = variables.get(name);
+            variables.put(name, newValue);
+        }finally {
+            lock.writeLock().unlock();
+        }
 		// Listeners notification
-		for (ZoneListener listener : listeners) {
-			listener.zoneVariableModified(this, name, oldValue);
+        List<ZoneListener> snapshotListener = getListenerCopy();
+        for (ZoneListener listener : snapshotListener) {
+            try{
+			    listener.zoneVariableModified(this, name, oldValue);
+            }catch(Exception ex){
+                System.err.println("Listener error in event zoneVariableModified");
+                ex.printStackTrace();
+            }
+
 		}
 	}
 
 	@Override
 	public void addVariable(String name) {
-		if (useParentVariable)
-			return;
-		if (variables.containsKey(name))
-			return;
-		variables.put(name, null);
+        lock.readLock().lock();
+        boolean _useParent = useParentVariable;
+        lock.readLock().unlock();
+        if (_useParent)
+            return;
 
-		// Listeners notification
-		for (ZoneListener listener : listeners) {
-			listener.zoneVariableAdded(this, name);
+        lock.writeLock().lock();
+        try {
+            if (variables.containsKey(name)){
+                return;
+            }
+            variables.put(name, null);
+        }finally {
+            lock.writeLock().unlock();
+        }
+
+    	// Listeners notification
+        List<ZoneListener> snapshotListener = getListenerCopy();
+        for (ZoneListener listener : snapshotListener) {
+            try{
+			    listener.zoneVariableAdded(this, name);
+            }catch (Exception ex){
+                System.err.println("Listener error in event zoneVariableAdded");
+                ex.printStackTrace();
+            }
 		}
 	}
 
 	@Override
 	public void removeVariable(String name) {
-		if (useParentVariable)
-			return;
-		if (!variables.containsKey(name))
-			return;
-		variables.remove(name);
+        lock.writeLock().lock();
+        try{
+            if (useParentVariable){
+                return;
+            }
+            if (!variables.containsKey(name)){
+                return;
+            }
+            variables.remove(name);
+        }finally {
+            lock.writeLock().unlock();
+        }
 
 		// Listeners notification
-		for (ZoneListener listener : listeners) {
-			listener.zoneVariableRemoved(this, name);
+        List<ZoneListener> snapshotListener = getListenerCopy();
+		for (ZoneListener listener : snapshotListener) {
+            try{
+			    listener.zoneVariableRemoved(this, name);
+            }catch(Exception ex){
+                System.err.println("Listener error in event zoneVariableRemoved");
+                ex.printStackTrace();
+            }
 		}
 	}
 
 	@Override
 	public Set<String> getVariableNames() {
-		if (useParentVariable)
-			if (parent != null)
-				return parent.getVariableNames();
-			else
-				return null;
-		return variables.keySet();
+        lock.readLock().lock();
+        try{
+            if (useParentVariable)
+                if (parent != null)
+                    return parent.getVariableNames();
+                else
+                    return null;
+            return variables.keySet();
+        }finally {
+            lock.readLock().unlock();
+        }
 	}
 
 	@Override
 	public void setUseParentVariables(boolean useParentVariables) {
+        lock.writeLock().lock();
 		this.useParentVariable = useParentVariables;
+        lock.writeLock().unlock();
 	}
 
 	@Override
 	public boolean getUseParentVariables() {
-		return useParentVariable;
+        lock.readLock().lock();
+		try{
+            return useParentVariable;
+        }finally {
+            lock.readLock().unlock();
+        }
 	}
 
 	@Override
 	public void setLeftTopRelativePosition(Position leftTopPosition) throws Exception {
+        Zone _parent = ZoneImpl.clone(getParent());
+        lock.writeLock().lock();
 		Position oldPosition = this.leftTopPosition;
 		this.leftTopPosition = leftTopPosition.clone();
+        lock.writeLock().unlock();
 
-		if (parent != null) {
-			if (!parent.fits(this)) {
+		if (_parent != null) {
+			if (!_parent.fits(this)) {
+                lock.writeLock().lock();
 				this.leftTopPosition = oldPosition;
+                lock.writeLock().unlock();
 				throw new Exception("New size does not fit the parent zone");
 			}
 		}
-		
+
 		moveAttachedObjects(leftTopPosition.x-oldPosition.x, leftTopPosition.y-oldPosition.y);
-		
+
 		// Listeners notification
-		for (ZoneListener listener : listeners)
-			listener.zoneMoved(this, oldPosition);
+        List<ZoneListener> snapshotListener = getListenerCopy();
+        for (ZoneListener listener : snapshotListener){
+			try{
+                listener.zoneMoved(this, oldPosition);
+            }catch (Exception ex){
+                System.err.println("Listener error in event zoneMoved");
+                ex.printStackTrace();
+            }
+        }
 
 	}
 
@@ -330,25 +500,37 @@ public class ZoneImpl extends LocatedObjectImpl implements Zone {
 		resize(this.width, height);
 
 	}
-	
+
 	@Override
 	public void resize(int newWidth, int newHeight) throws Exception {
+        Zone _parent = ZoneImpl.clone(getParent());
+        lock.writeLock().lock();
 		int oldWidth = this.width;
 		int oldHeight = this.height;
-		this.width = newWidth;
-		this.height = newHeight;
+        try{
+            this.width = newWidth;
+            this.height = newHeight;
+            if (_parent != null) {
+                if (!_parent.fits(this)) {
+                    this.width = oldWidth;
+                    this.height = oldHeight;
+                    throw new Exception("New size does not fit the parent zone");
+                }
+            }
+        }finally {
+            lock.writeLock().unlock();
+        }
 
-		if (parent != null) {
-			if (!parent.fits(this)) {
-				this.width = oldWidth;
-				this.height = oldHeight;
-				throw new Exception("New size does not fit the parent zone");
-			}
-		}
-
+        List<ZoneListener> snapshotListener = getListenerCopy();
 		// Listeners notification
-		for (ZoneListener listener : listeners)
-			listener.zoneResized(this);
+		for (ZoneListener listener : snapshotListener) {
+            try{
+			    listener.zoneResized(this);
+            }catch(Exception ex){
+                System.err.println("Listener error in event zoneResized");
+                ex.printStackTrace();
+            }
+        }
 	}
 
 
@@ -376,13 +558,18 @@ public class ZoneImpl extends LocatedObjectImpl implements Zone {
 		int newY = leftTopAbsolutePosition.y + height;
 	   return new Position(newX, newY);
    }
-	
+
 	@Override
 	public String toString() {
+        lock.readLock().lock();
 		String parentId = "Unset";
+        try{
 		if (parent!=null)
 			parentId = parent.getId();
 		return "Zone: " + id + " X: " + leftTopPosition.x + " Y: " + leftTopPosition.y + " -- Width: " + width + " Height: " + height + " - Parent: " + parentId + " - Use parent: " + useParentVariable;
+        }finally {
+            lock.readLock().unlock();
+        }
 	}
 
     @Override
@@ -402,4 +589,20 @@ public class ZoneImpl extends LocatedObjectImpl implements Zone {
         int result = id.hashCode();
         return result;
     }
+
+    /**
+     * Get a copy of the listener to iterate in it.
+     * @return a copy of the listeners
+     */
+    private List<ZoneListener> getListenerCopy(){
+        List<ZoneListener> snapshotListener;
+        lock.readLock().lock();
+        try{
+            snapshotListener = new ArrayList<ZoneListener>(listeners);
+        }finally {
+            lock.readLock().unlock();
+        }
+        return snapshotListener;
+    }
+
 }

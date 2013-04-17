@@ -17,6 +17,8 @@ package fr.liglab.adele.icasa.location.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import fr.liglab.adele.icasa.location.LocatedObject;
 import fr.liglab.adele.icasa.location.Position;
@@ -24,6 +26,12 @@ import fr.liglab.adele.icasa.location.Position;
 public abstract class LocatedObjectImpl implements LocatedObject {
 
 	private Position m_position;
+
+    ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+
+    Lock readLock = lock.readLock();
+
+    Lock writeLock = lock.writeLock();
 	
 	private List<LocatedObject> attachedObjects = new ArrayList<LocatedObject>();
 	
@@ -33,19 +41,28 @@ public abstract class LocatedObjectImpl implements LocatedObject {
 	
 	@Override
    public Position getCenterAbsolutePosition() {
-	   return m_position.clone();
+        readLock.lock();
+        try{
+	    return m_position.clone();
+        }finally {
+            readLock.unlock();
+        }
    }
 
 	@Override
    public void setCenterAbsolutePosition(Position position) {
-		int deltaX = position.x - getCenterAbsolutePosition().x ;
-		int deltaY = position.y - getCenterAbsolutePosition().y;
-		m_position = position.clone();		
+        Position absolutePosition =  getCenterAbsolutePosition();
+		int deltaX = position.x - absolutePosition.x ;
+		int deltaY = position.y - absolutePosition.y;
+        writeLock.lock();
+		m_position = position.clone();
+        writeLock.unlock();
 		moveAttachedObjects(deltaX, deltaY);
    }
 		
 	protected void moveAttachedObjects(int deltaX, int deltaY) {
-		for (LocatedObject object : attachedObjects) {
+        List<LocatedObject> snapshotAttachedObjects = getAttachedObjects();
+		for (LocatedObject object : snapshotAttachedObjects) {
 	      int newX = object.getCenterAbsolutePosition().x + deltaX;
 	      int newY = object.getCenterAbsolutePosition().y + deltaY;
 	      Position objectPosition = new Position(newX, newY);
@@ -57,8 +74,12 @@ public abstract class LocatedObjectImpl implements LocatedObject {
    public void attachObject(LocatedObject object) {
 		if (object==this)
 			return;
-		
-		attachedObjects.add(object);
+		writeLock.lock();
+        try{
+		    attachedObjects.add(object);
+        }finally {
+            writeLock.unlock();
+        }
         notifyAttachedObject(object);
    }
 
@@ -66,13 +87,25 @@ public abstract class LocatedObjectImpl implements LocatedObject {
    public void detachObject(LocatedObject object) {
 		if (object==this)
 			return;
-		
-		attachedObjects.remove(object);
+		writeLock.lock();
+        try{
+		    attachedObjects.remove(object);
+        }finally {
+            writeLock.unlock();
+        }
         notifyDetachedObject(object);
    }
 
    protected abstract void notifyAttachedObject(LocatedObject attachedObject);
 
    protected abstract void notifyDetachedObject(LocatedObject attachedObject);
+
+   private List<LocatedObject> getAttachedObjects(){
+       List<LocatedObject> snapshotList;
+       readLock.lock();
+       snapshotList = new ArrayList<LocatedObject>(attachedObjects);
+       readLock.unlock();
+       return snapshotList;
+   }
 
 }
