@@ -27,17 +27,21 @@ import fr.liglab.adele.icasa.location.LocatedDevice;
 import fr.liglab.adele.icasa.location.Position;
 import fr.liglab.adele.icasa.location.Zone;
 
+import java.util.Set;
+
 public class IcasaJSONUtil {
 
 	public static JSONObject getDeviceJSON(LocatedDevice device, ContextManager _ctxMgr) {
 
 		String deviceType = device.getType();
-		if (deviceType == null)
+		if (deviceType == null){
 			deviceType = "undefined";
+        }
 
 		Position devicePosition = _ctxMgr.getDevicePosition(device.getSerialNumber());
+        Set<String> specifications = _ctxMgr.getProvidedServices(deviceType);
 
-		JSONObject deviceJSON = null;
+        JSONObject deviceJSON = null;
 		try {
 			deviceJSON = new JSONObject();
 			deviceJSON.putOnce(DeviceJSON.ID_PROP, device.getSerialNumber());
@@ -46,6 +50,9 @@ public class IcasaJSONUtil {
 			deviceJSON.put(DeviceJSON.LOCATION_PROP, device.getPropertyValue(GenericDevice.LOCATION_PROPERTY_NAME));
 			deviceJSON.put(DeviceJSON.STATE_PROP, device.getPropertyValue(GenericDevice.STATE_PROPERTY_NAME));
 			deviceJSON.put(DeviceJSON.TYPE_PROP, deviceType);
+            if(specifications != null){
+                deviceJSON.put(DeviceJSON.SERVICES, specifications );
+            }
 			if (devicePosition != null) {
 				deviceJSON.put(DeviceJSON.POSITION_X_PROP, devicePosition.x);
 				deviceJSON.put(DeviceJSON.POSITION_Y_PROP, devicePosition.y);
@@ -63,12 +70,16 @@ public class IcasaJSONUtil {
 		return deviceJSON;
 	}
 
-	public static JSONObject getDeviceTypeJSON(String deviceTypeStr) {
+	public static JSONObject getDeviceTypeJSON(String deviceTypeStr, ContextManager ctx) {
 		JSONObject deviceTypeJSON = null;
+        Set<String> specifications = ctx.getProvidedServices(deviceTypeStr);
 		try {
 			deviceTypeJSON = new JSONObject();
 			deviceTypeJSON.putOnce("id", deviceTypeStr);
 			deviceTypeJSON.putOnce("name", deviceTypeStr);
+            if(specifications != null){
+                deviceTypeJSON.put(DeviceJSON.SERVICES, specifications );
+            }
 		} catch (JSONException e) {
 			e.printStackTrace();
 			deviceTypeJSON = null;

@@ -35,6 +35,7 @@ public class DeviceJSON {
 	public static final String NAME_PROP = "name";
 	public static final String DEVICE_ID_PROP = "deviceId";
 	public static final String ID_PROP = "id";
+    public static final String SERVICES = "services";
 
 	private String type;
 	private String name;

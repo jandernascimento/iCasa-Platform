@@ -275,7 +275,7 @@ public class DeviceREST extends AbstractREST {
     private String getDeviceTypes() {
         JSONArray currentDevices = new JSONArray();
         for (String deviceTypeStr : _contextMgr.getDeviceTypes()) {
-            JSONObject deviceType = IcasaJSONUtil.getDeviceTypeJSON(deviceTypeStr);
+            JSONObject deviceType = IcasaJSONUtil.getDeviceTypeJSON(deviceTypeStr, _contextMgr);
             if (deviceType == null)
                 continue;
 
@@ -293,7 +293,7 @@ public class DeviceREST extends AbstractREST {
     private String getSimulatedDeviceTypes() {
         JSONArray currentDevices = new JSONArray();
         for (String deviceTypeStr : simulator.getDeviceTypes()) {
-            JSONObject deviceType = IcasaJSONUtil.getDeviceTypeJSON(deviceTypeStr);
+            JSONObject deviceType = IcasaJSONUtil.getDeviceTypeJSON(deviceTypeStr, _contextMgr);
             if (deviceType == null)
                 continue;
 

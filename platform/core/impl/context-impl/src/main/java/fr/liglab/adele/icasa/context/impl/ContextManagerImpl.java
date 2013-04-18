@@ -15,14 +15,7 @@
  */
 package fr.liglab.adele.icasa.context.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -362,6 +355,28 @@ public class ContextManagerImpl implements ContextManager {
             lock.readLock().unlock();
         }
 	}
+
+    @Override
+    public Set<String> getProvidedServices(String deviceType){
+        Factory factory = getFactory(deviceType);
+        if (factory == null){
+            return null;
+        }
+        String[] specifications = factory.getComponentDescription().getprovidedServiceSpecification();
+        if(specifications == null) {
+            return null;
+        }
+        return new HashSet(Arrays.asList(specifications));
+    }
+
+    private Factory getFactory(String deviceType){
+        lock.readLock().lock();
+        try{
+            return m_factories.get(deviceType);
+        }finally {
+            lock.readLock().unlock();
+        }
+    }
 
 	@Bind(id = "devices", aggregate = true, optional = true)
 	public void bindDevice(GenericDevice simDev) {

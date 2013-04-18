@@ -179,6 +179,13 @@ public interface ContextManager {
 	public void moveDeviceIntoZone(String deviceId, String zoneId);
 
 	public Set<String> getDeviceTypes();
+
+    /**
+     * Get a set of the Service specification
+     * @param deviceType the device type to retrieve its service specifications.
+     * @return the set of specifications, null if any.
+     */
+    public Set<String> getProvidedServices(String deviceType);
 	
 
 	// -- Listener related methods --  //
