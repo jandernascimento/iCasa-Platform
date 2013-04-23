@@ -53,23 +53,11 @@ public interface BinaryLight extends GenericDevice {
 	 * @see #getMaxPowerLevel()
 	 */
 	String BINARY_LIGHT_MAX_POWER_LEVEL = "binaryLight.maxPowerLevel";
-	
-	
-	/**
-	 * Device property indicating the Lamp maximum Illuminance (in Lux)
-	 * <ul>
-	 * <li>This property is <b>mandatory</b></li>
-	 * <li>Type of values : <b><code>java.lang.Double</code></b>, compute by
-	 * the method computeIlluminance.
-	 * </ul>
-	 * 
-	 */
-	String BINARY_LIGHT_CURRENT_ILLUMINANCE = "binaryLight.currentIlluminance";
 
 
 	/**
 	 * Return the current power state of this binary light.
-	 * 
+	 *
 	 * @return the current power state of this binary light.
 	 * @see #setPowerStatus(boolean)
 	 * @see #BINARY_LIGHT_POWER_STATUS

@@ -53,15 +53,6 @@ public interface DimmerLight extends GenericDevice {
 	 * @see #getMaxPowerLevel()
 	 */
 	String DIMMER_LIGHT_MAX_POWER_LEVEL = "dimmerLight.maxPowerLevel";
-	/**
-	 * Device property indicating the Lamp maximum Illuminance (in Lux)
-	 * <ul>
-	 * <li>This property is <b>mandatory</b></li>
-	 * <li>Type of values : <b><code>java.lang.Double</code></b> compute by
-	 * the method computeIlluminance.
-	 * </ul>
-	 */
-	String DIMMER_LIGHT_CURRENT_ILLUMINANCE = "dimmerLight.currentIlluminance";
 
 	/**
 	 * Return the current power level of this dimmer light.
