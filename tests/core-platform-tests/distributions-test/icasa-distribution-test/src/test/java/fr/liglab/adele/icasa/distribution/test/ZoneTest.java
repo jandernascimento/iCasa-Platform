@@ -213,22 +213,14 @@ public class ZoneTest extends AbstractDistributionBaseTest {
 	public void addZoneParentTest(){
 		String zone_id_0 = "myZone-0";
 		String zone_parent_id_0 = "myParentZone-0";
-		int zone_0_scope = 2;//size of the squared zone is 4
-		int zone_parent_0_scope = 4;//size of the squared zone is 8
-		Position positionZone_0 = new Position(5,5);
-		Position positionParentZone_0 = new Position(5,5);
 		//Create zone
 		ZoneTestListener listener = new ZoneTestListener();
-		Zone zone_0 = icasa.createZone(zone_id_0, positionZone_0, zone_0_scope);
-		Assert.assertEquals(4,zone_0.getHeight());
-		Assert.assertEquals(4,zone_0.getWidth());
+		Zone zone_0 = icasa.createZone(zone_id_0, 77,387,49,49);
 		//Add listener after creating to only receive resize event.
 		icasa.addListener(listener);
 		Assert.assertNull(listener.getListenZone());//Any event received.
-		//Test center positions
-		Assert.assertEquals(zone_0.getCenterAbsolutePosition(), positionZone_0);
 		//Add parent zone.
-		icasa.createZone(zone_parent_id_0, positionParentZone_0, zone_parent_0_scope);
+		icasa.createZone(zone_parent_id_0, 55,370, 259, 210);
 		try {
 			icasa.setParentZone(zone_id_0, zone_parent_id_0);
 		} catch (Exception e1) {

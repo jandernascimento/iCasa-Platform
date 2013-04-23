@@ -21,7 +21,12 @@
 	<artifactId>context.api</artifactId>
 	<packaging>bundle</packaging>
 	<name>${productName} :: ${projectName}</name>
-
+    <dependencies>
+        <dependency>
+            <groupId>org.ow2.chameleon.json</groupId>
+            <artifactId>json-service-json.org</artifactId>
+        </dependency>
+    </dependencies>
 	<build>
 		<plugins>
 			<plugin>

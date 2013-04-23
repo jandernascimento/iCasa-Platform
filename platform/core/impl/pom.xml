@@ -31,6 +31,7 @@
 
 	<modules>
 		<module>context-impl</module>
+      <module>gogo-adapter</module>
 		<module>context-remote</module>
 		<module>clock-system-impl</module>
 		<module>device-manager-impl</module>

@@ -81,8 +81,9 @@ public class ZoneImpl extends LocatedObjectImpl implements Zone {
         lock.readLock().lock();
         _width = width;
         _height = height;
-        boolean fits = (aZonePosition.x + clonedZone.getWidth() > _width) || (aZonePosition.y + clonedZone.getHeight() > _height);
+        Position thisPosition = getLeftTopAbsolutePosition();
         lock.readLock().unlock();
+        boolean fits = (aZonePosition.x + clonedZone.getWidth() > _width + thisPosition.x) || (aZonePosition.y + clonedZone.getHeight() > _height + thisPosition.y);
 		return !fits;
 	}
 
