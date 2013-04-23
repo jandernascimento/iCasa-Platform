@@ -20,13 +20,11 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import fr.liglab.adele.icasa.TechnicalService;
+import fr.liglab.adele.icasa.Variable;
 import org.apache.felix.ipojo.Factory;
 import org.apache.felix.ipojo.Pojo;
-import org.apache.felix.ipojo.annotations.Bind;
-import org.apache.felix.ipojo.annotations.Component;
-import org.apache.felix.ipojo.annotations.Instantiate;
-import org.apache.felix.ipojo.annotations.Provides;
-import org.apache.felix.ipojo.annotations.Unbind;
+import org.apache.felix.ipojo.annotations.*;
 
 import fr.liglab.adele.icasa.ContextManager;
 import fr.liglab.adele.icasa.device.DeviceTypeListener;
@@ -46,6 +44,9 @@ import fr.liglab.adele.icasa.location.util.ZoneComparable;
 @Provides
 @Instantiate(name = "ContextManager-1")
 public class ContextManagerImpl implements ContextManager {
+
+    @Requires(optional = true)
+    private TechnicalService[] _technicalServices;
 
 	private Map<String, Zone> zones = new HashMap<String, Zone>();
 
@@ -68,7 +69,7 @@ public class ContextManagerImpl implements ContextManager {
     private Lock writeLock = lock.writeLock();
 
 	public ContextManagerImpl() {
-
+          // do nothing
 	}
 
 	@Override
@@ -338,7 +339,8 @@ public class ContextManagerImpl implements ContextManager {
 		}
 	}
 
-    private GenericDevice getGenericDevice(String deviceId) {
+    @Override
+    public GenericDevice getGenericDevice(String deviceId) {
         lock.readLock().lock();
         try{
             return m_devices.get(deviceId);
@@ -367,6 +369,26 @@ public class ContextManagerImpl implements ContextManager {
             return null;
         }
         return new HashSet(Arrays.asList(specifications));
+    }
+
+    @Override
+    public Set<Variable> getGlobalVariables() {
+        return null;  //TODO implement it
+    }
+
+    @Override
+    public Object getGlobalVariableValue(String variableName) {
+        return null;  //TODO implement it
+    }
+
+    @Override
+    public void addGlobalVariable(String variableName) {
+        //TODO implement it
+    }
+
+    @Override
+    public void setGlobalVariable(String variableName, Object value) {
+        //TODO implement it
     }
 
     private Factory getFactory(String deviceType){

@@ -15,6 +15,8 @@
  */
 package fr.liglab.adele.icasa.location;
 
+import fr.liglab.adele.icasa.device.GenericDevice;
+
 import java.util.List;
 import java.util.Set;
 
@@ -38,5 +40,7 @@ public interface LocatedDevice extends LocatedObject {
 	public void enterInZones(List<Zone> zones);
 
 	public void leavingZones(List<Zone> zones);
+
+    public GenericDevice getDeviceObject();
 
 }

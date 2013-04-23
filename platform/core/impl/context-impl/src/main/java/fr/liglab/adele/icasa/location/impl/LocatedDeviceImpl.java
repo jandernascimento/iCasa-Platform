@@ -188,7 +188,12 @@ public class LocatedDeviceImpl extends LocatedObjectImpl implements LocatedDevic
 		deviceComponent.leavingZones(zones);	   
    }
 
-	// --- Listeners methods -- //
+    @Override
+    public GenericDevice getDeviceObject() {
+        return deviceComponent;
+    }
+
+    // --- Listeners methods -- //
 	
 	@Override
    public void deviceAdded(GenericDevice device) {

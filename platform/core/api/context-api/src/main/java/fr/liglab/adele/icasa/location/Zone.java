@@ -15,6 +15,8 @@
  */
 package fr.liglab.adele.icasa.location;
 
+import fr.liglab.adele.icasa.Variable;
+
 import java.util.List;
 import java.util.Set;
 
@@ -135,6 +137,13 @@ public interface Zone extends LocatedObject {
 
 	public Object getVariableValue(String name);
 
+    /**
+     * Sets specified variable value.
+     * If the property does not exist, adds it.
+     *
+     * @param name variable name to set
+     * @param newValue property value to set
+     */
 	public void setVariableValue(String name, Object newValue);
 
 	public void addVariable(String name);
@@ -142,6 +151,8 @@ public interface Zone extends LocatedObject {
 	public void removeVariable(String name);
 
 	public Set<String> getVariableNames();
+
+    public Set<Variable> getVariables();
 	
 	public void resize(int newWidth, int newHeight) throws Exception;
 	

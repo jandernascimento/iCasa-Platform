@@ -15,14 +15,11 @@
  */
 package fr.liglab.adele.icasa.location.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import fr.liglab.adele.icasa.Variable;
 import fr.liglab.adele.icasa.location.*;
 
 public class ZoneImpl extends LocatedObjectImpl implements Zone {
@@ -348,10 +345,12 @@ public class ZoneImpl extends LocatedObjectImpl implements Zone {
 
        lock.writeLock().lock();
         try{
-            if (!variables.containsKey(name)){
-                throw new NullPointerException("Variable " + name + " does not exist");
+            if (variables.containsKey(name)){
+                oldValue = variables.get(name);
+            } else {
+                oldValue = null;
             }
-            oldValue = variables.get(name);
+
             variables.put(name, newValue);
         }finally {
             lock.writeLock().unlock();
@@ -441,7 +440,29 @@ public class ZoneImpl extends LocatedObjectImpl implements Zone {
         }
 	}
 
-	@Override
+    @Override
+    public Set<Variable> getVariables() {
+        Set<Variable> variables = new HashSet<Variable>();
+        lock.readLock().lock();
+
+        try{
+            for (String varName : getVariableNames()) {
+                Object value = getVariableValue(varName);
+                Class valueType = null;
+                if (value == null)
+                    valueType = Object.class;
+                else
+                    valueType = value.getClass();
+                variables.add(new Variable(varName, valueType, "No description"));
+            }
+
+            return variables;
+        } finally {
+            lock.readLock().unlock();
+        }
+    }
+
+    @Override
 	public void setUseParentVariables(boolean useParentVariables) {
         lock.writeLock().lock();
 		this.useParentVariable = useParentVariables;

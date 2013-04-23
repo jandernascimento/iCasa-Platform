@@ -18,6 +18,7 @@ package fr.liglab.adele.icasa;
 import java.util.List;
 import java.util.Set;
 
+import fr.liglab.adele.icasa.device.GenericDevice;
 import fr.liglab.adele.icasa.listener.IcasaListener;
 import fr.liglab.adele.icasa.location.LocatedDevice;
 import fr.liglab.adele.icasa.location.Position;
@@ -119,6 +120,12 @@ public interface ContextManager {
 
 	public Set<String> getZoneIds();
 
+    /**
+     * Returns all defined zones.
+     * If there is no zone then returns an empty collection.
+     *
+     * @return all defined zones.
+     */
 	public List<Zone> getZones();
 
 	public Zone getZone(String zoneId);
@@ -159,6 +166,14 @@ public interface ContextManager {
 	public LocatedDevice getDevice(String deviceId);
 
     /**
+     * Returns device object that corresponds to specified serial number.
+     *
+     * @param deviceId device serial number
+     * @return device object that corresponds to specified serial number.
+     */
+    public GenericDevice getGenericDevice(String deviceId);
+
+    /**
      * Returns a set of objects that represent all available devices.
      * If there is no devices, return an empty collection.
      *
@@ -186,6 +201,36 @@ public interface ContextManager {
      * @return the set of specifications, null if any.
      */
     public Set<String> getProvidedServices(String deviceType);
+
+    /**
+     * Returns all global variables.
+     *
+     * @return all global variables.
+     */
+    public Set<Variable> getGlobalVariables();
+
+    /**
+     * Returns the value of a given global variable.
+     *
+     * @param variableName The variable name to retrieve its value.
+     * @return The value of the variable.
+     */
+    public Object getGlobalVariableValue(String variableName);
+
+    /**
+     * Adds a global variable.
+     *
+     * @param variableName name of a global variable
+     */
+    public void addGlobalVariable(String variableName);
+
+    /**
+     * Sets specified global variable .
+     *
+     * @param variableName
+     * @param value
+     */
+    public void setGlobalVariable(String variableName, Object value);
 	
 
 	// -- Listener related methods --  //

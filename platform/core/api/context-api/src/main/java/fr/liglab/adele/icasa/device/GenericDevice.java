@@ -73,24 +73,24 @@ public interface GenericDevice {
 	 * @return the serial number of the device.
 	 * @see #DEVICE_SERIAL_NUMBER
 	 */
-	String getSerialNumber();
+    String getSerialNumber();
 
-	/**
-	 * Add the specified listener to the list of this device's listeners. If the
-	 * listener is already is the list, this method does nothing.
-	 * 
-	 * @param listener
-	 *           the listener to add
-	 */
-	void addListener(DeviceListener listener);
+    /**
+     * Add the specified listener to the list of this device's listeners. If the
+     * listener is already is the list, this method does nothing.
+     *
+     * @param listener
+     *           the listener to add
+     */
+    void addListener(DeviceListener listener);
 
-	/**
-	 * Remove the specified listener from the list of this device's listeners. If
-	 * the listener wasn't in the list, this method does nothing.
-	 * 
-	 * @param listener
-	 *           the listener to remove
-	 */
+    /**
+     * Remove the specified listener from the list of this device's listeners. If
+     * the listener wasn't in the list, this method does nothing.
+     *
+     * @param listener
+     *           the listener to remove
+     */
 	void removeListener(DeviceListener listener);
 
 
