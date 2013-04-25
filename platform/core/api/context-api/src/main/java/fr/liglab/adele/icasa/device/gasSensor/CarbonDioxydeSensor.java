@@ -13,38 +13,38 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package fr.liglab.adele.icasa.device.gazSensor;
+package fr.liglab.adele.icasa.device.gasSensor;
 
 import fr.liglab.adele.icasa.device.GenericDevice;
 
 /**
- * Service definition of a CO sensor device.
+ * Service definition of a CO2 sensor device.
  * 
  * @author jeremy
  */
-public interface CarbonMonoxydeSensor extends GenericDevice {
+public interface CarbonDioxydeSensor extends GenericDevice {
 
     /**
-     * Service property indicating the current value of CO measured by the gaz sensor, expressed in µg/m^3.
+     * Service property indicating the current value of CO2 measured by the gas sensor, expressed in µg/m^3.
      * 
      * <ul>
      * <li>This property is <b>mandatory</b></li>
      * <li>Type of values : <b><code>java.lang.Double</code></b></li>
-     * <li>Description : value is a CO concentration expressed in µg/m^3, so it
+     * <li>Description : value is a CO2 concentration expressed in µg/m^3, so it
      * is <code>always positive</code>.</li>
      * </ul>
      * 
-     * @see #getCOConcentration()
+     * @see #getCO2Concentration()
      */
-    String CARBON_MONOXYDE_SENSOR_CURRENT_CONCENTRATION = "carbonMonoxydeSensor.currentConcentration";
+    String CARBON_DIOXYDE_SENSOR_CURRENT_CONCENTRATION = "carbonDioxydeSensor.currentConcentration";
 
     /**
-     * Return the current CO concentration sensed by this gaz sensor, expressed in
+     * Return the current CO2 concentration sensed by this gas sensor, expressed in
      * µg/m^3.
      * 
-     * @return the current CO concentration sensed by this gaz sensor, expressed in
+     * @return the current CO2 concentration sensed by this gas sensor, expressed in
      *         µg/m^3.
      */
-    double getCOConcentration();
+    double getCO2Concentration();
 
 }
