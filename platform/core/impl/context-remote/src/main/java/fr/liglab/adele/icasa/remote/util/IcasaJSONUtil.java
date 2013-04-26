@@ -16,6 +16,7 @@
 package fr.liglab.adele.icasa.remote.util;
 
 import fr.liglab.adele.icasa.remote.impl.ClockREST;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -57,9 +58,12 @@ public class IcasaJSONUtil {
 				deviceJSON.put(DeviceJSON.POSITION_X_PROP, devicePosition.x);
 				deviceJSON.put(DeviceJSON.POSITION_Y_PROP, devicePosition.y);
 			}
-			JSONObject propObject = new JSONObject();
+			JSONArray propObject = new JSONArray();
 			for (String property : device.getProperties()) {
-				propObject.put(property, device.getPropertyValue(property));
+                JSONObject prop = new JSONObject();
+                prop.put("name", property);
+                prop.put("value", device.getPropertyValue(property));
+				propObject.put(prop);
 			}
 			deviceJSON.put(DeviceJSON.PROPERTIES_PROP, propObject);
 		} catch (JSONException e) {
