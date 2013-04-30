@@ -42,6 +42,7 @@ public interface ContextManager {
 	 * @param width the width of the zone.
 	 * @param height the height of the zone.
 	 * @return the created zone.
+     * @throws IllegalArgumentException when exists a zone with the same identifier.
 	 */
 	public Zone createZone(String id, int leftX, int topY, int width, int height);
 
@@ -54,6 +55,7 @@ public interface ContextManager {
 	 * 		width = detectionScope * 2
 	 * 		height = detectionScope * 2
 	 * @return the created zone.
+     * @throws IllegalArgumentException when exists a zone with the same identifier.
 	 */
 	public Zone createZone(String id, Position center, int detectionScope);
 	

@@ -76,6 +76,16 @@ public class ContextManagerImpl implements ContextManager {
 	public Zone createZone(String id, int leftX, int topY, int width, int height) {
 		Zone zone = new ZoneImpl(id, leftX, topY, width, height);
         List<ZoneListener> snapshotZoneListener;
+        boolean exists = false;
+        readLock.lock();
+        try{
+            exists = zones.containsKey(id);
+        } finally {
+            readLock.unlock();
+        }
+        if (exists){
+            throw new IllegalArgumentException("Zone already exist.");
+        }
         writeLock.lock();
         try{
 		    zones.put(id, zone);
