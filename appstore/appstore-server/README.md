@@ -39,7 +39,7 @@ Installation
 * using MySQL workbench or the mysql shell, add a user and grant access to the appstore database. User and password must match with the one used in the **application.conf** file.
 
 * Run using maven
-    * $mvn play2; run
+    * $mvn play2: start
 
 Execution
 ---------
