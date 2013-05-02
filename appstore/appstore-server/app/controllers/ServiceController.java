@@ -48,21 +48,19 @@ public class ServiceController extends Controller {
         return ok(services);
     }
 
-	public static Result addServiceForm(){
-		return ok(views.html.products.services.newService.render(form(Service.class)));
-	}
-
 	public static Result addService(){
 		Form<Service> filledForm = serviceForm.bindFromRequest();
 		if (filledForm.hasErrors()){
-			return badRequest(views.html.products.services.newService.render(filledForm));
+            System.out.println(filledForm);
+			return badRequest();
 		} else {
 			try{
 				Service.create(filledForm.get());
 			}catch (Exception ex){
-				return badRequest(views.html.products.services.newService.render(filledForm));
+                ex.printStackTrace();
+				return badRequest();
 			}
-			return redirect(routes.ServiceController.services());
+			return ok();
 		}
 	}
 }

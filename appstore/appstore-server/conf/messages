@@ -29,10 +29,12 @@ icasa.availableProducts= Available Services
 icasa.yourProducts= Your Services
 icasa.yourDevices= Your Devices
 icasa.box= Box
+icasa.URL= URL
 icasa.addBox=Add Box
 icasa.newApplication= New Application
 icasa.newProduct= New Service
 icasa.newService= New Subscription
+icasa.newDevice= New Device
 icasa.administration= Administration
 icasa.thereIsAnyServiceApplications=There is no applications and no subscriptions in this product.
 

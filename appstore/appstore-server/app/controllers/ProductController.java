@@ -8,6 +8,8 @@ import models.values.ProductPrice;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
+import org.h2.util.IOUtils;
+import play.api.Play;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.Json;
@@ -19,7 +21,7 @@ import play.mvc.Result;
 import securesocial.core.Identity;
 import securesocial.core.java.SecureSocial;
 
-import java.io.File;
+import java.io.*;
 import java.sql.DriverManager;
 import java.util.List;
 
@@ -58,7 +60,7 @@ public class ProductController extends Controller {
     public static Result buyProduct(String id){
         Identity socialUser = (Identity) ctx().args.get(SecureSocial.USER_KEY);
         User user = User.getUserByUserId(socialUser.id().id());
-        Product toBuy = Product.find.byId(id);
+        Product toBuy = Product.find.byId(Integer.parseInt(id));
         user.buyProduct(toBuy);
 
         return ok();
@@ -140,34 +142,48 @@ public class ProductController extends Controller {
 
 		JsonNode body = request().body().asJson();
 		Form<Product> filledForm = productForm.bindFromRequest();
-		System.out.println(filledForm);
+        Product product;
 		if (filledForm.hasErrors()){
             System.out.println("bad form");
 			return badRequest();
 		} else {
 			try{
-                Product product = filledForm.get();
-				Product.create(filledForm.get());
+                product = filledForm.get();
+				Product.create(product);
 			}catch (Exception ex){
                 ex.printStackTrace();
 				return badRequest();
 			}
-			return ok();
+			return ok(Product.toJson(product));
 		}
 	}
 
     @SecureSocial.SecuredAction
     public static Result uploadImage(String productId){
-        Product product = Product.find.byId(productId);
+        System.out.println(productId);
+        Product product = Product.find.byId(Integer.parseInt(productId));
         MultipartFormData body = request().body().asMultipartFormData();
-        MultipartFormData.FilePart picture = body.getFile("picture");
-        System.out.println("Upload file" + product);
+        MultipartFormData.FilePart picture = body.getFile("productPicture");
+        String fileURL = "public/images/products/" + productId + ".jpg";
+        String serverURL = "assets/images/products/" + productId + ".jpg";
         if (picture != null) {
             String fileName = picture.getFilename();
             String contentType = picture.getContentType();
             File file = picture.getFile();
-            System.out.println("Upload file:" + fileName);
-            return ok("File uploaded");
+            try {
+                InputStream is    = new FileInputStream(file);
+                OutputStream os = new FileOutputStream(new File(fileURL));
+                IOUtils.copy(is,os);
+                is.close();
+                os.close();
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+                flash("error", "unable to save file");
+                return badRequest();
+            }
+            product.imageURL = serverURL ;
+            product.save();
+            return ok(Product.toJson(product));
         } else {
             flash("error", "Missing file");
             return badRequest();

@@ -22,10 +22,7 @@ import org.codehaus.jackson.node.ObjectNode;
 import play.db.ebean.Model;
 import play.libs.Json;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 
@@ -50,6 +47,10 @@ public class Application extends Model  {
 
     @Column(name="url")
     public String url;
+
+    @OneToOne
+    @JoinColumn(name="lastVersion_id", referencedColumnName = "id")
+    public ApplicationVersion lastVersion;
 
 	public static Finder<String,Application> find = new Finder<String, Application>(
 		    String.class, Application.class
