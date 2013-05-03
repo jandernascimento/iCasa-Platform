@@ -1,6 +1,9 @@
 package controllers;
 
+import models.User;
 import models.values.Device;
+import models.values.Order;
+import models.values.Product;
 import org.codehaus.jackson.node.ArrayNode;
 import org.h2.util.IOUtils;
 import play.data.Form;
@@ -8,6 +11,7 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
+import securesocial.core.Identity;
 import securesocial.core.java.SecureSocial;
 
 import java.io.*;
@@ -22,6 +26,7 @@ public class DeviceController extends Controller {
     static Form<Device> deviceForm = form(Device.class);
 
 
+    @SecureSocial.SecuredAction
     public static Result devices(){
         System.out.println("Getting devices");
 
@@ -33,7 +38,7 @@ public class DeviceController extends Controller {
         }
         return ok(devices);
     }
-
+    @SecureSocial.SecuredAction
     public static Result addDevice(){
         Form<Device> filledForm = deviceForm.bindFromRequest();
         Device ndevice;
@@ -50,6 +55,23 @@ public class DeviceController extends Controller {
             return badRequest();
         }
         return ok(Device.toJson(ndevice));
+    }
+
+    @SecureSocial.SecuredAction
+    public static Result ownedDevices(){
+        Identity socialUser = (Identity) ctx().args.get(SecureSocial.USER_KEY);
+        User user = User.getUserByUserId(socialUser.id().id());
+        List<Order> buy = user.orders;
+        List<Product> allProducts = null;
+
+        allProducts = user.getOwnedProducts();
+        ArrayNode devices = Json.newObject().arrayNode();
+        for (Product product : allProducts) {
+            for (Device device: product.lastVersion.devices){
+                devices.add(Device.toJson(device));
+            }
+        }
+        return ok(devices);
     }
     @SecureSocial.SecuredAction
     public static Result uploadImage(String productId){

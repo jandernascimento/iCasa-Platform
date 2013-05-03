@@ -126,6 +126,30 @@
         </div>
         <!--/ko-->
     </div>
+    <!-- Main pane, list of purshased devices-->
+    <div class="tab-pane" id="allDevices">
+        <div class="page-header">
+            <h3>@Messages("icasa.devices")</h3>
+        </div>
+        <!--ko foreach: purshasedDevices -->
+        <div id="purshased-devices">
+            <div class="accordion-products ">
+                <div class="maccordion" data-bind="bsAccordionTable:{}">
+                    <center><h4>@Messages("icasa.name"): <span data-bind="text: name"></span></h4></center>
+                    <table class="table-products table table-hover">
+                        <tr >
+                            <td><img  class="grid-img" data-bind="attr:{src: imageURL}" /></td>
+                            <td>
+                                <h4>@Messages("icasa.description")</h4> <p><span href="#" data-bind="text: description"></span></p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--/ko-->
+    </div>
+
     <!-- Main pane, list of installed products-->
     <!--ko foreach: ownedDevices -->
     <div class="tab-pane" data-bind="attr: {id: 'installed' + id}">

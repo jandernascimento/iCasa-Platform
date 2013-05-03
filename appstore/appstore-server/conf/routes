@@ -48,10 +48,13 @@ PUT      /user/products/:id      controllers.ProductController.buyProduct(id)
 
 GET      /user/products         controllers.ProductController.ownedProducts()
 
-GET      /user/devices               controllers.OwnedDeviceController.getDevices
+#Owned Device Controllers
+GET      /user/ownedDevices               controllers.OwnedDeviceController.getDevices
 
-POST     /user/devices               controllers.OwnedDeviceController.addDevice
+POST     /user/ownedDevices               controllers.OwnedDeviceController.addDevice
 
+#Purshased Devices
+GET      /user/devices               controllers.DeviceController.ownedDevices
 
 
 #Applications Catalog Controllers REST

@@ -148,7 +148,7 @@ define(['backbone', 'underscore'],
 	        				'location':application.get("url")
 	    				},
 					);
-				urlRoot: 'user/devices'
+				urlRoot: 'user/ownedDevices'
 				defaults:
 					name: 'generic'
 					# installedPackages: new ApplicationModelCollection()
@@ -156,6 +156,12 @@ define(['backbone', 'underscore'],
 
 		class DataModel.Collections.OwnedDevices extends bb.Collection
 			model: DataModel.Models.OwnedDevice
+			url: '/user/ownedDevices'
+			constructor:()->
+				super;
+		
+		class DataModel.Collections.PurshasedDevices extends bb.Collection
+			model: DataModel.Models.Device
 			url: '/user/devices'
 			constructor:()->
 				super;

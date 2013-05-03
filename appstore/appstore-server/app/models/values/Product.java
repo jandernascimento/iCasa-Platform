@@ -64,7 +64,6 @@ public class Product extends Model  {
     @JoinTable(name = "Product_has_Category")
     public List<ProductHasCategory> productHasCategory = new ArrayList();
 
-
     @OneToOne
     @JoinColumn(name="productVersion_id", referencedColumnName = "id")
     public ProductVersion lastVersion;
@@ -79,7 +78,6 @@ public class Product extends Model  {
     public List<Application> applications = new ArrayList();
 
     public List<Service> services = new ArrayList();
-
 
     public List<Device> devices = new ArrayList();
 
@@ -161,6 +159,13 @@ public class Product extends Model  {
             Ebean.save(pvha);
         }
 
+        for(Device device:product.devices){
+            ProductVersionHasDevices pvhd = new ProductVersionHasDevices();
+            Ebean.refresh(device);
+            pvhd.device = device;
+            pvhd.productVersion = product.lastVersion;
+            Ebean.save(pvhd);
+         }
         Ebean.update(product);
         }finally {
             Ebean.commitTransaction();

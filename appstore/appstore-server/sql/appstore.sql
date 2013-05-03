@@ -82,10 +82,7 @@ CREATE TABLE `Device` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `Device` (`id`, `name`, `description`, `imageURL`) VALUES
-(1,   'Device21', 'Description Device 1', NULL),
-(2,   'Device1',  'Device description',   NULL),
-(3,   'fdfd',  'fdfdf', NULL),
-(4,   'dsdsdfdf', 'dsdsd', 'assets/images/devices/4.jpg');
+(5,   'Device1',  'Device1',  'assets/images/devices/5.jpg');
 
 DROP TABLE IF EXISTS `Orders`;
 CREATE TABLE `Orders` (
@@ -104,6 +101,7 @@ INSERT INTO `Orders` (`id`, `user_id`, `product_Price_id`) VALUES
 (26,  2, 1),
 (27,  2, 2),
 (28,  2, 4),
+(29,  2, 5),
 (16,  3, 1);
 
 DROP TABLE IF EXISTS `OwnedDevice`;
@@ -140,12 +138,7 @@ INSERT INTO `Product` (`id`, `name`, `description`, `imageURL`, `productVersion_
 (2,   'Product 2',   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi urna ante, egestas nec rhoncus eget, blandit at arcu. Sed ullamcorper feugiat nisi. Vivamus lacus dui, scelerisque id tempor sit amet, scelerisque a velit. Nulla facilisi. Aliquam id elit vel ',   'assets/images/products/2.png',  2),
 (3,   'Product 3',   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi urna ante, egestas nec rhoncus eget, blandit at arcu. Sed ullamcorper feugiat nisi. Vivamus lacus dui, scelerisque id tempor sit amet, scelerisque a velit. Nulla facilisi. Aliquam id elit vel ',   'assets/images/products/3.png',  67),
 (4,   'Product 4',   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi urna ante, egestas nec rhoncus eget, blandit at arcu. Sed ullamcorper feugiat nisi. Vivamus lacus dui, scelerisque id tempor sit amet, scelerisque a velit. Nulla facilisi. Aliquam id elit vel ',   'assets/images/products/4.png',  68),
-(80,  'fdfd',  'fdfd',  'assets/images/products/80.jpg', 72),
-(81,  'hghg',  'hghg',  'assets/images/products/default.jpg',  73),
-(82,  'gfgf',  'gfgf',  'assets/images/products/default.jpg',  74),
-(83,  'dsds',  'dsdsd', 'assets/images/products/default.jpg',  75),
-(84,  'dsds',  'dsds',  'assets/images/products/84.jpg', 76),
-(85,  'jhjhj', 'jhjhj', 'assets/images/products/85.jpg', 77);
+(88,  'gfgfg', 'gfgf',  'assets/images/products/88.jpg', 80);
 
 DROP TABLE IF EXISTS `ProductVersion`;
 CREATE TABLE `ProductVersion` (
@@ -162,12 +155,7 @@ INSERT INTO `ProductVersion` (`id`, `product_id`, `version`) VALUES
 (2,   2, '1.0.6'),
 (67,  3, '1.0.0'),
 (68,  4, '1.0.6'),
-(72,  80,   '1.0.0'),
-(73,  81,   '1.0.0'),
-(74,  82,   '1.0.0'),
-(75,  83,   '1.0.0'),
-(76,  84,   '1.0.0'),
-(77,  85,   '1.0.0');
+(80,  88,   '1.0.0');
 
 DROP TABLE IF EXISTS `ProductVersion_has_ApplicationVersion`;
 CREATE TABLE `ProductVersion_has_ApplicationVersion` (
@@ -178,8 +166,8 @@ CREATE TABLE `ProductVersion_has_ApplicationVersion` (
   UNIQUE KEY `id` (`id`),
   KEY `fk_ProductVersion_has_ApplicationVersion_ApplicationVersion1` (`applicationVersion_id`),
   KEY `fk_ProductVersion_has_ApplicationVersion_ProductVersion1` (`productVersion_id`),
-  CONSTRAINT `fk_ProductVersion_has_ApplicationVersion_ApplicationVersion1` FOREIGN KEY (`applicationVersion_id`) REFERENCES `ApplicationVersion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ProductVersion_has_ApplicationVersion_ProductVersion1` FOREIGN KEY (`productVersion_id`) REFERENCES `ProductVersion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `ProductVersion_has_ApplicationVersion_ibfk_2` FOREIGN KEY (`productVersion_id`) REFERENCES `ProductVersion` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `ProductVersion_has_ApplicationVersion_ibfk_1` FOREIGN KEY (`applicationVersion_id`) REFERENCES `ApplicationVersion` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `ProductVersion_has_ApplicationVersion` (`id`, `productVersion_id`, `applicationVersion_id`) VALUES
@@ -187,10 +175,7 @@ INSERT INTO `ProductVersion_has_ApplicationVersion` (`id`, `productVersion_id`, 
 (2,   1, 1),
 (3,   2, 0),
 (4,   2, 1),
-(5,   76,   1),
-(6,   76,   0),
-(7,   77,   1),
-(8,   77,   0);
+(12,  80,   1);
 
 DROP TABLE IF EXISTS `ProductVersion_has_Device`;
 CREATE TABLE `ProductVersion_has_Device` (
@@ -203,6 +188,8 @@ CREATE TABLE `ProductVersion_has_Device` (
   CONSTRAINT `fk_ProductVersion_has_Device_ProductVersion1` FOREIGN KEY (`productVersion_id`) REFERENCES `ProductVersion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+INSERT INTO `ProductVersion_has_Device` (`productVersion_id`, `device_id`) VALUES
+(80,  5);
 
 DROP TABLE IF EXISTS `ProductVersion_has_ServiceVersion`;
 CREATE TABLE `ProductVersion_has_ServiceVersion` (
@@ -211,12 +198,12 @@ CREATE TABLE `ProductVersion_has_ServiceVersion` (
   PRIMARY KEY (`productVersion_id`,`serviceVersion_id`),
   KEY `fk_ProductVersion_has_ServiceVersion_ServiceVersion1` (`serviceVersion_id`),
   KEY `fk_ProductVersion_has_ServiceVersion_ProductVersion1` (`productVersion_id`),
-  CONSTRAINT `fk_ProductVersion_has_ServiceVersion_ProductVersion1` FOREIGN KEY (`productVersion_id`) REFERENCES `ProductVersion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ProductVersion_has_ServiceVersion_ServiceVersion1` FOREIGN KEY (`serviceVersion_id`) REFERENCES `ServiceVersion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `ProductVersion_has_ServiceVersion_ibfk_2` FOREIGN KEY (`serviceVersion_id`) REFERENCES `ServiceVersion` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `ProductVersion_has_ServiceVersion_ibfk_1` FOREIGN KEY (`productVersion_id`) REFERENCES `ProductVersion` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `ProductVersion_has_ServiceVersion` (`productVersion_id`, `serviceVersion_id`) VALUES
-(77,  1);
+(80,  1);
 
 DROP TABLE IF EXISTS `Product_Price`;
 CREATE TABLE `Product_Price` (
@@ -237,7 +224,8 @@ INSERT INTO `Product_Price` (`id`, `price`, `unit`, `product_id`, `Appstore_id`)
 (1,   0.00, '€',  1, NULL),
 (2,   0.00, '€',  2, NULL),
 (3,   0.00, '€',  4, NULL),
-(4,   0.00, '€',  3, NULL);
+(4,   0.00, '€',  3, NULL),
+(5,   0.00, '€',  88,   NULL);
 
 DROP TABLE IF EXISTS `Product_has_Category`;
 CREATE TABLE `Product_has_Category` (
@@ -254,20 +242,10 @@ CREATE TABLE `Product_has_Category` (
 INSERT INTO `Product_has_Category` (`product_id`, `category_id`, `id`) VALUES
 (1,   1, 1),
 (2,   1, 3),
-(80,  1, 31),
 (1,   2, 2),
 (3,   2, 4),
-(80,  2, 32),
-(81,  2, 33),
-(82,  2, 35),
-(83,  2, 37),
-(84,  2, 39),
-(85,  2, 41),
-(81,  3, 34),
-(82,  3, 36),
-(83,  3, 38),
-(84,  3, 40),
-(85,  3, 42);
+(88,  2, 47),
+(88,  3, 48);
 
 DROP TABLE IF EXISTS `Service`;
 CREATE TABLE `Service` (
@@ -311,7 +289,7 @@ CREATE TABLE `User` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table containing the information of clients';
 
 INSERT INTO `User` (`id`, `userId`, `username`, `fullname`, `password`, `email`, `provider`, `authmethod`) VALUES
-(2,   '115199325219308345825',   '115199325219308345825',   'Issac Noé García',  'ya29.AHES6ZQLZ4n1yTp8qVfVmG5O0tRyJMB5xVLmra3CDP7bjQx8cQ',  'Some(issac@torito.org)',  'google',   'oauth2'),
+(2,   '115199325219308345825',   '115199325219308345825',   'Issac Noé García',  'ya29.AHES6ZTL0WVfiXmXFwikSKZPW305KOZt-7VLezgy0MxbAsBkAQ',  'Some(issac@torito.org)',  'google',   'oauth2'),
 (3,   '101452069845754362646',   '101452069845754362646',   'Thomas Leveque', 'ya29.AHES6ZRn84ZNXsfQoaQ-1MpX4AjDcimKWcAlHFsSu97c_J3I', 'Some(leveque.thomas@gmail.com)',   'google',   'oauth2');
 
--- 2013-05-02 19:42:16
+-- 2013-05-03 12:04:53

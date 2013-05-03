@@ -117,6 +117,8 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 			@services = kb.collectionObservable(new bb.Collection(model.get('services')), {view_model: ServiceViewModel})
 			#The collection of applications
 			@applications = kb.collectionObservable(new bb.Collection(model.get('applications')), {view_model: ApplicationViewModel})
+			#The collection of devices
+			@devices = kb.collectionObservable(new bb.Collection(model.get('devices')), {view_model: DeviceViewModel})
 			#The collection of categories of the product
 			@categories = model.get('categories')
 
@@ -167,25 +169,27 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 
 
 	class MainUserView
-		constructor:(@ownedProductsModel, @ownedDevicesModel, @availableProductsModel, @availableProductsModelGrid, @categoriesModel, @productsByCategory)->
-
-			@ownedProducts = kb.collectionObservable(ownedProductsModel, {view_model: ProductViewModelBase})
-			@ownedDevices = kb.collectionObservable(ownedDevicesModel, {view_model: OwnedDeviceViewModel})
+		constructor:()->
+			#@ownedProductsModel, @ownedDevicesModel, @availableProductsModel, @availableProductsModelGrid, @categoriesModel, @productsByCategory
+			@ownedProducts = kb.collectionObservable(DataModel.collections.ownedProducts, {view_model: ProductViewModelBase})
+			@ownedDevices = kb.collectionObservable(DataModel.collections.ownedDevices, {view_model: OwnedDeviceViewModel})
+			#devices purshased 
+			@purshasedDevices = kb.collectionObservable(DataModel.collections.purshasedDevices, {view_model: DeviceViewModel})
 			# Configure the top 10 item class to display in carrousel
-			@availableProducts = kb.collectionObservable(availableProductsModel, {view_model: ProductViewModelGrid})
+			@availableProducts = kb.collectionObservable(DataModel.collections.topProducts, {view_model: ProductViewModelGrid})
 			@availableProducts.subscribe(@.addItemClass)
 			# The available products
 			@pageSize= 8
 			@pageIndex= 0
-			@availableProductsGrid = kb.collectionObservable(availableProductsModelGrid, {view_model: ProductViewModelGrid})
+			@availableProductsGrid = kb.collectionObservable(DataModel.collections.availableProducts, {view_model: ProductViewModelGrid})
 			#Get the first page
-			@.availableProductsModelGrid.getNextPage(@.pageIndex, @.pageSize)
+			DataModel.collections.availableProducts.getNextPage(@.pageIndex, @.pageSize)
 			#Souscribe to get newer pages on scroll down
-			@categories = kb.collectionObservable(categoriesModel, {view_model: CategoryViewModel})
+			@categories = kb.collectionObservable(DataModel.collections.categories, {view_model: CategoryViewModel})
 			$(window).scroll(@.fetchNewPage)
 
 		getAllProducts:()=>
-			@.availableProductsGrid.collection(@.availableProductsModelGrid)
+			@.availableProductsGrid.collection(DataModel.collections.availableProducts)
 
 		addItemClass:(pmodels)->
 			if pmodels.length > 0
@@ -194,14 +198,14 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 		fetchNewPage:()=>
 			if $(window).scrollTop() == $(document).height() - $(window).height()
 				@.pageIndex++
-				@.availableProductsModelGrid.getNextPage(@.pageIndex, @.pageSize)
+				DataModel.collections.availableProducts.getNextPage(@.pageIndex, @.pageSize)
 		installApplication:(application, device)=>
 			device.model.installApplication(application.model)
 
 		updateCategory :(category)=>
 			if (category.id?)
-				@.productsByCategory.getProducsByCategory(category.id)
-				@.availableProductsGrid.collection(@.productsByCategory)
+				DataModel.collections.productsByCategories.getProducsByCategory(category.id)
+				@.availableProductsGrid.collection(DataModel.collections.productsByCategories)
 			else
 				@.getAllProducts()
 
@@ -268,7 +272,7 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
                 );
 
 				#Create the new Product model and save it into the backend
-				product = new DataModel.Models.Product({name: @newProductName(), description: @newProductDescription(), versions: versions, categories: chosenCategoriesId, applications: chosenApplicationsId, services: chosenServicesId});
+				product = new DataModel.Models.Product({name: @newProductName(), description: @newProductDescription(), versions: versions, categories: chosenCategoriesId, applications: chosenApplicationsId, services: chosenServicesId, devices: chosenDevicesId});
 
 				product.save({}, {
                     success: ()->
