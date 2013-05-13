@@ -259,7 +259,6 @@ public class EventBroadcast extends OnMessage<String> implements RemoteEventBroa
          * @param container
          * @param child
          */
-        @Override
         public void deviceAttached(LocatedDevice container, LocatedDevice child) {
             JSONObject json = new JSONObject();
             try {
@@ -278,7 +277,6 @@ public class EventBroadcast extends OnMessage<String> implements RemoteEventBroa
          * @param container
          * @param child
          */
-        @Override
         public void deviceDetached(LocatedDevice container, LocatedDevice child) {
             JSONObject json = new JSONObject();
             try {
@@ -370,7 +368,6 @@ public class EventBroadcast extends OnMessage<String> implements RemoteEventBroa
          * @param container
          * @param child
          */
-        @Override
         public void deviceAttached(Zone container, LocatedDevice child) {
             JSONObject json = new JSONObject();
             try {
@@ -389,7 +386,6 @@ public class EventBroadcast extends OnMessage<String> implements RemoteEventBroa
          * @param container
          * @param child
          */
-        @Override
         public void deviceDetached(Zone container, LocatedDevice child) {
             JSONObject json = new JSONObject();
             try {

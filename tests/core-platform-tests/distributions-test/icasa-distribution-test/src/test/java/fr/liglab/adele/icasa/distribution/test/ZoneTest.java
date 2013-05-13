@@ -19,6 +19,7 @@ import javax.inject.Inject;
 
 import org.junit.After;
 import org.junit.Assert;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -77,8 +78,12 @@ public class ZoneTest extends AbstractDistributionBaseTest {
 		Position positionZone_0 = new Position(0,0);
 
 		Zone zone_0 = icasa.createZone(zone_id_0, positionZone_0, 5);
-		Zone zone_1 = icasa.createZone(zone_id_0, positionZone_0, 10);
-		//Assert.fail("The current framework replace the object");
+        try {
+            Zone zone_1 = icasa.createZone(zone_id_0, positionZone_0, 10);
+            fail("Creation of existing zone should throw an exception");
+        } catch (IllegalArgumentException e) {
+            // passed
+        }
 	}
 	
 	/**

@@ -54,7 +54,7 @@ public interface ContextManager {
 	 * @param detectionScope used to calculate the width/height of the zone. width = detectionScope * 2 height =
 	 *           detectionScope * 2
 	 * @return the created zone.
-	 * @throws IllegalArgumentException when exists a zone with the same identifier.
+	 * @throws IllegalArgumentException when a zone exists with the same identifier.
 	 */
 	public Zone createZone(String id, Position center, int detectionScope);
 
