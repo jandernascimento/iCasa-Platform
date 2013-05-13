@@ -19,10 +19,21 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Utuilitary class to format dates in platform specific format. 
+ * 
+ * @author Gabriel Pedraza Ferreira
+ *
+ */
 public class DateTextUtil {
 
 	public static String SIMULATOR_DATE_FORMAT = "dd/MM/yyyy-HH:mm:ss";
 
+	/**
+	 * Gets a date from an string using the platform format
+	 * @param dateStr The string representation of the date
+	 * @return The date object or null if translation cannot be made.
+	 */
 	public static Date getDateFromText(String dateStr) {
 		if (dateStr != null && (!dateStr.isEmpty())) {
 			SimpleDateFormat formatter = new SimpleDateFormat(SIMULATOR_DATE_FORMAT);
@@ -41,11 +52,22 @@ public class DateTextUtil {
 		return null;
 	}
 
-	
+	/**
+	 * Returns the string representation of a date.
+	 * 
+	 * @param timeInMs The date expressed in milliseconds.
+	 * @return The string representation of the date.
+	 */
 	public static String getTextDate(long timeInMs) {
 		return getTextDate((new Date(timeInMs)));
 	}
 
+	/**
+	 * Returns the string representation of a date.
+	 * 
+	 * @param date The Date to be formated
+	 * @return The string representation of the date.
+	 */
 	public static String getTextDate(Date date) {
 		SimpleDateFormat format = new SimpleDateFormat(SIMULATOR_DATE_FORMAT);
 		return format.format(date);
