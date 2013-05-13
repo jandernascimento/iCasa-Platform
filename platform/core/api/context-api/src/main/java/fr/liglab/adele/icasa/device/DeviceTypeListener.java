@@ -17,14 +17,24 @@ package fr.liglab.adele.icasa.device;
 
 import fr.liglab.adele.icasa.listener.IcasaListener;
 
-
-
 /**
+ * Listener used to be notified about the device types in the platform.
+ * 
  * @author Thomas Leveque
  */
 public interface DeviceTypeListener extends IcasaListener {
 
-    public void deviceTypeAdded(String deviceType);
+	/**
+	 * Callback notifying the addition of a device type to the platform.
+	 * 
+	 * @param deviceType Device type added
+	 */
+	public void deviceTypeAdded(String deviceType);
 
-    public void deviceTypeRemoved(String deviceType);
+	/**
+	 * Callback notifying the elimination of a device type from the platform.
+	 * 
+	 * @param deviceType Device type removed
+	 */
+	public void deviceTypeRemoved(String deviceType);
 }

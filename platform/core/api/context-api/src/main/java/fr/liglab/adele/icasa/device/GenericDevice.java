@@ -147,8 +147,18 @@ public interface GenericDevice {
 	 */
 	public void setPropertyValue(String propertyName, Object value);
 	
+	/**
+	 * Callback notifying this device enters in one or more zones
+	 *  
+	 * @param zones The list of zones where the device has entered
+	 */
 	public void enterInZones(List<Zone> zones);
 	
+	/**
+	 * Callback notifying this device leaves one or more zones
+	 *  
+	 * @param zones The list of zones where that device has leaved
+	 */
 	public void leavingZones(List<Zone> zones);
 	
 
