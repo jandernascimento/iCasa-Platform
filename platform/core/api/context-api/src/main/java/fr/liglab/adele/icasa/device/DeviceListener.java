@@ -17,24 +17,53 @@ package fr.liglab.adele.icasa.device;
 
 import fr.liglab.adele.icasa.listener.IcasaListener;
 
-import java.util.EventListener;
-
 /**
- * Events may be notified more than once per event.
- * The only warantly is that at least one event will be sent to listeners.
- *
+ * A listner to the events related with device modifications.
+ * 
+ * Events may be notified more than once per event. The only waranty is that at least one event will be sent to
+ * listeners.
+ * 
  * @author Gabriel Pedraza Ferreira
- *
+ * 
  */
 public interface DeviceListener extends IcasaListener {
 
-    public void deviceAdded(GenericDevice device);
+	/**
+	 * Callback notifying the addition of a device to the platform.
+	 * 
+	 * @param device The device added. 
+	 */
+	public void deviceAdded(GenericDevice device);
 
-    public void deviceRemoved(GenericDevice device);
+	/**
+	 * Callback notifying the elimination of a device to the platform.
+	 * 
+	 * @param device The device removed. 
+	 */
+	public void deviceRemoved(GenericDevice device);
 
-    public void devicePropertyModified(GenericDevice device, String propertyName, Object oldValue);
+	/**
+	 * Callback notifying the modification of a property on the device listened.
+	 * 
+	 * @param device The device
+	 * @param propertyName The name of the modified property
+	 * @param oldValue The previous value of the property
+	 */
+	public void devicePropertyModified(GenericDevice device, String propertyName, Object oldValue);
 
-    public void devicePropertyAdded(GenericDevice device, String propertyName);
+	/**
+	 * Callback notifying the addition of a property on the device listened.
+	 *  
+	 * @param device The device
+	 * @param propertyName The name of the added property
+	 */
+	public void devicePropertyAdded(GenericDevice device, String propertyName);
 
-    public void devicePropertyRemoved(GenericDevice device, String propertyName);
+	/**
+	 * Callback notifying the elimination of a property on the device listened.
+	 *  
+	 * @param device The device
+	 * @param propertyName The name of the removed property
+	 */
+	public void devicePropertyRemoved(GenericDevice device, String propertyName);
 }
