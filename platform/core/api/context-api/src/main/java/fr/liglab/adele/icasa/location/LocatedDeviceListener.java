@@ -18,37 +18,65 @@ package fr.liglab.adele.icasa.location;
 import fr.liglab.adele.icasa.listener.IcasaListener;
 
 /**
- * Created with IntelliJ IDEA.
- * User: thomas
- * Date: 30/11/12
- * Time: 15:25
- * To change this template use File | Settings | File Templates.
+ * Listener on <code>LocatedDevice</code> objects
+ * 
+ * @author Gabriel Pedraza Ferreira
+ *
  */
 public interface LocatedDeviceListener extends IcasaListener {
 
+	/**
+	 * Called callback when a device property has been added.
+	 * @param device The device added.
+	 */
     public void deviceAdded(LocatedDevice device);
 
+    /**
+     * Called callback when a device property has been removed.
+     * @param device The device removed.
+     */
     public void deviceRemoved(LocatedDevice device);
 
+    /**
+     * Called callback when a device has been moved.
+     * @param device The device moved.
+     * @param oldPosition The previous position.
+     */
     public void deviceMoved(LocatedDevice device, Position oldPosition);
 
+    /**
+     * Called callback when a device property has been modified.
+     * @param device The device modified.
+     * @param propertyName The property modified.
+     * @param oldValue The property previous value.
+     */
     public void devicePropertyModified(LocatedDevice device, String propertyName, Object oldValue);
 
+    /**
+     * Called callback when a device property has been added.
+     * @param device The device modified
+     * @param propertyName The name of the property added.
+     */
     public void devicePropertyAdded(LocatedDevice device, String propertyName);
 
+    /**
+     * Called callback when a device property has been removed.
+     * @param device The device modified
+     * @param propertyName The name of the property removed.
+     */
     public void devicePropertyRemoved(LocatedDevice device, String propertyName);
 
     /**
-     * Invoked when a device has been attached to another device
-     * @param container
-     * @param child
+     * Called callback when a device has been attached to another device
+     * @param container The container device
+     * @param child The child device
      */
     void deviceAttached(LocatedDevice container, LocatedDevice child);
 
     /**
-     ** Invoked when a device has been detached from another device
-     * @param container
-     * @param child
+     * Called callback when a device has been detached from another device
+     * @param container The container device
+     * @param child The child device
      */
     void deviceDetached(LocatedDevice container, LocatedDevice child);
 

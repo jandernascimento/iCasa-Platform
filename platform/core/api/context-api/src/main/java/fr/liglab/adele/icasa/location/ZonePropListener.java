@@ -18,13 +18,32 @@ package fr.liglab.adele.icasa.location;
 import fr.liglab.adele.icasa.listener.IcasaListener;
 
 /**
+ * Listener of zone variables
+ * 
  * @author Thomas Leveque
  */
 public interface ZonePropListener extends IcasaListener {
 
-    public void zoneVariableAdded(Zone zone, String variableName);
+	/**
+	 * Called callback when a variable is added in a zone.
+	 * @param zone the zone where the variable was added.
+	 * @param variableName the name of variable added.
+	 */
+	public void zoneVariableAdded(Zone zone, String variableName);
 
-    public void zoneVariableRemoved(Zone zone, String variableName);
+	/**
+	 * Called callback when a variable is removed from a zone.
+	 * @param zone The zone where the variable was removed.
+	 * @param variableName The name of variable removed.
+	 */
+	public void zoneVariableRemoved(Zone zone, String variableName);
 
-    public void zoneVariableModified(Zone zone, String variableName, Object oldValue);
+	/**
+	 * Called callback when a variable has been modified.
+	 * @param zone The zone where the variable was modified.
+	 * @param variableName The name of variable modified.
+	 * @param oldValue The previous value of the variable.
+	 */
+	public void zoneVariableModified(Zone zone, String variableName, Object oldValue);
+	
 }

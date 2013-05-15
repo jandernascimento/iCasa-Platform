@@ -15,12 +15,21 @@
  */
 package fr.liglab.adele.icasa.location;
 
-
+/**
+ * This class represents a point in a coordinate system.
+ * @author Gabriel Pedraza Ferreira
+ *
+ */
 public final class Position {
 
 	public final int x;
 	public final int y;
 
+	/**
+	 * Default constructor
+	 * @param x
+	 * @param y
+	 */
 	public Position(final int x, final int y) {
 		this.x = x;
 		this.y = y;
@@ -56,6 +65,9 @@ public final class Position {
 		return true;
 	}
 
+	/**
+	 * Clones this point into a new object
+	 */
 	public Position clone() {
 		return new Position(this.x, this.y);
 	}
