@@ -19,7 +19,7 @@ import fr.liglab.adele.icasa.device.DeviceListener;
 import fr.liglab.adele.icasa.device.GenericDevice;
 
 /**
- * Empty implementation of a device listener. This is class is inteded to ease implementation of Device Listeners.
+ * Empty implementation of a device listener. This is class is intended to ease implementation of Device Listeners.
  * 
  * @author Thomas Leveque
  */

@@ -15,6 +15,11 @@
  */
 package fr.liglab.adele.icasa.device.settopbox;
 
+/**
+ * SettopBox device
+ * @author Gabriel
+ *
+ */
 public interface SetTopBox {
 
 	public boolean isStarted();

@@ -15,8 +15,6 @@
  */
 package fr.liglab.adele.icasa.device.util;
 
-import fr.liglab.adele.icasa.device.DeviceListener;
-import fr.liglab.adele.icasa.device.GenericDevice;
 import fr.liglab.adele.icasa.location.LocatedDevice;
 import fr.liglab.adele.icasa.location.LocatedDeviceListener;
 import fr.liglab.adele.icasa.location.Position;
