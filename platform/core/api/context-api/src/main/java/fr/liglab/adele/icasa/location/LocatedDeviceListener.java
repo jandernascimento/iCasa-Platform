@@ -18,7 +18,7 @@ package fr.liglab.adele.icasa.location;
 import fr.liglab.adele.icasa.listener.IcasaListener;
 
 /**
- * Listener on <code>LocatedDevice</code> objects
+ * Listener on {@link fr.liglab.adele.icasa.location.LocatedDevice} objects
  * 
  * @author Gabriel Pedraza Ferreira
  *

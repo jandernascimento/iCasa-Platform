@@ -26,7 +26,7 @@ import java.util.Set;
  * service interface definitions.
  * 
  * @see AbstractDevice
- * @author bourretp
+ * @author Gabriel Pedraza Ferreira
  */
 public interface GenericDevice {
 

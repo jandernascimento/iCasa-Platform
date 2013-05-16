@@ -17,8 +17,9 @@ package fr.liglab.adele.icasa.location;
 
 /**
  * This class represents a point in a coordinate system.
+ * 
  * @author Gabriel Pedraza Ferreira
- *
+ * 
  */
 public final class Position {
 
@@ -27,6 +28,7 @@ public final class Position {
 
 	/**
 	 * Default constructor
+	 * 
 	 * @param x
 	 * @param y
 	 */

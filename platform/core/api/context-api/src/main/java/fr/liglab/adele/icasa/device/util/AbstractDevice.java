@@ -30,7 +30,7 @@ import fr.liglab.adele.icasa.device.GenericDevice;
 import fr.liglab.adele.icasa.location.Zone;
 
 /**
- * Abstract implementation of the {@link GenericDevice} interface that manages
+ * Abstract implementation of the {@link fr.liglab.adele.icasa.device.GenericDevice} interface that manages
  * the listeners addition, removal and notifications.
  * 
  * @author Gabriel Pedraza Ferreira
