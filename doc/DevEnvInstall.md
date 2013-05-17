@@ -8,7 +8,6 @@ Prerequisites
 - IDE : Eclipse (>=Juno) ou IntelliJ (>= 11)
 - Build system : Maven  >=3.0.4
 - SCM : Git >= 1.8.0
-- SCM : Subversion >= 1.7
 - Java : JDK >= 6 (JDK 7 may not working in all cases, so prefer jdk 6)
 
 For Eclipse :
@@ -22,7 +21,6 @@ For easy github repository cloning
 - GitHub software
 On windows
 - Tortoise Git
-- Tortoise SVN
 For web development :
 - Chrome
 For SOAP and REST development :
@@ -40,9 +38,8 @@ dev
 -maven
 -maven-repo
 -workspaces
---iCasa
---Medical
---Project4
+--iCasa-Platform
+--MyProject
 ...
 
 Configuration
