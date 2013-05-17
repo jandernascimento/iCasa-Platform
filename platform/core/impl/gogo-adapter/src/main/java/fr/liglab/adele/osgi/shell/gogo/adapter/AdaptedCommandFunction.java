@@ -23,10 +23,9 @@ import org.apache.felix.service.command.CommandSession;
 import org.apache.felix.service.command.Function;
 import org.json.JSONObject;
 
-
 /**
- * AdaptedCommandFunction are used to expose ICommandService as gogo shell
- * commands. It helps to store a reference to the ICommand to be executed.
+ * AdaptedCommandFunction are used to expose ICommandService as gogo shell commands. It helps to store a reference to
+ * the ICommand to be executed.
  */
 public class AdaptedCommandFunction implements Function {
 
@@ -36,8 +35,7 @@ public class AdaptedCommandFunction implements Function {
 	/**
 	 * Instantiates a new adapted command function.
 	 * 
-	 * @param command
-	 *            the command
+	 * @param command the command
 	 */
 	AdaptedCommandFunction(iCasaCommand command) {
 		m_command = command;
@@ -46,21 +44,18 @@ public class AdaptedCommandFunction implements Function {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.apache.felix.service.command.Function#execute(org.apache.felix.service
-	 * .command.CommandSession, java.util.List)
+	 * @see org.apache.felix.service.command.Function#execute(org.apache.felix.service .command.CommandSession,
+	 * java.util.List)
 	 */
-	public Object execute(CommandSession session, List<Object> arguments)
-			throws Exception {
+	public Object execute(CommandSession session, List<Object> arguments) throws Exception {
 		JSONObject params = new JSONObject();
-        String paramsNames[] = m_command.getParameters();
-        if (arguments != null) {
-            for (int i = 0; i < paramsNames.length && arguments.size() > i; i++){
-                  params.put(paramsNames[i], arguments.get(i));
-            }
-        }
+		String paramsNames[] = m_command.getParameters();
+		if (arguments != null) {
+			for (int i = 0; i < paramsNames.length && arguments.size() > i; i++) {
+				params.put(paramsNames[i], arguments.get(i));
+			}
+		}
 
-		return m_command.execute(session.getKeyboard(), session.getConsole(),
-				params);
+		return m_command.execute(session.getKeyboard(), session.getConsole(), params);
 	}
 }

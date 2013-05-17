@@ -33,47 +33,46 @@ import org.json.JSONObject;
  */
 @Component(name = "CreateZoneCommand")
 @Provides
-@Instantiate(name="create-zone-command")
+@Instantiate(name = "create-zone-command")
 public class CreateZoneCommand extends AbstractCommand {
-
 
 	@Requires
 	private ContextManager simulationManager;
 
 	@Override
 	public Object execute(JSONObject param) throws Exception {
-        String id = param.getString(ScriptLanguage.ID);
-        int leftX = param.getInt(ScriptLanguage.LEFT_X );
-        int topY = param.getInt(ScriptLanguage.TOP_Y);
-        int height = param.getInt(ScriptLanguage.HEIGHT);
-        int width = param.getInt(ScriptLanguage.WIDTH);
+		String id = param.getString(ScriptLanguage.ID);
+		int leftX = param.getInt(ScriptLanguage.LEFT_X);
+		int topY = param.getInt(ScriptLanguage.TOP_Y);
+		int height = param.getInt(ScriptLanguage.HEIGHT);
+		int width = param.getInt(ScriptLanguage.WIDTH);
 		simulationManager.createZone(id, leftX, topY, width, height);
 		return null;
 	}
 
+	/**
+	 * Get the name of the Script and command gogo.
+	 * 
+	 * @return The command name.
+	 */
+	@Override
+	public String getName() {
+		return "create-zone";
+	}
 
-    /**
-     * Get the name of the  Script and command gogo.
-     *
-     * @return The command name.
-     */
-    @Override
-    public String getName() {
-        return "create-zone";
-    }
+	/**
+	 * Get the list of parameters.
+	 * 
+	 * @return
+	 */
+	@Override
+	public String[] getParameters() {
+		return new String[] { ScriptLanguage.ID, ScriptLanguage.LEFT_X, ScriptLanguage.TOP_Y, ScriptLanguage.HEIGHT,
+		      ScriptLanguage.WIDTH };
+	}
 
-    /**
-     * Get the list of parameters.
-     *
-     * @return
-     */
-    @Override
-    public String[] getParameters() {
-        return new String[]{ScriptLanguage.ID, ScriptLanguage.LEFT_X, ScriptLanguage.TOP_Y, ScriptLanguage.HEIGHT, ScriptLanguage.WIDTH};
-    }
-
-    @Override
-    public String getDescription(){
-        return "Creates a new zone.\n\t" + super.getDescription();
-    }
+	@Override
+	public String getDescription() {
+		return "Creates a new zone.\n\t" + super.getDescription();
+	}
 }
