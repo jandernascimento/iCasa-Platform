@@ -1,7 +1,7 @@
 <div class="row-fluid page-header">
     <div class="title span10">
-        <h1 style="text-align: center;">iCasa Simulator</h1>
-        <p style="text-align: center;" class="lead">Digital Home Simulation Tool</p>
+        <h1 style="text-align: center;">iCasa Platform</h1>
+        <p style="text-align: center;" class="lead">Digital Home Execution Platform</p>
         <!--p>
             <span class="span4">&nbsp;</span>
             <a href="http://maven.dynamis-technologies.com/artifactory/adele-repos/fr/liglab/adele/icasa/icasa.platform.distribution/${project.version}/icasa.platform.distribution-${project.version}.zip" class="btn
