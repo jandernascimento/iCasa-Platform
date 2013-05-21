@@ -28,5 +28,5 @@ public interface DeviceAccessPolicyMgr {
      * @param deviceDependency a device dependency
      * @return a handle on the application rights for this device dependency
      */
-    public DependAccessRights addDependency(Application application, DeviceDependency deviceDependency);
+    public DependAccessRights addDependency(DeviceDependency deviceDependency);
 }

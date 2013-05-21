@@ -15,12 +15,21 @@
  */
 package fr.liglab.adele.icasa.device.manager;
 
+import fr.liglab.adele.icasa.application.Application;
+
 import java.util.Set;
 
 /**
  * Represents a device dependency from an application.
  */
 public interface DeviceDependency {
+
+    /**
+     * Returns the application owner of this dependency.
+     *
+     * @return the application owner of this dependency.
+     */
+    public Application getApplication();
 
     /**
      * Returns all required access rights from related application device dependency.
