@@ -70,7 +70,7 @@ Prerequisites
 -----
 
 - install Maven 3.x
-- install jdk 6 (NOT java 7 !!!)
+- install jdk 6 or upper
 
 Instructions
 ----
@@ -87,20 +87,18 @@ The project is built every week on the following continuous integration server :
 Maven Repositories
 ----
 
-```xml
-<repository>
-	<id>maven-icasa-repository-release</id>
-	<name>icasa - Release</name>
-	<url>https://repository-icasa.forge.cloudbees.com/release/</url>
-	<layout>default</layout>
-</repository>
-<repository>
-	<id>maven-icasa-repository-snapshot</id>
-	<name>icasa - Snapshot</name>
-	<url>https://repository-icasa.forge.cloudbees.com/snapshot/</url>
-	<layout>default</layout>
-</repository>
-```
+    <repository>
+    	<id>maven-icasa-repository-release</id>
+	    <name>icasa - Release</name>
+	    <url>https://repository-icasa.forge.cloudbees.com/release/</url>
+	    <layout>default</layout>
+    </repository>
+    <repository>
+	    <id>maven-icasa-repository-snapshot</id>
+	    <name>icasa - Snapshot</name>
+	    <url>https://repository-icasa.forge.cloudbees.com/snapshot/</url>
+	    <layout>default</layout>
+    </repository>
 
 Contribute to this project
 ====

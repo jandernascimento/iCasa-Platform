@@ -26,12 +26,10 @@
 		<dependency>
          <groupId>${project.groupId}</groupId>
 			<artifactId>application.api</artifactId>
-         <version>${project.version}</version>
 		</dependency>
 		<dependency>
          <groupId>${project.groupId}</groupId>
 			<artifactId>common</artifactId>
-         <version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.osgi</groupId>
@@ -47,7 +45,7 @@
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
-						<Export-Package>fr.liglab.adele.icasa.device.manager, fr.liglab.adele.icasa.device.manager.util</Export-Package>
+						<Export-Package>fr.liglab.adele.icasa.device.manager</Export-Package>
 					</instructions>
 				</configuration>
 			</plugin>

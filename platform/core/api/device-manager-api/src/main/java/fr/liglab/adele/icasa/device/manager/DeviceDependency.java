@@ -15,126 +15,24 @@
  */
 package fr.liglab.adele.icasa.device.manager;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Represents a device dependency specification.
- * 
- * @author Thomas Leveque
- *
+ * Represents a device dependency from an application.
  */
-public class DeviceDependency {
-	
-	private final DeviceDependencies _dependencies;
-	
-	private boolean _isAll = false;
-	
-	private Set<String> _servSpecs = new HashSet<String>();
+public interface DeviceDependency {
 
-	private boolean _includes;
-	
-	DeviceDependency(DeviceDependencies dependencies, boolean includes) {
-		_dependencies = dependencies;
-		_includes = includes;
-	}
+    /**
+     * Returns all required access rights from related application device dependency.
+     *
+     * @return all required access rights from related application device dependency.
+     */
+    public Set<DeviceAccessRightRequest> getAccesRightRequests();
 
-	/**
-	 * Defines that we consider all devices.
-	 * 
-	 * @return this dependency
-	 */
-	public DeviceDependency all() {
-		_isAll  = true;
-		
-		return this;
-	}
-	
-	/**
-	 * Defines that we consider all devices which provides the specified specification.
-	 * 
-	 * @param spec a interface which represents a service specification
-	 * @return this dependency
-	 */
-	public DeviceDependency withService(String spec) {
-		_isAll = false;
-		_servSpecs.add(spec);
-		
-		return this;
-	}
-	
-	public DeviceDependency withService(Class<?> spec) {
-		return withService(spec.getName());
-	}
-	
-	/**
-	 * Returns serialized form of the device dependency specification.
-	 * 
-	 * @return serialized form of the device dependency specification.
-	 */
-	public String toString() {
-		if (_isAll)
-			return "all";
-		if (!_servSpecs.isEmpty()) {
-			StringBuffer specsStr = new StringBuffer();
-			specsStr.append("specifications(");
-			for (String spec : _servSpecs)
-				specsStr.append(spec);
-			specsStr.append(")");
-			return specsStr.toString();
-		}
-		
-		return "undefined"; 
-	}
+    public void updateAccessRightRequest(Set<DeviceAccessRightRequest> newRequest);
 
-	public boolean isAll() {
-		return _isAll;
-	}
-
-	/**
-	 * Returns true if this dependency represents inclusion of specified devices.
-	 * Else represents exclusion of specified devices.
-	 * 
-	 * @return true if this dependency represents inclusion of specified devices.
-	 */
-	public boolean isIncludes() {
-		return _includes;
-	}
-	
-	/**
-	 * Returns true if this dependency represents exclusion of specified devices.
-	 * Else represents inclusion of specified devices.
-	 * 
-	 * @return true if this dependency represents exclusion of specified devices.
-	 */
-	public boolean isExcludes() {
-		return !_includes;
-	}
-
-	public boolean matches(Device dev) {
-		if (_isAll)
-			return true;
-		
-		for (String spec : _servSpecs) {
-			if (!dev.hasServiceType(spec))
-				return false;
-		}
-		
-		//TODO perform match with attributes and other props
-		
-		return false;
-	}
-
-	public DeviceDependencies getDependencies() {
-		return _dependencies;
-	}
-
-	final DeviceDependency cloneDep(DeviceDependencies dependencies) {
-		DeviceDependency dep = new DeviceDependency(dependencies, _includes);
-		dep._isAll = _isAll;
-		dep._servSpecs = (Set<String>) ((HashSet<String>) _servSpecs).clone();
-		
-		return dep;
-	}
-
+    /**
+     * Must be called by the dependency owner to notify that this dependency is no more used.
+     */
+    public void unregister();
 }

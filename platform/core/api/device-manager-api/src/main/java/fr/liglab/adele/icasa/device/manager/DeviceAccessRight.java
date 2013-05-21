@@ -13,23 +13,16 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package fr.liglab.adele.icasa.device.manager.util;
+package fr.liglab.adele.icasa.device.manager;
 
-import fr.liglab.adele.icasa.device.manager.ProvidedDevice;
+import java.lang.reflect.Method;
 
 /**
- * Partial implementation of a provided device.
- * 
- * @author Thomas Leveque
- *
+ * Represents access right of one device method from one application.
  */
-public class AbstractProvidedDevice extends AbstractDevice implements ProvidedDevice {
+public interface DeviceAccessRight {
 
-	public AbstractProvidedDevice(String id, String name, String vendor) {
-		super(id, name, vendor);
-	}
-	
-	public AbstractProvidedDevice(String id, String name, String vendor, String typeId) {
-		super(id, name, vendor, typeId);
-	}
+    public Method getMethod();
+
+    public AccessRight getAccessRight();
 }

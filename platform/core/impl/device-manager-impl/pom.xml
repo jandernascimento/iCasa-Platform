@@ -18,12 +18,10 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>application.api</artifactId>
-      <version>${project.version}</version>
     </dependency>
 	<dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>device.manager.api</artifactId>
-      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.felix</groupId>
@@ -47,7 +45,7 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Private-Package>fr.liglab.adele.icasa.device.manager.impl.app, fr.liglab.adele.icasa.device.manager.impl.scope.mgt, fr.liglab.adele.icasa.device.manager.impl.util, fr.liglab.adele.icasa.device.manager.impl</Private-Package>
+            <Private-Package>fr.liglab.adele.icasa.device.manager.impl.app, fr.liglab.adele.icasa.device.manager.impl.util, fr.liglab.adele.icasa.device.manager.impl</Private-Package>
           </instructions>
         </configuration>
       </plugin>

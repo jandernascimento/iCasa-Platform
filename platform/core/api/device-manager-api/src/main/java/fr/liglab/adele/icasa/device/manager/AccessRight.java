@@ -15,20 +15,9 @@
  */
 package fr.liglab.adele.icasa.device.manager;
 
-import fr.liglab.adele.icasa.common.StateVariable;
-
 /**
- * Represents an operation parameter.
- * 
- * @author Thomas Leveque
- *
+ * Represents access right for a device method.
  */
-public interface OperationParameter extends StateVariable {
-
-	/**
-	 * Returns an object representing if it is an input and/or output parameter.
-	 * 
-	 * @return an object representing if it is an input and/or output parameter.
-	 */
-	public ParameterType getParameterType();
+public enum AccessRight {
+    EXCLUSIVE, SHARED, NO
 }

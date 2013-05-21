@@ -15,22 +15,18 @@
  */
 package fr.liglab.adele.icasa.device.manager;
 
-import java.util.Properties;
+import java.lang.reflect.Method;
 
 /**
- * Allows an object to contribute to property management of a device proxy service.
- * 
- * @author Thomas Leveque
- *
+ * Represents required device method access rights.
  */
-public interface ServPropManager {
+public interface DeviceAccessRightRequest {
 
-	/**
-	 * Called when the proxy is registered as an OSGi service.
-	 * 
-	 * @param device a device
-	 * @param proxy a device proxy
-	 * @param props the current proxy service properties
-	 */
-	public void registerService(ApplicationDevice device, Object proxy, Properties props);
+    public Method getMethod();
+
+    public boolean requestExclusiveAccess();
+
+    public boolean requestSharedAccess();
+
+    public boolean requestNoAccess();
 }

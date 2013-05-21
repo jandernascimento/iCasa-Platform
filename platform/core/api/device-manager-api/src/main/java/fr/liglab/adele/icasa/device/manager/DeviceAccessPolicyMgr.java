@@ -15,25 +15,18 @@
  */
 package fr.liglab.adele.icasa.device.manager;
 
-import java.util.ArrayList;
-import java.util.List;
+import fr.liglab.adele.icasa.application.Application;
 
 /**
- * Represents a request for devices.
- * 
- * @author Thomas Leveque
- *
+ * This service manages application access rights to devices.
  */
-public final class DeviceRequest extends DeviceDependencies {
-	
-	public DeviceRequest() {
-		super();
-	}
-	
-	public DeviceRequest cloneReq() {
-		DeviceRequest clonedDeps = new DeviceRequest();
-		super.cloneDepsInternal(clonedDeps);
-		
-		return clonedDeps;
-	}
+public interface DeviceAccessPolicyMgr {
+
+    /**
+     * Adds the specified application device dependency.
+     *
+     * @param deviceDependency a device dependency
+     * @return a handle on the application rights for this device dependency
+     */
+    public DependAccessRights addDependency(Application application, DeviceDependency deviceDependency);
 }

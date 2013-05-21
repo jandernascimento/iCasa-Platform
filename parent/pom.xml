@@ -232,6 +232,27 @@
                 <version>1.0.1-SNAPSHOT</version>
             </dependency>
 
+            <!-- iCasa -->
+            <dependency>
+                <groupId>fr.liglab.adele.icasa</groupId>
+                <artifactId>device.manager.api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>fr.liglab.adele.icasa</groupId>
+                <artifactId>application.api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>fr.liglab.adele.icasa</groupId>
+                <artifactId>application.impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>fr.liglab.adele.icasa</groupId>
+                <artifactId>common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
