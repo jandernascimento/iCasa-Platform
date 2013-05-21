@@ -114,34 +114,46 @@
 
     <!-- Project repositories -->
     <repositories>
-        <!-- iCASA repositories -->
+
+        <!-- ADELE repositories -->
         <repository>
-            <id>icasa-snapshot-repository</id>
-            <name>iCASA Snapshot repository</name>
-            <url>https://repository-icasa.forge.cloudbees.com/snapshot/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>adele-central-snapshot</id>
+            <name>adele-repos</name>
+            <url>http://maven.dynamis-technologies.com/artifactory/adele-repos</url>
         </repository>
         <repository>
-            <id>icasa-release-repository</id>
-            <name>iCASA Release repository</name>
-            <url>https://repository-icasa.forge.cloudbees.com/release/</url>
+            <snapshots />
+            <id>snapshots</id>
+            <name>adele-central-release</name>
+            <url>http://maven.dynamis-technologies.com/artifactory/adele-repos</url>
         </repository>
+
         <!-- For android apps-->
-        <repository>
+        <!--repository>
             <id>teleal-repo</id>
             <url>http://teleal.org/m2</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
-        </repository>
+        </repository-->
     </repositories>
-
     <pluginRepositories>
         <pluginRepository>
-            <id>elca-services</id>
-            <url>http://el4.elca-services.ch/el4j/maven2repository</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>central</id>
+            <name>adele-repos</name>
+            <url>http://maven.dynamis-technologies.com/artifactory/adele-repos</url>
+        </pluginRepository>
+        <pluginRepository>
+            <snapshots />
+            <id>snapshots</id>
+            <name>adele-central-release</name>
+            <url>http://maven.dynamis-technologies.com/artifactory/adele-repos</url>
         </pluginRepository>
     </pluginRepositories>
 
@@ -326,6 +338,7 @@
 
         </plugins>
     </build>
+
     <distributionManagement>
         <repository>
             <id>icasa-deploy-cloudbees-release</id>
@@ -342,6 +355,7 @@
             <url>file:target/site-tmp</url>
         </site>
     </distributionManagement>
+
     <scm>
         <connection>scm:git:ssh://git@github.com/AdeleResearchGroup/iCasa-Platform.git</connection>
         <url>https://github.com/AdeleResearchGroup/iCasa-Platform.git</url>
