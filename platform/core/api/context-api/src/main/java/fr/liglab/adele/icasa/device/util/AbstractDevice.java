@@ -90,7 +90,7 @@ public abstract class AbstractDevice implements GenericDevice {
 		}
 
 		if (modified)
-			notifyListeners(new DeviceEvent(this, DeviceEventType.PROP_MODIFIED, propertyName, oldValue));
+			notifyListeners(new DeviceEvent(this, DeviceEventType.PROP_MODIFIED, propertyName, oldValue, value));
 	}
 
 
@@ -159,7 +159,7 @@ public abstract class AbstractDevice implements GenericDevice {
 					listener.devicePropertyRemoved(event.getDevice(), event.getPropertyName());
 					continue;
 				} else if (DeviceEventType.PROP_MODIFIED.equals(event.getType())) {
-					listener.devicePropertyModified(event.getDevice(), event.getPropertyName(), event.getOldValue());
+					listener.devicePropertyModified(event.getDevice(), event.getPropertyName(), event.getOldValue(), event.getNewValue());
 					continue;
 				}
 			} catch (Exception e) {

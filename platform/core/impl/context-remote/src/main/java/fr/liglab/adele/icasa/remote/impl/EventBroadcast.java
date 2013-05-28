@@ -53,7 +53,7 @@ import fr.liglab.adele.icasa.remote.util.IcasaJSONUtil;
 @Component(name = "iCasa-event-broadcast")
 @Provides(specifications = RemoteEventBroadcast.class)
 @Instantiate(name = "iCasa-event-broadcast-1")
-public class EventBroadcast extends OnMessage<String> implements RemoteEventBroadcast{
+public class EventBroadcast extends OnMessage<String> implements RemoteEventBroadcast {
 
 	@Property(name = "mapping", value = "/event")
 	private String mapping;
@@ -183,7 +183,7 @@ public class EventBroadcast extends OnMessage<String> implements RemoteEventBroa
 		}
 
 		@Override
-		public void deviceMoved(LocatedDevice device, Position position) {
+		public void deviceMoved(LocatedDevice device, Position oldPosition, Position newPosition) {
 			JSONObject json = new JSONObject();
 			try {
 				json.put("deviceId", device.getSerialNumber());
@@ -218,7 +218,7 @@ public class EventBroadcast extends OnMessage<String> implements RemoteEventBroa
 		}
 
 		@Override
-		public void devicePropertyModified(LocatedDevice device, String propertyName, Object oldValue) {
+		public void devicePropertyModified(LocatedDevice device, String propertyName, Object oldValue, Object newValue) {
 			JSONObject json = new JSONObject();
 			try {
 				json.put("deviceId", device.getSerialNumber());

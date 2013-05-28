@@ -167,7 +167,7 @@ public class UPnPPhotometerProxyImpl extends AbstractDevice implements Photomete
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					notifyListeners(new DeviceEvent(_device, DeviceEventType.PROP_MODIFIED, PHOTOMETER_CURRENT_ILLUMINANCE, (Float)value.get("RetIlluminanceValue")));
+					notifyListeners(new DeviceEvent(_device, DeviceEventType.PROP_MODIFIED, PHOTOMETER_CURRENT_ILLUMINANCE, (Float)value.get("RetIlluminanceValue"), (Float)value.get("RetIlluminanceValue")));
 				}
 			};
 

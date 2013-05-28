@@ -136,9 +136,6 @@ public class UPnPBinaryLightProxyImpl extends AbstractDevice implements BinaryLi
 
 		@Override
 		public void notifyUPnPEvent(String deviceId, String serviceId, Dictionary events) {
-//			System.out.println("+++++ Device ID: " + deviceId);
-//			System.out.println("+++++ Service ID: " + serviceId);
-
 			Runnable notificator = new Runnable() {					
 				@Override
 				public void run() {
@@ -154,7 +151,7 @@ public class UPnPBinaryLightProxyImpl extends AbstractDevice implements BinaryLi
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					notifyListeners(new DeviceEvent(_device, DeviceEventType.PROP_MODIFIED, BINARY_LIGHT_POWER_STATUS, status));
+					notifyListeners(new DeviceEvent(_device, DeviceEventType.PROP_MODIFIED, BINARY_LIGHT_POWER_STATUS, status, status));
 				}
 			};
 

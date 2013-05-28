@@ -39,18 +39,22 @@ public interface LocatedDeviceListener extends IcasaListener {
 
     /**
      * Called callback when a device has been moved.
+     * 
      * @param device The device moved.
      * @param oldPosition The previous position.
+     * @param oldPosition The new position.
      */
-    public void deviceMoved(LocatedDevice device, Position oldPosition);
+    public void deviceMoved(LocatedDevice device, Position oldPosition, Position newPosition);
 
     /**
      * Called callback when a device property has been modified.
+     * 
      * @param device The device modified.
      * @param propertyName The property modified.
      * @param oldValue The property previous value.
+     * @param newValue The property new value.  
      */
-    public void devicePropertyModified(LocatedDevice device, String propertyName, Object oldValue);
+    public void devicePropertyModified(LocatedDevice device, String propertyName, Object oldValue, Object newValue);
 
     /**
      * Called callback when a device property has been added.

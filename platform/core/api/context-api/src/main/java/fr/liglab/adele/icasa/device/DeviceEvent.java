@@ -27,6 +27,7 @@ public class DeviceEvent {
 	private DeviceEventType _type;
 	private GenericDevice _device;
 	private Object _oldValue;
+	private Object _newValue;
 
 	/**
 	 * Creates a DeviceEvent.
@@ -36,11 +37,12 @@ public class DeviceEvent {
 	 * @param propName Property name
 	 * @param oldValue Old property value
 	 */
-	public DeviceEvent(GenericDevice device, DeviceEventType type, String propName, Object oldValue) {
+	public DeviceEvent(GenericDevice device, DeviceEventType type, String propName, Object oldValue, Object newValue) {
 		_device = device;
 		_propName = propName;
 		_type = type;
 		_oldValue = oldValue;
+		_newValue = newValue;
 	}
 
 	/**
@@ -51,7 +53,7 @@ public class DeviceEvent {
 	 * @param propName Property name
 	 */
 	public DeviceEvent(GenericDevice device, DeviceEventType type, String propName) {
-		this(device, type, propName, null);
+		this(device, type, propName, null, null);
 	}
 
 	/**
@@ -117,4 +119,13 @@ public class DeviceEvent {
 	public Object getOldValue() {
 		return _oldValue;
 	}
+	
+	/**
+	 * Gets the new value of the property modified
+	 * 
+	 * @return The new value of the property modified
+	 */
+	public Object getNewValue() {
+		return _newValue;
+	}	
 }

@@ -82,7 +82,7 @@ public interface GenericDevice {
      * @param listener
      *           the listener to add
      */
-    void addListener(DeviceListener listener);
+    void addListener(DeviceListener<?> listener);
 
     /**
      * Remove the specified listener from the list of this device's listeners. If
@@ -91,7 +91,7 @@ public interface GenericDevice {
      * @param listener
      *           the listener to remove
      */
-	void removeListener(DeviceListener listener);
+	void removeListener(DeviceListener<?> listener);
 
 
 	/**

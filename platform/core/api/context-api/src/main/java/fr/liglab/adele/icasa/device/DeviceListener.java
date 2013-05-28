@@ -18,29 +18,29 @@ package fr.liglab.adele.icasa.device;
 import fr.liglab.adele.icasa.listener.IcasaListener;
 
 /**
- * A listner to the events related with device modifications.
+ * A listener to the events related with device modifications.
  * 
- * Events may be notified more than once per event. The only waranty is that at least one event will be sent to
+ * Events may be notified more than once per event. The only guaranty is that at least one event will be sent to
  * listeners.
  * 
  * @author Gabriel Pedraza Ferreira
  * 
  */
-public interface DeviceListener extends IcasaListener {
+public interface DeviceListener<T extends GenericDevice> extends IcasaListener {
 
 	/**
 	 * Callback notifying the addition of a device to the platform.
 	 * 
 	 * @param device The device added. 
 	 */
-	public void deviceAdded(GenericDevice device);
+	public void deviceAdded(T device);
 
 	/**
 	 * Callback notifying the elimination of a device to the platform.
 	 * 
 	 * @param device The device removed. 
 	 */
-	public void deviceRemoved(GenericDevice device);
+	public void deviceRemoved(T device);
 
 	/**
 	 * Callback notifying the modification of a property on the device listened.
@@ -48,8 +48,9 @@ public interface DeviceListener extends IcasaListener {
 	 * @param device The device
 	 * @param propertyName The name of the modified property
 	 * @param oldValue The previous value of the property
+	 * @param newValue The new value of the property
 	 */
-	public void devicePropertyModified(GenericDevice device, String propertyName, Object oldValue);
+	public void devicePropertyModified(T device, String propertyName, Object oldValue, Object newValue);
 
 	/**
 	 * Callback notifying the addition of a property on the device listened.
@@ -57,7 +58,7 @@ public interface DeviceListener extends IcasaListener {
 	 * @param device The device
 	 * @param propertyName The name of the added property
 	 */
-	public void devicePropertyAdded(GenericDevice device, String propertyName);
+	public void devicePropertyAdded(T device, String propertyName);
 
 	/**
 	 * Callback notifying the elimination of a property on the device listened.
@@ -65,5 +66,7 @@ public interface DeviceListener extends IcasaListener {
 	 * @param device The device
 	 * @param propertyName The name of the removed property
 	 */
-	public void devicePropertyRemoved(GenericDevice device, String propertyName);
+	public void devicePropertyRemoved(T device, String propertyName);
+
+	
 }

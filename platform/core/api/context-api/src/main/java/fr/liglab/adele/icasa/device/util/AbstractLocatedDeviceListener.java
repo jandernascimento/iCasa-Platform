@@ -38,12 +38,12 @@ public class AbstractLocatedDeviceListener implements LocatedDeviceListener {
     }
 
     @Override
-    public void deviceMoved(LocatedDevice device, Position oldPosition) {
+    public void deviceMoved(LocatedDevice device, Position oldPosition, Position newPosition) {
         //do nothing
     }
 
     @Override
-    public void devicePropertyModified(LocatedDevice device, String propertyName, Object oldValue) {
+    public void devicePropertyModified(LocatedDevice device, String propertyName, Object oldValue, Object newValue) {
         //do nothing
     }
 
