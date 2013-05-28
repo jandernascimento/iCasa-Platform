@@ -315,7 +315,7 @@ public class EventBroadcast extends OnMessage<String> implements RemoteEventBroa
 		}
 
 		@Override
-		public void zoneVariableModified(Zone zone, String variableName, Object oldValue) {
+		public void zoneVariableModified(Zone zone, String variableName, Object oldValue, Object newValue) {
 			JSONObject json = new JSONObject();
 			try {
 				json.put("zoneId", zone.getId());

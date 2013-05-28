@@ -360,7 +360,7 @@ public class ZoneImpl extends LocatedObjectImpl implements Zone {
         List<ZoneListener> snapshotListener = getListenerCopy();
         for (ZoneListener listener : snapshotListener) {
             try{
-			    listener.zoneVariableModified(this, name, oldValue);
+			    listener.zoneVariableModified(this, name, oldValue, newValue);
             }catch(Exception ex){
                 System.err.println("Listener error in event zoneVariableModified");
                 ex.printStackTrace();

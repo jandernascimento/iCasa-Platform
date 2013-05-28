@@ -44,6 +44,6 @@ public interface ZonePropListener extends IcasaListener {
 	 * @param variableName The name of variable modified.
 	 * @param oldValue The previous value of the variable.
 	 */
-	public void zoneVariableModified(Zone zone, String variableName, Object oldValue);
+	public void zoneVariableModified(Zone zone, String variableName, Object oldValue, Object newValue);
 	
 }
