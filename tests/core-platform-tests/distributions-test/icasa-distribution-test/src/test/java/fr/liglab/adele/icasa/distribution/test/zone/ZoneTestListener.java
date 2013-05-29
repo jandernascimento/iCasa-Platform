@@ -91,7 +91,7 @@ public class ZoneTestListener implements ZoneListener {
 	 * @see fr.liglab.adele.icasa.location.ZonePropListener#zoneVariableModified(fr.liglab.adele.icasa.location.Zone, java.lang.String, java.lang.Object)
 	 */
 	public void zoneVariableModified(Zone zone, String variableName,
-			Object oldValue) {
+			Object oldValue, Object newValue) {
 		listenZone = zone;
 		listenVariable = variableName;
 		listenOldValue = oldValue;
