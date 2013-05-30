@@ -115,7 +115,7 @@ public abstract class AbstractDevice implements GenericDevice {
 	}
 
 	@Override
-	public void addListener(DeviceListener listener) {
+	public void addListener(DeviceListener<?> listener) {
 		if (listener == null) {
 			return;
 		}
@@ -127,7 +127,7 @@ public abstract class AbstractDevice implements GenericDevice {
 	}
 
 	@Override
-	public void removeListener(DeviceListener listener) {
+	public void removeListener(DeviceListener<?> listener) {
 		synchronized (m_listeners) {
 			m_listeners.remove(listener);
 		}
@@ -163,7 +163,6 @@ public abstract class AbstractDevice implements GenericDevice {
 					continue;
 				}
 			} catch (Exception e) {
-
 				Exception ee = new Exception("Exception in device listener '" + listener + "'", e);
 				ee.printStackTrace();
 			}

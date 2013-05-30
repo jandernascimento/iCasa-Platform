@@ -32,22 +32,32 @@ import fr.liglab.adele.icasa.location.Zone;
 
 public class LocatedDeviceImpl extends LocatedObjectImpl implements LocatedDevice, DeviceListener<GenericDevice> {
 
+	/**
+	 * Device Serial Number
+	 */
 	private String m_serialNumber;
 
-	private final List<LocatedDeviceListener> listeners = new ArrayList<LocatedDeviceListener>();
-
+	/**
+	 * Device Instance (of iPOJO Device Component)
+	 */
 	private GenericDevice deviceComponent;
 
-	private ContextManager manager;
-
+	/**
+	 * Device type (iPOJO Device Factory)
+	 */
 	private String _type;
+	
+	
+	private ContextManager manager;
+	
+	private final List<LocatedDeviceListener> listeners = new ArrayList<LocatedDeviceListener>();
 
 	private ReadWriteLock lock = new ReentrantReadWriteLock();
 
 	public LocatedDeviceImpl(String serialNumber, Position position, GenericDevice deviceComponent, String type,
 	      ContextManager manager) {
 		super(position);
-		m_serialNumber = serialNumber;
+		this.m_serialNumber = serialNumber;
 		this.deviceComponent = deviceComponent;
 		this.manager = manager;
 		this._type = type;

@@ -23,7 +23,7 @@ import fr.liglab.adele.icasa.device.GenericDevice;
  * 
  * @author Thomas Leveque
  */
-public class EmptyDeviceListener implements DeviceListener {
+public class EmptyDeviceListener implements DeviceListener<GenericDevice> {
 
 	@Override
 	public void deviceAdded(GenericDevice device) {
