@@ -76,6 +76,16 @@ public interface BinaryLight extends GenericDevice {
 	boolean setPowerStatus(boolean state);
 	
 	/**
+	 * Change the power status to true
+	 */
+	void turnOn();
+	
+	/**
+	 * Change the power status to false
+	 */
+	void turnOff();
+	
+	/**
 	 * Return the current power level of this binary light
 	 * @return the power level of this binary light
 	 * 

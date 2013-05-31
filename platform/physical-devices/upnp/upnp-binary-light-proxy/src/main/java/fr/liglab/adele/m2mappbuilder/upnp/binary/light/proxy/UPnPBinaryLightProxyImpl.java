@@ -189,4 +189,14 @@ public class UPnPBinaryLightProxyImpl extends AbstractDevice implements BinaryLi
 		}
 
 	}
+
+	@Override
+   public void turnOn() {
+		setPowerStatus(true);	   
+   }
+
+	@Override
+   public void turnOff() {
+		setPowerStatus(false);	   
+   }
 }
