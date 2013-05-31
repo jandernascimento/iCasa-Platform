@@ -43,8 +43,9 @@ public interface ZoneListener extends ZonePropListener {
 	 * 
 	 * @param zone The zone that has move.
 	 * @param oldPosition The old top-left relative position.
+	 * @param newPosition The new top-left relative position.
 	 */
-	public void zoneMoved(Zone zone, Position oldPosition);
+	public void zoneMoved(Zone zone, Position oldPosition, Position newPosition);
 
 	/**
 	 * Called callback when a zone has been resized.
@@ -58,8 +59,9 @@ public interface ZoneListener extends ZonePropListener {
 	 * 
 	 * @param zone The zone with new parent.
 	 * @param oldParentZone The old parent of the zone. null for the first time.
+	 * @param newParentZone The new parent zone.
 	 */
-	public void zoneParentModified(Zone zone, Zone oldParentZone);
+	public void zoneParentModified(Zone zone, Zone oldParentZone, Zone newParentZone);
 
 	/**
 	 * Invoked when a device has been attached a zone

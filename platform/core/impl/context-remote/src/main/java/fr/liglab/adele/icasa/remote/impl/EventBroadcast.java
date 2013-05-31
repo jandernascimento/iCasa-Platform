@@ -327,7 +327,7 @@ public class EventBroadcast extends OnMessage<String> implements RemoteEventBroa
 		}
 
 		@Override
-		public void zoneMoved(Zone zone, Position oldPosition) {
+		public void zoneMoved(Zone zone, Position oldPosition, Position newPosition) {
 			JSONObject json = new JSONObject();
 			try {
 				json.put("zoneId", zone.getId());
@@ -351,7 +351,7 @@ public class EventBroadcast extends OnMessage<String> implements RemoteEventBroa
 		}
 
 		@Override
-		public void zoneParentModified(Zone zone, Zone oldParent) {
+		public void zoneParentModified(Zone zone, Zone oldParent, Zone newParent) {
 			JSONObject json = new JSONObject();
 			try {
 				json.put("zoneId", zone.getId());

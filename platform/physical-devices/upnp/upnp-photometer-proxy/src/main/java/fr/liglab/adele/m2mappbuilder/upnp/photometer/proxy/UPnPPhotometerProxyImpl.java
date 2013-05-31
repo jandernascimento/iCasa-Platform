@@ -36,7 +36,7 @@ import fr.liglab.adele.icasa.location.Position;
 import fr.liglab.adele.icasa.location.Zone;
 import fr.liglab.adele.icasa.location.ZoneListener;
 
-public class UPnPPhotometerProxyImpl extends AbstractDevice implements Photometer, ZoneListener {
+public class UPnPPhotometerProxyImpl extends AbstractDevice implements Photometer {
 
 	private UPnPDevice device;
 
@@ -177,72 +177,4 @@ public class UPnPPhotometerProxyImpl extends AbstractDevice implements Photomete
 		}
 	}
 
-	@Override
-	public void zoneVariableAdded(Zone zone, String variableName) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void zoneVariableRemoved(Zone zone, String variableName) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void zoneVariableModified(Zone zone, String variableName, Object oldValue, Object newValue) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void zoneAdded(Zone zone) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void zoneRemoved(Zone zone) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void zoneMoved(Zone zone, Position oldPosition) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void zoneResized(Zone zone) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void zoneParentModified(Zone zone, Zone oldParentZone) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/**
-	 * Invoked when a device has been attached a zone
-	 * 
-	 * @param container
-	 * @param child
-	 */
-	@Override
-	public void deviceAttached(Zone container, LocatedDevice child) {
-		// To change body of implemented methods use File | Settings | File Templates.
-	}
-
-	/**
-	 * * Invoked when a device has been detached from a zone
-	 * 
-	 * @param container
-	 * @param child
-	 */
-	@Override
-	public void deviceDetached(Zone container, LocatedDevice child) {
-		// To change body of implemented methods use File | Settings | File Templates.
-	}
 }
