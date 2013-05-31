@@ -613,7 +613,8 @@ public class ContextManagerImpl implements ContextManager {
 	}
 
 	private int random(int min, int max) {
-		final double range = (max - 10) - (min + 10);
+		//final double range = (max - 10) - (min + 10);
+		final double range = max - min;
 		if (range <= 0.0) {
 			throw new IllegalArgumentException("min >= max");
 		}
@@ -626,8 +627,10 @@ public class ContextManagerImpl implements ContextManager {
 			return null;
 		int minX = zone.getLeftTopAbsolutePosition().x;
 		int minY = zone.getLeftTopAbsolutePosition().y;
-		int newX = random(minX, minX + zone.getWidth());
-		int newY = random(minY, minY + zone.getHeight());
+
+		int newX = random(minX + GenericDevice.DEFAULT_WIDTH, minX + zone.getWidth() - GenericDevice.DEFAULT_WIDTH);
+		int newY = random(minY + GenericDevice.DEFAULT_HEIGHT, minY + zone.getHeight() - GenericDevice.DEFAULT_HEIGHT);
+
 		return new Position(newX, newY);
 	}
 
