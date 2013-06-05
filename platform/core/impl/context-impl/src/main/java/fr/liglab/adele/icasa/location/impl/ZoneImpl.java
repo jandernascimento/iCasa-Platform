@@ -25,8 +25,9 @@ import fr.liglab.adele.icasa.location.*;
 public class ZoneImpl extends LocatedObjectImpl implements Zone {
 
 	private String id;
-	private int height;
-	private int width;
+	private int yLength;
+	private int xLength;
+    private int zLength;
 	private Zone parent;
 	private Position leftTopPosition;
 	private List<Zone> children = new ArrayList<Zone>();
@@ -35,16 +36,17 @@ public class ZoneImpl extends LocatedObjectImpl implements Zone {
 	private boolean useParentVariable = false;
 	private ReadWriteLock lock = new ReentrantReadWriteLock();
 
-	public ZoneImpl(String id, int x, int y, int width, int height) {
-		this(id, new Position(x, y), width, height);
+	public ZoneImpl(String id, int x, int y, int z, int xLength, int yLength, int zLength) {
+		this(id, new Position(x, y, z), xLength, yLength, zLength);
 	}
 
-	public ZoneImpl(String id, Position leftTopPosition, int width, int height) {
+	public ZoneImpl(String id, Position leftTopPosition, int width, int height, int depth) {
 		super(leftTopPosition);
 		this.id = id;
 		this.leftTopPosition = leftTopPosition.clone();
-		this.height = height;
-		this.width = width;
+		this.yLength = height;
+		this.xLength = width;
+        this.zLength = depth;
 	}
 
 	private static Zone clone(Zone zone) {
@@ -56,14 +58,14 @@ public class ZoneImpl extends LocatedObjectImpl implements Zone {
 			ZoneImpl _zone = (ZoneImpl) zone;
 			_zone.lock.readLock().lock();
 			try {
-				returningZone = new ZoneImpl(_zone.getId(), _zone.getLeftTopRelativePosition(), _zone.getWidth(),
-				      _zone.getHeight());
+				returningZone = new ZoneImpl(_zone.getId(), _zone.getLeftTopRelativePosition(), _zone.getXLength(),
+				      _zone.getYLength(), _zone.getZLength());
 			} finally {
 				_zone.lock.readLock().unlock();
 			}
 		} else {
-			returningZone = new ZoneImpl(zone.getId(), zone.getLeftTopRelativePosition(), zone.getWidth(),
-			      zone.getHeight());
+			returningZone = new ZoneImpl(zone.getId(), zone.getLeftTopRelativePosition(), zone.getXLength(),
+			      zone.getYLength(), zone.getZLength());
 		}
 		return returningZone;
 	}
@@ -78,12 +80,12 @@ public class ZoneImpl extends LocatedObjectImpl implements Zone {
 		Position aZonePosition = clonedZone.getLeftTopRelativePosition();
 		int _width, _height;
 		lock.readLock().lock();
-		_width = width;
-		_height = height;
+		_width = xLength;
+		_height = yLength;
 		Position thisPosition = getLeftTopAbsolutePosition();
 		lock.readLock().unlock();
-		boolean fits = (aZonePosition.x + clonedZone.getWidth() > _width + thisPosition.x)
-		      || (aZonePosition.y + clonedZone.getHeight() > _height + thisPosition.y);
+		boolean fits = (aZonePosition.x + clonedZone.getXLength() > _width + thisPosition.x)
+		      || (aZonePosition.y + clonedZone.getYLength() > _height + thisPosition.y);
 		return !fits;
 	}
 
@@ -143,20 +145,20 @@ public class ZoneImpl extends LocatedObjectImpl implements Zone {
 	}
 
 	@Override
-	public int getWidth() {
+	public int getXLength() {
 		lock.readLock().lock();
 		try {
-			return width;
+			return xLength;
 		} finally {
 			lock.readLock().unlock();
 		}
 	}
 
 	@Override
-	public int getHeight() {
+	public int getYLength() {
 		lock.readLock().lock();
 		try {
-			return height;
+			return yLength;
 		} finally {
 			lock.readLock().unlock();
 		}
@@ -178,8 +180,8 @@ public class ZoneImpl extends LocatedObjectImpl implements Zone {
 		try {
 			Position absolutePosition = getLeftTopAbsolutePosition();
 
-			return (position.x >= absolutePosition.x && position.x <= absolutePosition.x + width)
-			      && (position.y >= absolutePosition.y && position.y <= absolutePosition.y + height);
+			return (position.x >= absolutePosition.x && position.x <= absolutePosition.x + xLength)
+			      && (position.y >= absolutePosition.y && position.y <= absolutePosition.y + yLength);
 		} finally {
 			lock.readLock().unlock();
 		}
@@ -206,15 +208,18 @@ public class ZoneImpl extends LocatedObjectImpl implements Zone {
 		Zone parentZone = getParent();
 		int absoluteX = leftTopPosition.x;
 		int absoluteY = leftTopPosition.y;
+        int absoluteZ = leftTopPosition.z;
 
 		if (parentZone != null) {
 			absoluteX += parentZone.getCenterAbsolutePosition().x;
 			absoluteY += parentZone.getCenterAbsolutePosition().y;
+            absoluteZ += parentZone.getCenterAbsolutePosition().z;
 		}
-		absoluteX += width / 2;
-		absoluteY += height / 2;
+		absoluteX += xLength / 2;
+		absoluteY += yLength / 2;
+        absoluteZ += zLength / 2;
 		lock.readLock().unlock();
-		return new Position(absoluteX, absoluteY);
+		return new Position(absoluteX, absoluteY, absoluteZ);
 	}
 
 	@Override
@@ -223,15 +228,16 @@ public class ZoneImpl extends LocatedObjectImpl implements Zone {
 		try {
 			if (parent == null) {
 				try {
-					int newX = position.x - width / 2;
-					int newY = position.y - height / 2;
+					int newX = position.x - xLength / 2;
+					int newY = position.y - yLength / 2;
+                    int newZ = position.z - zLength / 2;
 					setLeftTopRelativePosition(new Position(newX, newY));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			} else {
-				int newX = (position.x - (width / 2)) - parent.getLeftTopAbsolutePosition().x;
-				int newY = (position.y - (height / 2)) - parent.getLeftTopAbsolutePosition().y;
+				int newX = (position.x - (xLength / 2)) - parent.getLeftTopAbsolutePosition().x;
+				int newY = (position.y - (yLength / 2)) - parent.getLeftTopAbsolutePosition().y;
 				try {
 					setLeftTopRelativePosition(new Position(newX, newY));
 				} catch (Exception e) {
@@ -516,29 +522,53 @@ public class ZoneImpl extends LocatedObjectImpl implements Zone {
 	}
 
 	@Override
-	public void setWidth(int width) throws Exception {
-		resize(width, this.height);
+	public void setXLength(int width) throws Exception {
+		resize(width, this.yLength, this.zLength);
 	}
 
 	@Override
-	public void setHeight(int height) throws Exception {
-		resize(this.width, height);
+	public void setYLength(int height) throws Exception {
+		resize(this.xLength, height, this.zLength);
 
 	}
 
-	@Override
-	public void resize(int newWidth, int newHeight) throws Exception {
+    /**
+     * Gets the zone Z length.
+     *
+     * @return the zone Y length.
+     */
+    @Override
+    public int getZLength() {
+        return zLength;
+    }
+
+    /**
+     * Sets the zone Y length.
+     *
+     * @param length the new zone Z length.
+     * @throws Exception When the zone does not fit its parent zone.
+     */
+    @Override
+    public void setZLength(int length) throws Exception {
+        this.zLength = length;
+    }
+
+    @Override
+	public void resize(int newWidth, int newHeight, int newDepth) throws Exception {
 		Zone _parent = ZoneImpl.clone(getParent());
 		lock.writeLock().lock();
-		int oldWidth = this.width;
-		int oldHeight = this.height;
+		int oldWidth = this.xLength;
+		int oldHeight = this.yLength;
+        int oldDepth = this.zLength;
 		try {
-			this.width = newWidth;
-			this.height = newHeight;
+			this.xLength = newWidth;
+			this.yLength = newHeight;
+            this.zLength = newDepth;
 			if (_parent != null) {
 				if (!_parent.fits(this)) {
-					this.width = oldWidth;
-					this.height = oldHeight;
+					this.xLength = oldWidth;
+					this.yLength = oldHeight;
+                    this.zLength = oldDepth;
 					throw new Exception("New size does not fit the parent zone");
 				}
 			}
@@ -564,34 +594,45 @@ public class ZoneImpl extends LocatedObjectImpl implements Zone {
 			return null;
 		int relX = object.getCenterAbsolutePosition().x - getCenterAbsolutePosition().x;
 		int relY = object.getCenterAbsolutePosition().y - getCenterAbsolutePosition().y;
-		return new Position(relX, relY);
+        int relZ = object.getCenterAbsolutePosition().z - getCenterAbsolutePosition().z;
+		return new Position(relX, relY, relZ);
 	}
 
 	@Override
 	public Position getRightBottomRelativePosition() {
 		Position leftTopRelativePosition = getLeftTopRelativePosition();
-		int newX = leftTopRelativePosition.x + width;
-		int newY = leftTopRelativePosition.y + height;
+		int newX = leftTopRelativePosition.x + xLength;
+		int newY = leftTopRelativePosition.y + yLength;
+        int newZ = leftTopRelativePosition.z + zLength;
 		return new Position(newX, newY);
 	}
 
 	@Override
 	public Position getRightBottomAbsolutePosition() {
 		Position leftTopAbsolutePosition = getLeftTopAbsolutePosition();
-		int newX = leftTopAbsolutePosition.x + width;
-		int newY = leftTopAbsolutePosition.y + height;
+		int newX = leftTopAbsolutePosition.x + xLength;
+		int newY = leftTopAbsolutePosition.y + yLength;
+        int newZ = leftTopAbsolutePosition.z + zLength;
 		return new Position(newX, newY);
 	}
 
 	@Override
 	public String toString() {
+        StringBuilder sBuilder = new StringBuilder();
+        String parentId = "Unset";
 		lock.readLock().lock();
-		String parentId = "Unset";
 		try {
-			if (parent != null)
+			if (parent != null) {
 				parentId = parent.getId();
-			return "Zone: " + id + " X: " + leftTopPosition.x + " Y: " + leftTopPosition.y + " -- Width: " + width
-			      + " Height: " + height + " - Parent: " + parentId + " - Use parent: " + useParentVariable;
+            }
+            sBuilder.append("Zone: ").append(id).append(" X: ").append(leftTopPosition.x).append(" Y: ").
+                    append(leftTopPosition.y).append(" Z: ").append(leftTopPosition.z);
+            sBuilder.append('\n');
+            sBuilder.append("X-Length: ").append(xLength).append(" Y-Length: ").append(yLength).
+                    append(" Z-Length: ").append(zLength).append('\n');
+            sBuilder.append("Parent:" ).append(parentId).append('\n');
+            sBuilder.append("Use Parent: ").append(useParentVariable);
+			return sBuilder.toString();
 		} finally {
 			lock.readLock().unlock();
 		}

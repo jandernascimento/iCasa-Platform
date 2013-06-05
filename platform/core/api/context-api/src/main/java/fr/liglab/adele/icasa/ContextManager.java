@@ -44,7 +44,7 @@ public interface ContextManager {
 	 * @return the created zone.
 	 * @throws IllegalArgumentException when exists a zone with the same identifier.
 	 */
-	public Zone createZone(String id, int leftX, int topY, int width, int height);
+	public Zone createZone(String id, int leftX, int topY, int bottomZ, int width, int height, int depth);
 
 	/**
 	 * Creates a new rectangular zone using a center position.
@@ -73,7 +73,7 @@ public interface ContextManager {
 	 * @param topY The new Y corner value
 	 * @throws Exception when new position does not fit in the parent zone.
 	 */
-	public void moveZone(String id, int leftX, int topY) throws Exception;
+	public void moveZone(String id, int leftX, int topY, int bottomZ) throws Exception;
 
 	/**
 	 * Resizes a zone using a new width and height.
@@ -81,9 +81,10 @@ public interface ContextManager {
 	 * @param id The identifier of the zone to resize.
 	 * @param width the new width of the zone.
 	 * @param height The new height of the zone
+     * @param depth The new depth of the zone
 	 * @throws Exception Throws an exception when the zone does not fit in the parent zone.
 	 */
-	public void resizeZone(String id, int width, int height) throws Exception;
+	public void resizeZone(String id, int width, int height, int depth) throws Exception;
 
 	/**
 	 * Removes all zones in the platform.

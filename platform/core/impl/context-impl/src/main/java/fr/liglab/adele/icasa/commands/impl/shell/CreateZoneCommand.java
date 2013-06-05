@@ -18,6 +18,7 @@ package fr.liglab.adele.icasa.commands.impl.shell;
 import fr.liglab.adele.icasa.ContextManager;
 import fr.liglab.adele.icasa.commands.impl.AbstractCommand;
 import fr.liglab.adele.icasa.commands.impl.ScriptLanguage;
+import fr.liglab.adele.icasa.location.Zone;
 import org.apache.felix.ipojo.annotations.Component;
 import org.apache.felix.ipojo.annotations.Instantiate;
 import org.apache.felix.ipojo.annotations.Provides;
@@ -46,7 +47,8 @@ public class CreateZoneCommand extends AbstractCommand {
 		int topY = param.getInt(ScriptLanguage.TOP_Y);
 		int height = param.getInt(ScriptLanguage.HEIGHT);
 		int width = param.getInt(ScriptLanguage.WIDTH);
-		simulationManager.createZone(id, leftX, topY, width, height);
+        System.err.println("Z-length and Z-Bottom will be set to the default values: " + Zone.DEFAULT_Z_LENGTH + " and " + Zone.DEFAULT_Z_BOTTOM);
+		simulationManager.createZone(id, leftX, topY, Zone.DEFAULT_Z_BOTTOM, width, height, Zone.DEFAULT_Z_LENGTH);
 		return null;
 	}
 

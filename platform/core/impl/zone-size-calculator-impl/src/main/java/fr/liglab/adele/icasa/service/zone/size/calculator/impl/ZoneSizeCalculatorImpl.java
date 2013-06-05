@@ -41,7 +41,7 @@ public class ZoneSizeCalculatorImpl implements ZoneSizeCalculator {
 	public double getXInMeter(String zoneId) {
 		Zone zone = _contextManager.getZone(zoneId);
 		if (zone!=null)
-			return zone.getWidth() * SCALE_FACTOR;
+			return zone.getXLength() * SCALE_FACTOR;
 		return 0;
 	}
 
@@ -56,7 +56,7 @@ public class ZoneSizeCalculatorImpl implements ZoneSizeCalculator {
 	public double getYInMeter(String zoneId) {
 		Zone zone = _contextManager.getZone(zoneId);
 		if (zone!=null)
-			return zone.getHeight() * SCALE_FACTOR;
+			return zone.getYLength() * SCALE_FACTOR;
 		return 0;
 	}
 

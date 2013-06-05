@@ -18,6 +18,7 @@ package fr.liglab.adele.icasa.commands.impl.shell;
 import fr.liglab.adele.icasa.ContextManager;
 import fr.liglab.adele.icasa.commands.impl.AbstractCommand;
 import fr.liglab.adele.icasa.commands.impl.ScriptLanguage;
+import fr.liglab.adele.icasa.location.Zone;
 import org.apache.felix.ipojo.annotations.Component;
 import org.apache.felix.ipojo.annotations.Instantiate;
 import org.apache.felix.ipojo.annotations.Provides;
@@ -46,9 +47,15 @@ public class MoveZoneCommand extends AbstractCommand {
 	@Override
 	public Object execute(JSONObject param) throws Exception {
         String zoneId = param.getString(ScriptLanguage.ZONE_ID);
+        Zone zone = simulationManager.getZone(zoneId);
+        if (zone == null){
+            throw new IllegalArgumentException("Zone ("+ zoneId +") does not exist");
+        }
         int leftX = param.getInt(ScriptLanguage.LEFT_X);
         int topY = param.getInt(ScriptLanguage.TOP_Y);
-		simulationManager.moveZone(zoneId, leftX, topY);
+        int bottomZ = zone.getLeftTopAbsolutePosition().z;
+        System.err.println("Z-Bottom value will not change");
+		simulationManager.moveZone(zoneId, leftX, topY, bottomZ);
 		return null;
 	}
 

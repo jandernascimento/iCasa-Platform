@@ -54,22 +54,27 @@ public abstract class LocatedObjectImpl implements LocatedObject {
 		Position absolutePosition = getCenterAbsolutePosition();
 		int deltaX = position.x - absolutePosition.x;
 		int deltaY = position.y - absolutePosition.y;
+        int deltaZ = position.z - absolutePosition.z;
 		writeLock.lock();
 		m_position = position.clone();
 		writeLock.unlock();
-		moveAttachedObjects(deltaX, deltaY);
+		moveAttachedObjects(deltaX, deltaY, deltaZ);
 	}
 
 	protected void moveAttachedObjects(int deltaX, int deltaY) {
-		List<LocatedObject> snapshotAttachedObjects = getAttachedObjects();
-		for (LocatedObject object : snapshotAttachedObjects) {
-			int newX = object.getCenterAbsolutePosition().x + deltaX;
-			int newY = object.getCenterAbsolutePosition().y + deltaY;
-			Position objectPosition = new Position(newX, newY);
-			object.setCenterAbsolutePosition(objectPosition);
-		}
+		moveAttachedObjects(deltaX, deltaY, 0);
 	}
 
+    protected void moveAttachedObjects(int deltaX, int deltaY, int deltaZ) {
+        List<LocatedObject> snapshotAttachedObjects = getAttachedObjects();
+        for (LocatedObject object : snapshotAttachedObjects) {
+            int newX = object.getCenterAbsolutePosition().x + deltaX;
+            int newY = object.getCenterAbsolutePosition().y + deltaY;
+            int newZ = object.getCenterAbsolutePosition().z + deltaZ;
+            Position objectPosition = new Position(newX, newY, newZ);
+            object.setCenterAbsolutePosition(objectPosition);
+        }
+    }
 	@Override
 	public void attachObject(LocatedObject object) {
 		if (object == this)

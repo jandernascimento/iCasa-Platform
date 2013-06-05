@@ -31,6 +31,7 @@ import org.osgi.framework.BundleContext;
 import fr.liglab.adele.commons.distribution.test.AbstractDistributionBaseTest;
 import fr.liglab.adele.icasa.ContextManager;
 import fr.liglab.adele.icasa.distribution.test.zone.ZoneTestListener;
+import fr.liglab.adele.icasa.listener.IcasaListener;
 import fr.liglab.adele.icasa.location.Position;
 import fr.liglab.adele.icasa.location.Zone;
 
@@ -167,7 +168,7 @@ public class ZoneTest extends AbstractDistributionBaseTest {
 		Assert.assertNull(listener.getListenZone());//There is any zone in the listener.
 		//move zone.
 		try {
-			icasa.moveZone(zone_id_0, 10, 10);
+			icasa.moveZone(zone_id_0, 10, 10, 0);
 		} catch (Exception e) {
 			Assert.fail("Error when moving zone");
 		}
@@ -183,13 +184,14 @@ public class ZoneTest extends AbstractDistributionBaseTest {
 	public void resizeZoneTest(){
 		String zone_id_0 = "myZone-0";
 		int zone_0_scope = 5;//size of the squared zone is 10
-		Position positionZone_0 = new Position(5,5);
-		Position newPositionAfterMove = new Position(10,10);
+		Position positionZone_0 = new Position(5,5,5);
+		Position newPositionAfterMove = new Position(10,10,10);
 		//Create zone
 		ZoneTestListener listener = new ZoneTestListener();
 		Zone zone_0 = icasa.createZone(zone_id_0, positionZone_0, zone_0_scope);
-		Assert.assertEquals(10,zone_0.getHeight());
-		Assert.assertEquals(10,zone_0.getWidth());
+		Assert.assertEquals(10,zone_0.getYLength());
+		Assert.assertEquals(10,zone_0.getXLength());
+        Assert.assertEquals(10,zone_0.getZLength());
 		//Add listener after creating to only receive resize event.
 		icasa.addListener(listener);
 		Assert.assertNull(listener.getListenZone());//Any event received.
@@ -197,7 +199,7 @@ public class ZoneTest extends AbstractDistributionBaseTest {
 		Assert.assertEquals(zone_0.getCenterAbsolutePosition(), positionZone_0);
 		//Resizes zone.
 		try {
-			icasa.resizeZone(zone_id_0, 20, 20);
+			icasa.resizeZone(zone_id_0, 20, 20, 20);
 		} catch (Exception e) {
 			Assert.fail("Error when resizing zone");
 		}
@@ -205,8 +207,8 @@ public class ZoneTest extends AbstractDistributionBaseTest {
 		//The resize event has been received.
 		Assert.assertEquals(zone_0, listener.getListenZone());
 		//Test the new zone size.
-		Assert.assertEquals(20,zone_0.getHeight());
-		Assert.assertEquals(20,zone_0.getWidth());
+		Assert.assertEquals(20,zone_0.getYLength());
+		Assert.assertEquals(20,zone_0.getXLength());
 		//Test the new zone center position.
 		
 	}
@@ -220,12 +222,12 @@ public class ZoneTest extends AbstractDistributionBaseTest {
 		String zone_parent_id_0 = "myParentZone-0";
 		//Create zone
 		ZoneTestListener listener = new ZoneTestListener();
-		Zone zone_0 = icasa.createZone(zone_id_0, 77,387,49,49);
+		Zone zone_0 = icasa.createZone(zone_id_0, 77,387, Zone.DEFAULT_Z_BOTTOM,49,49, Zone.DEFAULT_Z_LENGTH);
 		//Add listener after creating to only receive resize event.
 		icasa.addListener(listener);
 		Assert.assertNull(listener.getListenZone());//Any event received.
 		//Add parent zone.
-		icasa.createZone(zone_parent_id_0, 55,370, 259, 210);
+		icasa.createZone(zone_parent_id_0, 55,370,Zone.DEFAULT_Z_BOTTOM, 259, 210, Zone.DEFAULT_Z_LENGTH);
 		try {
 			icasa.setParentZone(zone_id_0, zone_parent_id_0);
 		} catch (Exception e1) {
@@ -249,8 +251,8 @@ public class ZoneTest extends AbstractDistributionBaseTest {
 		//Create zone
 		ZoneTestListener listener = new ZoneTestListener();
 		Zone zone_0 = icasa.createZone(zone_id_0, positionZone_0, zone_0_scope);
-		Assert.assertEquals(zone_0_scope*2,zone_0.getHeight());
-		Assert.assertEquals(zone_0_scope*2,zone_0.getWidth());
+		Assert.assertEquals(zone_0_scope*2,zone_0.getYLength());
+		Assert.assertEquals(zone_0_scope*2,zone_0.getXLength());
 		//Add listener after creating to only receive resize event.
 		icasa.addListener(listener);
 		Assert.assertNull(listener.getListenZone());//Any event received.
@@ -265,7 +267,7 @@ public class ZoneTest extends AbstractDistributionBaseTest {
 		}
 		//Resizes zone.
 		try {
-			icasa.resizeZone(zone_id_0, 20, 20);
+			icasa.resizeZone(zone_id_0, 20, 20, Zone.DEFAULT_Z_LENGTH);
 			Assert.fail("must throw an exception, child does not fit in parent zone");
 		} catch (Exception e) {
 			

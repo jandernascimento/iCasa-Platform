@@ -18,6 +18,7 @@ package fr.liglab.adele.icasa.commands.impl.shell;
 import fr.liglab.adele.icasa.ContextManager;
 import fr.liglab.adele.icasa.commands.impl.AbstractCommand;
 import fr.liglab.adele.icasa.commands.impl.ScriptLanguage;
+import fr.liglab.adele.icasa.location.Zone;
 import org.apache.felix.ipojo.annotations.Component;
 import org.apache.felix.ipojo.annotations.Instantiate;
 import org.apache.felix.ipojo.annotations.Provides;
@@ -65,9 +66,15 @@ public class ResizeZoneCommand extends AbstractCommand {
 	@Override
 	public Object execute(JSONObject param) throws Exception {
         String zoneId = param.getString(PARAMS[0]);
+        Zone zone = simulationManager.getZone(zoneId);
+        if (zone == null){
+            throw new IllegalArgumentException("Zone ("+ zoneId +") does not exist");
+        }
         int width = param.getInt(PARAMS[1]);
         int height = param.getInt(PARAMS[2]);
-		simulationManager.resizeZone(zoneId, width, height);
+        int depth = zone.getZLength();
+        System.err.println("Z-length will not change");
+		simulationManager.resizeZone(zoneId, width, height, depth);
 		return null;
 	}
     @Override

@@ -25,6 +25,8 @@ public final class Position {
 
 	public final int x;
 	public final int y;
+    public final int z;
+    public final static int DEFAULT_Z = 0;
 
 	/**
 	 * Default constructor
@@ -32,14 +34,18 @@ public final class Position {
 	 * @param x
 	 * @param y
 	 */
-	public Position(final int x, final int y) {
+	public Position(final int x, final int y, final int z) {
 		this.x = x;
 		this.y = y;
+        this.z = z;
 	}
+    public Position(final int x, final int y) {
+        this(x,y,DEFAULT_Z);
+    }
 
 	@Override
 	public String toString() {
-		return "(" + x + ":" + y + ")";
+		return "(" + x + "," + y + "," + z +")";
 	}
 
 	@Override
@@ -48,6 +54,7 @@ public final class Position {
 		int result = 1;
 		result = prime * result + x;
 		result = prime * result + y;
+        result = prime * result + z;
 		return result;
 	}
 
@@ -64,6 +71,8 @@ public final class Position {
 			return false;
 		if (y != other.y)
 			return false;
+        if (z != other.z)
+            return false;
 		return true;
 	}
 
@@ -71,7 +80,7 @@ public final class Position {
 	 * Clones this point into a new object
 	 */
 	public Position clone() {
-		return new Position(this.x, this.y);
+		return new Position(this.x, this.y, this.z);
 	}
 
 }

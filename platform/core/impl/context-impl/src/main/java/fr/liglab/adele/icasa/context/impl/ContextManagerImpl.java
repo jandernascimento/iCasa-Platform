@@ -73,8 +73,8 @@ public class ContextManagerImpl implements ContextManager {
 	}
 
 	@Override
-	public Zone createZone(String id, int leftX, int topY, int width, int height) {
-		Zone zone = new ZoneImpl(id, leftX, topY, width, height);
+	public Zone createZone(String id, int leftX, int topY, int bottomZ, int width, int height, int depth) {
+		Zone zone = new ZoneImpl(id, leftX, topY, bottomZ, width, height, depth);
 		List<ZoneListener> snapshotZoneListener;
 		boolean exists = false;
 		readLock.lock();
@@ -108,8 +108,8 @@ public class ContextManagerImpl implements ContextManager {
 	}
 
 	public Zone createZone(String id, Position center, int detectionScope) {
-		return createZone(id, center.x - detectionScope, center.y - detectionScope, detectionScope * 2,
-		      detectionScope * 2);
+		return createZone(id, center.x - detectionScope, center.y - detectionScope, center.z - detectionScope, detectionScope * 2,
+		      detectionScope * 2, detectionScope * 2);
 	}
 
 	@Override
@@ -138,21 +138,21 @@ public class ContextManagerImpl implements ContextManager {
 	}
 
 	@Override
-	public void moveZone(String id, int leftX, int topY) throws Exception {
+	public void moveZone(String id, int leftX, int topY, int bottomZ) throws Exception {
 		Zone zone = getZone(id);
 		if (zone == null) {
 			return;
 		}
-		Position newPosition = new Position(leftX, topY);
+		Position newPosition = new Position(leftX, topY, bottomZ);
 		zone.setLeftTopRelativePosition(newPosition);
 	}
 
 	@Override
-	public void resizeZone(String id, int width, int height) throws Exception {
+	public void resizeZone(String id, int width, int height, int depth) throws Exception {
 		Zone zone = getZone(id);
 		if (zone == null)
 			return;
-		zone.resize(width, height);
+		zone.resize(width, height, depth);
 	}
 
 	@Override
@@ -628,8 +628,8 @@ public class ContextManagerImpl implements ContextManager {
 		int minX = zone.getLeftTopAbsolutePosition().x;
 		int minY = zone.getLeftTopAbsolutePosition().y;
 
-		int newX = random(minX + GenericDevice.DEFAULT_WIDTH, minX + zone.getWidth() - GenericDevice.DEFAULT_WIDTH);
-		int newY = random(minY + GenericDevice.DEFAULT_HEIGHT, minY + zone.getHeight() - GenericDevice.DEFAULT_HEIGHT);
+		int newX = random(minX + GenericDevice.DEFAULT_WIDTH, minX + zone.getXLength() - GenericDevice.DEFAULT_WIDTH);
+		int newY = random(minY + GenericDevice.DEFAULT_HEIGHT, minY + zone.getYLength() - GenericDevice.DEFAULT_HEIGHT);
 
 		return new Position(newX, newY);
 	}

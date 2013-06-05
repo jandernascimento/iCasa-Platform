@@ -29,7 +29,12 @@ import java.util.Set;
  */
 public interface Zone extends LocatedObject {
 
-	/**
+    static final int DEFAULT_Z_LENGTH = 100;
+
+    static final int DEFAULT_Z_BOTTOM = 0;
+
+
+    /**
 	 * Returns the zone id.
 	 * 
 	 * @return zone id.
@@ -75,34 +80,48 @@ public interface Zone extends LocatedObject {
 	public void setLeftTopRelativePosition(Position leftTopPosition) throws Exception;
 
 	/**
-	 * Gets the zone width
+	 * Gets the zone X length (width)
 	 * 
 	 * @return the zone width
 	 */
-	public int getWidth();
+	public int getXLength();
 
 	/**
-	 * Sets the zone width.
+	 * Sets the zone X length .
 	 * 
-	 * @param width the new zone width.
+	 * @param length the new zone X length.
 	 * @throws Exception When the zone does not fit its parent zone.
 	 */
-	public void setWidth(int width) throws Exception;
+	public void setXLength(int length) throws Exception;
 
 	/**
-	 * Gets the zone height
+	 * Gets the zone Y length.
 	 * 
-	 * @return
+	 * @return the zone Y length.
 	 */
-	public int getHeight();
+	public int getYLength();
 
 	/**
-	 * Sets the zone height.
+	 * Sets the zone Y length.
 	 * 
-	 * @param height the new zone height.
+	 * @param length the new zone Y length.
 	 * @throws Exception When the zone does not fit its parent zone.
 	 */
-	public void setHeight(int height) throws Exception;
+	public void setYLength(int length) throws Exception;
+    /**
+     * Gets the zone Z length.
+     *
+     * @return the zone Y length.
+     */
+    public int getZLength();
+
+    /**
+     * Sets the zone Y length.
+     *
+     * @param length the new zone Z length.
+     * @throws Exception When the zone does not fit its parent zone.
+     */
+    public void setZLength(int length) throws Exception;
 
 	/**
 	 * Returns true if a object is geographically contained into the zone.
@@ -247,10 +266,11 @@ public interface Zone extends LocatedObject {
 	/**
 	 * Resizes the zone
 	 * 
-	 * @param newWidth The new width
-	 * @param newHeight The new Height
+	 * @param newWidth The new width (X length value)
+	 * @param newHeight The new Height (Y length value)
+     * @param newDepth The new Depth (Z length value)
 	 * @throws Exception When the zone does not fit its parent zone.
 	 */
-	public void resize(int newWidth, int newHeight) throws Exception;
+	public void resize(int newWidth, int newHeight, int newDepth) throws Exception;
 
 }

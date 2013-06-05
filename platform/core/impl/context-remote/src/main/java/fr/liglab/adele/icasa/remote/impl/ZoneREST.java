@@ -151,16 +151,16 @@ public class ZoneREST extends AbstractREST {
 		int width = zoneJSON.getRigthX() - zoneJSON.getLeftX();
 		int height = zoneJSON.getBottomY() - zoneJSON.getTopY();
 
-		if (zoneFound.getWidth() != width)
+		if (zoneFound.getXLength() != width)
 			try {
-				zoneFound.setWidth(width);
+				zoneFound.setXLength(width);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
-		if (zoneFound.getHeight() != height)
+		if (zoneFound.getYLength() != height)
 			try {
-				zoneFound.setHeight(height);
+				zoneFound.setYLength(height);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -179,9 +179,10 @@ public class ZoneREST extends AbstractREST {
 
 		int width = zoneJSON.getRigthX() - zoneJSON.getLeftX();
 		int height = zoneJSON.getBottomY() - zoneJSON.getTopY();
+        int depth = zoneJSON.getTopZ() - zoneJSON.getBottomZ();
 
 		Zone newZone = _simulationMgr
-		      .createZone(zoneJSON.getId(), zoneJSON.getLeftX(), zoneJSON.getTopY(), width, height);
+		      .createZone(zoneJSON.getId(), zoneJSON.getLeftX(), zoneJSON.getTopY(), zoneJSON.getBottomZ(), width, height, depth);
 
 		return makeCORS(Response.ok(IcasaJSONUtil.getZoneJSON(newZone).toString()));
 
