@@ -44,10 +44,10 @@ public class CreateZoneCommand extends AbstractCommand {
 	@Requires
 	private ContextManager simulationManager;
 
-    private static Signature CREATE_ZONE = new Signature(new String[]{ScriptLanguage.ID, ScriptLanguage.LEFT_X, ScriptLanguage.TOP_Y, ScriptLanguage.HEIGHT,
-            ScriptLanguage.WIDTH } );
-    private static Signature CREATE_ZONE_WZ = new Signature(new String[]{ScriptLanguage.ID, ScriptLanguage.LEFT_X, ScriptLanguage.TOP_Y, ScriptLanguage.BOTTOM_Z, ScriptLanguage.HEIGHT,
-            ScriptLanguage.WIDTH, ScriptLanguage.DEPTH } );
+    private static Signature CREATE_ZONE = new Signature(new String[]{ScriptLanguage.ID, ScriptLanguage.LEFT_X, ScriptLanguage.TOP_Y, ScriptLanguage.Y_LENGTH,
+            ScriptLanguage.X_LENGTH} );
+    private static Signature CREATE_ZONE_WZ = new Signature(new String[]{ScriptLanguage.ID, ScriptLanguage.LEFT_X, ScriptLanguage.TOP_Y, ScriptLanguage.BOTTOM_Z, ScriptLanguage.Y_LENGTH,
+            ScriptLanguage.X_LENGTH, ScriptLanguage.Z_LENGTH} );
 
     public CreateZoneCommand(){
         setSignature(CREATE_ZONE);
@@ -59,12 +59,12 @@ public class CreateZoneCommand extends AbstractCommand {
 		String id = param.getString(ScriptLanguage.ID);
 		int leftX = param.getInt(ScriptLanguage.LEFT_X);
 		int topY = param.getInt(ScriptLanguage.TOP_Y);
-		int height = param.getInt(ScriptLanguage.HEIGHT);
-		int width = param.getInt(ScriptLanguage.WIDTH);
+		int height = param.getInt(ScriptLanguage.Y_LENGTH);
+		int width = param.getInt(ScriptLanguage.X_LENGTH);
         int depth = Zone.DEFAULT_Z_LENGTH;
         int bottomZ = Zone.DEFAULT_Z_BOTTOM;
         if (signature.equals(CREATE_ZONE_WZ)){
-            depth = param.getInt(ScriptLanguage.DEPTH);
+            depth = param.getInt(ScriptLanguage.Z_LENGTH);
             bottomZ = param.getInt(ScriptLanguage.BOTTOM_Z);
         }
 		simulationManager.createZone(id, leftX, topY, bottomZ, width, height, depth);

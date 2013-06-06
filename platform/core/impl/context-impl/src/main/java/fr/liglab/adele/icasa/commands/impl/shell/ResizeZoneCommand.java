@@ -43,8 +43,8 @@ public class ResizeZoneCommand extends AbstractCommand {
 	@Requires
 	private ContextManager simulationManager;
 
-    private static final Signature RESIZE = new Signature(new String[]{ScriptLanguage.ZONE_ID, ScriptLanguage.WIDTH, ScriptLanguage.HEIGHT});
-    private static final Signature RESIZE_WZ = new Signature(new String[]{ScriptLanguage.ZONE_ID, ScriptLanguage.WIDTH, ScriptLanguage.HEIGHT, ScriptLanguage.DEPTH});
+    private static final Signature RESIZE = new Signature(new String[]{ScriptLanguage.ZONE_ID, ScriptLanguage.X_LENGTH, ScriptLanguage.Y_LENGTH});
+    private static final Signature RESIZE_WZ = new Signature(new String[]{ScriptLanguage.ZONE_ID, ScriptLanguage.X_LENGTH, ScriptLanguage.Y_LENGTH, ScriptLanguage.Z_LENGTH});
 
     private static final String NAME= "resize-zone";
 
