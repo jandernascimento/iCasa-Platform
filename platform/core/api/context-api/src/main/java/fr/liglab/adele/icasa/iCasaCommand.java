@@ -20,6 +20,7 @@ import java.io.PrintStream;
 import java.lang.Exception;
 import java.lang.Object;
 import java.lang.String;
+import java.util.List;
 
 import org.json.JSONObject;
 
@@ -71,7 +72,7 @@ public interface iCasaCommand {
 	 * @return true if parameters are valid, false if not.
 	 * @throws Exception
 	 */
-	boolean validate(JSONObject param) throws Exception;
+	boolean validate(JSONObject param, Signature signature) throws Exception;
 
 	/**
 	 * Get the command description.
@@ -88,10 +89,10 @@ public interface iCasaCommand {
 	String getName();
 
 	/**
-	 * Get the list of parameters.
+	 * Get signature by passing the number of arguments..
 	 * 
 	 * @return
 	 */
-	String[] getParameters();
+	Signature getSignature(int arguments);
 
 }

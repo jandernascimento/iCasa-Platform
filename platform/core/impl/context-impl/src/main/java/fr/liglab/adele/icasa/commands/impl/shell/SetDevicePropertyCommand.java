@@ -16,6 +16,7 @@
 package fr.liglab.adele.icasa.commands.impl.shell;
 
 import fr.liglab.adele.icasa.ContextManager;
+import fr.liglab.adele.icasa.Signature;
 import fr.liglab.adele.icasa.commands.impl.AbstractCommand;
 import fr.liglab.adele.icasa.commands.impl.ScriptLanguage;
 import fr.liglab.adele.icasa.location.LocatedDevice;
@@ -25,6 +26,9 @@ import org.apache.felix.ipojo.annotations.Provides;
 import org.apache.felix.ipojo.annotations.Requires;
 import org.json.JSONObject;
 
+import java.io.InputStream;
+import java.io.PrintStream;
+
 @Component(name = "SetDevicePropertyCommand")
 @Provides
 @Instantiate(name = "property-device-command")
@@ -33,10 +37,14 @@ public class SetDevicePropertyCommand extends AbstractCommand {
 	@Requires
 	private ContextManager contextManager;
 
-	private static final String[] PARAMS = new String[] { ScriptLanguage.DEVICE_ID, ScriptLanguage.PROPERTY,
-	      ScriptLanguage.VALUE };
+    private static final String NAME = "set-device-property";
 
-	private static final String NAME = "set-device-property";
+
+    public SetDevicePropertyCommand(){
+        setSignature(new Signature(new String[]{ScriptLanguage.DEVICE_ID, ScriptLanguage.PROPERTY,
+                ScriptLanguage.VALUE}));
+    }
+
 
 	/**
 	 * Get the name of the Script and command gogo.
@@ -48,21 +56,12 @@ public class SetDevicePropertyCommand extends AbstractCommand {
 		return NAME;
 	}
 
-	/**
-	 * Get the list of parameters.
-	 * 
-	 * @return
-	 */
-	@Override
-	public String[] getParameters() {
-		return PARAMS;
-	}
 
 	@Override
-	public Object execute(JSONObject param) throws Exception {
-		String deviceId = param.getString(PARAMS[0]);
-		String propertyId = param.getString(PARAMS[1]);
-		Object value = param.get(PARAMS[2]);
+	public Object execute(InputStream in, PrintStream out,JSONObject param, Signature signature) throws Exception {
+		String deviceId = param.getString(signature.getParameters()[0]);
+		String propertyId = param.getString(signature.getParameters()[1]);
+		Object value = param.get(signature.getParameters()[2]);
 		LocatedDevice device = contextManager.getDevice(deviceId);
 		System.out.println("Trying to modifiy " + propertyId + " property ");
 		if (device != null)

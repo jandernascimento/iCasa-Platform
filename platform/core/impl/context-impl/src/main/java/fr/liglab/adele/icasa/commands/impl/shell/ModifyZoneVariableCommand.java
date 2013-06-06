@@ -16,10 +16,14 @@
 package fr.liglab.adele.icasa.commands.impl.shell;
 
 import fr.liglab.adele.icasa.ContextManager;
+import fr.liglab.adele.icasa.Signature;
 import fr.liglab.adele.icasa.commands.impl.AbstractCommand;
 import fr.liglab.adele.icasa.commands.impl.ScriptLanguage;
 import org.apache.felix.ipojo.annotations.*;
 import org.json.JSONObject;
+
+import java.io.InputStream;
+import java.io.PrintStream;
 
 /**
  * @author Thomas Leveque
@@ -32,8 +36,12 @@ public class ModifyZoneVariableCommand extends AbstractCommand {
 	@Requires
 	private ContextManager simulationManager;
 
+    public ModifyZoneVariableCommand(){
+        setSignature(new Signature(new String[]{ScriptLanguage.ZONE_ID, ScriptLanguage.VARIABLE, ScriptLanguage.VALUE}));
+    }
+
 	@Override
-	public Object execute(JSONObject param) throws Exception {
+	public Object execute(InputStream in, PrintStream out,JSONObject param, Signature signature) throws Exception {
         String zoneId = param.getString(ScriptLanguage.ZONE_ID);
         String variableName = param.getString(ScriptLanguage.VARIABLE);
         Double newValue = param.getDouble(ScriptLanguage.VALUE);
@@ -53,15 +61,6 @@ public class ModifyZoneVariableCommand extends AbstractCommand {
         return "modify-zone-variable";
     }
 
-    /**
-     * Get the list of parameters.
-     *
-     * @return
-     */
-    @Override
-    public String[] getParameters() {
-        return new String[]{ScriptLanguage.ZONE_ID, ScriptLanguage.VARIABLE, ScriptLanguage.VALUE};
-    }
     @Override
     public String getDescription(){
         return "Modify the value of a variable in a given zone.\n\t" + super.getDescription();

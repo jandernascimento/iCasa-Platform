@@ -17,27 +17,54 @@ package fr.liglab.adele.icasa.commands.impl;
 
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 
+import fr.liglab.adele.icasa.Signature;
 import org.json.JSONObject;
 
 import fr.liglab.adele.icasa.iCasaCommand;
 
 public abstract class AbstractCommand implements iCasaCommand {
 
+    protected static Signature EMPTY_SIGNATURE = new Signature(new String[0]);
+
     /**
      * Default namespace for iCasa commands
      */
     private static String NAMESPACE = "icasa";
 
+    private List<Signature> signatureList = new ArrayList<Signature>(1);
+
 	@Override
 	public Object execute(InputStream in, PrintStream out, JSONObject param) throws Exception {
-		if (validate(param)){
-            return execute(param);
+        Signature signature = getSignature(param.length());
+		if (validate(param, signature)){
+            return execute(in, out, param, signature);
         } else {
             out.println(getDescription());
             throw new Exception("Invalid parameters: " + param);
         }
 	}
+
+    protected void setSignature(Signature signature){
+        for(Signature sign: signatureList){
+            if(sign.getParameters().length == signature.getParameters().length){
+                throw new InstantiationError("Unable to add two signature with the same number of parameters");
+            }
+        }
+        signatureList.add(signature);
+
+    }
+
+    public Signature getSignature(int param){
+        for (Signature signature: signatureList){
+            if (signature.getParameters().length == param){
+                return signature;
+            }
+        }
+        return null;
+    }
 
     /**
      * Get the command description.
@@ -46,15 +73,18 @@ public abstract class AbstractCommand implements iCasaCommand {
      */
     @Override
     public String getDescription() {
-        String[] params = getParameters();
-        StringBuilder descr = new StringBuilder("Parameters (");
-        for (String param: params){
-            descr.append(" ");
-            descr.append(param);
-            descr.append(" ");
+        StringBuilder description = new StringBuilder("Parameters: \n");
+        for(Signature sign: signatureList){
+            String[] params = sign.getParameters();
+            description.append("\t(");
+            for (String param: params){
+                description.append(" ");
+                description.append(param);
+                description.append(" ");
+            }
+            description.append(")\n");
         }
-        descr.append(")");
-        return descr.toString();
+        return description.toString();
     }
 
     /**
@@ -65,8 +95,8 @@ public abstract class AbstractCommand implements iCasaCommand {
      * @throws Exception
      */
     @Override
-	public boolean validate(JSONObject param) throws Exception {
-        String []params = getParameters();
+	public boolean validate(JSONObject param, Signature signature) throws Exception {
+        String []params = signature.getParameters();
         for (String name: params){
             if(!param.has(name)){
                 return false;
@@ -75,5 +105,5 @@ public abstract class AbstractCommand implements iCasaCommand {
         return true;// All params are in the Json object.
     }
 	
-	public abstract Object execute(JSONObject param) throws Exception;
+	public abstract Object execute(InputStream in, PrintStream out, JSONObject param, Signature signature) throws Exception;
 }

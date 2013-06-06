@@ -16,6 +16,7 @@
 package fr.liglab.adele.icasa.commands.impl.shell;
 
 import fr.liglab.adele.icasa.ContextManager;
+import fr.liglab.adele.icasa.Signature;
 import fr.liglab.adele.icasa.commands.impl.AbstractCommand;
 import fr.liglab.adele.icasa.commands.impl.ScriptLanguage;
 import fr.liglab.adele.icasa.location.LocatedDevice;
@@ -44,6 +45,10 @@ public class ShowDeviceInfoCommand extends AbstractCommand {
 
     private static final String NAME= "show-device";
 
+    public ShowDeviceInfoCommand(){
+        setSignature(new Signature(PARAMS));
+    }
+
     /**
      * Get the name of the  Script and command gogo.
      *
@@ -54,24 +59,16 @@ public class ShowDeviceInfoCommand extends AbstractCommand {
         return NAME;
     }
 
-    /**
-     * Get the list of parameters.
-     *
-     * @return
-     */
-    @Override
-    public String[] getParameters() {
-        return PARAMS;
-    }
 
     @Override
-    public Object execute(InputStream in, PrintStream out, JSONObject param) throws Exception {
-        String deviceId = param.getString(PARAMS[0]);
+    public Object execute(InputStream in, PrintStream out, JSONObject param, Signature signature) throws Exception {
+        String[] params = signature.getParameters();
+        String deviceId = param.getString(params[0]);
         out.println("Properties: ");
         LocatedDevice device = simulationManager.getDevice(deviceId);
-        if (device==null)
-            return null;
-
+        if (device==null) {
+            throw new IllegalArgumentException("Device ("+ deviceId +") does not exist");
+        }
         Set<String> properties = device.getProperties();
         for (String property : properties) {
             out.println("Property: " + property + " - Value: " +device.getPropertyValue(property));
@@ -79,10 +76,6 @@ public class ShowDeviceInfoCommand extends AbstractCommand {
         return null;
     }
 
-    @Override
-    public Object execute(JSONObject param) throws Exception {
-        return execute(System.in, System.out, param);
-    }
 
     @Override
     public String getDescription(){

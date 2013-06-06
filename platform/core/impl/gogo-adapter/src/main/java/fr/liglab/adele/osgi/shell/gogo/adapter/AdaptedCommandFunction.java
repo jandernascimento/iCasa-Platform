@@ -18,6 +18,7 @@ package fr.liglab.adele.osgi.shell.gogo.adapter;
 import java.util.List;
 import java.util.Map;
 
+import fr.liglab.adele.icasa.Signature;
 import fr.liglab.adele.icasa.iCasaCommand;
 import org.apache.felix.service.command.CommandSession;
 import org.apache.felix.service.command.Function;
@@ -49,9 +50,11 @@ public class AdaptedCommandFunction implements Function {
 	 */
 	public Object execute(CommandSession session, List<Object> arguments) throws Exception {
 		JSONObject params = new JSONObject();
-		String paramsNames[] = m_command.getParameters();
+        int argumentsSize = (arguments == null)?0:arguments.size();
+		Signature signature =  m_command.getSignature(argumentsSize);
+        String paramsNames[] = signature.getParameters();
 		if (arguments != null) {
-			for (int i = 0; i < paramsNames.length && arguments.size() > i; i++) {
+			for (int i = 0; i < paramsNames.length && argumentsSize > i; i++) {
 				params.put(paramsNames[i], arguments.get(i));
 			}
 		}

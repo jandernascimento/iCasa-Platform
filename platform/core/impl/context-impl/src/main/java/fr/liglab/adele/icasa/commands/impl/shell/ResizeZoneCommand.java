@@ -16,6 +16,7 @@
 package fr.liglab.adele.icasa.commands.impl.shell;
 
 import fr.liglab.adele.icasa.ContextManager;
+import fr.liglab.adele.icasa.Signature;
 import fr.liglab.adele.icasa.commands.impl.AbstractCommand;
 import fr.liglab.adele.icasa.commands.impl.ScriptLanguage;
 import fr.liglab.adele.icasa.location.Zone;
@@ -24,6 +25,9 @@ import org.apache.felix.ipojo.annotations.Instantiate;
 import org.apache.felix.ipojo.annotations.Provides;
 import org.apache.felix.ipojo.annotations.Requires;
 import org.json.JSONObject;
+
+import java.io.InputStream;
+import java.io.PrintStream;
 
 /**
  * 
@@ -39,9 +43,15 @@ public class ResizeZoneCommand extends AbstractCommand {
 	@Requires
 	private ContextManager simulationManager;
 
-    private static final String[] PARAMS =  new String[]{ScriptLanguage.ZONE_ID, ScriptLanguage.WIDTH, ScriptLanguage.HEIGHT};
+    private static final Signature RESIZE = new Signature(new String[]{ScriptLanguage.ZONE_ID, ScriptLanguage.WIDTH, ScriptLanguage.HEIGHT});
+    private static final Signature RESIZE_WZ = new Signature(new String[]{ScriptLanguage.ZONE_ID, ScriptLanguage.WIDTH, ScriptLanguage.HEIGHT, ScriptLanguage.DEPTH});
 
     private static final String NAME= "resize-zone";
+
+    public ResizeZoneCommand(){
+        setSignature(RESIZE);
+        setSignature(RESIZE_WZ);
+    }
 
     /**
      * Get the name of the  Script and command gogo.
@@ -53,27 +63,20 @@ public class ResizeZoneCommand extends AbstractCommand {
         return NAME;
     }
 
-    /**
-     * Get the list of parameters.
-     *
-     * @return
-     */
-    @Override
-    public String[] getParameters() {
-        return PARAMS;
-    }
 
 	@Override
-	public Object execute(JSONObject param) throws Exception {
-        String zoneId = param.getString(PARAMS[0]);
+	public Object execute(InputStream in, PrintStream out,JSONObject param, Signature signature) throws Exception {
+        String zoneId = param.getString(signature.getParameters()[0]);
         Zone zone = simulationManager.getZone(zoneId);
         if (zone == null){
             throw new IllegalArgumentException("Zone ("+ zoneId +") does not exist");
         }
-        int width = param.getInt(PARAMS[1]);
-        int height = param.getInt(PARAMS[2]);
+        int width = param.getInt(signature.getParameters()[1]);
+        int height = param.getInt(signature.getParameters()[2]);
         int depth = zone.getZLength();
-        System.err.println("Z-length will not change");
+        if (signature.equals(RESIZE_WZ)){
+            depth = param.getInt(signature.getParameters()[3]);
+        }
 		simulationManager.resizeZone(zoneId, width, height, depth);
 		return null;
 	}

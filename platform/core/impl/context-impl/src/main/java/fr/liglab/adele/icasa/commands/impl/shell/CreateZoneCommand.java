@@ -16,6 +16,7 @@
 package fr.liglab.adele.icasa.commands.impl.shell;
 
 import fr.liglab.adele.icasa.ContextManager;
+import fr.liglab.adele.icasa.Signature;
 import fr.liglab.adele.icasa.commands.impl.AbstractCommand;
 import fr.liglab.adele.icasa.commands.impl.ScriptLanguage;
 import fr.liglab.adele.icasa.location.Zone;
@@ -24,6 +25,9 @@ import org.apache.felix.ipojo.annotations.Instantiate;
 import org.apache.felix.ipojo.annotations.Provides;
 import org.apache.felix.ipojo.annotations.Requires;
 import org.json.JSONObject;
+
+import java.io.InputStream;
+import java.io.PrintStream;
 
 /**
  * 
@@ -40,15 +44,30 @@ public class CreateZoneCommand extends AbstractCommand {
 	@Requires
 	private ContextManager simulationManager;
 
+    private static Signature CREATE_ZONE = new Signature(new String[]{ScriptLanguage.ID, ScriptLanguage.LEFT_X, ScriptLanguage.TOP_Y, ScriptLanguage.HEIGHT,
+            ScriptLanguage.WIDTH } );
+    private static Signature CREATE_ZONE_WZ = new Signature(new String[]{ScriptLanguage.ID, ScriptLanguage.LEFT_X, ScriptLanguage.TOP_Y, ScriptLanguage.BOTTOM_Z, ScriptLanguage.HEIGHT,
+            ScriptLanguage.WIDTH, ScriptLanguage.DEPTH } );
+
+    public CreateZoneCommand(){
+        setSignature(CREATE_ZONE);
+        setSignature(CREATE_ZONE_WZ);
+    }
+
 	@Override
-	public Object execute(JSONObject param) throws Exception {
+	public Object execute(InputStream in, PrintStream out,JSONObject param, Signature signature) throws Exception {
 		String id = param.getString(ScriptLanguage.ID);
 		int leftX = param.getInt(ScriptLanguage.LEFT_X);
 		int topY = param.getInt(ScriptLanguage.TOP_Y);
 		int height = param.getInt(ScriptLanguage.HEIGHT);
 		int width = param.getInt(ScriptLanguage.WIDTH);
-        System.err.println("Z-length and Z-Bottom will be set to the default values: " + Zone.DEFAULT_Z_LENGTH + " and " + Zone.DEFAULT_Z_BOTTOM);
-		simulationManager.createZone(id, leftX, topY, Zone.DEFAULT_Z_BOTTOM, width, height, Zone.DEFAULT_Z_LENGTH);
+        int depth = Zone.DEFAULT_Z_LENGTH;
+        int bottomZ = Zone.DEFAULT_Z_BOTTOM;
+        if (signature.equals(CREATE_ZONE_WZ)){
+            depth = param.getInt(ScriptLanguage.DEPTH);
+            bottomZ = param.getInt(ScriptLanguage.BOTTOM_Z);
+        }
+		simulationManager.createZone(id, leftX, topY, bottomZ, width, height, depth);
 		return null;
 	}
 
@@ -60,17 +79,6 @@ public class CreateZoneCommand extends AbstractCommand {
 	@Override
 	public String getName() {
 		return "create-zone";
-	}
-
-	/**
-	 * Get the list of parameters.
-	 * 
-	 * @return
-	 */
-	@Override
-	public String[] getParameters() {
-		return new String[] { ScriptLanguage.ID, ScriptLanguage.LEFT_X, ScriptLanguage.TOP_Y, ScriptLanguage.HEIGHT,
-		      ScriptLanguage.WIDTH };
 	}
 
 	@Override

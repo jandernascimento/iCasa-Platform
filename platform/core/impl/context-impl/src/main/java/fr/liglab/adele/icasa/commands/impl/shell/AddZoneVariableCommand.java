@@ -17,10 +17,14 @@ package fr.liglab.adele.icasa.commands.impl.shell;
 
 import fr.liglab.adele.icasa.ContextManager;
 
+import fr.liglab.adele.icasa.Signature;
 import fr.liglab.adele.icasa.commands.impl.AbstractCommand;
 import fr.liglab.adele.icasa.commands.impl.ScriptLanguage;
 import org.apache.felix.ipojo.annotations.*;
 import org.json.JSONObject;
+
+import java.io.InputStream;
+import java.io.PrintStream;
 
 /**
  * @author Thomas Leveque
@@ -33,16 +37,15 @@ public class AddZoneVariableCommand extends AbstractCommand {
     @Requires
     private ContextManager contextManager;
 
+    public AddZoneVariableCommand(){
+        setSignature(new Signature(new String[]{ScriptLanguage.ZONE_ID, ScriptLanguage.VARIABLE}));
+    }
     @Override
-    public Object execute(JSONObject param) throws Exception {
+    public Object execute(InputStream in, PrintStream out,JSONObject param, Signature signature) throws Exception {
         contextManager.addZoneVariable(param.getString(ScriptLanguage.ZONE_ID), param.getString(ScriptLanguage.VARIABLE));
         return null;
     }
 
-    @Override
-    public boolean validate(JSONObject param) throws Exception {
-        return param.has(ScriptLanguage.ZONE_ID)  && param.has(ScriptLanguage.VARIABLE);
-    }
 
     /**
      * Get the name of the  Script and command gogo.
@@ -54,15 +57,6 @@ public class AddZoneVariableCommand extends AbstractCommand {
         return "add-zone-variable";
     }
 
-    /**
-     * Get the list of parameters.
-     *
-     * @return
-     */
-    @Override
-    public String[] getParameters() {
-        return new String[]{ScriptLanguage.ZONE_ID, ScriptLanguage.VARIABLE};
-    }
 
     @Override
     public String getDescription(){

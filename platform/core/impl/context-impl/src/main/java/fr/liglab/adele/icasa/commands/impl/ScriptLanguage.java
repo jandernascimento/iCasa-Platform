@@ -62,4 +62,10 @@ public class ScriptLanguage {
 
     public static final String NEW_Y = "newY";
 
+    public static final String NEW_Z = "newZ";
+
+    public static final String BOTTOM_Z = "BottomZ";
+
+    public static final String DEPTH = "depth";
+
 }

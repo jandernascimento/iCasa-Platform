@@ -16,8 +16,10 @@
 package fr.liglab.adele.icasa.commands.impl.shell;
 
 import fr.liglab.adele.icasa.ContextManager;
+import fr.liglab.adele.icasa.Signature;
 import fr.liglab.adele.icasa.commands.impl.AbstractCommand;
 import fr.liglab.adele.icasa.commands.impl.ScriptLanguage;
+import fr.liglab.adele.icasa.location.Zone;
 import org.apache.felix.ipojo.annotations.Component;
 import org.apache.felix.ipojo.annotations.Instantiate;
 import org.apache.felix.ipojo.annotations.Provides;
@@ -45,6 +47,10 @@ public class ShowZoneVariablesCommand extends AbstractCommand {
 
     private static final String NAME= "show-zone";
 
+    public ShowZoneVariablesCommand(){
+        setSignature(new Signature(PARAMS));
+    }
+
     /**
      * Get the name of the  Script and command gogo.
      *
@@ -55,30 +61,21 @@ public class ShowZoneVariablesCommand extends AbstractCommand {
         return NAME;
     }
 
-    /**
-     * Get the list of parameters.
-     *
-     * @return
-     */
-    @Override
-    public String[] getParameters() {
-        return PARAMS;
-    }
 
     @Override
-    public Object execute(InputStream in, PrintStream out, JSONObject param) throws Exception {
+    public Object execute(InputStream in, PrintStream out, JSONObject param, Signature signature) throws Exception {
         String zoneId = param.getString(PARAMS[0]);
+        Zone zone = manager.getZone(zoneId);
+        if (zone == null){
+            throw new IllegalArgumentException("Zone ("+ zoneId +") does not exist");
+        }
+        out.print(zone);
         out.println("Variables: ");
         Set<String> variables = manager.getZoneVariables(zoneId);
         for (String variable : variables) {
             out.println("Variable: " + variable + " - Value: " + manager.getZoneVariableValue(zoneId, variable));
         }
         return null;
-    }
-
-    @Override
-    public Object execute(JSONObject param) throws Exception {
-        return execute(System.in, System.out, param);
     }
 
     @Override

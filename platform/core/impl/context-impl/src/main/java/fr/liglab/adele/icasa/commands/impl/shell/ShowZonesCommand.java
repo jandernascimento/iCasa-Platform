@@ -16,6 +16,7 @@
 package fr.liglab.adele.icasa.commands.impl.shell;
 
 import fr.liglab.adele.icasa.ContextManager;
+import fr.liglab.adele.icasa.Signature;
 import fr.liglab.adele.icasa.commands.impl.AbstractCommand;
 import fr.liglab.adele.icasa.location.Zone;
 import org.apache.felix.ipojo.annotations.Component;
@@ -43,9 +44,11 @@ public class ShowZonesCommand extends AbstractCommand {
     private ContextManager manager;
 
 
-    private static final String[] PARAMS =  new String[]{};
-
     private static final String NAME= "show-zones";
+
+    public ShowZonesCommand(){
+        setSignature(EMPTY_SIGNATURE);
+    }
 
     /**
      * Get the name of the  Script and command gogo.
@@ -57,18 +60,9 @@ public class ShowZonesCommand extends AbstractCommand {
         return NAME;
     }
 
-    /**
-     * Get the list of parameters.
-     *
-     * @return
-     */
-    @Override
-    public String[] getParameters() {
-        return PARAMS;
-    }
 
     @Override
-    public Object execute(InputStream in, PrintStream out, JSONObject param) throws Exception {
+    public Object execute(InputStream in, PrintStream out, JSONObject param, Signature signature) throws Exception {
         out.println("Zones: ");
         List<Zone> zones = manager.getZones();
         for (Zone zone : zones) {
@@ -77,10 +71,6 @@ public class ShowZonesCommand extends AbstractCommand {
         return null;
     }
 
-    @Override
-    public Object execute(JSONObject param) throws Exception {
-        return execute(System.in, System.out, param);
-    }
 
     @Override
     public String getDescription(){
