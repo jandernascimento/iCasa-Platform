@@ -70,7 +70,7 @@ public class ShowZoneVariablesCommand extends AbstractCommand {
             throw new IllegalArgumentException("Zone ("+ zoneId +") does not exist");
         }
         out.print(zone);
-        out.println("Variables: ");
+        out.println("\nVariables: ");
         Set<String> variables = manager.getZoneVariables(zoneId);
         for (String variable : variables) {
             out.println("Variable: " + variable + " - Value: " + manager.getZoneVariableValue(zoneId, variable));
