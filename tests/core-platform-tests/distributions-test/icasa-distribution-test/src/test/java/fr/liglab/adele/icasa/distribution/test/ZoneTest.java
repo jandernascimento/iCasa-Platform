@@ -42,9 +42,6 @@ public class ZoneTest extends AbstractDistributionBaseTest {
 	
 	@Inject
 	public BundleContext context;
-	
-	@Inject
-	public ContextManager icasa;
 
 	@Before
 	public void setUp() {
@@ -61,6 +58,9 @@ public class ZoneTest extends AbstractDistributionBaseTest {
 	 */
 	@Test
 	public void creationZoneTest(){
+        IcasaListener list = getService(context,IcasaListener.class);
+        ContextManager icasa = getService(context,ContextManager.class);
+        assertNotNull(icasa);
 		String zone_id_0 = "myZone-0";
 		int zone_0_scope = 5;
 		Position positionZone_0 = new Position(0,0);
@@ -75,6 +75,9 @@ public class ZoneTest extends AbstractDistributionBaseTest {
 	 */
 	@Test
 	public void creationZoneFailDueToExistentTest(){
+        IcasaListener list = getService(context,IcasaListener.class);
+        ContextManager icasa = getService(context,ContextManager.class);
+        assertNotNull(icasa);
 		String zone_id_0 = "myZone-0";
 		Position positionZone_0 = new Position(0,0);
 
@@ -92,6 +95,9 @@ public class ZoneTest extends AbstractDistributionBaseTest {
 	 */
 	@Test
 	public void eventsForRemovedZoneFailTest(){
+        IcasaListener list = getService(context,IcasaListener.class);
+        ContextManager icasa = getService(context,ContextManager.class);
+        assertNotNull(icasa);
 		String zone_id_0 = "myZone-0";
 		String variable = "variable";
 		int zone_0_scope = 5;
@@ -115,6 +121,9 @@ public class ZoneTest extends AbstractDistributionBaseTest {
 	 */
 	@Test
 	public void addZoneTest(){
+        IcasaListener list = getService(context,IcasaListener.class);
+        ContextManager icasa = getService(context,ContextManager.class);
+        assertNotNull(icasa);
 		String zone_id_0 = "myZone-0";
 		int zone_0_scope = 5;
 		Position positionZone_0 = new Position(0,0);
@@ -134,6 +143,9 @@ public class ZoneTest extends AbstractDistributionBaseTest {
 	 */
 	@Test
 	public void removeZoneTest(){
+        IcasaListener list = getService(context,IcasaListener.class);
+        ContextManager icasa = getService(context,ContextManager.class);
+        assertNotNull(icasa);
 		String zone_id_0 = "myZone-0";
 		int zone_0_scope = 5;
 		Position positionZone_0 = new Position(0,0);
@@ -157,6 +169,9 @@ public class ZoneTest extends AbstractDistributionBaseTest {
 	 */
 	@Test
 	public void moveZoneTest(){
+        IcasaListener list = getService(context,IcasaListener.class);
+        ContextManager icasa = getService(context,ContextManager.class);
+        assertNotNull(icasa);
 		String zone_id_0 = "myZone-0";
 		int zone_0_scope = 5;
 		Position positionZone_0 = new Position(5,5);
@@ -182,6 +197,9 @@ public class ZoneTest extends AbstractDistributionBaseTest {
 	 */
 	@Test
 	public void resizeZoneTest(){
+        IcasaListener list = getService(context,IcasaListener.class);
+        ContextManager icasa = getService(context,ContextManager.class);
+        assertNotNull(icasa);
 		String zone_id_0 = "myZone-0";
 		int zone_0_scope = 5;//size of the squared zone is 10
 		Position positionZone_0 = new Position(5,5,5);
@@ -218,6 +236,9 @@ public class ZoneTest extends AbstractDistributionBaseTest {
 	 */
 	@Test
 	public void addZoneParentTest(){
+        IcasaListener list = getService(context,IcasaListener.class);
+        ContextManager icasa = getService(context,ContextManager.class);
+        assertNotNull(icasa);
 		String zone_id_0 = "myZone-0";
 		String zone_parent_id_0 = "myParentZone-0";
 		//Create zone
@@ -241,6 +262,9 @@ public class ZoneTest extends AbstractDistributionBaseTest {
 	 */
 	@Test
 	public void resizeZoneInParentFailTest(){
+        IcasaListener list = getService(context,IcasaListener.class);
+        ContextManager icasa = getService(context,ContextManager.class);
+        assertNotNull(icasa);
 		waitForStability(context);
 		String zone_id_0 = "myZone-0";
 		String zone_parent_id_0 = "myParentZone-0";
@@ -278,6 +302,9 @@ public class ZoneTest extends AbstractDistributionBaseTest {
 	 */
 	@Test
 	public void testZoneAddVariables(){
+        IcasaListener list = getService(context,IcasaListener.class);
+        ContextManager icasa = getService(context,ContextManager.class);
+        assertNotNull(icasa);
 		String zone_id_0 = "myZone-0";
 		String zone_variable = "variable-0";
 		int zone_0_scope = 5;

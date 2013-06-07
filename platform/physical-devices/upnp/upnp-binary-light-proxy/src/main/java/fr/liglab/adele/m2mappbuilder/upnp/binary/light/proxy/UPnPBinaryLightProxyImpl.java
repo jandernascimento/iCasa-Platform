@@ -108,7 +108,7 @@ public class UPnPBinaryLightProxyImpl extends AbstractDevice implements BinaryLi
 		String keys = "(UPnP.device.UDN="+ m_serialNumber + ")";
 		try {
 			Filter filter = m_context.createFilter(keys);
-			Properties props = new Properties();
+			Dictionary props = new Properties();
 			props.put(UPnPEventListener.UPNP_FILTER, filter);
 			listenerRegistration = m_context.registerService(UPnPEventListener.class.getName(), listener, props);
 		} catch (Exception ex) {

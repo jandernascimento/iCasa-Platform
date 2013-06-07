@@ -86,7 +86,7 @@ public class GogoAdapter {
 			String commandDescription = command.getDescription();
 
 			// Register the command
-			Dictionary<Object, Object> commandProperties = new Properties();
+			Dictionary  commandProperties = new Properties();
 			commandProperties.put(CommandProcessor.COMMAND_FUNCTION, new String[] { commandName });
 			commandProperties.put(CommandProcessor.COMMAND_SCOPE, commandNamespace);
 			commandProperties.put(iCasaCommand.PROP_DESCRIPTION, commandDescription);

@@ -76,7 +76,7 @@ public final class ShellScriptInstallerImpl implements ShellScriptInstaller {
 		ScriptFunction function = new ScriptFunction(scriptPath, _processor);
 
 		// Register the command
-		Dictionary<Object, Object> commandProperties = new Properties();
+		Dictionary commandProperties = new Properties();
 		commandProperties.put(CommandProcessor.COMMAND_FUNCTION,
 				new String[] { name });
 		commandProperties.put(CommandProcessor.COMMAND_SCOPE, scope);
