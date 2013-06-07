@@ -40,7 +40,6 @@
         <!--UPNP -->
         <UPnPBDVersion>0.8.0</UPnPBDVersion>
         <UPnPBDExtrasVersion>0.4.0</UPnPBDExtrasVersion>
-        <roseVersion>1.0.2</roseVersion>
         <androidPlatform>16</androidPlatform>
 
     </properties>
