@@ -56,11 +56,11 @@
       <artifactId>org.osgi.core</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.barjo.atmosgi</groupId>
+       <groupId>org.ow2.chameleon.rose.atmosphere</groupId>
       <artifactId>atmosgi-service</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.barjo.atmosgi</groupId>
+       <groupId>org.ow2.chameleon.rose.atmosphere</groupId>
       <artifactId>atmosgi-component</artifactId>
     </dependency>
     <dependency>
