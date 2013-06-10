@@ -109,7 +109,7 @@ class ZoneDimensionImpl implements TechnicalService, ZoneDimension {
 			final double volume = area * z;
 
 			if (L.isLoggable(Level.INFO)) {
-				L.info(String.format("Update the zone %s area = %d m2 ; volume = %d m3",
+				L.info(String.format("Update the zone %s area = %f m2 ; volume = %f m3",
 				        zone.getId(), area, volume));
 			}
 
