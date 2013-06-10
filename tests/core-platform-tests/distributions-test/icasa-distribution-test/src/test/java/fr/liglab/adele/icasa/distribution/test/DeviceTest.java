@@ -56,7 +56,7 @@ public class DeviceTest extends AbstractDistributionBaseTest {
 	 */
 	@Test
 	public void getDevicesWithoutDevicesTest(){
-        ContextManager contextMgr = getService(context,ContextManager.class);
+        ContextManager contextMgr = (ContextManager)getService(context,ContextManager.class);
         if (contextMgr == null){
             Assert.fail("Unable to get ServiceReference for ContextManager");
         }
