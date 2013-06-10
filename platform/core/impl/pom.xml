@@ -38,6 +38,7 @@
 		<module>application-impl</module>
 		<module>application-mock-impl</module>
 		<module>zone-size-calculator-impl</module>		
+      <module>iCASA.extra.third.parties</module>
 	</modules>
    <build>
       <plugins>
