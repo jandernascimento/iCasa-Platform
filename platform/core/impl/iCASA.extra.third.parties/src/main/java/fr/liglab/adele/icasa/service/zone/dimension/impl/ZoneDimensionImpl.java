@@ -50,10 +50,6 @@ class ZoneDimensionImpl implements TechnicalService, ZoneDimension {
 
 	private final static Logger L = Logger.getLogger(ZoneDimension.class.getName());
 
-	static {
-		L.setLevel(Level.INFO);
-	}
-
 	/**
 	 * The array of zone variables computed by this technical service.
 	 */
@@ -64,12 +60,6 @@ class ZoneDimensionImpl implements TechnicalService, ZoneDimension {
 	 * The Constant SCALE_FACTOR establishes the relation between px and meters.
 	 */
 	public static final double SCALE_FACTOR = 0.014d; // 1px -> 0.014m
-
-	/**
-	 * We assume that each room is 2.5 meters height (FIXME : this is used until
-	 * a physical model is provided).
-	 */
-	public static final double DEFAULT_Z_DIMENSION_IN_METER = 2.5d;
 
 	@Requires
 	/**
@@ -99,13 +89,16 @@ class ZoneDimensionImpl implements TechnicalService, ZoneDimension {
 			// FIXME : z should be provided by a technical service.
 			final double x = pixelsToMeters(zone.getXLength());
 			final double y = pixelsToMeters(zone.getYLength());
-			final double z =  pixelsToMeters(zone.getZLength());
+			final double z = pixelsToMeters(zone.getZLength());
 
-			assert ((x > 0) && (y > 0) && (z > 0)) : "negative dimensions !";
+			assert ((x > 0.0d) && (y > 0.0d) && (z > 0.0d)) : "negative dimensions !";
 
-			// computes area and volume of the zone.
-			Double area = x * y;
-			Double volume = area * z;
+
+			// computes area and volume of the zone. We assume that the zone is
+			// a rectangle (not a trapezoid).
+			final double area = x * y;
+			final double volume = area * z;
+
 
 			if (L.isLoggable(Level.INFO)) {
 				L.info(String.format("Update the zone %s area = %f m2 ; volume = %f m3",
