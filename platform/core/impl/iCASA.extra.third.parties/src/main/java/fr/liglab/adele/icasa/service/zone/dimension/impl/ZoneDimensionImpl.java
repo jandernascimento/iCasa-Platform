@@ -99,7 +99,7 @@ class ZoneDimensionImpl implements TechnicalService, ZoneDimension {
 			// FIXME : z should be provided by a technical service.
 			final double x = pixelsToMeters(zone.getXLength());
 			final double y = pixelsToMeters(zone.getYLength());
-			final double z = DEFAULT_Z_DIMENSION_IN_METER;
+			final double z =  pixelsToMeters(zone.getZLength());
 
 			assert ((x > 0) && (y > 0) && (z > 0)) : "negative dimensions !";
 
