@@ -101,7 +101,7 @@ class ZoneDimensionImpl implements TechnicalService, ZoneDimension {
 			final double y = pixelsToMeters(zone.getYLength());
 			final double z =  pixelsToMeters(zone.getZLength());
 
-			assert ((x > 0d) && (y > 0d) && (z > 0d)) : "negative dimensions !";
+			assert ((x > 0.0d) && (y > 0.0d) && (z > 0.0d)) : "negative dimensions !";
 
 			// computes area and volume of the zone. We assume that the zone is
 			// a rectangle (not a trapezoid).
