@@ -61,12 +61,6 @@ class ZoneDimensionImpl implements TechnicalService, ZoneDimension {
 	 */
 	public static final double SCALE_FACTOR = 0.014d; // 1px -> 0.014m
 
-	/**
-	 * We assume that each room is 2.5 meters height (FIXME : this is used until
-	 * a physical model is provided).
-	 */
-	public static final double DEFAULT_Z_DIMENSION_IN_METER = 2.5d;
-
 	@Requires
 	/**
 	 * The context manager is provided by the simulator and allows to modify the different zones properties.
@@ -95,7 +89,7 @@ class ZoneDimensionImpl implements TechnicalService, ZoneDimension {
 			// FIXME : z should be provided by a technical service.
 			final double x = pixelsToMeters(zone.getXLength());
 			final double y = pixelsToMeters(zone.getYLength());
-			final double z =  pixelsToMeters(zone.getZLength());
+			final double z = pixelsToMeters(zone.getZLength());
 
 			assert ((x > 0.0d) && (y > 0.0d) && (z > 0.0d)) : "negative dimensions !";
 
