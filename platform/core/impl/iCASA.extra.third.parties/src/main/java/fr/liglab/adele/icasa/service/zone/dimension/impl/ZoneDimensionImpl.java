@@ -50,10 +50,6 @@ class ZoneDimensionImpl implements TechnicalService, ZoneDimension {
 
 	private final static Logger L = Logger.getLogger(ZoneDimension.class.getName());
 
-	static {
-		L.setLevel(Level.INFO);
-	}
-
 	/**
 	 * The array of zone variables computed by this technical service.
 	 */
