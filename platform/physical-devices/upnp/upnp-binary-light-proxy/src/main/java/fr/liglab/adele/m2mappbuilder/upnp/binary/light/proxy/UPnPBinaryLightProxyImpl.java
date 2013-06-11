@@ -19,6 +19,7 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.Properties;
 
+import fr.liglab.adele.icasa.device.DevicePropertyEvent;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Filter;
 import org.osgi.framework.ServiceRegistration;
@@ -151,7 +152,7 @@ public class UPnPBinaryLightProxyImpl extends AbstractDevice implements BinaryLi
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					notifyListeners(new DeviceEvent(_device, DeviceEventType.PROP_MODIFIED, BINARY_LIGHT_POWER_STATUS, status, status));
+					notifyListeners(new DevicePropertyEvent(_device, DeviceEventType.PROP_MODIFIED, BINARY_LIGHT_POWER_STATUS, status, status));
 				}
 			};
 

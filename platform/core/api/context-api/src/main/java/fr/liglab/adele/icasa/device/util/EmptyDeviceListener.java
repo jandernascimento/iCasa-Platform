@@ -49,4 +49,14 @@ public class EmptyDeviceListener implements DeviceListener<GenericDevice> {
 	public void devicePropertyRemoved(GenericDevice device, String propertyName) {
 		// do nothing
 	}
+
+    /**
+     * Callback notifying when the device want to trigger an event.
+     *
+     * @param device the device triggering the event.
+     * @param data   the content of the event.
+     */
+    @Override
+    public void deviceEvent(GenericDevice device, Object data) {
+    }
 }

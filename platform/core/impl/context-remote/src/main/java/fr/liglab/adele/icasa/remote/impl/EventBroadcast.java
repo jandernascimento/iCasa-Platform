@@ -289,6 +289,25 @@ public class EventBroadcast extends OnMessage<String> implements RemoteEventBroa
             }
         }
 
+        /**
+         * Callback notifying when the device want to trigger an event.
+         *
+         * @param device the device triggering the event.
+         * @param data   the content of the event.
+         */
+        @Override
+        public void deviceEvent(LocatedDevice device, Object data) {
+            JSONObject json = new JSONObject();
+            try {
+                json.put("deviceId", device.getSerialNumber());
+                json.put("device", IcasaJSONUtil.getDeviceJSON(device, _ctxMgr));
+                json.put("event-data", String.valueOf(data));
+                sendEvent("device-event", json);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
 
         @Override
 		public void zoneVariableAdded(Zone zone, String variableName) {

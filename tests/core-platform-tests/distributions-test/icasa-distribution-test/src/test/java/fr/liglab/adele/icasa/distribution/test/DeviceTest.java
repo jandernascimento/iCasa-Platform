@@ -66,4 +66,9 @@ public class DeviceTest extends AbstractDistributionBaseTest {
 		Assert.assertEquals(0, devices.size());
 	}
 
+    @Test
+    public void testDeviceListener(){
+
+    }
+
 }

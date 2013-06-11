@@ -15,44 +15,24 @@
  */
 package fr.liglab.adele.icasa.device;
 
+
 /**
- * Represents an event related to a device.
- * 
- * @author Thomas Leveque
+ * Store an Immutable event data triggered by a device.
+ * @param <T>
  */
-public class DeviceEvent {
+public class DeviceDataEvent<T> extends DeviceEvent {
+    private final T data;
 
-	private final DeviceEventType _type;
-	private final GenericDevice _device;
+    public DeviceDataEvent(GenericDevice device, DeviceEventType type,  T _data){
+        super(device, type);
+        this.data = _data;
+    }
 
-
-	/**
-	 * Creates a DeviceEvent.
-	 * 
-	 * @param device Device associated to the event
-	 * @param type Type of the event
-	 */
-	public DeviceEvent(GenericDevice device, DeviceEventType type) {
-		_device = device;
-		_type = type;
-	}
-
-
-	/**
-	 * Gets the event type
-	 * 
-	 * @return The event type
-	 */
-	public DeviceEventType getType() {
-		return _type;
-	}
-
-	/**
-	 * Gets the event associated device
-	 * 
-	 * @return The event associated device
-	 */
-	public GenericDevice getDevice() {
-		return _device;
-	}
+    /**
+     * Get the event data.
+     * @return
+     */
+    public T getData() {
+        return data;
+    }
 }

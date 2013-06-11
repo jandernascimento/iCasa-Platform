@@ -23,10 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import fr.liglab.adele.icasa.device.DeviceEvent;
-import fr.liglab.adele.icasa.device.DeviceEventType;
-import fr.liglab.adele.icasa.device.DeviceListener;
-import fr.liglab.adele.icasa.device.GenericDevice;
+import fr.liglab.adele.icasa.device.*;
 import fr.liglab.adele.icasa.location.Zone;
 
 /**
@@ -90,7 +87,7 @@ public abstract class AbstractDevice implements GenericDevice {
 		}
 
 		if (modified)
-			notifyListeners(new DeviceEvent(this, DeviceEventType.PROP_MODIFIED, propertyName, oldValue, value));
+			notifyListeners(new DevicePropertyEvent(this, DeviceEventType.PROP_MODIFIED, propertyName, oldValue, value));
 	}
 
 
@@ -152,15 +149,6 @@ public abstract class AbstractDevice implements GenericDevice {
 				} else if (DeviceEventType.REMOVED.equals(event.getType())) {
 					listener.deviceRemoved(event.getDevice());
 					continue;
-				} else if (DeviceEventType.PROP_ADDED.equals(event.getType())) {
-					listener.devicePropertyAdded(event.getDevice(), event.getPropertyName());
-					continue;
-				} else if (DeviceEventType.PROP_REMOVED.equals(event.getType())) {
-					listener.devicePropertyRemoved(event.getDevice(), event.getPropertyName());
-					continue;
-				} else if (DeviceEventType.PROP_MODIFIED.equals(event.getType())) {
-					listener.devicePropertyModified(event.getDevice(), event.getPropertyName(), event.getOldValue(), event.getNewValue());
-					continue;
 				}
 			} catch (Exception e) {
 				Exception ee = new Exception("Exception in device listener '" + listener + "'", e);
@@ -168,6 +156,59 @@ public abstract class AbstractDevice implements GenericDevice {
 			}
 		}
 	}
+
+    /**
+     * Notify all listeners. In case of exceptions, exceptions are dumped to the
+     * standard error stream.
+     */
+    protected void notifyListeners(DeviceDataEvent event) {
+        List<DeviceListener> listeners;
+        // Make a snapshot of the listeners list
+        synchronized (m_listeners) {
+            listeners = Collections.unmodifiableList(new ArrayList<DeviceListener>(m_listeners));
+        }
+        // Call all listeners sequentially
+        for (DeviceListener listener : listeners) {
+            try {
+                if (DeviceEventType.DEVICE_EVENT.equals(event.getType())) {
+                    listener.deviceEvent(event.getDevice(), event.getData());
+                    continue;
+                }
+            } catch (Exception e) {
+                Exception ee = new Exception("Exception in device listener '" + listener + "'", e);
+                ee.printStackTrace();
+            }
+        }
+    }
+    /**
+     * Notify all listeners. In case of exceptions, exceptions are dumped to the
+     * standard error stream.
+     */
+    protected void notifyListeners(DevicePropertyEvent event) {
+        List<DeviceListener> listeners;
+        // Make a snapshot of the listeners list
+        synchronized (m_listeners) {
+            listeners = Collections.unmodifiableList(new ArrayList<DeviceListener>(m_listeners));
+        }
+        // Call all listeners sequentially
+        for (DeviceListener listener : listeners) {
+            try {
+                if (DeviceEventType.PROP_ADDED.equals(event.getType())) {
+                    listener.devicePropertyAdded(event.getDevice(), event.getPropertyName());
+                    continue;
+                } else if (DeviceEventType.PROP_REMOVED.equals(event.getType())) {
+                    listener.devicePropertyRemoved(event.getDevice(), event.getPropertyName());
+                    continue;
+                } else if (DeviceEventType.PROP_MODIFIED.equals(event.getType())) {
+                    listener.devicePropertyModified(event.getDevice(), event.getPropertyName(), event.getOldValue(), event.getNewValue());
+                    continue;
+                }
+            } catch (Exception e) {
+                Exception ee = new Exception("Exception in device listener '" + listener + "'", e);
+                ee.printStackTrace();
+            }
+        }
+    }
 
 	/* (non-Javadoc)
 	 * @see fr.liglab.adele.icasa.device.GenericDevice#enterInZones(java.util.List)

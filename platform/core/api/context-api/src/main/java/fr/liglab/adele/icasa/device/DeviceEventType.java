@@ -22,7 +22,7 @@ package fr.liglab.adele.icasa.device;
  */
 public enum DeviceEventType {
 
-    ADDED("added"), REMOVED("removed"), PROP_ADDED("prop-added"), PROP_REMOVED("prop-removed"), PROP_MODIFIED("prop-modified");
+    ADDED("added"), REMOVED("removed"), PROP_ADDED("prop-added"), PROP_REMOVED("prop-removed"), PROP_MODIFIED("prop-modified"), DEVICE_EVENT("device-event");
 
     private String _eventTypeStr;
 

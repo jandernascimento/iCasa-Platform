@@ -68,5 +68,12 @@ public interface DeviceListener<T extends GenericDevice> extends IcasaListener {
 	 */
 	public void devicePropertyRemoved(T device, String propertyName);
 
+    /**
+     * Callback notifying when the device want to trigger an event.
+     * @param device the device triggering the event.
+     * @param data the content of the event.
+     */
+    public void deviceEvent(T device, Object data);
+
 	
 }

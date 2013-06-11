@@ -258,7 +258,25 @@ public class LocatedDeviceImpl extends LocatedObjectImpl implements LocatedDevic
 		}
 	}
 
-	@Override
+    /**
+     * Callback notifying when the device want to trigger an event.
+     *
+     * @param device the device triggering the event.
+     * @param data   the content of the event.
+     */
+    @Override
+    public void deviceEvent(GenericDevice device, Object data) {
+        List<LocatedDeviceListener> snapshotListener = getListenerCopy();
+        for (LocatedDeviceListener listener : snapshotListener) {
+            try {
+                listener.deviceEvent(this, data);
+            } catch (Exception ex) {
+                System.err.println("Listener has throw an exception: " + listener);
+                ex.printStackTrace();
+            }
+        }    }
+
+    @Override
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;

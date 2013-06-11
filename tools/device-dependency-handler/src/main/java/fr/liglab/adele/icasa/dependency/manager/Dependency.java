@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
+import fr.liglab.adele.icasa.device.util.EmptyDeviceListener;
 import org.apache.felix.ipojo.ConfigurationException;
 import org.apache.felix.ipojo.ConstructorInjector;
 import org.apache.felix.ipojo.FieldInterceptor;
@@ -1241,23 +1242,14 @@ public class Dependency extends DependencyModel implements FieldInterceptor, Met
 	   return match;
 	}
 	
-	class HandlerDeviceListener implements DeviceListener {
+	class HandlerDeviceListener extends EmptyDeviceListener{
 
 		private ServiceReference m_ref;
 		
 		public HandlerDeviceListener(ServiceReference ref) {
 			m_ref = ref;
 		}
-		
-		public void deviceAdded(GenericDevice arg0) {
-	      // TODO Auto-generated method stub
-	      
-      }
 
-		public void devicePropertyAdded(GenericDevice arg0, String arg1) {
-	      // TODO Auto-generated method stub
-	      
-      }
 
 		public void devicePropertyModified(GenericDevice device, String deviceId, Object value, Object newValue) {
 	      boolean match = true;
@@ -1282,15 +1274,7 @@ public class Dependency extends DependencyModel implements FieldInterceptor, Met
 			
       }
 
-		public void devicePropertyRemoved(GenericDevice arg0, String arg1) {
-	      // TODO Auto-generated method stub
-	      
-      }
 
-		public void deviceRemoved(GenericDevice arg0) {
-	      // TODO Auto-generated method stub
-	      
-      }
 		
 	}
 

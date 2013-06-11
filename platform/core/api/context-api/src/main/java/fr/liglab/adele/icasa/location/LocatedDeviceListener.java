@@ -84,4 +84,11 @@ public interface LocatedDeviceListener extends IcasaListener {
      */
     void deviceDetached(LocatedDevice container, LocatedDevice child);
 
+    /**
+     * Callback notifying when the device want to trigger an event.
+     * @param device the device triggering the event.
+     * @param data the content of the event.
+     */
+    public void deviceEvent(LocatedDevice device, Object data);
+
 }

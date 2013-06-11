@@ -18,6 +18,7 @@ package fr.liglab.adele.m2mappbuilder.upnp.photometer.proxy;
 import java.util.Dictionary;
 import java.util.Properties;
 
+import fr.liglab.adele.icasa.device.DevicePropertyEvent;
 import fr.liglab.adele.icasa.location.LocatedDevice;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Filter;
@@ -167,7 +168,7 @@ public class UPnPPhotometerProxyImpl extends AbstractDevice implements Photomete
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					notifyListeners(new DeviceEvent(_device, DeviceEventType.PROP_MODIFIED, PHOTOMETER_CURRENT_ILLUMINANCE,
+					notifyListeners(new DevicePropertyEvent(_device, DeviceEventType.PROP_MODIFIED, PHOTOMETER_CURRENT_ILLUMINANCE,
 					      (Float) value.get("RetIlluminanceValue"), (Float) value.get("RetIlluminanceValue")));
 				}
 			};

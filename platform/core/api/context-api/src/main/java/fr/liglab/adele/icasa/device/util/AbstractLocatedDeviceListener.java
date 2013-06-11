@@ -66,4 +66,15 @@ public class AbstractLocatedDeviceListener implements LocatedDeviceListener {
     public void deviceDetached(LocatedDevice container, LocatedDevice child) {
         //do nothing
     }
+
+    /**
+     * Callback notifying when the device want to trigger an event.
+     *
+     * @param device the device triggering the event.
+     * @param data   the content of the event.
+     */
+    @Override
+    public void deviceEvent(LocatedDevice device, Object data) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
 }
