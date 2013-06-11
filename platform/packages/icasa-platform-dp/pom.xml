@@ -57,15 +57,14 @@
 		</dependency>
 		<dependency>
          <groupId>${project.groupId}</groupId>
-			<artifactId>zone.size.calculator.api</artifactId>
+			<artifactId>technical.services.api</artifactId>
          <version>${project.version}</version>
 		</dependency>
 		<dependency>
          <groupId>${project.groupId}</groupId>
-			<artifactId>zone.size.calculator.impl</artifactId>
+         <artifactId>technical.services.impl</artifactId>
          <version>${project.version}</version>
 		</dependency>		
-		
       <dependency>
          <groupId>org.ow2.chameleon.rose.atmosphere</groupId>
          <artifactId>atmosgi-service</artifactId>
