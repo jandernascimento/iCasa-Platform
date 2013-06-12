@@ -13,53 +13,55 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package fr.liglab.adele.icasa.commands.impl.shell;
+package fr.liglab.adele.icasa.service.preferences.impl.commands;
 
 import org.apache.felix.ipojo.annotations.Component;
 import org.apache.felix.ipojo.annotations.Instantiate;
 import org.apache.felix.ipojo.annotations.Provides;
 import org.apache.felix.ipojo.annotations.Requires;
-import org.ow2.chameleon.sharedprefs.SharedPreferencesService;
 
 import fr.liglab.adele.icasa.Signature;
 import fr.liglab.adele.icasa.commands.impl.ScriptLanguage;
+import fr.liglab.adele.icasa.service.preferences.Preferences;
 
-@Component(name = "GetConfigPropertyCommand")
+@Component(name = "SetConfigPropertyCommand")
 @Provides
-@Instantiate(name = "get-config-property-command")
-public class GetConfigPropertyCommand extends SharedPreferencesCommand {
+@Instantiate(name = "set-config-property-command")
+public class SetConfigPropertyCommand extends AbstractSetPreferencesCommand {
 
 	@Requires
-	private SharedPreferencesService preferenceService;
+	private Preferences preferenceService;
 
-	public GetConfigPropertyCommand() {
-		setSignature(new Signature(new String[] { ScriptLanguage.PROPERTY}));
+	public SetConfigPropertyCommand() {
+		setSignature(new Signature(new String[] { ScriptLanguage.PROPERTY, ScriptLanguage.VALUE, ScriptLanguage.TYPE }));
 	}
 
 	@Override
 	public String getName() {
-		return "get-config-property";
+		return "set-config-property";
 	}
 
 
 	@Override
 	public String getDescription() {
-		return "Gets a platform configuration property.\n\t" + super.getDescription();
+		return "Sets a platform configuration property.\n\t" + super.getDescription();
 	}
 
 	@Override
-   protected String getCommandType() {
-	   return "get";
+   protected String getPreferencesType() {
+	   return GLOBAL_PREFERENCE;
    }
 
 	@Override
-   protected String getPreferencesName() {
-	   return "platform-configuration";
+   protected String getExtraParameterName() {
+	   return "no-name";
    }
 
 	@Override
-   protected SharedPreferencesService getPreferenceService() {
+   protected Preferences getPreferenceService() {
 	   return preferenceService;
    }
+	
+	
 
 }

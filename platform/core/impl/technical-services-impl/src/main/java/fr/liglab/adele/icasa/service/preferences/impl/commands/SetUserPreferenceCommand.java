@@ -13,27 +13,27 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package fr.liglab.adele.icasa.commands.impl.shell;
+package fr.liglab.adele.icasa.service.preferences.impl.commands;
 
 import org.apache.felix.ipojo.annotations.Component;
 import org.apache.felix.ipojo.annotations.Instantiate;
 import org.apache.felix.ipojo.annotations.Provides;
 import org.apache.felix.ipojo.annotations.Requires;
-import org.ow2.chameleon.sharedprefs.SharedPreferencesService;
 
 import fr.liglab.adele.icasa.Signature;
 import fr.liglab.adele.icasa.commands.impl.ScriptLanguage;
+import fr.liglab.adele.icasa.service.preferences.Preferences;
 
 @Component(name = "SetUserPreferenceCommand")
 @Provides
 @Instantiate(name = "set-user-preference-command")
-public class SetUserPreferenceCommand extends SharedPreferencesCommand {
+public class SetUserPreferenceCommand extends AbstractSetPreferencesCommand {
 
 	@Requires
-	private SharedPreferencesService preferenceService;
+	private Preferences preferenceService;
 
 	public SetUserPreferenceCommand() {
-		setSignature(new Signature(new String[] { ScriptLanguage.PROPERTY, ScriptLanguage.VALUE, ScriptLanguage.TYPE }));
+		setSignature(new Signature(new String[] { ScriptLanguage.USER, ScriptLanguage.PROPERTY, ScriptLanguage.VALUE, ScriptLanguage.TYPE }));
 	}
 
 	@Override
@@ -44,22 +44,24 @@ public class SetUserPreferenceCommand extends SharedPreferencesCommand {
 
 	@Override
 	public String getDescription() {
-		return "Sets a user preference property.\n\t" + super.getDescription();
+		return "Sets a user preference.\n\t" + super.getDescription();
 	}
 
 	@Override
-   protected String getCommandType() {
-	   return "set";
+   protected String getPreferencesType() {
+	   return USER_PREFERENCE;
    }
 
 	@Override
-   protected String getPreferencesName() {
-	   return "user-preferences";
+   protected String getExtraParameterName() {
+	   return ScriptLanguage.USER;
    }
 
 	@Override
-   protected SharedPreferencesService getPreferenceService() {
+   protected Preferences getPreferenceService() {
 	   return preferenceService;
    }
+
+
 
 }

@@ -96,7 +96,9 @@ public abstract class AbstractCommand implements iCasaCommand {
      */
     @Override
 	public boolean validate(JSONObject param, Signature signature) throws Exception {
-        String []params = signature.getParameters();
+   	 if (param==null)
+   		 return false;
+        String[] params = signature.getParameters();
         for (String name: params){
             if(!param.has(name)){
                 return false;

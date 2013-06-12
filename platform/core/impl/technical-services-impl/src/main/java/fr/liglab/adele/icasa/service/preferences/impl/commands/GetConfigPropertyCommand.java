@@ -13,53 +13,52 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package fr.liglab.adele.icasa.commands.impl.shell;
+package fr.liglab.adele.icasa.service.preferences.impl.commands;
+
+import java.io.InputStream;
+import java.io.PrintStream;
 
 import org.apache.felix.ipojo.annotations.Component;
 import org.apache.felix.ipojo.annotations.Instantiate;
 import org.apache.felix.ipojo.annotations.Provides;
 import org.apache.felix.ipojo.annotations.Requires;
-import org.ow2.chameleon.sharedprefs.SharedPreferencesService;
+import org.json.JSONObject;
 
 import fr.liglab.adele.icasa.Signature;
+import fr.liglab.adele.icasa.commands.impl.AbstractCommand;
 import fr.liglab.adele.icasa.commands.impl.ScriptLanguage;
+import fr.liglab.adele.icasa.service.preferences.Preferences;
 
-@Component(name = "SetConfigPropertyCommand")
+@Component(name = "GetConfigPropertyCommand")
 @Provides
-@Instantiate(name = "set-config-property-command")
-public class SetConfigPropertyCommand extends SharedPreferencesCommand {
+@Instantiate(name = "get-config-property-command")
+public class GetConfigPropertyCommand extends AbstractCommand {
 
 	@Requires
-	private SharedPreferencesService preferenceService;
+	private Preferences preferenceService;
 
-	public SetConfigPropertyCommand() {
-		setSignature(new Signature(new String[] { ScriptLanguage.PROPERTY, ScriptLanguage.VALUE, ScriptLanguage.TYPE }));
+	public GetConfigPropertyCommand() {
+		setSignature(new Signature(new String[] {ScriptLanguage.PROPERTY}));
 	}
 
 	@Override
 	public String getName() {
-		return "set-config-property";
+		return "get-config-property";
 	}
 
 
 	@Override
 	public String getDescription() {
-		return "Sets a platform configuration property.\n\t" + super.getDescription();
+		return "Gets a platform configuration property.\n\t" + super.getDescription();
 	}
 
 	@Override
-   protected String getCommandType() {
-	   return "set";
+   public Object execute(InputStream in, PrintStream out, JSONObject param, Signature signature) throws Exception {
+		String property = param.getString(ScriptLanguage.NAME);
+		Object value  = preferenceService.getGlobalPropertyValue(property);
+		out.println("Property " + property + " - value: " + value);
+	   return value;
    }
 
-	@Override
-   protected String getPreferencesName() {
-	   return "platform-configuration";
-   }
-
-	@Override
-   protected SharedPreferencesService getPreferenceService() {
-	   return preferenceService;
-   }
 
 }

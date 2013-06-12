@@ -13,32 +13,37 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package fr.liglab.adele.icasa.commands.impl.shell;
+package fr.liglab.adele.icasa.service.preferences.impl.commands;
+
+import java.io.InputStream;
+import java.io.PrintStream;
 
 import org.apache.felix.ipojo.annotations.Component;
 import org.apache.felix.ipojo.annotations.Instantiate;
 import org.apache.felix.ipojo.annotations.Provides;
 import org.apache.felix.ipojo.annotations.Requires;
-import org.ow2.chameleon.sharedprefs.SharedPreferencesService;
+import org.json.JSONObject;
 
 import fr.liglab.adele.icasa.Signature;
+import fr.liglab.adele.icasa.commands.impl.AbstractCommand;
 import fr.liglab.adele.icasa.commands.impl.ScriptLanguage;
+import fr.liglab.adele.icasa.service.preferences.Preferences;
 
-@Component(name = "GetUserPreferenceCommand")
+@Component(name = "GetAppPreferenceCommand")
 @Provides
-@Instantiate(name = "get-user-preference-command")
-public class GetUserPreferenceCommand extends SharedPreferencesCommand {
+@Instantiate(name = "get-app-preference-command")
+public class GetApplicationPreferenceCommand extends AbstractCommand {
 
 	@Requires
-	private SharedPreferencesService preferenceService;
+	private Preferences preferenceService;
 
-	public GetUserPreferenceCommand() {
-		setSignature(new Signature(new String[] { ScriptLanguage.PROPERTY}));
+	public GetApplicationPreferenceCommand() {
+		setSignature(new Signature(new String[] {ScriptLanguage.APPLICATION_ID, ScriptLanguage.PROPERTY}));
 	}
 
 	@Override
 	public String getName() {
-		return "get-user-preference";
+		return "get-app-preference";
 	}
 
 
@@ -48,18 +53,12 @@ public class GetUserPreferenceCommand extends SharedPreferencesCommand {
 	}
 
 	@Override
-   protected String getCommandType() {
-	   return "get";
-   }
-
-	@Override
-   protected String getPreferencesName() {
-	   return "user-preferences";
-   }
-
-	@Override
-   protected SharedPreferencesService getPreferenceService() {
-	   return preferenceService;
+   public Object execute(InputStream in, PrintStream out, JSONObject param, Signature signature) throws Exception {
+		String property = param.getString(ScriptLanguage.NAME);
+		String appId = param.getString(ScriptLanguage.APPLICATION_ID);
+		Object value  = preferenceService.getApplicationPropertyValue(appId, property);
+		out.println("Property " + property + " - value: " + value);
+	   return value;
    }
 
 }

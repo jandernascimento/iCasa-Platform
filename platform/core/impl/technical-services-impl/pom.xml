@@ -27,22 +27,30 @@
     <dependency>
       <groupId>org.apache.felix</groupId>
       <artifactId>org.apache.felix.ipojo.api</artifactId>
-    </dependency>    
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>zone.size.calculator.api</artifactId>
-      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>context.api</artifactId>
       <version>${project.version}</version>
     </dependency>
-      <dependency>
-          <groupId>${project.groupId}</groupId>
-          <artifactId>technical.services.api</artifactId>
-          <version>${project.version}</version>
-      </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>context.impl</artifactId>
+      <version>${project.version}</version>
+    </dependency>    
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>technical.services.api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.ow2.chameleon.sharedprefs</groupId>
+      <artifactId>shared-preferences-service</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.ow2.chameleon.sharedprefs</groupId>
+      <artifactId>xml-shared-preferences</artifactId> 
+    </dependency>      
   </dependencies>
 
   <build>
@@ -53,7 +61,9 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Private-Package>fr.liglab.adele.icasa.service.zone.size.calculator.impl, fr.liglab.adele.icasa.service.zone.dimension.calculator.impl</Private-Package>
+            <Private-Package>fr.liglab.adele.icasa.service.preferences,
+              fr.liglab.adele.icasa.service.zone.size.calculator.impl,
+              fr.liglab.adele.icasa.service.zone.dimension.calculator.impl</Private-Package>
           </instructions>
         </configuration>
       </plugin>
