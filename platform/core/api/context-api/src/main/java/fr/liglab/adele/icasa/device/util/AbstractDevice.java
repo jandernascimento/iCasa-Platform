@@ -149,66 +149,33 @@ public abstract class AbstractDevice implements GenericDevice {
 				} else if (DeviceEventType.REMOVED.equals(event.getType())) {
 					listener.deviceRemoved(event.getDevice());
 					continue;
-				}
+				}  else if (DeviceEventType.DEVICE_EVENT.equals(event.getType()) && event instanceof DeviceDataEvent) {
+                    DeviceDataEvent dataEvent = (DeviceDataEvent)event;
+                    listener.deviceEvent(dataEvent.getDevice(), dataEvent.getData());
+                    continue;
+                } else if (DeviceEventType.PROP_ADDED.equals(event.getType()) && event instanceof DevicePropertyEvent) {
+                    DevicePropertyEvent devicePropertyEvent = (DevicePropertyEvent) event;
+                    listener.devicePropertyAdded(devicePropertyEvent.getDevice(), devicePropertyEvent.getPropertyName());
+                    continue;
+                } else if (DeviceEventType.PROP_REMOVED.equals(event.getType()) && event instanceof DevicePropertyEvent) {
+                    DevicePropertyEvent devicePropertyEvent = (DevicePropertyEvent) event;
+                    listener.devicePropertyRemoved(devicePropertyEvent.getDevice(), devicePropertyEvent.getPropertyName());
+                    continue;
+                } else if (DeviceEventType.PROP_MODIFIED.equals(event.getType()) && event instanceof DevicePropertyEvent) {
+                    DevicePropertyEvent devicePropertyEvent = (DevicePropertyEvent) event;
+                    listener.devicePropertyModified(devicePropertyEvent.getDevice(), devicePropertyEvent.getPropertyName(), devicePropertyEvent.getOldValue(), devicePropertyEvent.getNewValue());
+                    continue;
+                } else {
+                    Exception ee = new Exception("Malformed Event '" + event);
+                    ee.printStackTrace();
+                    throw ee;
+                }
 			} catch (Exception e) {
 				Exception ee = new Exception("Exception in device listener '" + listener + "'", e);
 				ee.printStackTrace();
 			}
 		}
 	}
-
-    /**
-     * Notify all listeners. In case of exceptions, exceptions are dumped to the
-     * standard error stream.
-     */
-    protected void notifyListeners(DeviceDataEvent event) {
-        List<DeviceListener> listeners;
-        // Make a snapshot of the listeners list
-        synchronized (m_listeners) {
-            listeners = Collections.unmodifiableList(new ArrayList<DeviceListener>(m_listeners));
-        }
-        // Call all listeners sequentially
-        for (DeviceListener listener : listeners) {
-            try {
-                if (DeviceEventType.DEVICE_EVENT.equals(event.getType())) {
-                    listener.deviceEvent(event.getDevice(), event.getData());
-                    continue;
-                }
-            } catch (Exception e) {
-                Exception ee = new Exception("Exception in device listener '" + listener + "'", e);
-                ee.printStackTrace();
-            }
-        }
-    }
-    /**
-     * Notify all listeners. In case of exceptions, exceptions are dumped to the
-     * standard error stream.
-     */
-    protected void notifyListeners(DevicePropertyEvent event) {
-        List<DeviceListener> listeners;
-        // Make a snapshot of the listeners list
-        synchronized (m_listeners) {
-            listeners = Collections.unmodifiableList(new ArrayList<DeviceListener>(m_listeners));
-        }
-        // Call all listeners sequentially
-        for (DeviceListener listener : listeners) {
-            try {
-                if (DeviceEventType.PROP_ADDED.equals(event.getType())) {
-                    listener.devicePropertyAdded(event.getDevice(), event.getPropertyName());
-                    continue;
-                } else if (DeviceEventType.PROP_REMOVED.equals(event.getType())) {
-                    listener.devicePropertyRemoved(event.getDevice(), event.getPropertyName());
-                    continue;
-                } else if (DeviceEventType.PROP_MODIFIED.equals(event.getType())) {
-                    listener.devicePropertyModified(event.getDevice(), event.getPropertyName(), event.getOldValue(), event.getNewValue());
-                    continue;
-                }
-            } catch (Exception e) {
-                Exception ee = new Exception("Exception in device listener '" + listener + "'", e);
-                ee.printStackTrace();
-            }
-        }
-    }
 
 	/* (non-Javadoc)
 	 * @see fr.liglab.adele.icasa.device.GenericDevice#enterInZones(java.util.List)
