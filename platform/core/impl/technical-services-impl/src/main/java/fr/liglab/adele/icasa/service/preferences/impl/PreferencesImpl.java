@@ -31,7 +31,7 @@ import org.ow2.chameleon.sharedprefs.SharedPreferencesService;
 import fr.liglab.adele.icasa.service.preferences.Preferences;
 
 /**
- * @author Gabriel
+ * @author Gabriel Pedraza Ferreira
  * 
  */
 @Component(name = "iCasaPreferences")

@@ -23,9 +23,9 @@ import java.util.List;
 import fr.liglab.adele.icasa.Signature;
 import org.json.JSONObject;
 
-import fr.liglab.adele.icasa.iCasaCommand;
+import fr.liglab.adele.icasa.ICasaCommand;
 
-public abstract class AbstractCommand implements iCasaCommand {
+public abstract class AbstractCommand implements ICasaCommand {
 
     protected static Signature EMPTY_SIGNATURE = new Signature(new String[0]);
 

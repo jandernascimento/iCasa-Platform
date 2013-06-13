@@ -19,7 +19,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 
 import fr.liglab.adele.icasa.Signature;
-import fr.liglab.adele.icasa.iCasaCommand;
+import fr.liglab.adele.icasa.ICasaCommand;
 import org.apache.felix.ipojo.Factory;
 import org.apache.felix.ipojo.annotations.Component;
 import org.apache.felix.ipojo.annotations.Instantiate;
@@ -32,7 +32,7 @@ import org.json.JSONObject;
 @Component
 @Provides
 @Instantiate
-public class CommandFactory implements iCasaCommand {
+public class CommandFactory implements ICasaCommand {
 
 	@Requires
 	Factory[] m_factories;

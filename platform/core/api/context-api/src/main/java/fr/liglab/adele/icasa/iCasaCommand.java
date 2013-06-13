@@ -17,10 +17,6 @@ package fr.liglab.adele.icasa;
 
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.lang.Exception;
-import java.lang.Object;
-import java.lang.String;
-import java.util.List;
 
 import org.json.JSONObject;
 
@@ -28,7 +24,7 @@ import org.json.JSONObject;
  * An ICommandService is a service that can be executed with a set of arguments. It can execute a block of code and then
  * returns the result object of executing this code.
  */
-public interface iCasaCommand {
+public interface ICasaCommand {
 	/**
 	 * @serviceproperty Namespace is the command namespace (same as xml namespace or gogo shell scope)
 	 * @mandatory

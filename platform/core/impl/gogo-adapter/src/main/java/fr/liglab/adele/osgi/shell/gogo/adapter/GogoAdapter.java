@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import fr.liglab.adele.icasa.iCasaCommand;
+import fr.liglab.adele.icasa.ICasaCommand;
 import org.apache.felix.ipojo.annotations.Bind;
 import org.apache.felix.ipojo.annotations.Component;
 import org.apache.felix.ipojo.annotations.Instantiate;
@@ -74,7 +74,7 @@ public class GogoAdapter {
 	}
 
 	@Bind(aggregate = true)
-	void bindCommand(iCasaCommand command) {
+	void bindCommand(ICasaCommand command) {
 
 		try {
 			// Create an adapter for the command
@@ -82,14 +82,14 @@ public class GogoAdapter {
 
 			// Read the adapted command properties
 			String commandName = command.getName();
-			String commandNamespace = iCasaCommand.DEFAULT_NAMESPACE;
+			String commandNamespace = ICasaCommand.DEFAULT_NAMESPACE;
 			String commandDescription = command.getDescription();
 
 			// Register the command
 			Dictionary  commandProperties = new Properties();
 			commandProperties.put(CommandProcessor.COMMAND_FUNCTION, new String[] { commandName });
 			commandProperties.put(CommandProcessor.COMMAND_SCOPE, commandNamespace);
-			commandProperties.put(iCasaCommand.PROP_DESCRIPTION, commandDescription);
+			commandProperties.put(ICasaCommand.PROP_DESCRIPTION, commandDescription);
 
 			ServiceRegistration commandRegistration = m_context.registerService(new String[] { Function.class.getName() },
 			      function, commandProperties);
@@ -105,11 +105,11 @@ public class GogoAdapter {
 	}
 
 	@Unbind
-	void unbindCommand(iCasaCommand command) {
+	void unbindCommand(ICasaCommand command) {
 		try {
 			// Read the adapted command properties
 			String commandName = command.getName();
-			String commandNamespace = iCasaCommand.DEFAULT_NAMESPACE;
+			String commandNamespace = ICasaCommand.DEFAULT_NAMESPACE;
 			// Unregister the adapted command
 			ServiceRegistration commandRegistration = m_functions.get(commandNamespace + ":" + commandName);
 			if (commandRegistration != null) {

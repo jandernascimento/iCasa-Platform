@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import fr.liglab.adele.icasa.Signature;
-import fr.liglab.adele.icasa.iCasaCommand;
+import fr.liglab.adele.icasa.ICasaCommand;
 import org.apache.felix.service.command.CommandSession;
 import org.apache.felix.service.command.Function;
 import org.json.JSONObject;
@@ -31,14 +31,14 @@ import org.json.JSONObject;
 public class AdaptedCommandFunction implements Function {
 
 	/** The ICommandService command to be executed. */
-	final iCasaCommand m_command;
+	final ICasaCommand m_command;
 
 	/**
 	 * Instantiates a new adapted command function.
 	 * 
 	 * @param command the command
 	 */
-	AdaptedCommandFunction(iCasaCommand command) {
+	AdaptedCommandFunction(ICasaCommand command) {
 		m_command = command;
 	}
 

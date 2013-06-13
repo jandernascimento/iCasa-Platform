@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import fr.liglab.adele.icasa.iCasaCommand;
+import fr.liglab.adele.icasa.ICasaCommand;
 import org.apache.felix.ipojo.annotations.Component;
 import org.apache.felix.ipojo.annotations.Instantiate;
 import org.apache.felix.ipojo.annotations.Invalidate;
@@ -112,7 +112,7 @@ public final class UtilCommand {
 
         Filter filter = context.createFilter(String.format("(&(%s=%s)(%s=*))",
                 CommandProcessor.COMMAND_SCOPE,
-                iCasaCommand.DEFAULT_NAMESPACE,
+                ICasaCommand.DEFAULT_NAMESPACE,
 				CommandProcessor.COMMAND_FUNCTION));
 
 		return new ServiceTracker(context, filter, null) {
@@ -120,7 +120,7 @@ public final class UtilCommand {
 			public Object addingService(ServiceReference ref) {
 				try {
 					String description = (String) ref
-							.getProperty(iCasaCommand.PROP_DESCRIPTION);
+							.getProperty(ICasaCommand.PROP_DESCRIPTION);
 					description = (description == null ? "" : description);
 
 					SortedSet<String> funcFQNames = extractFunctionsQualifiedName(ref);
