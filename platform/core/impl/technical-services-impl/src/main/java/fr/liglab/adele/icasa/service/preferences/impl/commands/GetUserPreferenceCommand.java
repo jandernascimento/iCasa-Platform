@@ -38,7 +38,7 @@ public class GetUserPreferenceCommand extends AbstractCommand {
 	private Preferences preferenceService;
 
 	public GetUserPreferenceCommand() {
-		setSignature(new Signature(new String[] {ScriptLanguage.USER, ScriptLanguage.PROPERTY}));
+		setSignature(new Signature(new String[] {ScriptLanguage.USER, ScriptLanguage.NAME}));
 	}
 
 	@Override

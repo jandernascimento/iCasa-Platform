@@ -33,7 +33,8 @@ public class SetUserPreferenceCommand extends AbstractSetPreferencesCommand {
 	private Preferences preferenceService;
 
 	public SetUserPreferenceCommand() {
-		setSignature(new Signature(new String[] { ScriptLanguage.USER, ScriptLanguage.PROPERTY, ScriptLanguage.VALUE, ScriptLanguage.TYPE }));
+		setSignature(new Signature(new String[] { ScriptLanguage.USER, ScriptLanguage.NAME, ScriptLanguage.VALUE }));
+		setSignature(new Signature(new String[] { ScriptLanguage.USER, ScriptLanguage.NAME, ScriptLanguage.VALUE, ScriptLanguage.TYPE }));
 	}
 
 	@Override

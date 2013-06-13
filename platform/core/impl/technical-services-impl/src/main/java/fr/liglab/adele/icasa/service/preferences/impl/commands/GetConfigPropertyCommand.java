@@ -38,7 +38,7 @@ public class GetConfigPropertyCommand extends AbstractCommand {
 	private Preferences preferenceService;
 
 	public GetConfigPropertyCommand() {
-		setSignature(new Signature(new String[] {ScriptLanguage.PROPERTY}));
+		setSignature(new Signature(new String[] {ScriptLanguage.NAME}));
 	}
 
 	@Override

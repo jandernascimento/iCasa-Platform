@@ -39,7 +39,10 @@ public abstract class AbstractSetPreferencesCommand extends AbstractCommand {
 		preferenceService = getPreferenceService();
 
 		String property = param.getString(ScriptLanguage.NAME);
-		String type = param.getString(ScriptLanguage.TYPE);
+		
+		String type = "String";
+		if (signature.hasParameter(ScriptLanguage.TYPE))		
+			type = param.getString(ScriptLanguage.TYPE);
 		String commandType = getPreferencesType();		
 		Object value = null;
 		
@@ -73,6 +76,8 @@ public abstract class AbstractSetPreferencesCommand extends AbstractCommand {
 		return null;
 	}
 
+	
+	
 	protected abstract String getPreferencesType();
 
 	protected abstract String getExtraParameterName();

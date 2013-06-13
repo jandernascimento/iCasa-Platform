@@ -33,7 +33,8 @@ public class SetApplicationPreferenceCommand extends AbstractSetPreferencesComma
 	private Preferences preferenceService;
 
 	public SetApplicationPreferenceCommand() {
-		setSignature(new Signature(new String[] { ScriptLanguage.APPLICATION_ID, ScriptLanguage.PROPERTY, ScriptLanguage.VALUE, ScriptLanguage.TYPE }));
+		setSignature(new Signature(new String[] { ScriptLanguage.APPLICATION_ID, ScriptLanguage.NAME, ScriptLanguage.VALUE }));
+		setSignature(new Signature(new String[] { ScriptLanguage.APPLICATION_ID, ScriptLanguage.NAME, ScriptLanguage.VALUE, ScriptLanguage.TYPE }));
 	}
 
 	@Override

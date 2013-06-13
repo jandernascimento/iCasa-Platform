@@ -33,7 +33,8 @@ public class SetConfigPropertyCommand extends AbstractSetPreferencesCommand {
 	private Preferences preferenceService;
 
 	public SetConfigPropertyCommand() {
-		setSignature(new Signature(new String[] { ScriptLanguage.PROPERTY, ScriptLanguage.VALUE, ScriptLanguage.TYPE }));
+		setSignature(new Signature(new String[] { ScriptLanguage.NAME, ScriptLanguage.VALUE }));
+		setSignature(new Signature(new String[] { ScriptLanguage.NAME, ScriptLanguage.VALUE, ScriptLanguage.TYPE }));
 	}
 
 	@Override

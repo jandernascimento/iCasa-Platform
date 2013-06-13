@@ -38,7 +38,7 @@ public class GetApplicationPreferenceCommand extends AbstractCommand {
 	private Preferences preferenceService;
 
 	public GetApplicationPreferenceCommand() {
-		setSignature(new Signature(new String[] {ScriptLanguage.APPLICATION_ID, ScriptLanguage.PROPERTY}));
+		setSignature(new Signature(new String[] {ScriptLanguage.APPLICATION_ID, ScriptLanguage.NAME}));
 	}
 
 	@Override
