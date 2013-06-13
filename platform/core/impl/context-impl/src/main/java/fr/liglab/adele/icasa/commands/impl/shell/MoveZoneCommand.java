@@ -15,20 +15,20 @@
  */
 package fr.liglab.adele.icasa.commands.impl.shell;
 
-import fr.liglab.adele.icasa.ContextManager;
-import fr.liglab.adele.icasa.Signature;
-import fr.liglab.adele.icasa.commands.impl.AbstractCommand;
-import fr.liglab.adele.icasa.commands.impl.ScriptLanguage;
-import fr.liglab.adele.icasa.location.Zone;
+import java.io.InputStream;
+import java.io.PrintStream;
+
 import org.apache.felix.ipojo.annotations.Component;
 import org.apache.felix.ipojo.annotations.Instantiate;
 import org.apache.felix.ipojo.annotations.Provides;
 import org.apache.felix.ipojo.annotations.Requires;
 import org.json.JSONObject;
 
-import java.io.InputStream;
-import java.io.PrintStream;
-import java.security.PublicKey;
+import fr.liglab.adele.icasa.ContextManager;
+import fr.liglab.adele.icasa.Signature;
+import fr.liglab.adele.icasa.commands.impl.AbstractCommand;
+import fr.liglab.adele.icasa.commands.impl.ScriptLanguage;
+import fr.liglab.adele.icasa.location.Zone;
 
 /**
  * 
