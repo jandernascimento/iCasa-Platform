@@ -24,38 +24,38 @@ import fr.liglab.adele.icasa.Signature;
 import fr.liglab.adele.icasa.commands.impl.ScriptLanguage;
 import fr.liglab.adele.icasa.service.preferences.Preferences;
 
-@Component(name = "SetUserPreferenceCommand")
+@Component(name = "SetApplicationPropertyCommand")
 @Provides
-@Instantiate(name = "set-user-preference-command")
-public class SetUserPreferenceCommand extends AbstractSetPreferencesCommand {
+@Instantiate(name = "set-app-property-command")
+public class SetApplicationPropertyCommand extends AbstractSetPropertyCommand {
 
 	@Requires
 	private Preferences preferenceService;
 
-	public SetUserPreferenceCommand() {
-		setSignature(new Signature(new String[] { ScriptLanguage.USER, ScriptLanguage.NAME, ScriptLanguage.VALUE }));
-		setSignature(new Signature(new String[] { ScriptLanguage.USER, ScriptLanguage.NAME, ScriptLanguage.VALUE, ScriptLanguage.TYPE }));
+	public SetApplicationPropertyCommand() {
+		setSignature(new Signature(new String[] { ScriptLanguage.APPLICATION_ID, ScriptLanguage.NAME, ScriptLanguage.VALUE }));
+		setSignature(new Signature(new String[] { ScriptLanguage.APPLICATION_ID, ScriptLanguage.NAME, ScriptLanguage.VALUE, ScriptLanguage.TYPE }));
 	}
 
 	@Override
 	public String getName() {
-		return "set-user-preference";
+		return "set-app-property";
 	}
 
 
 	@Override
 	public String getDescription() {
-		return "Sets a user preference.\n\t" + super.getDescription();
+		return "Sets a application property.\n\t" + super.getDescription();
 	}
 
 	@Override
    protected String getPreferencesType() {
-	   return USER_PREFERENCE;
+	   return APPLICATION_PREFERENCE;
    }
 
 	@Override
    protected String getExtraParameterName() {
-	   return ScriptLanguage.USER;
+	   return ScriptLanguage.APPLICATION_ID;
    }
 
 	@Override

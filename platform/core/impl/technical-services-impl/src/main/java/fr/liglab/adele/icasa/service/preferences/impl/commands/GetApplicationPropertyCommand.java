@@ -15,54 +15,50 @@
  */
 package fr.liglab.adele.icasa.service.preferences.impl.commands;
 
+import java.io.InputStream;
+import java.io.PrintStream;
+
 import org.apache.felix.ipojo.annotations.Component;
 import org.apache.felix.ipojo.annotations.Instantiate;
 import org.apache.felix.ipojo.annotations.Provides;
 import org.apache.felix.ipojo.annotations.Requires;
+import org.json.JSONObject;
 
 import fr.liglab.adele.icasa.Signature;
+import fr.liglab.adele.icasa.commands.impl.AbstractCommand;
 import fr.liglab.adele.icasa.commands.impl.ScriptLanguage;
 import fr.liglab.adele.icasa.service.preferences.Preferences;
 
-@Component(name = "SetAppPreferenceCommand")
+@Component(name = "GetApplicationPropertyCommand")
 @Provides
-@Instantiate(name = "set-app-preference-command")
-public class SetApplicationPreferenceCommand extends AbstractSetPreferencesCommand {
+@Instantiate(name = "get-app-property-command")
+public class GetApplicationPropertyCommand extends AbstractCommand {
 
 	@Requires
 	private Preferences preferenceService;
 
-	public SetApplicationPreferenceCommand() {
-		setSignature(new Signature(new String[] { ScriptLanguage.APPLICATION_ID, ScriptLanguage.NAME, ScriptLanguage.VALUE }));
-		setSignature(new Signature(new String[] { ScriptLanguage.APPLICATION_ID, ScriptLanguage.NAME, ScriptLanguage.VALUE, ScriptLanguage.TYPE }));
+	public GetApplicationPropertyCommand() {
+		setSignature(new Signature(new String[] {ScriptLanguage.APPLICATION_ID, ScriptLanguage.NAME}));
 	}
 
 	@Override
 	public String getName() {
-		return "set-app-preference";
+		return "get-app-property";
 	}
 
 
 	@Override
 	public String getDescription() {
-		return "Sets a application preference.\n\t" + super.getDescription();
+		return "Gets a user preference property.\n\t" + super.getDescription();
 	}
 
 	@Override
-   protected String getPreferencesType() {
-	   return APPLICATION_PREFERENCE;
+   public Object execute(InputStream in, PrintStream out, JSONObject param, Signature signature) throws Exception {
+		String property = param.getString(ScriptLanguage.NAME);
+		String appId = param.getString(ScriptLanguage.APPLICATION_ID);
+		Object value  = preferenceService.getApplicationPropertyValue(appId, property);
+		out.println("Property " + property + " - value: " + value);
+	   return value;
    }
-
-	@Override
-   protected String getExtraParameterName() {
-	   return ScriptLanguage.APPLICATION_ID;
-   }
-
-	@Override
-   protected Preferences getPreferenceService() {
-	   return preferenceService;
-   }
-
-
 
 }

@@ -25,7 +25,7 @@ import fr.liglab.adele.icasa.commands.impl.AbstractCommand;
 import fr.liglab.adele.icasa.commands.impl.ScriptLanguage;
 import fr.liglab.adele.icasa.service.preferences.Preferences;
 
-public abstract class AbstractSetPreferencesCommand extends AbstractCommand {
+public abstract class AbstractSetPropertyCommand extends AbstractCommand {
 
 	private Preferences preferenceService;
 	

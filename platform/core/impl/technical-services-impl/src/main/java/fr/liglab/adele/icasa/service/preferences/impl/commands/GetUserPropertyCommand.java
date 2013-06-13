@@ -29,21 +29,21 @@ import fr.liglab.adele.icasa.commands.impl.AbstractCommand;
 import fr.liglab.adele.icasa.commands.impl.ScriptLanguage;
 import fr.liglab.adele.icasa.service.preferences.Preferences;
 
-@Component(name = "GetAppPreferenceCommand")
+@Component(name = "GetUserPropertyCommand")
 @Provides
-@Instantiate(name = "get-app-preference-command")
-public class GetApplicationPreferenceCommand extends AbstractCommand {
+@Instantiate(name = "get-user-property-command")
+public class GetUserPropertyCommand extends AbstractCommand {
 
 	@Requires
 	private Preferences preferenceService;
 
-	public GetApplicationPreferenceCommand() {
-		setSignature(new Signature(new String[] {ScriptLanguage.APPLICATION_ID, ScriptLanguage.NAME}));
+	public GetUserPropertyCommand() {
+		setSignature(new Signature(new String[] {ScriptLanguage.USER, ScriptLanguage.NAME}));
 	}
 
 	@Override
 	public String getName() {
-		return "get-app-preference";
+		return "get-user-property";
 	}
 
 
@@ -55,8 +55,8 @@ public class GetApplicationPreferenceCommand extends AbstractCommand {
 	@Override
    public Object execute(InputStream in, PrintStream out, JSONObject param, Signature signature) throws Exception {
 		String property = param.getString(ScriptLanguage.NAME);
-		String appId = param.getString(ScriptLanguage.APPLICATION_ID);
-		Object value  = preferenceService.getApplicationPropertyValue(appId, property);
+		String user = param.getString(ScriptLanguage.USER);
+		Object value  = preferenceService.getUserPropertyValue(user, property);
 		out.println("Property " + property + " - value: " + value);
 	   return value;
    }
