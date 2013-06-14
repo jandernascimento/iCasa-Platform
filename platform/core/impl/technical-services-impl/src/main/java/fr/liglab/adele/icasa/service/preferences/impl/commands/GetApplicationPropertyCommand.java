@@ -57,7 +57,7 @@ public class GetApplicationPropertyCommand extends AbstractCommand {
 		String property = param.getString(ScriptLanguage.NAME);
 		String appId = param.getString(ScriptLanguage.APPLICATION_ID);
 		Object value  = preferenceService.getApplicationPropertyValue(appId, property);
-		out.println("Property " + property + " - value: " + value);
+		out.println("Property: " + property + " - Value: " + value);
 	   return value;
    }
 

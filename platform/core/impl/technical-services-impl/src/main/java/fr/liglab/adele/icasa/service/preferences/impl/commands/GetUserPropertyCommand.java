@@ -57,7 +57,7 @@ public class GetUserPropertyCommand extends AbstractCommand {
 		String property = param.getString(ScriptLanguage.NAME);
 		String user = param.getString(ScriptLanguage.USER);
 		Object value  = preferenceService.getUserPropertyValue(user, property);
-		out.println("Property " + property + " - value: " + value);
+		out.println("Property: " + property + " - Value: " + value);
 	   return value;
    }
 

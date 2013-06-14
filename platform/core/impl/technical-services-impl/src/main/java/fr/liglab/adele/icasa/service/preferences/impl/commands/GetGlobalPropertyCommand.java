@@ -56,7 +56,7 @@ public class GetGlobalPropertyCommand extends AbstractCommand {
    public Object execute(InputStream in, PrintStream out, JSONObject param, Signature signature) throws Exception {
 		String property = param.getString(ScriptLanguage.NAME);
 		Object value  = preferenceService.getGlobalPropertyValue(property);
-		out.println("Property " + property + " - value: " + value);
+		out.println("Property: " + property + " - Value: " + value);
 	   return value;
    }
 
