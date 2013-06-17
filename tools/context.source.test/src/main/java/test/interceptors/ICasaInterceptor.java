@@ -46,7 +46,12 @@ public class ICasaInterceptor implements ServiceTrackingInterceptor {
          TransformedServiceReference<S> serviceReference) {
 		System.out.println("Interceptor - Component Instance :: " + getInstanceName(model));
 	   System.out.println("Interceptor - Dependency Filter :: " + model.getFilter());
-	   System.out.println("Interceptor - Service Property :: " + serviceReference.getProperty("location"));	   
+	   System.out.println("Interceptor - Service Property :: " + serviceReference.getProperty("location"));
+	   if (getInstanceName(model).equals("ConsumerFakeDevice-2")) {
+	   	 System.out.println("Interceptor - Adding Location Property :: ");
+	   	serviceReference.addProperty("location", "kitchen");
+	   }
+	   
 	   return serviceReference;
    }
 	

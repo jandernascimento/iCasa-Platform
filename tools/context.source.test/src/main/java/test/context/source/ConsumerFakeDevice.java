@@ -27,7 +27,7 @@ public class ConsumerFakeDevice {
 
 	GenericDevice llDevice;
 	
-	@Bind(id = "dev")
+	@Bind(id = "dev", aggregate=true)
 	public void bindFakeDevice(BinaryLight device) {
 		System.out.println("--------------> Device Binded ----- " + device.getSerialNumber());
 	}
