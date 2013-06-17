@@ -22,40 +22,55 @@ import java.util.Arrays;
  */
 public class Signature {
 
-    /**
-     * The list of parameters for a given iCasaCommand signature.
-     */
-    private final String[] parameters;
+	/**
+	 * The list of parameters for a given iCasaCommand signature.
+	 */
+	private final String[] parameters;
 
+	public Signature(String[] params) {
+		this.parameters = params;
+	}
 
-    public Signature(String[] params){
-        this.parameters = params;
-    }
+	/**
+	 * Get the list of parameters of this signature.
+	 * 
+	 * @return the list of parameters.
+	 */
+	public String[] getParameters() {
+		return parameters;
+	}
 
-    /**
-     * Get the list of parameters of this signature.
-     * @return the list of parameters.
-     */
-    public String[] getParameters(){
-        return parameters;
-    }
+	/**
+	 * Determines if the signature contains a parameter
+	 * @param parameter a parameter name
+	 * @return true if contains the parameter
+	 */
+	public boolean hasParameter(String parameter) {
+		for (String actualParameter : parameters) {
+			if (actualParameter.equals(parameter))
+				return true;
+		}
+		return false;
+	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+		Signature signature = (Signature) o;
 
-        Signature signature = (Signature) o;
+		if (!Arrays.equals(parameters, signature.parameters))
+			return false;
 
-        if (!Arrays.equals(parameters, signature.parameters)) return false;
+		return true;
+	}
 
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = Arrays.hashCode(parameters);
-        return result;
-    }
+	@Override
+	public int hashCode() {
+		int result = Arrays.hashCode(parameters);
+		return result;
+	}
 }

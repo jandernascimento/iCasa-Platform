@@ -15,53 +15,50 @@
  */
 package fr.liglab.adele.icasa.service.preferences.impl.commands;
 
+import java.io.InputStream;
+import java.io.PrintStream;
+
 import org.apache.felix.ipojo.annotations.Component;
 import org.apache.felix.ipojo.annotations.Instantiate;
 import org.apache.felix.ipojo.annotations.Provides;
 import org.apache.felix.ipojo.annotations.Requires;
+import org.json.JSONObject;
 
 import fr.liglab.adele.icasa.Signature;
+import fr.liglab.adele.icasa.commands.impl.AbstractCommand;
 import fr.liglab.adele.icasa.commands.impl.ScriptLanguage;
 import fr.liglab.adele.icasa.service.preferences.Preferences;
 
-@Component(name = "SetAppPreferenceCommand")
+@Component(name = "GetGlobalPropertyCommand")
 @Provides
-@Instantiate(name = "set-app-preference-command")
-public class SetApplicationPreferenceCommand extends AbstractSetPreferencesCommand {
+@Instantiate(name = "get-global-property-command")
+public class GetGlobalPropertyCommand extends AbstractCommand {
 
 	@Requires
 	private Preferences preferenceService;
 
-	public SetApplicationPreferenceCommand() {
-		setSignature(new Signature(new String[] { ScriptLanguage.APPLICATION_ID, ScriptLanguage.PROPERTY, ScriptLanguage.VALUE, ScriptLanguage.TYPE }));
+	public GetGlobalPropertyCommand() {
+		setSignature(new Signature(new String[] {ScriptLanguage.NAME}));
 	}
 
 	@Override
 	public String getName() {
-		return "set-app-preference";
+		return "get-global-property";
 	}
 
 
 	@Override
 	public String getDescription() {
-		return "Sets a application preference.\n\t" + super.getDescription();
+		return "Gets a platform configuration property.\n\t" + super.getDescription();
 	}
 
 	@Override
-   protected String getPreferencesType() {
-	   return APPLICATION_PREFERENCE;
+   public Object execute(InputStream in, PrintStream out, JSONObject param, Signature signature) throws Exception {
+		String property = param.getString(ScriptLanguage.NAME);
+		Object value  = preferenceService.getGlobalPropertyValue(property);
+		out.println("Property: " + property + " - Value: " + value);
+	   return value;
    }
-
-	@Override
-   protected String getExtraParameterName() {
-	   return ScriptLanguage.APPLICATION_ID;
-   }
-
-	@Override
-   protected Preferences getPreferenceService() {
-	   return preferenceService;
-   }
-
 
 
 }

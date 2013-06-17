@@ -37,7 +37,7 @@
       <groupId>${project.groupId}</groupId>
       <artifactId>context.impl</artifactId>
       <version>${project.version}</version>
-    </dependency>    
+    </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>technical.services.api</artifactId>
@@ -49,8 +49,8 @@
     </dependency>
     <dependency>
       <groupId>org.ow2.chameleon.sharedprefs</groupId>
-      <artifactId>xml-shared-preferences</artifactId> 
-    </dependency>      
+      <artifactId>xml-shared-preferences</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
@@ -61,7 +61,8 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Private-Package>fr.liglab.adele.icasa.service.preferences,
+            <Private-Package>fr.liglab.adele.icasa.service.preferences.impl,
+              fr.liglab.adele.icasa.service.preferences.impl.commands,
               fr.liglab.adele.icasa.service.zone.size.calculator.impl,
               fr.liglab.adele.icasa.service.zone.dimension.calculator.impl,
               fr.liglab.adele.icasa.service.scheduler.impl, fr.liglab.adele.icasa.service.scheduler.impl.task

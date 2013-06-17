@@ -24,21 +24,22 @@ import fr.liglab.adele.icasa.Signature;
 import fr.liglab.adele.icasa.commands.impl.ScriptLanguage;
 import fr.liglab.adele.icasa.service.preferences.Preferences;
 
-@Component(name = "SetConfigPropertyCommand")
+@Component(name = "SetGlobalPropertyCommand")
 @Provides
-@Instantiate(name = "set-config-property-command")
-public class SetConfigPropertyCommand extends AbstractSetPreferencesCommand {
+@Instantiate(name = "set-global-property-command")
+public class SetGlobalPropertyCommand extends AbstractSetPropertyCommand {
 
 	@Requires
 	private Preferences preferenceService;
 
-	public SetConfigPropertyCommand() {
-		setSignature(new Signature(new String[] { ScriptLanguage.PROPERTY, ScriptLanguage.VALUE, ScriptLanguage.TYPE }));
+	public SetGlobalPropertyCommand() {
+		setSignature(new Signature(new String[] { ScriptLanguage.NAME, ScriptLanguage.VALUE }));
+		setSignature(new Signature(new String[] { ScriptLanguage.NAME, ScriptLanguage.VALUE, ScriptLanguage.TYPE }));
 	}
 
 	@Override
 	public String getName() {
-		return "set-config-property";
+		return "set-global-property";
 	}
 
 
