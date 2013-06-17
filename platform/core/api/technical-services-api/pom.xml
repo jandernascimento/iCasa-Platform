@@ -42,7 +42,11 @@
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
-						<Export-Package>fr.liglab.adele.icasa.service.zone.size.calculator, fr.liglab.adele.icasa.service.zone.dimension.calculator, fr.liglab.adele.icasa.service.preferences</Export-Package>
+						<Export-Package>fr.liglab.adele.icasa.service.zone.size.calculator,
+                            fr.liglab.adele.icasa.service.zone.dimension.calculator,
+                            fr.liglab.adele.icasa.service.preferences,
+                            fr.liglab.adele.icasa.service.scheduler
+                        </Export-Package>
 					</instructions>
 				</configuration>
 			</plugin>

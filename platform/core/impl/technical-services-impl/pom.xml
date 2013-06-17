@@ -63,7 +63,9 @@
           <instructions>
             <Private-Package>fr.liglab.adele.icasa.service.preferences,
               fr.liglab.adele.icasa.service.zone.size.calculator.impl,
-              fr.liglab.adele.icasa.service.zone.dimension.calculator.impl</Private-Package>
+              fr.liglab.adele.icasa.service.zone.dimension.calculator.impl,
+              fr.liglab.adele.icasa.service.scheduler.impl, fr.liglab.adele.icasa.service.scheduler.impl.task
+            </Private-Package>
           </instructions>
         </configuration>
       </plugin>
