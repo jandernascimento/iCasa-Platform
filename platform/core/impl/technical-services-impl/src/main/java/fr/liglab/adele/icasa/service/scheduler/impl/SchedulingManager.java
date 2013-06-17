@@ -16,6 +16,7 @@
 package fr.liglab.adele.icasa.service.scheduler.impl;
 
 import fr.liglab.adele.icasa.clock.Clock;
+import fr.liglab.adele.icasa.service.scheduler.PeriodicRunnable;
 import fr.liglab.adele.icasa.service.scheduler.ScheduledRunnable;
 import org.apache.felix.ipojo.annotations.*;
 import org.slf4j.Logger;
@@ -37,8 +38,9 @@ public class SchedulingManager {
     @Requires
     private Clock clock;
 
-    @Bind
+    @Bind(aggregate = true, optional = true)
     public void bindRunnable(ScheduledRunnable runnable) {
+        System.out.println("Register scheduled runnable" + runnable.getGroup());
         synchronized (this) {
             Group group = groups.get(runnable.getGroup());
             if (group == null) {
@@ -66,6 +68,40 @@ public class SchedulingManager {
         }
     }
 
+    @Bind(aggregate = true, optional = true)
+    public void bindPeriodicRunnable(PeriodicRunnable runnable) {
+        System.out.println("Register periodic runnable" + runnable.getGroup());
+        synchronized (this) {
+            Group group = groups.get(runnable.getGroup());
+            if (group == null) {
+                group = new Group(runnable.getGroup(), clock);
+                groups.put(group.getName(), group);
+                logger.info("New group created : " + runnable.getGroup());
+            }
+            group.submit(runnable);
+        }
+    }
+
+    @Unbind
+    public void unbindPeriodicRunnable(PeriodicRunnable runnable) {
+        synchronized (this) {
+            Group group = groups.get(runnable.getGroup());
+            if (group != null) {
+                group.withdraw(runnable);
+            }
+
+            // Is the group is empty, close it
+            if (group.isEmpty()) {
+                group.close();
+                groups.remove(group.getName());
+            }
+        }
+    }
+
+    @Validate
+    public void start(){
+        System.out.println("********Starting scheduler manager" );
+    }
     @Invalidate
     public void stop() {
         logger.info("Stopping");

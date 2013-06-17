@@ -45,15 +45,15 @@ public class Group  {
     public volatile boolean clockIsRunning = false;
 
     public int DEFAULT_POOL_SIZE = 5;
-    public int DEFAULT_PERIOD = 50;
 
     public Group(String groupName, Clock clock) {
         this.name = groupName;
         this.clock = clock;
         this.logger = LoggerFactory.getLogger(Group.class.getName() + "-" + this.name);
         isRunning = true;
-        executor = new SchedulerThreadPoolImpl(this.name, clock, DEFAULT_POOL_SIZE,DEFAULT_PERIOD);
+        executor = new SchedulerThreadPoolImpl(this.name, clock, DEFAULT_POOL_SIZE);
         clockIsRunning = !clock.isPaused();
+        new Thread(executor).start();
     }
 
     public String getName() {
@@ -68,6 +68,8 @@ public class Group  {
     public synchronized boolean submit(ScheduledRunnable runnable) {
         TaskReferenceImpl taskRef = new OneShotTaskImpl(clock, runnable, new Long(runnable.getExecutionDate()));
         executor.addTask(taskRef);
+        System.out.println("Expected time: " + new Date(runnable.getExecutionDate()));
+        System.out.println("Registration at: " + new Date(taskRef.getRegistrationTime()));
         jobs.put(runnable, taskRef);
         return true;
     }
@@ -80,13 +82,15 @@ public class Group  {
      */
     public synchronized boolean submit(PeriodicRunnable runnable) {
         TaskReferenceImpl taskRef = new PeriodicTaskImpl(clock, runnable, new Long(runnable.getPeriod()));
+        System.out.println("Expected time at: " + new Date(taskRef.getNextExecutionTime()));
+        System.out.println("Registration at: " + new Date(taskRef.getRegistrationTime()));
         executor.addTask(taskRef);
         jobs.put(runnable, taskRef);
         return true;
     }
 
 
-    public synchronized boolean withdraw(ScheduledRunnable runnable) {
+    public synchronized boolean withdraw(ICasaRunnable runnable) {
         TaskReferenceImpl handle = jobs.remove(runnable);
         if (handle != null) {
             logger.info("Withdrawing job {}", runnable);

@@ -33,8 +33,9 @@ public class SchedulerThreadPoolImpl extends Thread {
     // The parent service
     private final Clock clockService;
 
-    // The period between two scheduler thread ticks
-    private final long m_period;
+    private static final int DEFAULT_PERIOD = 100;
+
+    private static final int MINIMAL_PERIOD = 5;
 
     // The threads in charge of task executions
     private final ExecutorThreadImpl[] m_executors;
@@ -43,12 +44,10 @@ public class SchedulerThreadPoolImpl extends Thread {
     private final SortedMap/* <Long, List<TaskReferenceImpl>> */m_tasks;
 
     // TODO
-    public SchedulerThreadPoolImpl(String groupName, Clock service, int poolSize,
-                                   long period) {
+    public SchedulerThreadPoolImpl(String groupName, Clock service, int poolSize) {
         super(groupName);
         m_lock = new Object();
         clockService = service;
-        m_period = period;
         m_executors = new ExecutorThreadImpl[poolSize];
         m_tasks = new TreeMap/* <Long, List<TaskReferenceImpl>> */();
     }
@@ -85,7 +84,7 @@ public class SchedulerThreadPoolImpl extends Thread {
             Long now = new Long(clockService.currentTimeMillis());
             synchronized (m_lock) {
                 SortedMap toRun = m_tasks.headMap(now);
-                List toReschedule = new ArrayList();
+                List<TaskReferenceImpl> toReschedule = new ArrayList<TaskReferenceImpl>();
                 Iterator i = toRun.entrySet().iterator();
                 while (i.hasNext()) {
                     Entry e = (Entry) i.next();
@@ -106,9 +105,21 @@ public class SchedulerThreadPoolImpl extends Thread {
                         i.remove();
                     }
                 }
+                //reschedule periodic tasks.
+                for (TaskReferenceImpl task: toReschedule){
+                    addTask(task, task.getNextExecutionTime());
+                }
             }
             try {
-                Thread.sleep(m_period);
+                int period = DEFAULT_PERIOD;
+                if (clockService.getFactor() > 100){
+                    period = DEFAULT_PERIOD*100 / clockService.getFactor();
+                    if (period < MINIMAL_PERIOD){
+                        period = MINIMAL_PERIOD; //minimal factor.
+                    }
+                }
+
+                Thread.sleep(period);
             } catch (InterruptedException e) {
                 running = false;
             }
