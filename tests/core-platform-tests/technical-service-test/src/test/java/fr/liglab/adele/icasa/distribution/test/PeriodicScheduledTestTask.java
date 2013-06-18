@@ -40,13 +40,6 @@ public class PeriodicScheduledTestTask implements PeriodicRunnable {
         }
 
         /**
-         * If false, the job is scheduled at fixed interval. If true, at fixed rate.
-         */
-        public boolean isScheduledAtFixedRate() {
-            return false;  //To change body of implemented methods use File | Settings | File Templates.
-        }
-
-        /**
          * Gets the job's group.
          * Jobs sharing a group use the same thread pool.
          *

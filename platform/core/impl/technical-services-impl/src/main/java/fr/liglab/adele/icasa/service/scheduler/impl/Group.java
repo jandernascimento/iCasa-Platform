@@ -34,15 +34,10 @@ public class Group  {
 
     private final String name;
     Map<ICasaRunnable, TaskReferenceImpl> jobs = new HashMap<ICasaRunnable, TaskReferenceImpl>();
-    //private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor(DefensiveThreadFactory.get());
     private SchedulerThreadPoolImpl executor;
     private Logger logger;
     private Clock clock;
 
-    private Thread additionThread = new Thread();
-    private volatile boolean isRunning;
-
-    public volatile boolean clockIsRunning = false;
 
     public int DEFAULT_POOL_SIZE = 5;
 
@@ -50,9 +45,7 @@ public class Group  {
         this.name = groupName;
         this.clock = clock;
         this.logger = LoggerFactory.getLogger(Group.class.getName() + "-" + this.name);
-        isRunning = true;
         executor = new SchedulerThreadPoolImpl(this.name, clock, DEFAULT_POOL_SIZE);
-        clockIsRunning = !clock.isPaused();
         new Thread(executor).start();
     }
 
@@ -109,8 +102,6 @@ public class Group  {
             future.cancel(true);
         }
         jobs.clear();
-        isRunning = false;
-
     }
 
 }

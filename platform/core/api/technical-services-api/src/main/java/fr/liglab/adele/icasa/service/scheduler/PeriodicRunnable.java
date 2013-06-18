@@ -22,9 +22,4 @@ public interface PeriodicRunnable extends ICasaRunnable {
      */
     public long getPeriod();
 
-    /**
-     * If false, the job is scheduled at fixed interval. If true, at fixed rate.
-     */
-    public boolean isScheduledAtFixedRate();
-
 }

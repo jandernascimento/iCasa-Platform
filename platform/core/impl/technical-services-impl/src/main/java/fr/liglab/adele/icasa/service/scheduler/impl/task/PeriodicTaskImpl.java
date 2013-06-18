@@ -30,8 +30,6 @@ public class PeriodicTaskImpl extends TaskReferenceImpl {
                            PeriodicRunnable task,  Long periodTime) {
         super(service,  task) ;
 
-        long registrationTime = getRegistrationTime();
-
         period = periodTime;
 
         executionTime = getRegistrationTime() + periodTime;

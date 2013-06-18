@@ -20,11 +20,7 @@ import fr.liglab.adele.icasa.clock.Clock;
 import java.util.*;
 import java.util.Map.Entry;
 
-/**
- * User: torito
- * Date: 6/14/13
- * Time: 2:23 PM
- */
+
 public class SchedulerThreadPoolImpl extends Thread {
 
     // The access lock
