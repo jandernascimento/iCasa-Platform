@@ -57,6 +57,28 @@
 			<name>iCASA Release repository</name>
 			<url>https://repository-icasa.forge.cloudbees.com/release/</url>
 		</repository>
+
+
+		<repository>
+			<id>ow2-snapshot</id>
+			<name>ow2</name>
+			<url>http://repository-barjo.forge.cloudbees.com/snapshot/</url>
+			  <snapshots>
+			  <enabled>true</enabled>
+		        </snapshots>
+		</repository>
+
+		<repository>
+			<id>ow2-release</id>
+			<name>ow2-release</name>
+			<url>http://repository-barjo.forge.cloudbees.com/release/</url>
+			  <snapshots>
+			  <enabled>true</enabled>
+		        </snapshots>
+		</repository>
+
+
+
       <!-- For android apps-->
       <repository>
          <id>teleal-repo</id>
