@@ -1,11 +1,7 @@
 iCasa Platform
 =====
 
-This project aims at providing a complete toolkit to build digital home applications.
-The home page of the project is <http://adeleresearchgroup.github.com/iCasa-Platform/>.
-The project websites are:
- * Development version <http://adeleresearchgroup.github.com/iCasa-Platform/snapshot/>
- * Last stable release version <http://adeleresearchgroup.github.com/iCasa-Platform/1.1.0/>
+This project aims at providing a complete toolkit to build M2M applications.
 
 License
 =====
@@ -70,7 +66,7 @@ Prerequisites
 -----
 
 - install Maven 3.x
-- install jdk 6 or upper
+- install jdk 6 (NOT java 7 !!!)
 
 Instructions
 ----
@@ -87,18 +83,20 @@ The project is built every week on the following continuous integration server :
 Maven Repositories
 ----
 
-    <repository>
-    	<id>maven-icasa-repository-release</id>
-	    <name>icasa - Release</name>
-	    <url>https://repository-icasa.forge.cloudbees.com/release/</url>
-	    <layout>default</layout>
-    </repository>
-    <repository>
-	    <id>maven-icasa-repository-snapshot</id>
-	    <name>icasa - Snapshot</name>
-	    <url>https://repository-icasa.forge.cloudbees.com/snapshot/</url>
-	    <layout>default</layout>
-    </repository>
+```xml
+<repository>
+	<id>maven-icasa-repository-release</id>
+	<name>icasa - Release</name>
+	<url>https://repository-icasa.forge.cloudbees.com/release/</url>
+	<layout>default</layout>
+</repository>
+<repository>
+	<id>maven-icasa-repository-snapshot</id>
+	<name>icasa - Snapshot</name>
+	<url>https://repository-icasa.forge.cloudbees.com/snapshot/</url>
+	<layout>default</layout>
+</repository>
+```
 
 Contribute to this project
 ====

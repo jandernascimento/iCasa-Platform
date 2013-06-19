@@ -1,5 +1,5 @@
 define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','components/model/productModel','backbone'], ($,ui,bs,_,kb,ko, DataModel,bb) ->
-
+	
 	# The accordion first configuration used in buyed products
 	$(()->
   		$(".accordion-products .hidden-table:not(maccordion)").hide()
@@ -12,7 +12,7 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 	window.addDevice = ()->
             deviceName = document.getElementById("inputDeviceName").value
             deviceUrl = document.getElementById("inputDeviceURL").value
-            device = new DataModel.Model.OwnedDevice({name: deviceName, url: deviceUrl})
+            device = new DataModel.Model.Device({name: deviceName, url: deviceUrl})
             device.save()
             alert("New Device Added")
             return true
@@ -96,39 +96,32 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 	class CategoryViewModel extends IdentifiedViewModel
 		constructor: (@model) ->
 			super(model)
-
+			
 	class ApplicationViewModel extends VersionedViewModel
 		constructor: (@model) ->
 			super(model)
-
-	class DeviceViewModel extends IdentifiedViewModel
-	    constructor:(@model)->
-	        super(model);
-	        @imageURL = model.get('imageURL') ;
-
+		
 	class ProductViewModelBase extends IdentifiedViewModel
 		constructor:(@model) ->
 			super(model)
 			@imageURL = model.get('imageURL')
-
-
+			
+			
 			@lastVersion = model.get('lastVersion')
 			#The collection of  services
 			@services = kb.collectionObservable(new bb.Collection(model.get('services')), {view_model: ServiceViewModel})
 			#The collection of applications
 			@applications = kb.collectionObservable(new bb.Collection(model.get('applications')), {view_model: ApplicationViewModel})
-			#The collection of devices
-			@devices = kb.collectionObservable(new bb.Collection(model.get('devices')), {view_model: DeviceViewModel})
 			#The collection of categories of the product
 			@categories = model.get('categories')
 
 			#These fields are used only to the template.
 			@shortDescription = ko.computed(()=>
-			 	if @description().length > 100
-			 		shortD = @description().substring(0,100) + "..."
+			 	if @description.length > 160
+			 		shortD = @description.substring(0,160) + "..."
 			 	else
-			 		shortD = @description()
-			 	return shortD;
+			 		shortD = @description
+			 	shortD
 			 )
 
 	class ProductViewModelOwned extends ProductViewModelBase
@@ -143,7 +136,7 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 			@classItem = "item"
 		saveModel: () ->
 			@pmodel.save()
-
+		
 	class ProductViewModelGrid extends ProductViewModel
 		constructor: (@model) ->
 			super(model)
@@ -166,30 +159,28 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 			@url = ko.observable(model.get('url'))
 			@installedPackages = kb.collectionObservable(model.get('installedPackages'), {view_model: ApplicationViewModel})
 
-
+	
 
 	class MainUserView
-		constructor:()->
-			#@ownedProductsModel, @ownedDevicesModel, @availableProductsModel, @availableProductsModelGrid, @categoriesModel, @productsByCategory
-			@ownedProducts = kb.collectionObservable(DataModel.collections.ownedProducts, {view_model: ProductViewModelBase})
-			@ownedDevices = kb.collectionObservable(DataModel.collections.ownedDevices, {view_model: OwnedDeviceViewModel})
-			#devices purshased 
-			@purshasedDevices = kb.collectionObservable(DataModel.collections.purshasedDevices, {view_model: DeviceViewModel})
+		constructor:(@ownedProductsModel, @ownedDevicesModel, @availableProductsModel, @availableProductsModelGrid, @categoriesModel, @productsByCategory)->
+
+			@ownedProducts = kb.collectionObservable(ownedProductsModel, {view_model: ProductViewModelBase})
+			@ownedDevices = kb.collectionObservable(ownedDevicesModel, {view_model: OwnedDeviceViewModel})
 			# Configure the top 10 item class to display in carrousel
-			@availableProducts = kb.collectionObservable(DataModel.collections.topProducts, {view_model: ProductViewModelGrid})
+			@availableProducts = kb.collectionObservable(availableProductsModel, {view_model: ProductViewModelGrid})
 			@availableProducts.subscribe(@.addItemClass)
 			# The available products
-			@pageSize= 8
-			@pageIndex= 0
-			@availableProductsGrid = kb.collectionObservable(DataModel.collections.availableProducts, {view_model: ProductViewModelGrid})
+			@pageSize= 8 
+			@pageIndex= 0 
+			@availableProductsGrid = kb.collectionObservable(availableProductsModelGrid, {view_model: ProductViewModelGrid})
 			#Get the first page
-			DataModel.collections.availableProducts.getNextPage(@.pageIndex, @.pageSize)
+			@.availableProductsModelGrid.getNextPage(@.pageIndex, @.pageSize)
 			#Souscribe to get newer pages on scroll down
-			@categories = kb.collectionObservable(DataModel.collections.categories, {view_model: CategoryViewModel})
+			@categories = kb.collectionObservable(categoriesModel, {view_model: CategoryViewModel})
 			$(window).scroll(@.fetchNewPage)
-
+			
 		getAllProducts:()=>
-			@.availableProductsGrid.collection(DataModel.collections.availableProducts)
+			@.availableProductsGrid.collection(@.availableProductsModelGrid)
 
 		addItemClass:(pmodels)->
 			if pmodels.length > 0
@@ -198,37 +189,35 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 		fetchNewPage:()=>
 			if $(window).scrollTop() == $(document).height() - $(window).height()
 				@.pageIndex++
-				DataModel.collections.availableProducts.getNextPage(@.pageIndex, @.pageSize)
+				@.availableProductsModelGrid.getNextPage(@.pageIndex, @.pageSize)
 		installApplication:(application, device)=>
 			device.model.installApplication(application.model)
 
 		updateCategory :(category)=>
 			if (category.id?)
-				DataModel.collections.productsByCategories.getProducsByCategory(category.id)
-				@.availableProductsGrid.collection(DataModel.collections.productsByCategories)
+				@.productsByCategory.getProducsByCategory(category.id)
+				@.availableProductsGrid.collection(@.productsByCategory)
 			else
 				@.getAllProducts()
 
 
 
-
+		
 
 	class MainAdminView
 		constructor:()->
-			@pageSize= 8
-			@pageIndex= 0
+			@pageSize= 8 
+			@pageIndex= 0 
 
 			# The available products, categories, services and applications
 			@products = kb.collectionObservable(DataModel.collections.products, {view_model: ProductViewModelGrid});
 			@categories = kb.collectionObservable(DataModel.collections.categories, {view_model: CategoryViewModel});
 			@applications = kb.collectionObservable(DataModel.collections.applications, {view_model: ApplicationViewModel});
 			@services = kb.collectionObservable(DataModel.collections.services, {view_model: ServiceViewModel});
-			@devices = kb.collectionObservable(DataModel.collections.devices, {view_model: DeviceViewModel});
 			#For selection, the selected Applications, Services, categories
 			@chosenApplications = ko.observableArray([]);
 			@chosenServices = ko.observableArray([]);
 			@chosenCategories = ko.observableArray([]);
-			@chosenDevices = ko.observableArray([]);
 
 			#Get the first page of products
 			DataModel.collections.products.getNextPage(@.pageIndex, @.pageSize)
@@ -238,21 +227,7 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 			@newProductName = ko.observable("")
 			@newProductDescription = ko.observable("")
 			@newProductVersion = ko.observable("1.0.0")
-            #For the creation of new Application
-			@newApplicationName = ko.observable("")
-			@newApplicationDescription = ko.observable("")
-			@newApplicationVersion = ko.observable("1.0.0")
-			@newApplicationURL= ko.observable("")
-            #For the creation of new Service
-			@newServiceName = ko.observable("")
-			@newServiceDescription = ko.observable("")
-			@newServiceVersion = ko.observable("1.0.0");
-
-            #For the creation of new Device
-
-			@newDeviceName = ko.observable("")
-			@newDeviceDescription = ko.observable("")
-
+			@newProductImg = ko.observable("")
 
 			@addProduct = ()=>
 				version = new DataModel.Models.Version(version: @newProductVersion());
@@ -267,17 +242,11 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 				chosenServicesId = _.map(@chosenServices(), (_service)=>
 					return _service.model;
 				);
-				chosenDevicesId = _.map(@chosenDevices(), (_device)=>
-                    return _device.model;
-                );
 
 				#Create the new Product model and save it into the backend
-				product = new DataModel.Models.Product({name: @newProductName(), description: @newProductDescription(), versions: versions, categories: chosenCategoriesId, applications: chosenApplicationsId, services: chosenServicesId, devices: chosenDevicesId});
+				product = new DataModel.Models.Product({name: @newProductName(), description: @newProductDescription(), versions: versions, categories: chosenCategoriesId, applications: chosenApplicationsId, services: chosenServicesId});
 
-				product.save({}, {
-                    success: ()->
-                        product.setImage()
-                });
+				product.save()
 				#add it to the local collection
 				DataModel.collections.products.push(product);
 				#Remove options for new additions.
@@ -287,27 +256,18 @@ define ['jquery','jquery.ui','bootstrap','underscore','knockback','knockout','co
 				@newProductName("");
 				@newProductDescription("");
 				@newProductVersion("1.0.0");
-#				if $("#newProductPicture").val()?
-#					file = $("#newProductPicture").val();
-#					product.setImage(file)
+				if $("#newProductPicture").val()?
+					file = $("#newProductPicture").val();
+					#product.setImage(file)	
 
 			@addApplication = ()=>
-				application = new DataModel.Models.Application({name: @newApplicationName(), description: @newApplicationDescription(), version: @newApplicationVersion(), url: @newApplicationURL()})
+				application = new DataModel.Models.Application({name: @newProductName(), description: @newProductDescription(), version: @newProductVersion()})
 				application.save()
 				DataModel.collections.products.push(application)
 			@addService = ()=>
-				version = new DataModel.Models.Version(version: @newServiceVersion());
-				versions = new DataModel.Collections.Versions([version]);
-				service = new DataModel.Models.Service({name: @newServiceName(), description: @newServiceDescription(), version: @newServiceVersion(), versions: versions})
+				service = new DataModel.Models.Service({name: @newServiceName(), description: @newServiceDescription(), version: @newServiceVersion()})
 				service.save()
-				DataModel.collections.services.push(service)
-			@addDevice = ()=>
-            	device = new DataModel.Models.Device({name: @newDeviceName(), description: @newDeviceDescription()})
-            	device.save({},{
-            	    success:()->
-            	        device.setImage();
-            	});
-            	DataModel.collections.devices.push(device)
+				DataModel.collections.products.push(service)
 
 		fetchNewPage:()=>
 			if $(window).scrollTop() == $(document).height() - $(window).height()

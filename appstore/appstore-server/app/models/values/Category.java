@@ -7,7 +7,6 @@ import play.db.ebean.Model;
 import play.libs.Json;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,15 +30,15 @@ public class Category extends Model{
     @Column(name="description", columnDefinition="TEXT")
     public String description;
 
-    @OneToMany
+    @ManyToMany
     @JoinTable(name = "Product_has_Category")
-    public List<ProductHasCategory> products = new ArrayList<ProductHasCategory>();
+    public List<Product> products;
 
     /**
      * To locate Products
      */
-    public static Finder<Integer,Category> find = new Finder<Integer, Category>(
-            Integer.class, Category.class
+    public static Finder<String,Category> find = new Finder<String, Category>(
+            String.class, Category.class
     );
 
     public static ArrayNode toJson(List<Category> categories){

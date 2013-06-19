@@ -48,13 +48,10 @@ PUT      /user/products/:id      controllers.ProductController.buyProduct(id)
 
 GET      /user/products         controllers.ProductController.ownedProducts()
 
-#Owned Device Controllers
-GET      /user/ownedDevices               controllers.OwnedDeviceController.getDevices
+GET      /user/devices               controllers.DeviceController.getDevices
 
-POST     /user/ownedDevices               controllers.OwnedDeviceController.addDevice
+POST     /user/devices               controllers.DeviceController.addDevice
 
-#Purshased Devices
-GET      /user/devices               controllers.DeviceController.ownedDevices
 
 
 #Applications Catalog Controllers REST
@@ -67,13 +64,6 @@ GET      /catalog/applications              controllers.ApplicationController.ap
 POST     /catalog/services                   controllers.ServiceController.addService()
 
 GET      /catalog/services                  controllers.ServiceController.services()
-
-#Device Catalog Controllers REST
-
-
-POST     /catalog/devices                   controllers.DeviceController.addDevice()
-GET      /catalog/devices                  controllers.DeviceController.devices()
-POST     /catalog/devices/:productId/image              controllers.DeviceController.uploadImage(productId)
 
 
 # Map static resources from the /public folder to the /assets URL path

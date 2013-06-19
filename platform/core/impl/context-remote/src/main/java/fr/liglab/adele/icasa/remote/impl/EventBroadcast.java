@@ -53,7 +53,7 @@ import fr.liglab.adele.icasa.remote.util.IcasaJSONUtil;
 @Component(name = "iCasa-event-broadcast")
 @Provides(specifications = RemoteEventBroadcast.class)
 @Instantiate(name = "iCasa-event-broadcast-1")
-public class EventBroadcast extends OnMessage<String> implements RemoteEventBroadcast {
+public class EventBroadcast extends OnMessage<String> implements RemoteEventBroadcast{
 
 	@Property(name = "mapping", value = "/event")
 	private String mapping;
@@ -183,7 +183,7 @@ public class EventBroadcast extends OnMessage<String> implements RemoteEventBroa
 		}
 
 		@Override
-		public void deviceMoved(LocatedDevice device, Position oldPosition, Position newPosition) {
+		public void deviceMoved(LocatedDevice device, Position position) {
 			JSONObject json = new JSONObject();
 			try {
 				json.put("deviceId", device.getSerialNumber());
@@ -218,7 +218,7 @@ public class EventBroadcast extends OnMessage<String> implements RemoteEventBroa
 		}
 
 		@Override
-		public void devicePropertyModified(LocatedDevice device, String propertyName, Object oldValue, Object newValue) {
+		public void devicePropertyModified(LocatedDevice device, String propertyName, Object oldValue) {
 			JSONObject json = new JSONObject();
 			try {
 				json.put("deviceId", device.getSerialNumber());
@@ -259,6 +259,7 @@ public class EventBroadcast extends OnMessage<String> implements RemoteEventBroa
          * @param container
          * @param child
          */
+        @Override
         public void deviceAttached(LocatedDevice container, LocatedDevice child) {
             JSONObject json = new JSONObject();
             try {
@@ -277,6 +278,7 @@ public class EventBroadcast extends OnMessage<String> implements RemoteEventBroa
          * @param container
          * @param child
          */
+        @Override
         public void deviceDetached(LocatedDevice container, LocatedDevice child) {
             JSONObject json = new JSONObject();
             try {
@@ -284,25 +286,6 @@ public class EventBroadcast extends OnMessage<String> implements RemoteEventBroa
                 json.put("container", IcasaJSONUtil.getDeviceJSON(container, _ctxMgr));
                 json.put("child", IcasaJSONUtil.getDeviceJSON(child, _ctxMgr));
                 sendEvent("device-detached-device", json);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-        /**
-         * Callback notifying when the device want to trigger an event.
-         *
-         * @param device the device triggering the event.
-         * @param data   the content of the event.
-         */
-        @Override
-        public void deviceEvent(LocatedDevice device, Object data) {
-            JSONObject json = new JSONObject();
-            try {
-                json.put("deviceId", device.getSerialNumber());
-                json.put("device", IcasaJSONUtil.getDeviceJSON(device, _ctxMgr));
-                json.put("event-data", String.valueOf(data));
-                sendEvent("device-event", json);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -334,7 +317,7 @@ public class EventBroadcast extends OnMessage<String> implements RemoteEventBroa
 		}
 
 		@Override
-		public void zoneVariableModified(Zone zone, String variableName, Object oldValue, Object newValue) {
+		public void zoneVariableModified(Zone zone, String variableName, Object oldValue) {
 			JSONObject json = new JSONObject();
 			try {
 				json.put("zoneId", zone.getId());
@@ -346,7 +329,7 @@ public class EventBroadcast extends OnMessage<String> implements RemoteEventBroa
 		}
 
 		@Override
-		public void zoneMoved(Zone zone, Position oldPosition, Position newPosition) {
+		public void zoneMoved(Zone zone, Position oldPosition) {
 			JSONObject json = new JSONObject();
 			try {
 				json.put("zoneId", zone.getId());
@@ -370,7 +353,7 @@ public class EventBroadcast extends OnMessage<String> implements RemoteEventBroa
 		}
 
 		@Override
-		public void zoneParentModified(Zone zone, Zone oldParent, Zone newParent) {
+		public void zoneParentModified(Zone zone, Zone oldParent) {
 			JSONObject json = new JSONObject();
 			try {
 				json.put("zoneId", zone.getId());
@@ -387,6 +370,7 @@ public class EventBroadcast extends OnMessage<String> implements RemoteEventBroa
          * @param container
          * @param child
          */
+        @Override
         public void deviceAttached(Zone container, LocatedDevice child) {
             JSONObject json = new JSONObject();
             try {
@@ -405,6 +389,7 @@ public class EventBroadcast extends OnMessage<String> implements RemoteEventBroa
          * @param container
          * @param child
          */
+        @Override
         public void deviceDetached(Zone container, LocatedDevice child) {
             JSONObject json = new JSONObject();
             try {

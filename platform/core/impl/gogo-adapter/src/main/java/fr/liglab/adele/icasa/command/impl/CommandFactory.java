@@ -18,8 +18,7 @@ package fr.liglab.adele.icasa.command.impl;
 import java.io.InputStream;
 import java.io.PrintStream;
 
-import fr.liglab.adele.icasa.Signature;
-import fr.liglab.adele.icasa.ICasaCommand;
+import fr.liglab.adele.icasa.iCasaCommand;
 import org.apache.felix.ipojo.Factory;
 import org.apache.felix.ipojo.annotations.Component;
 import org.apache.felix.ipojo.annotations.Instantiate;
@@ -32,15 +31,10 @@ import org.json.JSONObject;
 @Component
 @Provides
 @Instantiate
-public class CommandFactory implements ICasaCommand {
+public class CommandFactory implements iCasaCommand {
 
 	@Requires
 	Factory[] m_factories;
-    Signature empty = new Signature(new String[0]);
-
-    public CommandFactory(){
-
-    }
 
 	public Object execute(InputStream in, PrintStream out, JSONObject param)
 			throws Exception {
@@ -62,10 +56,9 @@ public class CommandFactory implements ICasaCommand {
      * @throws Exception
      */
     @Override
-    public boolean validate(JSONObject param, Signature signature) throws Exception {
-        return true;  //To change body of implemented methods use File | Settings | File Templates.
+    public boolean validate(JSONObject param) throws Exception {
+        return true;
     }
-
 
     /**
      * Get the command description.
@@ -88,13 +81,12 @@ public class CommandFactory implements ICasaCommand {
     }
 
     /**
-     * Get signature by passing the number of arguments..
+     * Get the list of parameters.
      *
      * @return
      */
     @Override
-    public Signature getSignature(int arguments) {
-        return empty;
+    public String[] getParameters() {
+        return new String[0];  //To change body of implemented methods use File | Settings | File Templates.
     }
-
 }

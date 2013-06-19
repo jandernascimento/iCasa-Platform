@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import fr.liglab.adele.icasa.ICasaCommand;
+import fr.liglab.adele.icasa.iCasaCommand;
 import org.apache.felix.ipojo.annotations.Bind;
 import org.apache.felix.ipojo.annotations.Component;
 import org.apache.felix.ipojo.annotations.Instantiate;
@@ -30,6 +30,7 @@ import org.apache.felix.service.command.Function;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 
+
 /**
  * <p>
  * This component exposes all iCasaCommand services as gogo shell commands.
@@ -38,10 +39,11 @@ import org.osgi.framework.ServiceRegistration;
  * <p>
  * Exposed command can be used twofold :
  * <ul>
- * <li><b>Using a JSON string as parameter :</b> <code> ns:name "{\"key\":\"value\", ... }"</code>. Pay attention to the
+ * <li><b>Using a JSON string as parameter :</b>
+ * <code> ns:name "{\"key\":\"value\", ... }"</code>. Pay attention to the
  * quotes and escaped characters.</li>
- * <li><b>Using a map as parameter :</b> <code> ns:name "[key:value]"</code>. Pay attention to the quotes and escaped
- * characters.</li>
+ * <li><b>Using a map as parameter :</b> <code> ns:name "[key:value]"</code>.
+ * Pay attention to the quotes and escaped characters.</li>
  * </ul>
  * 
  */
@@ -50,7 +52,8 @@ import org.osgi.framework.ServiceRegistration;
 public class GogoAdapter {
 
 	/**
-	 * Keep a track of the registered command so as to be able to unregister them
+	 * Keep a track of the registered command so as to be able to unregister
+	 * them
 	 */
 	private final Map<String, ServiceRegistration> m_functions = new HashMap<String, ServiceRegistration>();
 
@@ -64,39 +67,48 @@ public class GogoAdapter {
 	 */
 	private final BundleContext m_context;
 
+
 	/**
 	 * Get the context from iPOJO
 	 * 
-	 * @param context : the bundle context
+	 * @param context
+	 *            : the bundle context
 	 */
 	GogoAdapter(BundleContext context) {
 		m_context = context;
 	}
 
 	@Bind(aggregate = true)
-	void bindCommand(ICasaCommand command) {
+	void bindCommand(iCasaCommand command) {
 
 		try {
 			// Create an adapter for the command
-			AdaptedCommandFunction function = new AdaptedCommandFunction(command);
+			AdaptedCommandFunction function = new AdaptedCommandFunction(
+					command);
 
 			// Read the adapted command properties
 			String commandName = command.getName();
-			String commandNamespace = ICasaCommand.DEFAULT_NAMESPACE;
-			String commandDescription = command.getDescription();
+			String commandNamespace = iCasaCommand.DEFAULT_NAMESPACE;
+            String commandDescription = command.getDescription();
+
 
 			// Register the command
-			Dictionary  commandProperties = new Properties();
-			commandProperties.put(CommandProcessor.COMMAND_FUNCTION, new String[] { commandName });
-			commandProperties.put(CommandProcessor.COMMAND_SCOPE, commandNamespace);
-			commandProperties.put(ICasaCommand.PROP_DESCRIPTION, commandDescription);
+			Dictionary<Object, Object> commandProperties = new Properties();
+			commandProperties.put(CommandProcessor.COMMAND_FUNCTION,
+					new String[] { commandName });
+			commandProperties.put(CommandProcessor.COMMAND_SCOPE,
+					commandNamespace);
+			commandProperties.put(iCasaCommand.PROP_DESCRIPTION,
+					commandDescription);
 
-			ServiceRegistration commandRegistration = m_context.registerService(new String[] { Function.class.getName() },
-			      function, commandProperties);
+			ServiceRegistration commandRegistration = m_context
+					.registerService(new String[] { Function.class.getName() },
+							function, commandProperties);
 
 			synchronized (_functionsLock) {
 				// keep a track of the registration
-				m_functions.put(commandNamespace + ":" + commandName, commandRegistration);
+				m_functions.put(commandNamespace + ":" + commandName,
+						commandRegistration);
 			}
 
 		} catch (Exception e) {
@@ -105,13 +117,14 @@ public class GogoAdapter {
 	}
 
 	@Unbind
-	void unbindCommand(ICasaCommand command) {
+	void unbindCommand(iCasaCommand command) {
 		try {
 			// Read the adapted command properties
 			String commandName = command.getName();
-			String commandNamespace = ICasaCommand.DEFAULT_NAMESPACE;
+			String commandNamespace = iCasaCommand.DEFAULT_NAMESPACE;
 			// Unregister the adapted command
-			ServiceRegistration commandRegistration = m_functions.get(commandNamespace + ":" + commandName);
+			ServiceRegistration commandRegistration = m_functions
+					.get(commandNamespace + ":" + commandName);
 			if (commandRegistration != null) {
 				commandRegistration.unregister();
 

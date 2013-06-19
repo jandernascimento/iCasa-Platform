@@ -6,7 +6,7 @@ require.config({
 
     # paths MUST not include .js extension
     paths: {
-        'backbone' : 'frameworks/backbone/backbone',
+        'backbone' : 'frameworks/backbone/backbone-min',
         'bootstrap.dir' : 'frameworks/bootstrap',
         'bootstrap' : 'frameworks/bootstrap/js/bootstrap.min',
         'comp' : 'components',

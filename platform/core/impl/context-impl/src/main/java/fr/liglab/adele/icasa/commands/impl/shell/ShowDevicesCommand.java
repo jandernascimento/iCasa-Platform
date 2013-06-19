@@ -16,7 +16,6 @@
 package fr.liglab.adele.icasa.commands.impl.shell;
 
 import fr.liglab.adele.icasa.ContextManager;
-import fr.liglab.adele.icasa.Signature;
 import fr.liglab.adele.icasa.commands.impl.AbstractCommand;
 import fr.liglab.adele.icasa.location.LocatedDevice;
 import org.apache.felix.ipojo.annotations.Component;
@@ -43,6 +42,9 @@ public class ShowDevicesCommand extends AbstractCommand {
     @Requires
     private ContextManager manager;
 
+
+    private static final String[] PARAMS =  new String[]{};
+
     private static final String NAME= "show-devices";
 
     /**
@@ -55,18 +57,29 @@ public class ShowDevicesCommand extends AbstractCommand {
         return NAME;
     }
 
-    public ShowDevicesCommand(){
-        setSignature(EMPTY_SIGNATURE);
+    /**
+     * Get the list of parameters.
+     *
+     * @return
+     */
+    @Override
+    public String[] getParameters() {
+        return PARAMS;
     }
 
     @Override
-    public Object execute(InputStream in, PrintStream out, JSONObject param, Signature signature) throws Exception {
+    public Object execute(InputStream in, PrintStream out, JSONObject param) throws Exception {
         out.println("Devices: ");
         List<LocatedDevice> devices = manager.getDevices();
         for (LocatedDevice locatedDevice : devices) {
             out.println("Device " + locatedDevice);
         }
         return null;
+    }
+
+    @Override
+    public Object execute(JSONObject param) throws Exception {
+        return execute(System.in, System.out, param);
     }
 
     @Override

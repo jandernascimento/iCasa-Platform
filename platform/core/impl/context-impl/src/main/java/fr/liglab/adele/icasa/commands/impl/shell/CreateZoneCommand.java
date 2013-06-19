@@ -16,18 +16,13 @@
 package fr.liglab.adele.icasa.commands.impl.shell;
 
 import fr.liglab.adele.icasa.ContextManager;
-import fr.liglab.adele.icasa.Signature;
 import fr.liglab.adele.icasa.commands.impl.AbstractCommand;
 import fr.liglab.adele.icasa.commands.impl.ScriptLanguage;
-import fr.liglab.adele.icasa.location.Zone;
 import org.apache.felix.ipojo.annotations.Component;
 import org.apache.felix.ipojo.annotations.Instantiate;
 import org.apache.felix.ipojo.annotations.Provides;
 import org.apache.felix.ipojo.annotations.Requires;
 import org.json.JSONObject;
-
-import java.io.InputStream;
-import java.io.PrintStream;
 
 /**
  * 
@@ -38,51 +33,47 @@ import java.io.PrintStream;
  */
 @Component(name = "CreateZoneCommand")
 @Provides
-@Instantiate(name = "create-zone-command")
+@Instantiate(name="create-zone-command")
 public class CreateZoneCommand extends AbstractCommand {
+
 
 	@Requires
 	private ContextManager simulationManager;
 
-    private static Signature CREATE_ZONE = new Signature(new String[]{ScriptLanguage.ID, ScriptLanguage.LEFT_X, ScriptLanguage.TOP_Y, ScriptLanguage.Y_LENGTH,
-            ScriptLanguage.X_LENGTH} );
-    private static Signature CREATE_ZONE_WZ = new Signature(new String[]{ScriptLanguage.ID, ScriptLanguage.LEFT_X, ScriptLanguage.TOP_Y, ScriptLanguage.BOTTOM_Z, ScriptLanguage.Y_LENGTH,
-            ScriptLanguage.X_LENGTH, ScriptLanguage.Z_LENGTH} );
-
-    public CreateZoneCommand(){
-        setSignature(CREATE_ZONE);
-        setSignature(CREATE_ZONE_WZ);
-    }
-
 	@Override
-	public Object execute(InputStream in, PrintStream out,JSONObject param, Signature signature) throws Exception {
-		String id = param.getString(ScriptLanguage.ID);
-		int leftX = param.getInt(ScriptLanguage.LEFT_X);
-		int topY = param.getInt(ScriptLanguage.TOP_Y);
-		int height = param.getInt(ScriptLanguage.Y_LENGTH);
-		int width = param.getInt(ScriptLanguage.X_LENGTH);
-        int depth = Zone.DEFAULT_Z_LENGTH;
-        int bottomZ = Zone.DEFAULT_Z_BOTTOM;
-        if (signature.equals(CREATE_ZONE_WZ)){
-            depth = param.getInt(ScriptLanguage.Z_LENGTH);
-            bottomZ = param.getInt(ScriptLanguage.BOTTOM_Z);
-        }
-		simulationManager.createZone(id, leftX, topY, bottomZ, width, height, depth);
+	public Object execute(JSONObject param) throws Exception {
+        String id = param.getString(ScriptLanguage.ID);
+        int leftX = param.getInt(ScriptLanguage.LEFT_X );
+        int topY = param.getInt(ScriptLanguage.TOP_Y);
+        int height = param.getInt(ScriptLanguage.HEIGHT);
+        int width = param.getInt(ScriptLanguage.WIDTH);
+		simulationManager.createZone(id, leftX, topY, width, height);
 		return null;
 	}
 
-	/**
-	 * Get the name of the Script and command gogo.
-	 * 
-	 * @return The command name.
-	 */
-	@Override
-	public String getName() {
-		return "create-zone";
-	}
 
-	@Override
-	public String getDescription() {
-		return "Creates a new zone.\n\t" + super.getDescription();
-	}
+    /**
+     * Get the name of the  Script and command gogo.
+     *
+     * @return The command name.
+     */
+    @Override
+    public String getName() {
+        return "create-zone";
+    }
+
+    /**
+     * Get the list of parameters.
+     *
+     * @return
+     */
+    @Override
+    public String[] getParameters() {
+        return new String[]{ScriptLanguage.ID, ScriptLanguage.LEFT_X, ScriptLanguage.TOP_Y, ScriptLanguage.HEIGHT, ScriptLanguage.WIDTH};
+    }
+
+    @Override
+    public String getDescription(){
+        return "Creates a new zone.\n\t" + super.getDescription();
+    }
 }

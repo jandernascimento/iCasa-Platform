@@ -20,86 +20,27 @@ import fr.liglab.adele.icasa.device.GenericDevice;
 import java.util.List;
 import java.util.Set;
 
-/**
- * 
- * This device interface is used to add properties not specified in the device implementation. The location is also
- * added by this interface. Implementations have to maintain a reference to the Device implementation.
- * 
- * @author Gabriel Pedraza Ferreira
- * 
- */
+
 public interface LocatedDevice extends LocatedObject {
 
-	/**
-	 * Gets the device serial number.
-	 * 
-	 * @return device serial number
-	 */
 	public String getSerialNumber();
 
-	/**
-	 * Gets the device type.
-	 * 
-	 * @return device type.
-	 */
 	public String getType();
 
-	/**
-	 * Gets the set of properties names.
-	 * 
-	 * @return set of properties names.
-	 */
 	public Set<String> getProperties();
 
-	/**
-	 * Get the value of a property.
-	 * 
-	 * @param propertyName Property name
-	 * @return Property value
-	 */
 	public Object getPropertyValue(String propertyName);
 
-	/**
-	 * Sets a property value
-	 * 
-	 * @param propertyName the name of property
-	 * @param value the new value
-	 */
 	public void setPropertyValue(String propertyName, Object value);
 
-	/**
-	 * Adds a listener to the Located device.
-	 * 
-	 * @param listener the listener to be added.
-	 */
 	public void addListener(final LocatedDeviceListener listener);
 
-	/**
-	 * Removes a listener from the Located device.
-	 * 
-	 * @param listener the listener to be removed.
-	 */
 	public void removeListener(final LocatedDeviceListener listener);
 
-	/**
-	 * Callback notifying this device enters in one or more zones
-	 * 
-	 * @param zones The list of zones where the device has entered
-	 */
 	public void enterInZones(List<Zone> zones);
 
-	/**
-	 * Callback notifying this device leaves one or more zones
-	 * 
-	 * @param zones The list of zones where that device has leaved
-	 */
 	public void leavingZones(List<Zone> zones);
 
-	/**
-	 * Gets a reference to the device implementation.
-	 * 
-	 * @return Reference to the device implementation.
-	 */
-	public GenericDevice getDeviceObject();
+    public GenericDevice getDeviceObject();
 
 }

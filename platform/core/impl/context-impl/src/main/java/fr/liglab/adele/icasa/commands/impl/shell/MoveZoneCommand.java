@@ -15,20 +15,14 @@
  */
 package fr.liglab.adele.icasa.commands.impl.shell;
 
-import java.io.InputStream;
-import java.io.PrintStream;
-
+import fr.liglab.adele.icasa.ContextManager;
+import fr.liglab.adele.icasa.commands.impl.AbstractCommand;
+import fr.liglab.adele.icasa.commands.impl.ScriptLanguage;
 import org.apache.felix.ipojo.annotations.Component;
 import org.apache.felix.ipojo.annotations.Instantiate;
 import org.apache.felix.ipojo.annotations.Provides;
 import org.apache.felix.ipojo.annotations.Requires;
 import org.json.JSONObject;
-
-import fr.liglab.adele.icasa.ContextManager;
-import fr.liglab.adele.icasa.Signature;
-import fr.liglab.adele.icasa.commands.impl.AbstractCommand;
-import fr.liglab.adele.icasa.commands.impl.ScriptLanguage;
-import fr.liglab.adele.icasa.location.Zone;
 
 /**
  * 
@@ -42,33 +36,19 @@ import fr.liglab.adele.icasa.location.Zone;
 @Instantiate(name="move-zone-command")
 public class MoveZoneCommand extends AbstractCommand {
 
+    private static final String[] PARAMS =  new String[]{ScriptLanguage.ZONE_ID, ScriptLanguage.LEFT_X, ScriptLanguage.TOP_Y};
+
     private static final String NAME= "move-zone";
 
 	@Requires
 	private ContextManager simulationManager;
 
-    private static Signature MOVE = new Signature(new String[]{ScriptLanguage.ZONE_ID, ScriptLanguage.LEFT_X, ScriptLanguage.TOP_Y});
-    private static Signature MOVE_WZ = new Signature(new String[]{ScriptLanguage.ZONE_ID, ScriptLanguage.LEFT_X, ScriptLanguage.TOP_Y, ScriptLanguage.BOTTOM_Z});
-
-    public MoveZoneCommand(){
-        setSignature(MOVE);
-        setSignature(MOVE_WZ);
-    }
-
 	@Override
-	public Object execute(InputStream in, PrintStream out,JSONObject param, Signature signature) throws Exception {
+	public Object execute(JSONObject param) throws Exception {
         String zoneId = param.getString(ScriptLanguage.ZONE_ID);
-        Zone zone = simulationManager.getZone(zoneId);
-        if (zone == null){
-            throw new IllegalArgumentException("Zone ("+ zoneId +") does not exist");
-        }
         int leftX = param.getInt(ScriptLanguage.LEFT_X);
         int topY = param.getInt(ScriptLanguage.TOP_Y);
-        int bottomZ = zone.getLeftTopAbsolutePosition().z;
-        if (signature.equals(MOVE_WZ)){
-            bottomZ = param.getInt(ScriptLanguage.BOTTOM_Z);
-        }
-		simulationManager.moveZone(zoneId, leftX, topY, bottomZ);
+		simulationManager.moveZone(zoneId, leftX, topY);
 		return null;
 	}
 
@@ -82,6 +62,15 @@ public class MoveZoneCommand extends AbstractCommand {
         return NAME;
     }
 
+    /**
+     * Get the list of parameters.
+     *
+     * @return
+     */
+    @Override
+    public String[] getParameters() {
+        return PARAMS;
+    }
     @Override
     public String getDescription(){
         return "Change the position of a zone.\n\t" + super.getDescription();

@@ -23,11 +23,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import fr.liglab.adele.icasa.device.*;
+import fr.liglab.adele.icasa.device.DeviceEvent;
+import fr.liglab.adele.icasa.device.DeviceEventType;
+import fr.liglab.adele.icasa.device.DeviceListener;
+import fr.liglab.adele.icasa.device.GenericDevice;
 import fr.liglab.adele.icasa.location.Zone;
 
 /**
- * Abstract implementation of the {@link fr.liglab.adele.icasa.device.GenericDevice} interface that manages
+ * Abstract implementation of the {@link GenericDevice} interface that manages
  * the listeners addition, removal and notifications.
  * 
  * @author Gabriel Pedraza Ferreira
@@ -87,7 +90,7 @@ public abstract class AbstractDevice implements GenericDevice {
 		}
 
 		if (modified)
-			notifyListeners(new DevicePropertyEvent(this, DeviceEventType.PROP_MODIFIED, propertyName, oldValue, value));
+			notifyListeners(new DeviceEvent(this, DeviceEventType.PROP_MODIFIED, propertyName, oldValue));
 	}
 
 
@@ -112,7 +115,7 @@ public abstract class AbstractDevice implements GenericDevice {
 	}
 
 	@Override
-	public void addListener(DeviceListener<?> listener) {
+	public void addListener(DeviceListener listener) {
 		if (listener == null) {
 			return;
 		}
@@ -124,7 +127,7 @@ public abstract class AbstractDevice implements GenericDevice {
 	}
 
 	@Override
-	public void removeListener(DeviceListener<?> listener) {
+	public void removeListener(DeviceListener listener) {
 		synchronized (m_listeners) {
 			m_listeners.remove(listener);
 		}
@@ -149,28 +152,18 @@ public abstract class AbstractDevice implements GenericDevice {
 				} else if (DeviceEventType.REMOVED.equals(event.getType())) {
 					listener.deviceRemoved(event.getDevice());
 					continue;
-				}  else if (DeviceEventType.DEVICE_EVENT.equals(event.getType()) && event instanceof DeviceDataEvent) {
-                    DeviceDataEvent dataEvent = (DeviceDataEvent)event;
-                    listener.deviceEvent(dataEvent.getDevice(), dataEvent.getData());
-                    continue;
-                } else if (DeviceEventType.PROP_ADDED.equals(event.getType()) && event instanceof DevicePropertyEvent) {
-                    DevicePropertyEvent devicePropertyEvent = (DevicePropertyEvent) event;
-                    listener.devicePropertyAdded(devicePropertyEvent.getDevice(), devicePropertyEvent.getPropertyName());
-                    continue;
-                } else if (DeviceEventType.PROP_REMOVED.equals(event.getType()) && event instanceof DevicePropertyEvent) {
-                    DevicePropertyEvent devicePropertyEvent = (DevicePropertyEvent) event;
-                    listener.devicePropertyRemoved(devicePropertyEvent.getDevice(), devicePropertyEvent.getPropertyName());
-                    continue;
-                } else if (DeviceEventType.PROP_MODIFIED.equals(event.getType()) && event instanceof DevicePropertyEvent) {
-                    DevicePropertyEvent devicePropertyEvent = (DevicePropertyEvent) event;
-                    listener.devicePropertyModified(devicePropertyEvent.getDevice(), devicePropertyEvent.getPropertyName(), devicePropertyEvent.getOldValue(), devicePropertyEvent.getNewValue());
-                    continue;
-                } else {
-                    Exception ee = new Exception("Malformed Event '" + event);
-                    ee.printStackTrace();
-                    throw ee;
-                }
+				} else if (DeviceEventType.PROP_ADDED.equals(event.getType())) {
+					listener.devicePropertyAdded(event.getDevice(), event.getPropertyName());
+					continue;
+				} else if (DeviceEventType.PROP_REMOVED.equals(event.getType())) {
+					listener.devicePropertyRemoved(event.getDevice(), event.getPropertyName());
+					continue;
+				} else if (DeviceEventType.PROP_MODIFIED.equals(event.getType())) {
+					listener.devicePropertyModified(event.getDevice(), event.getPropertyName(), event.getOldValue());
+					continue;
+				}
 			} catch (Exception e) {
+
 				Exception ee = new Exception("Exception in device listener '" + listener + "'", e);
 				ee.printStackTrace();
 			}

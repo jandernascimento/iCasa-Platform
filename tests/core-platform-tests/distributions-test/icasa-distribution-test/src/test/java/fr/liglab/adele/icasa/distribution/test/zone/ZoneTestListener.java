@@ -33,14 +33,8 @@ public class ZoneTestListener implements ZoneListener {
 	private Object listenOldValue = null;
 
 	private Position listenOldPosition = null;
-	
-	private Position listenNewPosition = null;
 
 	private Zone listenParentZone = null;
-	
-	private Zone listenNewParentZone = null;
-	
-	
 	/**
 	 * @return the listenZone
 	 */
@@ -76,22 +70,6 @@ public class ZoneTestListener implements ZoneListener {
 		return listenParentZone;
 	}
 	
-	
-	/**
-	 * @return the listenNewPosition
-	 */
-	public Position getListenNewPosition() {
-		return listenNewPosition;
-	}
-
-	/**
-	 * @return the listenNewParentZone
-	 */
-	public Zone getListenNewParentZone() {
-		return listenNewParentZone;
-	}
-
-	
 	/* (non-Javadoc)
 	 * @see fr.liglab.adele.icasa.location.ZonePropListener#zoneVariableAdded(fr.liglab.adele.icasa.location.Zone, java.lang.String)
 	 */
@@ -113,7 +91,7 @@ public class ZoneTestListener implements ZoneListener {
 	 * @see fr.liglab.adele.icasa.location.ZonePropListener#zoneVariableModified(fr.liglab.adele.icasa.location.Zone, java.lang.String, java.lang.Object)
 	 */
 	public void zoneVariableModified(Zone zone, String variableName,
-			Object oldValue, Object newValue) {
+			Object oldValue) {
 		listenZone = zone;
 		listenVariable = variableName;
 		listenOldValue = oldValue;
@@ -136,10 +114,9 @@ public class ZoneTestListener implements ZoneListener {
 	/* (non-Javadoc)
 	 * @see fr.liglab.adele.icasa.location.ZoneListener#zoneMoved(fr.liglab.adele.icasa.location.Zone, fr.liglab.adele.icasa.location.Position)
 	 */
-	public void zoneMoved(Zone zone, Position oldPosition, Position newPosition) {
+	public void zoneMoved(Zone zone, Position oldPosition) {
 		listenZone = zone;
 		listenOldPosition = oldPosition;
-		listenNewPosition = newPosition;
 	}
 
 	/* (non-Javadoc)
@@ -152,10 +129,9 @@ public class ZoneTestListener implements ZoneListener {
 	/* (non-Javadoc)
 	 * @see fr.liglab.adele.icasa.location.ZoneListener#zoneParentModified(fr.liglab.adele.icasa.location.Zone, fr.liglab.adele.icasa.location.Zone)
 	 */
-	public void zoneParentModified(Zone zone, Zone oldParentZone, Zone newParentZone) {
+	public void zoneParentModified(Zone zone, Zone oldParentZone) {
 		listenZone = zone;
 		listenParentZone = oldParentZone;
-		listenNewParentZone = newParentZone;
 	}
 
     /**
@@ -177,6 +153,5 @@ public class ZoneTestListener implements ZoneListener {
     public void deviceDetached(Zone container, LocatedDevice child) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
-
 
 }

@@ -27,90 +27,85 @@ public abstract class LocatedObjectImpl implements LocatedObject {
 
 	private Position m_position;
 
-	ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+    ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
-	Lock readLock = lock.readLock();
+    Lock readLock = lock.readLock();
 
-	Lock writeLock = lock.writeLock();
-
+    Lock writeLock = lock.writeLock();
+	
 	private List<LocatedObject> attachedObjects = new ArrayList<LocatedObject>();
-
+	
 	public LocatedObjectImpl(Position position) {
 		m_position = position.clone();
 	}
-
+	
 	@Override
-	public Position getCenterAbsolutePosition() {
-		readLock.lock();
-		try {
-			return m_position.clone();
-		} finally {
-			readLock.unlock();
-		}
-	}
-
-	@Override
-	public void setCenterAbsolutePosition(Position position) {
-		Position absolutePosition = getCenterAbsolutePosition();
-		int deltaX = position.x - absolutePosition.x;
-		int deltaY = position.y - absolutePosition.y;
-        int deltaZ = position.z - absolutePosition.z;
-		writeLock.lock();
-		m_position = position.clone();
-		writeLock.unlock();
-		moveAttachedObjects(deltaX, deltaY, deltaZ);
-	}
-
-	protected void moveAttachedObjects(int deltaX, int deltaY) {
-		moveAttachedObjects(deltaX, deltaY, 0);
-	}
-
-    protected void moveAttachedObjects(int deltaX, int deltaY, int deltaZ) {
-        List<LocatedObject> snapshotAttachedObjects = getAttachedObjects();
-        for (LocatedObject object : snapshotAttachedObjects) {
-            int newX = object.getCenterAbsolutePosition().x + deltaX;
-            int newY = object.getCenterAbsolutePosition().y + deltaY;
-            int newZ = object.getCenterAbsolutePosition().z + deltaZ;
-            Position objectPosition = new Position(newX, newY, newZ);
-            object.setCenterAbsolutePosition(objectPosition);
+   public Position getCenterAbsolutePosition() {
+        readLock.lock();
+        try{
+	    return m_position.clone();
+        }finally {
+            readLock.unlock();
         }
-    }
-	@Override
-	public void attachObject(LocatedObject object) {
-		if (object == this)
-			return;
-		writeLock.lock();
-		try {
-			attachedObjects.add(object);
-		} finally {
-			writeLock.unlock();
-		}
-		notifyAttachedObject(object);
-	}
+   }
 
 	@Override
-	public void detachObject(LocatedObject object) {
-		if (object == this)
+   public void setCenterAbsolutePosition(Position position) {
+        Position absolutePosition =  getCenterAbsolutePosition();
+		int deltaX = position.x - absolutePosition.x ;
+		int deltaY = position.y - absolutePosition.y;
+        writeLock.lock();
+		m_position = position.clone();
+        writeLock.unlock();
+		moveAttachedObjects(deltaX, deltaY);
+   }
+		
+	protected void moveAttachedObjects(int deltaX, int deltaY) {
+        List<LocatedObject> snapshotAttachedObjects = getAttachedObjects();
+		for (LocatedObject object : snapshotAttachedObjects) {
+	      int newX = object.getCenterAbsolutePosition().x + deltaX;
+	      int newY = object.getCenterAbsolutePosition().y + deltaY;
+	      Position objectPosition = new Position(newX, newY);
+	      object.setCenterAbsolutePosition(objectPosition);
+      }
+	}
+
+	@Override
+   public void attachObject(LocatedObject object) {
+		if (object==this)
 			return;
 		writeLock.lock();
-		try {
-			attachedObjects.remove(object);
-		} finally {
-			writeLock.unlock();
-		}
-		notifyDetachedObject(object);
-	}
+        try{
+		    attachedObjects.add(object);
+        }finally {
+            writeLock.unlock();
+        }
+        notifyAttachedObject(object);
+   }
 
-	protected abstract void notifyAttachedObject(LocatedObject attachedObject);
+	@Override
+   public void detachObject(LocatedObject object) {
+		if (object==this)
+			return;
+		writeLock.lock();
+        try{
+		    attachedObjects.remove(object);
+        }finally {
+            writeLock.unlock();
+        }
+        notifyDetachedObject(object);
+   }
 
-	protected abstract void notifyDetachedObject(LocatedObject attachedObject);
+   protected abstract void notifyAttachedObject(LocatedObject attachedObject);
 
-	private List<LocatedObject> getAttachedObjects() {
-		List<LocatedObject> snapshotList;
-		readLock.lock();
-		snapshotList = new ArrayList<LocatedObject>(attachedObjects);
-		readLock.unlock();
-		return snapshotList;
-	}
+   protected abstract void notifyDetachedObject(LocatedObject attachedObject);
+
+   private List<LocatedObject> getAttachedObjects(){
+       List<LocatedObject> snapshotList;
+       readLock.lock();
+       snapshotList = new ArrayList<LocatedObject>(attachedObjects);
+       readLock.unlock();
+       return snapshotList;
+   }
 
 }

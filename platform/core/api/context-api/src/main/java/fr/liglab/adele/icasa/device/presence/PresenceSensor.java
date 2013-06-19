@@ -20,7 +20,7 @@ import fr.liglab.adele.icasa.device.GenericDevice;
 /**
  * Service definition of a simple presence sensor device.
  * 
- * @author Gabriel Pedraza Ferreira
+ * @author bourretp
  */
 public interface PresenceSensor extends GenericDevice {
 

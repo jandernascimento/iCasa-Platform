@@ -18,47 +18,49 @@ package fr.liglab.adele.osgi.shell.gogo.adapter;
 import java.util.List;
 import java.util.Map;
 
-import fr.liglab.adele.icasa.Signature;
-import fr.liglab.adele.icasa.ICasaCommand;
+import fr.liglab.adele.icasa.iCasaCommand;
 import org.apache.felix.service.command.CommandSession;
 import org.apache.felix.service.command.Function;
 import org.json.JSONObject;
 
+
 /**
- * AdaptedCommandFunction are used to expose ICommandService as gogo shell commands. It helps to store a reference to
- * the ICommand to be executed.
+ * AdaptedCommandFunction are used to expose ICommandService as gogo shell
+ * commands. It helps to store a reference to the ICommand to be executed.
  */
 public class AdaptedCommandFunction implements Function {
 
 	/** The ICommandService command to be executed. */
-	final ICasaCommand m_command;
+	final iCasaCommand m_command;
 
 	/**
 	 * Instantiates a new adapted command function.
 	 * 
-	 * @param command the command
+	 * @param command
+	 *            the command
 	 */
-	AdaptedCommandFunction(ICasaCommand command) {
+	AdaptedCommandFunction(iCasaCommand command) {
 		m_command = command;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.apache.felix.service.command.Function#execute(org.apache.felix.service .command.CommandSession,
-	 * java.util.List)
+	 * @see
+	 * org.apache.felix.service.command.Function#execute(org.apache.felix.service
+	 * .command.CommandSession, java.util.List)
 	 */
-	public Object execute(CommandSession session, List<Object> arguments) throws Exception {
+	public Object execute(CommandSession session, List<Object> arguments)
+			throws Exception {
 		JSONObject params = new JSONObject();
-        int argumentsSize = (arguments == null)?0:arguments.size();
-		Signature signature =  m_command.getSignature(argumentsSize);
-        String paramsNames[] = signature.getParameters();
-		if (arguments != null) {
-			for (int i = 0; i < paramsNames.length && argumentsSize > i; i++) {
-				params.put(paramsNames[i], arguments.get(i));
-			}
-		}
+        String paramsNames[] = m_command.getParameters();
+        if (arguments != null) {
+            for (int i = 0; i < paramsNames.length && arguments.size() > i; i++){
+                  params.put(paramsNames[i], arguments.get(i));
+            }
+        }
 
-		return m_command.execute(session.getKeyboard(), session.getConsole(), params);
+		return m_command.execute(session.getKeyboard(), session.getConsole(),
+				params);
 	}
 }

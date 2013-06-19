@@ -17,14 +17,15 @@
  */
 package models.values;
 
-import com.avaje.ebean.Ebean;
-import com.avaje.ebean.Transaction;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
 import play.db.ebean.Model;
 import play.libs.Json;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.List;
 
 /**
@@ -42,8 +43,7 @@ public class Service extends Model  {
 
 	@Id
 	@Column(name="id", length=25)
-    @GeneratedValue
-    public int id;
+	public String id;
 
 	@Column(name="name", length=50)
 	public String name;
@@ -51,15 +51,8 @@ public class Service extends Model  {
 	@Column(name="description", columnDefinition="TEXT")
 	public String description;
 
-    @OneToMany (cascade=CascadeType.ALL, mappedBy = "service")
-    public List<ServiceVersion> versions;
-
-    @OneToOne
-    @JoinColumn(name="lastVersion_id", referencedColumnName = "id")
-    public ServiceVersion lastVersion;
-
-	public static Finder<Integer,Service> find = new Finder<Integer, Service>(
-			Integer.class, Service.class
+	public static Finder<String,Service> find = new Finder<String, Service>(
+			String.class, Service.class
 			);
 
 	public static List<Service> all() {
@@ -69,20 +62,10 @@ public class Service extends Model  {
 
 
 	public static void create(Service service) {
-        Transaction trans = Ebean.beginTransaction();
-        Ebean.save(service);
-
-        Ebean.refresh(service);
-        service.save();
-        if (service.versions != null && service.lastVersion == null) {
-            service.lastVersion = service.versions.get(service.versions.size()-1); //When creating there is only one
-            Ebean.save(service);
-        }
-        Ebean.refresh(service);
-        trans.commit();
+		service.save();
 	}
 
-	public static void remove(Integer identifier){
+	public static void remove(String identifier){
 		find.byId(identifier).delete();
 	}
 

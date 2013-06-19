@@ -15,37 +15,20 @@
  */
 package fr.liglab.adele.icasa.location;
 
-/**
- * This class represents a point in a coordinate system.
- * 
- * @author Gabriel Pedraza Ferreira
- * 
- */
+
 public final class Position {
 
 	public final int x;
 	public final int y;
-    public final int z;
-    public final static int DEFAULT_Z = 0;
 
-	/**
-	 * Default constructor
-	 * 
-	 * @param x
-	 * @param y
-	 */
-	public Position(final int x, final int y, final int z) {
+	public Position(final int x, final int y) {
 		this.x = x;
 		this.y = y;
-        this.z = z;
 	}
-    public Position(final int x, final int y) {
-        this(x,y,DEFAULT_Z);
-    }
 
 	@Override
 	public String toString() {
-		return "(" + x + "," + y + "," + z +")";
+		return "(" + x + ":" + y + ")";
 	}
 
 	@Override
@@ -54,7 +37,6 @@ public final class Position {
 		int result = 1;
 		result = prime * result + x;
 		result = prime * result + y;
-        result = prime * result + z;
 		return result;
 	}
 
@@ -71,16 +53,11 @@ public final class Position {
 			return false;
 		if (y != other.y)
 			return false;
-        if (z != other.z)
-            return false;
 		return true;
 	}
 
-	/**
-	 * Clones this point into a new object
-	 */
 	public Position clone() {
-		return new Position(this.x, this.y, this.z);
+		return new Position(this.x, this.y);
 	}
 
 }

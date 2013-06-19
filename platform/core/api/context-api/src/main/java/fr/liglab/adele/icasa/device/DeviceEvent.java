@@ -17,42 +17,53 @@ package fr.liglab.adele.icasa.device;
 
 /**
  * Represents an event related to a device.
- * 
+ *
  * @author Thomas Leveque
  */
 public class DeviceEvent {
 
-	private final DeviceEventType _type;
-	private final GenericDevice _device;
+    private String _propName;
+    private String _description;
+    private DeviceEventType _type;
+    private GenericDevice _device;
+    private Object _oldValue;
 
+    public DeviceEvent(GenericDevice device, DeviceEventType type, String propName, Object oldValue) {
+        _device = device;
+        _propName = propName;
+        _type = type;
+        _oldValue = oldValue;
+    }
 
-	/**
-	 * Creates a DeviceEvent.
-	 * 
-	 * @param device Device associated to the event
-	 * @param type Type of the event
-	 */
-	public DeviceEvent(GenericDevice device, DeviceEventType type) {
-		_device = device;
-		_type = type;
-	}
+    public DeviceEvent(GenericDevice device, DeviceEventType type, String propName) {
+        this(device, type, propName, null);
+    }
 
+    public DeviceEvent(GenericDevice device, DeviceEventType type) {
+        this(device, type, null);
+    }
 
-	/**
-	 * Gets the event type
-	 * 
-	 * @return The event type
-	 */
-	public DeviceEventType getType() {
-		return _type;
-	}
+    public void setDescription(String description) {
+        _description = description;
+    }
 
-	/**
-	 * Gets the event associated device
-	 * 
-	 * @return The event associated device
-	 */
-	public GenericDevice getDevice() {
-		return _device;
-	}
+    public DeviceEventType getType() {
+        return _type;
+    }
+
+    public String getDescription() {
+        return _description;
+    }
+
+    public String getPropertyName() {
+        return _propName;
+    }
+
+    public GenericDevice getDevice() {
+        return _device;
+    }
+
+    public Object getOldValue() {
+        return _oldValue;
+    }
 }

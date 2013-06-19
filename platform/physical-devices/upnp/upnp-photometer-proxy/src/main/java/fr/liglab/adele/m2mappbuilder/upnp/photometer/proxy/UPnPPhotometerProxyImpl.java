@@ -18,7 +18,6 @@ package fr.liglab.adele.m2mappbuilder.upnp.photometer.proxy;
 import java.util.Dictionary;
 import java.util.Properties;
 
-import fr.liglab.adele.icasa.device.DevicePropertyEvent;
 import fr.liglab.adele.icasa.location.LocatedDevice;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Filter;
@@ -37,7 +36,7 @@ import fr.liglab.adele.icasa.location.Position;
 import fr.liglab.adele.icasa.location.Zone;
 import fr.liglab.adele.icasa.location.ZoneListener;
 
-public class UPnPPhotometerProxyImpl extends AbstractDevice implements Photometer {
+public class UPnPPhotometerProxyImpl extends AbstractDevice implements Photometer, ZoneListener {
 
 	private UPnPDevice device;
 
@@ -50,7 +49,7 @@ public class UPnPPhotometerProxyImpl extends AbstractDevice implements Photomete
 	private String state;
 	private String fault;
 	private String m_serialNumber;
-	private float illuminance = 0;
+	private float illuminance = 0;   
 
 	public UPnPPhotometerProxyImpl(BundleContext context) {
 		m_context = context;
@@ -103,10 +102,10 @@ public class UPnPPhotometerProxyImpl extends AbstractDevice implements Photomete
 				System.out.println("---- UPnP Service " + uPnPService.getId());
 				UPnPStateVariable[] variables = uPnPService.getStateVariables();
 			}
-
+			
 			illuminanceService = device.getService("urn:upnp-org:serviceId:Photometer");
-
-			m_serialNumber = (String) device.getDescriptions(null).get(UPnPDevice.UDN);
+			
+			m_serialNumber = (String)device.getDescriptions(null).get(UPnPDevice.UDN);
 			registerListener();
 		}
 
@@ -120,10 +119,10 @@ public class UPnPPhotometerProxyImpl extends AbstractDevice implements Photomete
 
 	private void registerListener() {
 		UPnPEventListenerImpl listener = new UPnPEventListenerImpl(this);
-		String keys = "(UPnP.device.UDN=" + m_serialNumber + ")";
+		String keys = "(UPnP.device.UDN="+ m_serialNumber + ")";
 		try {
 			Filter filter = m_context.createFilter(keys);
-			Dictionary props = new Properties();
+			Properties props = new Properties();
 			props.put(UPnPEventListener.UPNP_FILTER, filter);
 			listenerRegistration = m_context.registerService(UPnPEventListener.class.getName(), listener, props);
 		} catch (Exception ex) {
@@ -154,7 +153,7 @@ public class UPnPPhotometerProxyImpl extends AbstractDevice implements Photomete
 			System.out.println("+++++ Device ID: " + deviceId);
 			System.out.println("+++++ Service ID: " + serviceId);
 			float tempIlluminance = (Float) events.get("Illuminance");
-			Runnable notificator = new Runnable() {
+			Runnable notificator = new Runnable() {					
 				@Override
 				public void run() {
 					Dictionary value = null;
@@ -168,14 +167,83 @@ public class UPnPPhotometerProxyImpl extends AbstractDevice implements Photomete
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					notifyListeners(new DevicePropertyEvent(_device, DeviceEventType.PROP_MODIFIED, PHOTOMETER_CURRENT_ILLUMINANCE,
-					      (Float) value.get("RetIlluminanceValue"), (Float) value.get("RetIlluminanceValue")));
+					notifyListeners(new DeviceEvent(_device, DeviceEventType.PROP_MODIFIED, PHOTOMETER_CURRENT_ILLUMINANCE, (Float)value.get("RetIlluminanceValue")));
 				}
 			};
 
 			Thread notificationThread = new Thread(notificator);
 			notificationThread.start();
-		}
+		}		
 	}
 
+	@Override
+	public void zoneVariableAdded(Zone zone, String variableName) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void zoneVariableRemoved(Zone zone, String variableName) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void zoneVariableModified(Zone zone, String variableName,
+			Object oldValue) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void zoneAdded(Zone zone) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void zoneRemoved(Zone zone) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void zoneMoved(Zone zone, Position oldPosition) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void zoneResized(Zone zone) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void zoneParentModified(Zone zone, Zone oldParentZone) {
+		// TODO Auto-generated method stub
+
+	}
+
+    /**
+     * Invoked when a device has been attached a zone
+     *
+     * @param container
+     * @param child
+     */
+    @Override
+    public void deviceAttached(Zone container, LocatedDevice child) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    /**
+     * * Invoked when a device has been detached from a zone
+     *
+     * @param container
+     * @param child
+     */
+    @Override
+    public void deviceDetached(Zone container, LocatedDevice child) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

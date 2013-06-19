@@ -13,7 +13,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-package fr.liglab.adele.icasa.distribution.test;
+package fr.liglab.adele.contextMgr.distribution.test;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -31,7 +31,6 @@ import org.osgi.framework.BundleContext;
 import fr.liglab.adele.commons.distribution.test.AbstractDistributionBaseTest;
 import fr.liglab.adele.icasa.ContextManager;
 import fr.liglab.adele.icasa.location.LocatedDevice;
-import org.osgi.framework.ServiceReference;
 
 
 @RunWith(PaxExam.class)
@@ -41,6 +40,9 @@ public class DeviceTest extends AbstractDistributionBaseTest {
 	@Inject
 	public BundleContext context;
 	
+	@Inject
+	public ContextManager contextMgr;
+
 	@Before
 	public void setUp() {
 		waitForStability(context);
@@ -55,20 +57,12 @@ public class DeviceTest extends AbstractDistributionBaseTest {
 	 * Test the creation of a new zone.
 	 */
 	@Test
-	public void getDevicesWithoutDevicesTest(){
-        ContextManager contextMgr = (ContextManager)getService(context,ContextManager.class);
-        if (contextMgr == null){
-            Assert.fail("Unable to get ServiceReference for ContextManager");
-        }
+	public void getDevicesWihtoutDevicesTest(){
+
 
 		List<LocatedDevice> devices = contextMgr.getDevices();
 		Assert.assertNotNull(devices);
 		Assert.assertEquals(0, devices.size());
 	}
-
-    @Test
-    public void testDeviceListener(){
-
-    }
 
 }

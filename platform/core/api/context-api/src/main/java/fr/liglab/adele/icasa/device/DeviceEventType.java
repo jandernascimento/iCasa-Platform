@@ -16,13 +16,13 @@
 package fr.liglab.adele.icasa.device;
 
 /**
- * This enum represents the type of the event
+ *
  *
  * @author Thomas Leveque
  */
 public enum DeviceEventType {
 
-    ADDED("added"), REMOVED("removed"), PROP_ADDED("prop-added"), PROP_REMOVED("prop-removed"), PROP_MODIFIED("prop-modified"), DEVICE_EVENT("device-event");
+    ADDED("added"), REMOVED("removed"), PROP_ADDED("prop-added"), PROP_REMOVED("prop-removed"), PROP_MODIFIED("prop-modified");
 
     private String _eventTypeStr;
 

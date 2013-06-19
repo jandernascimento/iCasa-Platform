@@ -15,6 +15,8 @@
  */
 package fr.liglab.adele.icasa.device.util;
 
+import fr.liglab.adele.icasa.device.DeviceListener;
+import fr.liglab.adele.icasa.device.GenericDevice;
 import fr.liglab.adele.icasa.location.LocatedDevice;
 import fr.liglab.adele.icasa.location.LocatedDeviceListener;
 import fr.liglab.adele.icasa.location.Position;
@@ -38,12 +40,12 @@ public class AbstractLocatedDeviceListener implements LocatedDeviceListener {
     }
 
     @Override
-    public void deviceMoved(LocatedDevice device, Position oldPosition, Position newPosition) {
+    public void deviceMoved(LocatedDevice device, Position oldPosition) {
         //do nothing
     }
 
     @Override
-    public void devicePropertyModified(LocatedDevice device, String propertyName, Object oldValue, Object newValue) {
+    public void devicePropertyModified(LocatedDevice device, String propertyName, Object oldValue) {
         //do nothing
     }
 
@@ -65,16 +67,5 @@ public class AbstractLocatedDeviceListener implements LocatedDeviceListener {
     @Override
     public void deviceDetached(LocatedDevice container, LocatedDevice child) {
         //do nothing
-    }
-
-    /**
-     * Callback notifying when the device want to trigger an event.
-     *
-     * @param device the device triggering the event.
-     * @param data   the content of the event.
-     */
-    @Override
-    public void deviceEvent(LocatedDevice device, Object data) {
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 }

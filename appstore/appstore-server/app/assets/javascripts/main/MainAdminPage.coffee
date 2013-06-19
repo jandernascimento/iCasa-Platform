@@ -21,9 +21,6 @@ require([
         DataModel.collections.services = new DataModel.Collections.Services()
         DataModel.collections.services.fetch();
 
-        DataModel.collections.devices = new DataModel.Collections.Devices()
-        DataModel.collections.devices.fetch();
-
         mainView = new view.MainAdminView()
         ko.applyBindings(mainView)
 

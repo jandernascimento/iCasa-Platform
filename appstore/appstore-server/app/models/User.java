@@ -60,8 +60,8 @@ public class User extends Model {
     public List<Order> orders;
 
     @OneToMany
-    @JoinTable(name="OwnedDevice")
-    public List<OwnedDevice> devices;
+    @JoinTable(name="Device")
+    public List<Device> devices;
 
     public static void create(Identity user) {
         User newUser = User.getUserByUserId(user.id().id());
@@ -171,7 +171,7 @@ public class User extends Model {
         return owned;
     }
 
-    public void assignDevice(OwnedDevice device){
+    public void assignDevice(Device device){
         device.user = this;
         this.devices.add(device);
         device.save();

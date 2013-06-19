@@ -17,7 +17,6 @@ package fr.liglab.adele.icasa.commands.impl.shell;
 
 
 import fr.liglab.adele.icasa.ContextManager;
-import fr.liglab.adele.icasa.Signature;
 import fr.liglab.adele.icasa.commands.impl.AbstractCommand;
 import fr.liglab.adele.icasa.commands.impl.ScriptLanguage;
 import fr.liglab.adele.icasa.location.Zone;
@@ -26,9 +25,6 @@ import org.apache.felix.ipojo.annotations.Instantiate;
 import org.apache.felix.ipojo.annotations.Provides;
 import org.apache.felix.ipojo.annotations.Requires;
 import org.json.JSONObject;
-
-import java.io.InputStream;
-import java.io.PrintStream;
 
 /**
  * 
@@ -49,10 +45,6 @@ public class SetZoneParentCommand extends AbstractCommand {
 
     private static final String NAME= "set-zone-parent";
 
-    public SetZoneParentCommand(){
-        setSignature(new Signature(PARAMS));
-    }
-
     /**
      * Get the name of the  Script and command gogo.
      *
@@ -63,10 +55,19 @@ public class SetZoneParentCommand extends AbstractCommand {
         return NAME;
     }
 
+    /**
+     * Get the list of parameters.
+     *
+     * @return
+     */
+    @Override
+    public String[] getParameters() {
+        return PARAMS;
+    }
 
 
 	@Override
-	public Object execute(InputStream in, PrintStream out,JSONObject param, Signature signature) throws Exception {
+	public Object execute(JSONObject param) throws Exception {
         String zoneId = param.getString(PARAMS[0]);
         String parentId = param.getString(PARAMS[1]);
         boolean useParentVariables = param.getBoolean(PARAMS[2]);

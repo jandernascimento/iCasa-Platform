@@ -18,7 +18,6 @@
 package models.values;
 
 import com.avaje.ebean.Ebean;
-import com.avaje.ebean.Transaction;
 import org.codehaus.jackson.node.ObjectNode;
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
@@ -27,6 +26,7 @@ import play.libs.Json;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author <a href="mailto:cilia-devel@lists.ligforge.imag.fr">Cilia Project
@@ -60,9 +60,9 @@ public class Product extends Model  {
     @OneToMany (cascade=CascadeType.ALL, mappedBy = "product")
     public List<ProductVersion> versions;
 
-    @OneToMany
+    @ManyToMany
     @JoinTable(name = "Product_has_Category")
-    public List<ProductHasCategory> productHasCategory = new ArrayList();
+    public List<Category> categories;
 
     @OneToOne
     @JoinColumn(name="productVersion_id", referencedColumnName = "id")
@@ -72,21 +72,11 @@ public class Product extends Model  {
     @JoinTable(name = "Product_Price")
     public List<ProductPrice> prices;
 
-
-    public List<Category> categories = new ArrayList();
-
-    public List<Application> applications = new ArrayList();
-
-    public List<Service> services = new ArrayList();
-
-    public List<Device> devices = new ArrayList();
-
-
 	/**
 	 * To locate Products
 	 */
-	public static Finder<Integer,Product> find = new Finder(
-		    Integer.class, Product.class
+	public static Finder<String,Product> find = new Finder<String, Product>(
+		    String.class, Product.class
 		  );
 	
 	/**
@@ -104,7 +94,7 @@ public class Product extends Model  {
 	}
 	
 	public static List<Product> getPageProducts(int pageSize, int pageNumber){
-        return find.all();//findPagingList(pageSize).getPage(pageNumber).getList();
+        return find.findPagingList(pageSize).getPage(pageNumber).getList();
 	}
 	
 	public static int getPageCount(int pageSize){
@@ -117,68 +107,18 @@ public class Product extends Model  {
 	 */
 	public static void create(Product product) {
         //Add the given version as the current version
-        Ebean.beginTransaction();
-        try{
-        Ebean.save(product);
-
-        Ebean.refresh(product);
-
+		product.save();
         if (product.versions != null && product.lastVersion == null) {
             product.lastVersion = product.versions.get(product.versions.size()-1); //When creating there is only one
-            Ebean.save(product);
+            product.save();
         }
-
-        for(Category cat:product.categories){
-            ProductHasCategory phc=new ProductHasCategory();
-            phc.product=product;
-            phc.category=cat;
-            Ebean.save(phc);
-            product.productHasCategory.add(phc);
-            Ebean.update(product);
-        }
-
-        for(Application application:product.applications){
-            ProductVersionHasApplications pvha = new ProductVersionHasApplications();
-            Ebean.refresh(application);
-            ApplicationVersion aVersion = application.lastVersion;
-            ProductVersion pversion = product.lastVersion;
-            Ebean.refresh(aVersion);
-            Ebean.refresh(pversion);
-            pvha.applicationVersion = aVersion;
-            pvha.productVersion = pversion;
-            pversion.applicationVersions.add(aVersion);
-            Ebean.update(pversion);
-            Ebean.save(pvha);
-        }
-
-        for(Service service:product.services){
-            ProductVersionHasServices pvha = new ProductVersionHasServices();
-            Ebean.refresh(service);
-            pvha.serviceVersion = service.lastVersion;
-            pvha.productVersion = product.lastVersion;
-            Ebean.save(pvha);
-        }
-
-        for(Device device:product.devices){
-            ProductVersionHasDevices pvhd = new ProductVersionHasDevices();
-            Ebean.refresh(device);
-            pvhd.device = device;
-            pvhd.productVersion = product.lastVersion;
-            Ebean.save(pvhd);
-         }
-        Ebean.update(product);
-        }finally {
-            Ebean.commitTransaction();
-        }
-        //Ebean.saveAssociation(product, "categories");
-
 	}
 	
 	/**
 	 * Remove an existent product
 	 * @param identifier
 	 */
-	public static void remove(Integer identifier){
+	public static void remove(String identifier){
 		find.byId(identifier).delete();
 	}
 
@@ -193,7 +133,6 @@ public class Product extends Model  {
         result.put("categories", Category.toJson(product.categories));
         result.put("applications", ProductVersion.getApplications(product.lastVersion));
         result.put("services", ProductVersion.getServices(product.lastVersion));
-        result.put("devices", ProductVersion.getDevices(product.lastVersion));
 		return result;
 	}
 
@@ -221,14 +160,7 @@ public class Product extends Model  {
     }
 
     public static List<Product> getProductByCategory(int categoryId){
-
-        List <ProductHasCategory> productHC = Ebean.find(ProductHasCategory.class).where("category.id="+categoryId).findList();//where().eq("category",Category.find.byId(categoryId))
-        ArrayList<Product> products=new ArrayList<Product>();
-
-        for(ProductHasCategory s:productHC){
-            products.add(s.product);
-        }
-
+        List <Product> products = Ebean.find(Product.class).fetch("categories").where().eq("category_id",categoryId).findList();
         return products;
     }
 

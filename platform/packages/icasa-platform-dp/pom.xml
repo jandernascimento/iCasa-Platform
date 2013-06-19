@@ -57,20 +57,21 @@
 		</dependency>
 		<dependency>
          <groupId>${project.groupId}</groupId>
-			<artifactId>technical.services.api</artifactId>
+			<artifactId>zone.size.calculator.api</artifactId>
          <version>${project.version}</version>
 		</dependency>
 		<dependency>
          <groupId>${project.groupId}</groupId>
-         <artifactId>technical.services.impl</artifactId>
+			<artifactId>zone.size.calculator.impl</artifactId>
          <version>${project.version}</version>
 		</dependency>		
+		
       <dependency>
-         <groupId>org.ow2.chameleon.rose.atmosphere</groupId>
+         <groupId>org.barjo.atmosgi</groupId>
          <artifactId>atmosgi-service</artifactId>
       </dependency>
       <dependency>
-         <groupId>org.ow2.chameleon.rose.atmosphere</groupId>
+         <groupId>org.barjo.atmosgi</groupId>
          <artifactId>atmosgi-component</artifactId>
       </dependency>
       <dependency>      

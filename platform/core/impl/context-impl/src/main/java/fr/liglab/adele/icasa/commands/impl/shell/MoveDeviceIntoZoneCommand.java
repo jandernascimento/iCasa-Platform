@@ -17,7 +17,6 @@ package fr.liglab.adele.icasa.commands.impl.shell;
 
 import fr.liglab.adele.icasa.ContextManager;
 
-import fr.liglab.adele.icasa.Signature;
 import fr.liglab.adele.icasa.commands.impl.AbstractCommand;
 import fr.liglab.adele.icasa.commands.impl.ScriptLanguage;
 import org.apache.felix.ipojo.annotations.Component;
@@ -25,9 +24,6 @@ import org.apache.felix.ipojo.annotations.Instantiate;
 import org.apache.felix.ipojo.annotations.Provides;
 import org.apache.felix.ipojo.annotations.Requires;
 import org.json.JSONObject;
-
-import java.io.InputStream;
-import java.io.PrintStream;
 
 
 /**
@@ -45,12 +41,8 @@ public class MoveDeviceIntoZoneCommand extends AbstractCommand {
 	@Requires
 	private ContextManager contextManager;
 
-    public MoveDeviceIntoZoneCommand(){
-        setSignature(new Signature(new String[]{ScriptLanguage.DEVICE_ID, ScriptLanguage.ZONE_ID}));
-    }
-
 	@Override
-	public Object execute(InputStream in, PrintStream out,JSONObject param, Signature signature) throws Exception {
+	public Object execute(JSONObject param) throws Exception {
         String deviceId = param.getString(ScriptLanguage.DEVICE_ID);
         String zoneId = param.getString(ScriptLanguage.ZONE_ID);
 		contextManager.moveDeviceIntoZone(deviceId, zoneId);
@@ -68,6 +60,15 @@ public class MoveDeviceIntoZoneCommand extends AbstractCommand {
         return "move-device-zone";
     }
 
+    /**
+     * Get the list of parameters.
+     *
+     * @return
+     */
+    @Override
+    public String[] getParameters() {
+        return new String[]{ScriptLanguage.DEVICE_ID, ScriptLanguage.ZONE_ID};
+    }
 
     @Override
     public String getDescription(){

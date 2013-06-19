@@ -1,4 +1,4 @@
-define(['backbone', 'underscore'],
+define(['backbone', 'underscore'], 
 	(bb, _) ->
 
 #define (['backbone'], (bb) ->
@@ -9,53 +9,27 @@ define(['backbone', 'underscore'],
 		 	models : {}
 
 		class DataModel.Models.Service extends bb.Model
-			urlRoot: 'catalog/services'
+	# 		urlRoot: '/service'
 			defaults:
 				name: 'msn'
 				description: 'msd'
 				version: '0.0.0'
-
+		
 		class DataModel.Collections.Services extends bb.Collection
 	 		url: 'catalog/services'
 			model: DataModel.Models.Service
 
 		class DataModel.Models.Application extends bb.Model
-	 		urlRoot: 'catalog/applications'
+	# 		urlRoot: '/application'
 			defaults:
 				name: 'man'
 				description: 'mad'
 				version: '0.0.0'
 		# ApplicationModel.setup()
-
+		
 		class DataModel.Collections.Applications extends bb.Collection
-			url: 'catalog/applications'
+	 		url: 'catalog/applications'
 			model: DataModel.Models.Application
-
-		class DataModel.Models.Device extends bb.Model
-			urlRoot: 'catalog/devices'
-			defaults:
-				name: 'dn'
-				description: 'dd'
-			setImage:(file)=>
-				dataToSend = new FormData(document.forms.namedItem("deviceForm"));
-
-				oReq = new XMLHttpRequest();
-				oReq.open("POST", 'catalog/devices/'+@.id+'/image', true);
-				imodel = @;
-				oReq.onload = (oEvent) =>
-					if oReq.status == 200
-						@.set('imageURL', "assets/images/devices/"+ @.id+".jpg");
-					else
-						alert("Error when uploading");
-
-				oReq.send(dataToSend);
-				console.log "sending data"				
-
-		class DataModel.Collections.Devices extends bb.Collection
-			url: 'catalog/devices'
-			model: DataModel.Models.Device
-
-			
 
 		class DataModel.Models.Category extends bb.Model
 			defaults:
@@ -78,7 +52,7 @@ define(['backbone', 'underscore'],
 			constructor: ()->
 				super;
 			urlRoot: 'catalog/products'
-
+			
 			defaults:
 				name: 'my product name'
 				description: 'my description'
@@ -90,19 +64,19 @@ define(['backbone', 'underscore'],
 					type: 'PUT',
 					url: 'user/products/' + @.id,
 				);
-			setImage:(file)=>
-				dataToSend = new FormData(document.forms.namedItem("productForm"));
-				oReq = new XMLHttpRequest();
-				oReq.open("POST", 'catalog/products/'+@.id+'/image', true);
-				imodel = @;
-				oReq.onload = (oEvent) =>
-					if oReq.status == 200
-						@.set('imageURL', "assets/images/products/"+ @.id+".jpg");
-					else
-						alert("Error when uploading");
-				oReq.send(dataToSend);
+			setImage:(file)->
+				data = new FormData();
+				data.append('file', file)
+				$.ajax(
+					url: 'catalog/products/'+@.id+'/image'
+					type: 'POST',
+					processData: false,
+  					contentType: false,
+					data: data,
+					success: ()->
+						alert("succefully updloaded");
 
-
+				);
 
 		class DataModel.Collections.OwnedProducts extends bb.Collection
 			model: DataModel.Models.Product
@@ -113,12 +87,12 @@ define(['backbone', 'underscore'],
 			updateOwnedModel:()=>
 				@.fetch();
 
-		class DataModel.Models.OwnedDevice extends bb.Model
+		class DataModel.Models.Device extends bb.Model
 				constructor: ()->
 					super;
 					@.on("sync", @.getInstalledApplication());
-
-
+					
+					
 				getInstalledApplication:()=>
 					@appurl = @.get("url")+"/appstore/applications"
 					$.ajax({
@@ -144,23 +118,17 @@ define(['backbone', 'underscore'],
 					$.ajax(
 		   				type: "POST",
 		   				url: @.appurl,
-		   				data: {
+		   				data: { 
 	        				'location':application.get("url")
 	    				},
 					);
-				urlRoot: 'user/ownedDevices'
+				urlRoot: 'user/devices'
 				defaults:
 					name: 'generic'
 					# installedPackages: new ApplicationModelCollection()
-
+				
 
 		class DataModel.Collections.OwnedDevices extends bb.Collection
-			model: DataModel.Models.OwnedDevice
-			url: '/user/ownedDevices'
-			constructor:()->
-				super;
-		
-		class DataModel.Collections.PurshasedDevices extends bb.Collection
 			model: DataModel.Models.Device
 			url: '/user/devices'
 			constructor:()->

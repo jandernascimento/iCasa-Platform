@@ -19,7 +19,6 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.Properties;
 
-import fr.liglab.adele.icasa.device.DevicePropertyEvent;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Filter;
 import org.osgi.framework.ServiceRegistration;
@@ -109,7 +108,7 @@ public class UPnPBinaryLightProxyImpl extends AbstractDevice implements BinaryLi
 		String keys = "(UPnP.device.UDN="+ m_serialNumber + ")";
 		try {
 			Filter filter = m_context.createFilter(keys);
-			Dictionary props = new Properties();
+			Properties props = new Properties();
 			props.put(UPnPEventListener.UPNP_FILTER, filter);
 			listenerRegistration = m_context.registerService(UPnPEventListener.class.getName(), listener, props);
 		} catch (Exception ex) {
@@ -137,6 +136,9 @@ public class UPnPBinaryLightProxyImpl extends AbstractDevice implements BinaryLi
 
 		@Override
 		public void notifyUPnPEvent(String deviceId, String serviceId, Dictionary events) {
+//			System.out.println("+++++ Device ID: " + deviceId);
+//			System.out.println("+++++ Service ID: " + serviceId);
+
 			Runnable notificator = new Runnable() {					
 				@Override
 				public void run() {
@@ -152,7 +154,7 @@ public class UPnPBinaryLightProxyImpl extends AbstractDevice implements BinaryLi
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					notifyListeners(new DevicePropertyEvent(_device, DeviceEventType.PROP_MODIFIED, BINARY_LIGHT_POWER_STATUS, status, status));
+					notifyListeners(new DeviceEvent(_device, DeviceEventType.PROP_MODIFIED, BINARY_LIGHT_POWER_STATUS, status));
 				}
 			};
 
@@ -190,14 +192,4 @@ public class UPnPBinaryLightProxyImpl extends AbstractDevice implements BinaryLi
 		}
 
 	}
-
-	@Override
-   public void turnOn() {
-		setPowerStatus(true);	   
-   }
-
-	@Override
-   public void turnOff() {
-		setPowerStatus(false);	   
-   }
 }

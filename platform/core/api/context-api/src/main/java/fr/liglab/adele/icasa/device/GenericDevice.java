@@ -26,7 +26,7 @@ import java.util.Set;
  * service interface definitions.
  * 
  * @see AbstractDevice
- * @author Gabriel Pedraza Ferreira
+ * @author bourretp
  */
 public interface GenericDevice {
 
@@ -60,12 +60,12 @@ public interface GenericDevice {
 	/**
 	 * Default icon width, in px.
 	 */
-	public static final int DEFAULT_WIDTH = 32;
+	int DEFAULT_WIDTH = 32;
 
 	/**
 	 * Default icon height, in px.
 	 */
-	public static final int DEFAULT_HEIGHT = 32;
+	int DEFAULT_HEIGHT = 32;
 
 	/**
 	 * Return the serial number of the device.
@@ -82,7 +82,7 @@ public interface GenericDevice {
      * @param listener
      *           the listener to add
      */
-    void addListener(DeviceListener<?> listener);
+    void addListener(DeviceListener listener);
 
     /**
      * Remove the specified listener from the list of this device's listeners. If
@@ -91,7 +91,7 @@ public interface GenericDevice {
      * @param listener
      *           the listener to remove
      */
-	void removeListener(DeviceListener<?> listener);
+	void removeListener(DeviceListener listener);
 
 
 	/**
@@ -147,18 +147,8 @@ public interface GenericDevice {
 	 */
 	public void setPropertyValue(String propertyName, Object value);
 	
-	/**
-	 * Callback notifying this device enters in one or more zones
-	 *  
-	 * @param zones The list of zones where the device has entered
-	 */
 	public void enterInZones(List<Zone> zones);
 	
-	/**
-	 * Callback notifying this device leaves one or more zones
-	 *  
-	 * @param zones The list of zones where that device has leaved
-	 */
 	public void leavingZones(List<Zone> zones);
 	
 

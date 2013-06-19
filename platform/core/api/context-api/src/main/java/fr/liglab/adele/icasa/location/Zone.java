@@ -20,130 +20,66 @@ import fr.liglab.adele.icasa.Variable;
 import java.util.List;
 import java.util.Set;
 
-/**
- * This interface represents a Zone (a rectangular surface) into the iCasa platform. Zones can be embeded, a zone can
- * have several children zones. Each children zone must fit into its parent zone.
- * 
- * @author Gabriel Pedraza Ferreira
- * 
- */
+
 public interface Zone extends LocatedObject {
 
-    static final int DEFAULT_Z_LENGTH = 100;
-
-    static final int DEFAULT_Z_BOTTOM = 0;
-
-
-    /**
-	 * Returns the zone id.
+	/**
+	 * Returns id.
 	 * 
-	 * @return zone id.
+	 * @return id.
 	 */
 	public String getId();
 
 	/**
-	 * Gets the (x,y) point in the left-top corner of the zone. This point is relative to its parent zone. If there is no
-	 * parent, this method returns the same point of <code>getLeftTopAbsolutePosition</code> method.
+	 * Gets the (x,y) point in the left-top corner of the zone. This point is
+	 * relative to its parent zone
 	 * 
-	 * @return the relative (x,y) point in the left-top corner of the zone
+	 * @return
 	 */
 	public Position getLeftTopRelativePosition();
 
-	/**
-	 * Gets the absolute (x,y) point in the left-top corner of the zone.
-	 * 
-	 * @return the absolute (x,y) point in the left-top corner of the zone.
-	 */
-	public Position getLeftTopAbsolutePosition();
+    public Position getLeftTopAbsolutePosition();
 
-	/**
-	 * Gets the (x,y) point in the right-bottom corner of the zone. This point is relative to its parent zone. If there
-	 * is no parent, this method returns the same point of <code>getRightBottomAbsolutePosition</code> method.
-	 * 
-	 * @return Gets the relative (x,y) point in the right-bottom corner of the zone.
-	 */
-	public Position getRightBottomRelativePosition();
-
-	/**
-	 * Gets the absolute (x,y) point in the right-bottom corner of the zone.
-	 * 
-	 * @return the absolute (x,y) point in the right-bottom corner of the zone.
-	 */
-	public Position getRightBottomAbsolutePosition();
-
-	/**
-	 * Sets the relative (x,y) point in the left-top corner of the zone.
-	 * 
-	 * @param leftTopPosition The new left-top corner of the zone.
-	 * @throws Exception When the zone does not fit its parent zone.
-	 */
 	public void setLeftTopRelativePosition(Position leftTopPosition) throws Exception;
 
+
 	/**
-	 * Gets the zone X length (width)
+	 * Gets the zone width
 	 * 
-	 * @return the zone width
+	 * @return
 	 */
-	public int getXLength();
+	public int getWidth();
+
+	public void setWidth(int width) throws Exception;
 
 	/**
-	 * Sets the zone X length .
+	 * Gets the zone height
 	 * 
-	 * @param length the new zone X length.
-	 * @throws Exception When the zone does not fit its parent zone.
+	 * @return
 	 */
-	public void setXLength(int length) throws Exception;
+	public int getHeight();
+
+	public void setHeight(int height) throws Exception;
 
 	/**
-	 * Gets the zone Y length.
+	 * Returns true if a object its geographically contained into the zone.
 	 * 
-	 * @return the zone Y length.
-	 */
-	public int getYLength();
-
-	/**
-	 * Sets the zone Y length.
-	 * 
-	 * @param length the new zone Y length.
-	 * @throws Exception When the zone does not fit its parent zone.
-	 */
-	public void setYLength(int length) throws Exception;
-    /**
-     * Gets the zone Z length.
-     *
-     * @return the zone Y length.
-     */
-    public int getZLength();
-
-    /**
-     * Sets the zone Y length.
-     *
-     * @param length the new zone Z length.
-     * @throws Exception When the zone does not fit its parent zone.
-     */
-    public void setZLength(int length) throws Exception;
-
-	/**
-	 * Returns true if a object is geographically contained into the zone.
-	 * 
-	 * @param object a located object
-	 * @return true if a object is geographically contained into the zone, false if it is not.
+	 * @param object
+	 *           a located object
+	 * @return true if a object its geographically contained into the zone
 	 */
 	public boolean contains(LocatedObject object);
 
-	/**
-	 * Returns true if a point is geographically contained into the zone.
-	 * 
-	 * @param position a point
-	 * @return true if a point is geographically contained into the zone, false if it is not.
-	 */
-	public boolean contains(Position position);
+    public boolean contains(Position position);
 
 	/**
-	 * Returns relative position of specified object from top left corner of this zone.
+	 * Returns relative position of specified object from top left corner of this
+	 * zone.
 	 * 
-	 * @param object a located object
-	 * @return relative position of specified object from top left corner of this zone.
+	 * @param object
+	 *           a located object
+	 * @return relative position of specified object from top left corner of this
+	 *         zone.
 	 */
 	public Position getRelativePosition(LocatedObject object);
 
@@ -158,8 +94,8 @@ public interface Zone extends LocatedObject {
 	/**
 	 * Determines if a Zone fits (don't exceed limits) of this zone/
 	 * 
-	 * @param aZone a zone
-	 * @return true if aZone fits into this zone, false otherwise.
+	 * @param aZone
+	 * @return
 	 */
 	public boolean fits(Zone aZone);
 
@@ -191,86 +127,37 @@ public interface Zone extends LocatedObject {
 	 */
 	public Zone getParent();
 
-	/**
-	 * Adds a listener to this zone.
-	 * 
-	 * @param listener the listener to be added.
-	 */
-	public void addListener(final ZoneListener listener);
+	public void addListener(ZoneListener listener);
 
-	/**
-	 * Removes a listener from the zone.
-	 * 
-	 * @param listener the listener to be removed.
-	 */
-	public void removeListener(final ZoneListener listener);
+	public void removeListener(ZoneListener listener);
 
-	/**
-	 * Modifies if this zone will use the variable of its parent zone.
-	 * 
-	 * @param useParentVariables true if the zone must use its parent variables.
-	 */
 	public void setUseParentVariables(boolean useParentVariables);
 
-	/**
-	 * Determines if this zone use the variable of its parent zone.
-	 * 
-	 * @return
-	 */
 	public boolean getUseParentVariables();
 
-	/**
-	 * Gets the value from a zone variable.
-	 * 
-	 * @param name The name of variable.
-	 * @return the value of variable.
-	 */
 	public Object getVariableValue(String name);
 
-	/**
-	 * Sets specified variable value. If the property does not exist, adds it.
-	 * 
-	 * @param name variable name to set
-	 * @param newValue property value to set
-	 */
+    /**
+     * Sets specified variable value.
+     * If the property does not exist, adds it.
+     *
+     * @param name variable name to set
+     * @param newValue property value to set
+     */
 	public void setVariableValue(String name, Object newValue);
 
-	/**
-	 * Adds a variable to this zone.
-	 * 
-	 * @param name The variable name.
-	 */
 	public void addVariable(String name);
 
-	/**
-	 * Removes a variable from this zone.
-	 * 
-	 * @param name The variable name.
-	 */
 	public void removeVariable(String name);
 
-	/**
-	 * Gets the list of variable names
-	 * 
-	 * @return the list of variable names
-	 */
 	public Set<String> getVariableNames();
 
-	/**
-	 * Gets the list of variable
-	 * 
-	 * @return the list of variable
-	 */
-	public Set<Variable> getVariables();
+    public Set<Variable> getVariables();
+	
+	public void resize(int newWidth, int newHeight) throws Exception;
+	
+	public Position getRightBottomRelativePosition();
 
-	/**
-	 * Resizes the zone
-	 * 
-	 * @param newWidth The new width (X length value)
-	 * @param newHeight The new Height (Y length value)
-     * @param newDepth The new Depth (Z length value)
-	 * @throws Exception When the zone does not fit its parent zone.
-	 */
-	public void resize(int newWidth, int newHeight, int newDepth) throws Exception;
+    public Position getRightBottomAbsolutePosition();
 
 }

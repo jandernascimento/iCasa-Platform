@@ -33,7 +33,6 @@
 		<module>device-manager-tests</module>
 		<module>icasa-bridge-tests</module>-->
       <module>distributions-test</module>
-      <module>technical-service-test</module>
 	</modules>
    <build>
       <plugins>

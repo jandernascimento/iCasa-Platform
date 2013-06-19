@@ -7,161 +7,82 @@
 	OR CONDITIONS OF ANY KIND, either express or implied. See the License for 
 	the specific language governing permissions and limitations under the License. -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>fr.liglab.adele.common</groupId>
+		<artifactId>base</artifactId>
+		<version>1.0.5-SNAPSHOT</version>
+      <relativePath />
+	</parent>
 
-    <parent>
-        <groupId>fr.liglab.adele.common</groupId>
-        <artifactId>base</artifactId>
-        <version>1.0.5-SNAPSHOT</version>
-        <relativePath/>
-    </parent>
+	<!-- Project coordinates -->
+	<groupId>fr.liglab.adele.icasa</groupId>
+	<artifactId>platform.parent</artifactId>
+   <version>1.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
 
-    <!-- Project coordinates -->
-    <groupId>fr.liglab.adele.icasa</groupId>
-    <artifactId>platform.parent</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
+	<!-- Project description -->
+	<name>${productName} :: ${projectName}</name>
+	<description>${project.name}</description>
+	<inceptionYear>2012</inceptionYear>
 
-    <!-- Project description -->
-    <name>${productName} :: ${projectName}</name>
-    <description>${project.name}</description>
-    <inceptionYear>2012</inceptionYear>
+	<!-- Project common properties -->
+	<properties>
+		<productName>iCasa Platform</productName>
+      <productVersion>${project.version}</productVersion>
+      <AdeleBaseVersion>1.0.5-SNAPSHOT</AdeleBaseVersion>
+      <DistributionTestVersion>1.0.5-SNAPSHOT</DistributionTestVersion>
+      <cxfVersion>2.3.2</cxfVersion>
 
-    <!-- Project common properties -->
-    <properties>
-        <productName>iCasa Platform</productName>
-        <productVersion>${project.version}</productVersion>
-        <AdeleBaseVersion>1.0.5-SNAPSHOT</AdeleBaseVersion>
-        <DistributionTestVersion>1.0.5-SNAPSHOT</DistributionTestVersion>
-        <cxfVersion>2.3.2</cxfVersion>
+      <!--UPNP -->
+      <UPnPBDVersion>0.8.0</UPnPBDVersion>
+      <UPnPBDExtrasVersion>0.4.0</UPnPBDExtrasVersion>
+      <roseVersion>1.0.2</roseVersion>
+      <androidPlatform>16</androidPlatform>
+      
+	</properties>
 
-        <!--UPNP -->
-        <UPnPBDVersion>0.8.0</UPnPBDVersion>
-        <UPnPBDExtrasVersion>0.4.0</UPnPBDExtrasVersion>
-        <androidPlatform>16</androidPlatform>
+	<!-- Project repositories -->
+	<repositories>
+	<!-- iCASA repositories -->
+		<repository>
+			<id>icasa-snapshot-repository</id>
+			<name>iCASA Snapshot repository</name>
+			<url>https://repository-icasa.forge.cloudbees.com/snapshot/</url>
+		</repository>
+		<repository>
+			<id>icasa-release-repository</id>
+			<name>iCASA Release repository</name>
+			<url>https://repository-icasa.forge.cloudbees.com/release/</url>
+		</repository>
+      <!-- For android apps-->
+      <repository>
+         <id>teleal-repo</id>
+         <url>http://teleal.org/m2</url>
+         <snapshots>
+            <enabled>true</enabled>
+         </snapshots>
+      </repository>
+	</repositories>
+	
+	 <pluginRepositories>
+		<pluginRepository>
+			<id>elca-services</id>
+			<url>http://el4.elca-services.ch/el4j/maven2repository</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</pluginRepository>
+	</pluginRepositories>
 
-    </properties>
-
-    <developers>
-        <developer>
-            <name>Philippe Lalanda</name>
-            <email> philippe.lalanda @nospam@ imag.fr	</email>
-            <roles>
-                <role>Project Manager</role>
-            </roles>
-            <organization>Adele | LIG</organization>
-            <organizationUrl>http://www-adele.imag.fr</organizationUrl>
-        </developer>
-        <developer>
-            <name>Catherine Hamon</name>
-            <email> Catherine.Hamon @nospam@ orange-ftgroup.com	</email>
-            <roles>
-                <role>Project Manager</role>
-            </roles>
-            <organization>Orange Labs</organization>
-            <organizationUrl>http://orange-ftgroup.com</organizationUrl>
-        </developer>
-        <developer>
-            <name>Thomas Leveque</name>
-            <email> leveque.thomas @nospam@ gmail.com	</email>
-            <roles>
-                <role>Project Manager</role>
-            </roles>
-            <organization>Adele | LIG</organization>
-            <organizationUrl>http://www-adele.imag.fr</organizationUrl>
-        </developer>
-        <developer>
-            <name>Issac Noé Garcia Garza</name>
-            <email> 	 torito @nospam@ gmail.com</email>
-            <roles>
-            </roles>
-            <organization>Adele | LIG</organization>
-            <organizationUrl>http://www-adele.imag.fr</organizationUrl>
-        </developer>
-        <developer>
-            <name>Gabriel Pedraza Ferreira</name>
-            <email>gabriel.pedraza-ferreira @nospam@ imag.fr</email>
-            <roles>
-            </roles>
-            <organization>Adele | LIG</organization>
-            <organizationUrl>http://www-adele.imag.fr</organizationUrl>
-        </developer>
-    </developers>
-
-    <contributors>
-        <contributor>
-            <name>Elmehdi Damou</name>
-            <email>elmehdi.damou @nospam@ imag.fr</email>
-            <organization>Adele | LIG</organization>
-            <organizationUrl>http://www-adele.imag.fr</organizationUrl>
-            <roles>
-                <role>Developer</role>
-            </roles>
-        </contributor>
-        <contributor>
-            <name>Pierre Bourret</name>
-            <email> 	 bourretp @nospam@ gmail.com</email>
-            <organization>Adele | LIG</organization>
-            <organizationUrl>http://www-adele.imag.fr</organizationUrl>
-            <roles>
-                <role>Developer</role>
-            </roles>
-        </contributor>
-    </contributors>
-
-    <!-- Project repositories -->
-    <repositories>
-
-        <!-- ADELE repositories -->
-        <repository>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <id>adele-central-snapshot</id>
-            <name>adele-repos</name>
-            <url>http://maven.dynamis-technologies.com/artifactory/adele-repos</url>
-        </repository>
-        <repository>
-            <snapshots />
-            <id>snapshots</id>
-            <name>adele-central-release</name>
-            <url>http://maven.dynamis-technologies.com/artifactory/adele-repos</url>
-        </repository>
-
-        <!-- For android apps-->
-        <!--repository>
-            <id>teleal-repo</id>
-            <url>http://teleal.org/m2</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository-->
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <id>central</id>
-            <name>adele-repos</name>
-            <url>http://maven.dynamis-technologies.com/artifactory/adele-repos</url>
-        </pluginRepository>
-        <pluginRepository>
-            <snapshots />
-            <id>snapshots</id>
-            <name>adele-central-release</name>
-            <url>http://maven.dynamis-technologies.com/artifactory/adele-repos</url>
-        </pluginRepository>
-    </pluginRepositories>
-
-    <!-- Dependencies version management -->
-    <dependencyManagement>
-        <dependencies>
-            <!--RoSe DP-->
+	<!-- Dependencies version management -->
+	<dependencyManagement>
+		<dependencies>
+         <!--RoSe DP-->
             <dependency>
-               <groupId>org.ow2.chameleon.rose</groupId>
+               <groupId>fr.liglab.adele.common</groupId>
                <artifactId>rose.dp</artifactId>
                <version>${roseVersion}</version>
                <type>deployment-package</type>
@@ -179,163 +100,131 @@
             </dependency>
             <!-- Distribution Base-->
             <dependency>
-                <groupId>fr.liglab.adele.common</groupId>
-                <artifactId>distribution.base</artifactId>
-                <version>${AdeleBaseVersion}</version>
-                <type>osgi-distribution</type>
+               <groupId>fr.liglab.adele.common</groupId>
+               <artifactId>distribution.base</artifactId>
+               <version>${AdeleBaseVersion}</version>
+               <type>osgi-distribution</type>
             </dependency>
             <dependency>
-                <groupId>fr.liglab.adele.common</groupId>
-                <artifactId>distribution.factory</artifactId>
-                <version>${DistributionTestVersion}</version>
+               <groupId>fr.liglab.adele.common</groupId>
+               <artifactId>distribution.factory</artifactId>
+               <version>${DistributionTestVersion}</version>
             </dependency>
-            <!-- UPNP -->
-            <dependency>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>org.apache.felix.upnp.basedriver</artifactId>
-                <version>${UPnPBDVersion}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>org.apache.felix.upnp.extra</artifactId>
-                <version>${UPnPBDExtrasVersion}</version>
-            </dependency>
-            <!-- For android-->
-            <dependency>
-                <groupId>com.google.android</groupId>
-                <artifactId>android</artifactId>
-                <version>4.1.1.4</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.teleal.cling</groupId>
-                <artifactId>cling-support</artifactId>
-                <version>1.0.3</version>
-            </dependency>
-            <!-- JUnit 4 and Mockito for tests -->
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>4.8.2</version>
-            </dependency>
-            <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-all</artifactId>
-                <version>1.7</version>
-            </dependency>
+			<!-- UPNP -->
+			<dependency>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>org.apache.felix.upnp.basedriver</artifactId>
+            <version>${UPnPBDVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>org.apache.felix.upnp.extra</artifactId>
+            <version>${UPnPBDExtrasVersion}</version>
+			</dependency>
+         <!-- For android-->
+         <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>android</artifactId>
+            <version>4.1.1.4</version>
+            <scope>provided</scope>
+         </dependency>
+         <dependency>
+            <groupId>org.teleal.cling</groupId>
+            <artifactId>cling-support</artifactId>
+            <version>1.0.3</version>
+         </dependency>
+			<!-- JUnit 4 and Mockito for tests -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.8.2</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-all</artifactId>
+				<version>1.7</version>
+			</dependency>
+			
+
+			<dependency>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>org.apache.felix.usb.basedriver</artifactId>
+				<version>1.0.1-SNAPSHOT</version>
+			</dependency>
 
 
-            <dependency>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>org.apache.felix.usb.basedriver</artifactId>
-                <version>1.0.1-SNAPSHOT</version>
-            </dependency>
+         
+		</dependencies>
+	</dependencyManagement>
 
-            <!-- iCasa -->
-            <dependency>
-                <groupId>fr.liglab.adele.icasa</groupId>
-                <artifactId>device.manager.api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>fr.liglab.adele.icasa</groupId>
-                <artifactId>application.api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>fr.liglab.adele.icasa</groupId>
-                <artifactId>application.impl</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>fr.liglab.adele.icasa</groupId>
-                <artifactId>common</artifactId>
-                <version>${project.version}</version>
-            </dependency>
+	<build>
 
-        </dependencies>
-    </dependencyManagement>
-
-    <build>
-
-        <!-- Plugins version management -->
-        <pluginManagement>
-            <plugins>
-
-                <!-- License plugin -->
-                <plugin>
-                    <groupId>com.google.code.maven-license-plugin</groupId>
-                    <artifactId>maven-license-plugin</artifactId>
-                    <version>1.4.0</version>
-                    <configuration>
-                        <header>${basedir}/../parent/license.txt</header>
-                        <aggregate>true</aggregate>
-                        <excludes>
-                            <exclude>.gitignore</exclude>
-                            <exclude>license.txt</exclude>
+		<!-- Plugins version management -->
+		<pluginManagement>
+			<plugins>
+				
+				<!-- License plugin -->
+				<plugin>
+					<groupId>com.google.code.maven-license-plugin</groupId>
+					<artifactId>maven-license-plugin</artifactId>
+					<version>1.4.0</version>
+					<configuration>
+						<header>${basedir}/../parent/license.txt</header>
+						<aggregate>true</aggregate>
+						<excludes>
+							<exclude>.gitignore</exclude>
+							<exclude>license.txt</exclude>
                             <exclude>**/.idea/**</exclude>
                             <exclude>**/*.iml</exclude>
-                            <exclude>**/src/test/resources/**</exclude>
-                            <exclude>**/src/test/data/**</exclude>
-                            <exclude>**/*.so</exclude>
-                            <exclude>**/*.dll</exclude>
-                            <exclude>**/*.bhv</exclude>
-                            <exclude>**/*.cfg</exclude>
-                            <exclude>**/*.dp</exclude>
-                            <exclude>**/*.xcf</exclude>
-                            <exclude>**/*.md</exclude>
-                            <exclude>**/*.jj</exclude>
-                            <exclude>.git/**/*</exclude>
-                        </excludes>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>format</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-deploy-plugin</artifactId>
-                    <version>2.7</version>
-                </plugin>
-                <plugin>
-                    <groupId>fr.liglab.adele.common</groupId>
-                    <artifactId>maven-osgi-distribution-plugin</artifactId>
-                    <extensions>true</extensions>
-                    <configuration>
-                        <generateScripts>true</generateScripts>
-                    </configuration>
-                </plugin>
-
-                <plugin>
-                    <artifactId>maven-release-plugin</artifactId>
-                    <configuration>
-                        <allowTimestampedSnapshots>true</allowTimestampedSnapshots>
-                        <autoVersionSubmodules>true</autoVersionSubmodules>
-                        <releaseProfiles>release</releaseProfiles>
-                        <useReleaseProfile>true</useReleaseProfile>
-                        <goals>deploy site-deploy</goals>
-                    </configuration>
-                </plugin>
-
-                <!-- Android plugin-->
-                <plugin>
-                    <groupId>com.jayway.maven.plugins.android.generation2</groupId>
-                    <artifactId>android-maven-plugin</artifactId>
-                    <version>3.5.1</version>
-                    <configuration>
-                        <sdk>
-                            <!-- Don't forget to set your ANDROID_HOME environment variable to your SDK directory! -->
-                            <path>${env.ANDROID_HOME}</path>
-                            <platform>${androidPlatform}</platform>
-                        </sdk>
-                        <!-- All of these go into the /src/main/android/ directory, we don't
-                 want to polute the project root directory. -->
-                        <androidManifestFile>${project.basedir}/src/main/android/AndroidManifest.xml
-                        </androidManifestFile>
+							<exclude>**/src/test/resources/**</exclude>
+							<exclude>**/src/test/data/**</exclude>
+							<exclude>**/*.so</exclude>
+							<exclude>**/*.dll</exclude>
+							<exclude>**/*.bhv</exclude>
+							<exclude>**/*.cfg</exclude>
+							<exclude>**/*.dp</exclude>
+							<exclude>**/*.xcf</exclude>
+							<exclude>**/*.md</exclude>
+							<exclude>**/*.jj</exclude>
+							<exclude>.git/**/*</exclude>
+						</excludes>
+					</configuration>
+					<executions>
+						<execution>
+							<phase>verify</phase>
+							<goals>
+								<goal>format</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+            <plugin>
+               <artifactId>maven-deploy-plugin</artifactId>
+               <version>2.7</version>
+            </plugin>
+            <plugin>
+               <groupId>fr.liglab.adele.common</groupId>
+               <artifactId>maven-osgi-distribution-plugin</artifactId>
+               <extensions>true</extensions>
+               <configuration>
+                  <generateScripts>true</generateScripts>
+               </configuration>
+            </plugin>
+           
+            <!-- Android plugin-->
+            <plugin>
+               <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+               <artifactId>android-maven-plugin</artifactId>
+               <version>3.5.1</version>
+               <configuration>
+                  <sdk>
+                     <!-- Don't forget to set your ANDROID_HOME environment variable to your SDK directory! -->
+                     <path>${env.ANDROID_HOME}</path>
+                     <platform>${androidPlatform}</platform>
+                  </sdk>
+                  <!-- All of these go into the /src/main/android/ directory, we don't
+                     want to polute the project root directory. -->
+                        <androidManifestFile>${project.basedir}/src/main/android/AndroidManifest.xml</androidManifestFile>
                         <resourceDirectory>${project.basedir}/src/main/android/res</resourceDirectory>
                         <assetsDirectory>${project.basedir}/src/main/android/assets</assetsDirectory>
                         <nativeLibrariesDirectory>${project.basedir}/src/main/android/native</nativeLibrariesDirectory>
@@ -343,43 +232,32 @@
                         <!-- Read the Android Maven plugin documentation about these settings -->
                         <deleteConflictingFiles>true</deleteConflictingFiles>
                         <undeployBeforeDeploy>true</undeployBeforeDeploy>
-                    </configuration>
-                    <extensions>true</extensions>
-                </plugin>
-            </plugins>
-        </pluginManagement>
+                     </configuration>
+                     <extensions>true</extensions>
+                  </plugin>
+			</plugins>
+		</pluginManagement>
 
-        <!-- Build extensions -->
-        <extensions>
+		<!-- Build extensions -->
+		<extensions>
 
-        </extensions>
-
-        <plugins>
-
-        </plugins>
-    </build>
-
-    <distributionManagement>
-        <repository>
-            <id>icasa-deploy-cloudbees-release</id>
-            <name>Cloudbees Adele Repository</name>
-            <url>dav:https://repository-icasa.forge.cloudbees.com/release</url>
-        </repository>
-        <snapshotRepository>
-            <id>icasa-deploy-cloudbees-snapshot</id>
-            <name>iCasa Cloudbees Snapshot Private Repository</name>
-            <url>dav:https://repository-icasa.forge.cloudbees.com/snapshot</url>
-        </snapshotRepository>
-        <site>
-            <id>tmp</id>
-            <url>file:target/site-tmp</url>
-        </site>
-    </distributionManagement>
-
-    <scm>
-        <connection>scm:git:ssh://git@github.com/AdeleResearchGroup/iCasa-Platform.git</connection>
-        <url>https://github.com/AdeleResearchGroup/iCasa-Platform.git</url>
-        <developerConnection>scm:git:ssh://git@github.com/AdeleResearchGroup/iCasa-Platform.git</developerConnection>
-        <tag>HEAD</tag>
-    </scm>
+		</extensions>
+		
+		<plugins>
+		  
+		</plugins>
+	</build>
+   <distributionManagement>
+      <repository>
+         <id>cloudbees-adele-release</id>
+         <name>Cloudbees Adele Repository</name>
+         <url>dav:https://repository-icasa.forge.cloudbees.com/release</url>
+      </repository>
+   </distributionManagement>
+   <scm>
+      <connection>scm:git:ssh://git@github.com/AdeleResearchGroup/iCasa-Platform.git</connection>
+      <url>https://github.com/AdeleResearchGroup/iCasa-Platform.git</url>
+      <developerConnection>scm:git:ssh://git@github.com/AdeleResearchGroup/iCasa-Platform.git</developerConnection>
+      <tag>HEAD</tag>
+   </scm>
 </project>

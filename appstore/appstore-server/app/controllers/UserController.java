@@ -1,9 +1,15 @@
 package controllers;
 
+import models.Device;
 import models.User;
+import models.values.Application;
+import org.codehaus.jackson.node.ArrayNode;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import securesocial.core.Identity;
+import securesocial.core.java.SecureSocial;
 
 /**
  * Created with IntelliJ IDEA.

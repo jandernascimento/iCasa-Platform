@@ -5,7 +5,6 @@ import org.codehaus.jackson.node.ObjectNode;
 import play.libs.Json;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -33,15 +32,11 @@ public class ProductVersion {
 
     @ManyToMany
     @JoinTable(name="ProductVersion_has_ServiceVersion")
-    List<ServiceVersion> serviceVersions = new ArrayList();
-
-    @ManyToMany
-    @JoinTable(name = "ProductVersion_has_Device")
-    public List<Device> devices = new ArrayList();
+    List<ServiceVersion> serviceVersions;
 
     @ManyToMany
     @JoinTable(name="ProductVersion_has_ApplicationVersion")
-    List<ApplicationVersion> applicationVersions = new ArrayList();
+    List<ApplicationVersion> applicationVersions;
 
     public static ObjectNode toJson(ProductVersion product){
         ObjectNode result = Json.newObject();
@@ -82,14 +77,5 @@ public class ProductVersion {
         return result;
     }
 
-    public static ArrayNode getDevices(ProductVersion productVersion){
-        ArrayNode result = Json.newObject().arrayNode();
-        if (productVersion != null && productVersion.devices != null){
-            for (Device device: productVersion.devices) {
-                result.add(Device.toJson(device));
-            }
-        }
-        return result;
-    }
 
 }

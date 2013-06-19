@@ -18,77 +18,38 @@ package fr.liglab.adele.icasa.location;
 import fr.liglab.adele.icasa.listener.IcasaListener;
 
 /**
- * Listener on {@link fr.liglab.adele.icasa.location.LocatedDevice} objects
- * 
- * @author Gabriel Pedraza Ferreira
- *
+ * Created with IntelliJ IDEA.
+ * User: thomas
+ * Date: 30/11/12
+ * Time: 15:25
+ * To change this template use File | Settings | File Templates.
  */
 public interface LocatedDeviceListener extends IcasaListener {
 
-	/**
-	 * Called callback when a device property has been added.
-	 * @param device The device added.
-	 */
     public void deviceAdded(LocatedDevice device);
 
-    /**
-     * Called callback when a device property has been removed.
-     * @param device The device removed.
-     */
     public void deviceRemoved(LocatedDevice device);
 
-    /**
-     * Called callback when a device has been moved.
-     * 
-     * @param device The device moved.
-     * @param oldPosition The previous position.
-     * @param oldPosition The new position.
-     */
-    public void deviceMoved(LocatedDevice device, Position oldPosition, Position newPosition);
+    public void deviceMoved(LocatedDevice device, Position oldPosition);
 
-    /**
-     * Called callback when a device property has been modified.
-     * 
-     * @param device The device modified.
-     * @param propertyName The property modified.
-     * @param oldValue The property previous value.
-     * @param newValue The property new value.  
-     */
-    public void devicePropertyModified(LocatedDevice device, String propertyName, Object oldValue, Object newValue);
+    public void devicePropertyModified(LocatedDevice device, String propertyName, Object oldValue);
 
-    /**
-     * Called callback when a device property has been added.
-     * @param device The device modified
-     * @param propertyName The name of the property added.
-     */
     public void devicePropertyAdded(LocatedDevice device, String propertyName);
 
-    /**
-     * Called callback when a device property has been removed.
-     * @param device The device modified
-     * @param propertyName The name of the property removed.
-     */
     public void devicePropertyRemoved(LocatedDevice device, String propertyName);
 
     /**
-     * Called callback when a device has been attached to another device
-     * @param container The container device
-     * @param child The child device
+     * Invoked when a device has been attached to another device
+     * @param container
+     * @param child
      */
     void deviceAttached(LocatedDevice container, LocatedDevice child);
 
     /**
-     * Called callback when a device has been detached from another device
-     * @param container The container device
-     * @param child The child device
+     ** Invoked when a device has been detached from another device
+     * @param container
+     * @param child
      */
     void deviceDetached(LocatedDevice container, LocatedDevice child);
-
-    /**
-     * Callback notifying when the device want to trigger an event.
-     * @param device the device triggering the event.
-     * @param data the content of the event.
-     */
-    public void deviceEvent(LocatedDevice device, Object data);
 
 }

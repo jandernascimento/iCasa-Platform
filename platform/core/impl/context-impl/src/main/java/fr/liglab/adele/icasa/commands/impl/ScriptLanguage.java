@@ -23,12 +23,6 @@ public class ScriptLanguage {
     public static final String ID = "id";
 
     public static final String TYPE = "type";
-    
-    public static final String NAME = "name";
-    
-    public static final String USER = "user";
-    
-    public static final String APPLICATION_ID = "application";
 
     public static final String DEVICE_ID = "deviceId";
 
@@ -54,11 +48,9 @@ public class ScriptLanguage {
 
     public static final String TOP_Y = "topY";
 
-    public static final String X_LENGTH = "X-Length";
+    public static final String WIDTH = "width";
 
-    public static final String Y_LENGTH = "Y-Length";
-
-    public static final String Z_LENGTH = "Z-Length";
+    public static final String HEIGHT = "height";
 
     public static final String SCRIPT_NAME = "scriptName";
 
@@ -69,13 +61,5 @@ public class ScriptLanguage {
     public static final String NEW_X = "newX";
 
     public static final String NEW_Y = "newY";
-
-    public static final String NEW_Z = "newZ";
-
-    public static final String BOTTOM_Z = "bottomZ";
-    
-
-  
-
 
 }

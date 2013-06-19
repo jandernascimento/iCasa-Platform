@@ -20,7 +20,7 @@ import fr.liglab.adele.icasa.device.GenericDevice;
 /**
  * Service definition of a simple dimmer light device.
  * 
- * @author Gabriel Pedraza Ferreira
+ * @author bourretp
  */
 public interface DimmerLight extends GenericDevice {
 

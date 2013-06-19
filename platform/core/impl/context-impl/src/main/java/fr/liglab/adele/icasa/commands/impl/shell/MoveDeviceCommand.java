@@ -15,21 +15,16 @@
  */
 package fr.liglab.adele.icasa.commands.impl.shell;
 
-import fr.liglab.adele.icasa.Signature;
-import fr.liglab.adele.icasa.location.LocatedDevice;
+import fr.liglab.adele.icasa.ContextManager;
+import fr.liglab.adele.icasa.commands.impl.AbstractCommand;
+import fr.liglab.adele.icasa.commands.impl.ScriptLanguage;
 import org.apache.felix.ipojo.annotations.Component;
 import org.apache.felix.ipojo.annotations.Instantiate;
 import org.apache.felix.ipojo.annotations.Provides;
 import org.apache.felix.ipojo.annotations.Requires;
 import org.json.JSONObject;
 
-import fr.liglab.adele.icasa.ContextManager;
-import fr.liglab.adele.icasa.commands.impl.AbstractCommand;
-import fr.liglab.adele.icasa.commands.impl.ScriptLanguage;
 import fr.liglab.adele.icasa.location.Position;
-
-import java.io.InputStream;
-import java.io.PrintStream;
 
 
 /**
@@ -47,28 +42,12 @@ public class MoveDeviceCommand extends AbstractCommand {
 	@Requires
 	private ContextManager contextManager;
 
-    private static Signature MOVE = new Signature(new String[]{ScriptLanguage.ID, ScriptLanguage.LEFT_X, ScriptLanguage.TOP_Y} );
-    private static Signature MOVE_WZ = new Signature(new String[]{ScriptLanguage.ID, ScriptLanguage.LEFT_X, ScriptLanguage.TOP_Y, ScriptLanguage.BOTTOM_Z } );
-
-    public MoveDeviceCommand(){
-       setSignature(MOVE);
-       setSignature(MOVE_WZ);
-    }
-
 	@Override
-	public Object execute(InputStream in, PrintStream out,JSONObject param, Signature signature) throws Exception {
+	public Object execute(JSONObject param) throws Exception {
         String deviceId = param.getString(ScriptLanguage.DEVICE_ID);
-        LocatedDevice device = contextManager.getDevice(deviceId);
-        if (device == null) {
-            throw new IllegalArgumentException("Device ("+ deviceId +") does not exist");
-        }
         int newX = param.getInt(ScriptLanguage.NEW_X);
-        int newY = param.getInt(ScriptLanguage.NEW_Y);
-        int newZ = device.getCenterAbsolutePosition().z;
-        if (signature.equals(MOVE_WZ)){
-            newZ = param.getInt(ScriptLanguage.NEW_Z);
-        }
-		contextManager.setDevicePosition(deviceId, new Position(newX, newY, newZ));
+        int newY = param.getInt(ScriptLanguage.NEW_X);
+		contextManager.setDevicePosition(deviceId, new Position(newX, newY));
 		return null;
 	}
 
@@ -82,6 +61,15 @@ public class MoveDeviceCommand extends AbstractCommand {
         return "move-device";
     }
 
+    /**
+     * Get the list of parameters.
+     *
+     * @return
+     */
+    @Override
+    public String[] getParameters() {
+        return new String[]{ScriptLanguage.DEVICE_ID, ScriptLanguage.NEW_X, ScriptLanguage.NEW_Y};
+    }
     @Override
     public String getDescription(){
         return "Move a device to new X,Y positions.\n\t" + super.getDescription();
